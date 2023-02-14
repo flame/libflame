@@ -383,7 +383,7 @@ the routine */
 int cggevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, complex *a, integer *lda, complex *b, integer *ldb, complex *alpha, complex *beta, complex *vl, integer *ldvl, complex * vr, integer *ldvr, integer *ilo, integer *ihi, real *lscale, real * rscale, real *abnrm, real *bbnrm, real *rconde, real *rcondv, complex *work, integer *lwork, real *rwork, integer *iwork, logical *bwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cggevx inputs: balanc %c, jobvl %c, jobvr %c, sense %c, n %lld, lda %lld, ldb %lld, ldvl %lld, ldvr %lld, lwork %lld",*balanc, *jobvl, *jobvr, *sense, *n, *lda, *ldb, *ldvl, *ldvr, *lwork);

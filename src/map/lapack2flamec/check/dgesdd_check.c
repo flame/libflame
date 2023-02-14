@@ -14,7 +14,7 @@ int dgesdd_check(char *jobz, integer *m, integer *n, double * a, integer *lda, d
     integer bdspac;
     integer minwrk, maxwrk;
     logical wntqas, lquery;    
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     sprintf(buffer, "dgesdd inputs: jobz %c, m %d, n %d, lda %d, ldu %d, ldvt %d\n", *jobz, *m, *n, *lda, *ldu, *ldvt);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

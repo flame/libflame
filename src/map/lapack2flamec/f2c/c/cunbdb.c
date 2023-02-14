@@ -285,7 +285,7 @@ the routine */
 int cunbdb_(char *trans, char *signs, integer *m, integer *p, integer *q, complex *x11, integer *ldx11, complex *x12, integer * ldx12, complex *x21, integer *ldx21, complex *x22, integer *ldx22, real *theta, real *phi, complex *taup1, complex *taup2, complex * tauq1, complex *tauq2, complex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cunbdb inputs: trans %c, signs %c, m %lld, p %lld, q %lld, ldx11 %lld, ldx12 %lld, ldx21 %lld, ldx22 %lld, lwork %lld",*trans, *signs, *m, *p, *q, *ldx11, *ldx12, *ldx21, *ldx22, *lwork);

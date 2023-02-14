@@ -193,7 +193,7 @@ the routine */
 int sorbdb1_(integer *m, integer *p, integer *q, real *x11, integer *ldx11, real *x21, integer *ldx21, real *theta, real *phi, real *taup1, real *taup2, real *tauq1, real *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"sorbdb1 inputs: m %d, p %d, q %d, ldx11 %d, ldx21 %d",*m, *p, *q, *ldx11, *ldx21);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

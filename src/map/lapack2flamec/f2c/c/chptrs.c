@@ -112,7 +112,7 @@ static integer c__1 = 1;
 int chptrs_(char *uplo, integer *n, integer *nrhs, complex * ap, integer *ipiv, complex *b, integer *ldb, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"chptrs inputs: uplo %c, n %lld, nrhs %lld, ldb %lld",*uplo, *n, *nrhs, *ldb);

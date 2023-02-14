@@ -142,7 +142,7 @@ v(i+2:ihi) is stored on */
 int cgehd2_(integer *n, integer *ilo, integer *ihi, complex * a, integer *lda, complex *tau, complex *work, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgehd2 inputs: n %lld, ilo %lld, ihi %lld, lda %lld",*n, *ilo, *ihi, *lda);

@@ -257,7 +257,7 @@ these eigenvalues are flagged by a */
 int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *il, integer *iu, real *abstol, real *d__, real *e, integer *m, integer *nsplit, real *w, integer *iblock, integer * isplit, real *work, integer *iwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"sstebz inputs: range %c, order %c, n %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS "",*range, *order, *n, *il, *iu);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

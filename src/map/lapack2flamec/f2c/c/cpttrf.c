@@ -82,7 +82,7 @@ if k < N, the factorization could not */
 int cpttrf_(integer *n, real *d__, complex *e, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cpttrf inputs: n %lld",*n);

@@ -166,7 +166,7 @@ the routine */
 int sormrq_(char *side, char *trans, integer *m, integer *n, integer *k, real *a, integer *lda, real *tau, real *c__, integer *ldc, real *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"sormrq inputs: side %c, trans %c, m %d, n %d, k %d, lda %d, ldc %d",*side, *trans, *m, *n, *k, *lda, *ldc);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

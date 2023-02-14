@@ -295,7 +295,7 @@ K=N/2. If */
 int ctfsm_(char *transr, char *side, char *uplo, char *trans, char *diag, integer *m, integer *n, complex *alpha, complex *a, complex *b, integer *ldb)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"ctfsm inputs: transr %c, side %c, uplo %c, trans %c, diag %c, m %lld, n %lld, ldb %lld",*transr, *side, *uplo, *trans, *diag, *m, *n, *ldb);

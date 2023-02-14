@@ -148,7 +148,7 @@ static integer c__1 = 1;
 int clatzm_(char *side, integer *m, integer *n, complex *v, integer *incv, complex *tau, complex *c1, complex *c2, integer *ldc, complex *work)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clatzm inputs: side %c, m %lld, n %lld, incv %lld, ldc %lld",*side, *m, *n, *incv, *ldc);

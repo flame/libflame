@@ -90,7 +90,7 @@ static integer c__1 = 1;
 real slanst_(char *norm, integer *n, real *d__, real *e)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"slanst inputs: norm %c, n %d",*norm, *n);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

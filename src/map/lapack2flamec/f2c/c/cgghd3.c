@@ -244,7 +244,7 @@ the routine */
 int cgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, complex *a, integer *lda, complex *b, integer *ldb, complex *q, integer *ldq, complex *z__, integer *ldz, complex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgghd3 inputs: compq %c, compz %c, n %lld, ilo %lld, ihi %lld, lda %lld, ldb %lld, ldq %lld, ldz %lld, lwork %lld",*compq, *compz, *n, *ilo, *ihi, *lda, *ldb, *ldq, *ldz, *lwork);

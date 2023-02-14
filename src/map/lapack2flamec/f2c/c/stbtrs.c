@@ -139,7 +139,7 @@ static integer c__1 = 1;
 int stbtrs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, integer *nrhs, real *ab, integer *ldab, real *b, integer *ldb, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"stbtrs inputs: uplo %c, trans %c, diag %c, n %" FLA_IS ", kd %" FLA_IS ", nrhs %" FLA_IS ", ldab %" FLA_IS ", ldb %" FLA_IS "",*uplo, *trans, *diag, *n, *kd, *nrhs, *ldab, *ldb);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

@@ -267,7 +267,7 @@ static integer c__2 = 2;
 int slasda_(integer *icompq, integer *smlsiz, integer *n, integer *sqre, real *d__, real *e, real *u, integer *ldu, real *vt, integer *k, real *difl, real *difr, real *z__, real *poles, integer * givptr, integer *givcol, integer *ldgcol, integer *perm, real *givnum, real *c__, real *s, real *work, integer *iwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"slasda inputs: icompq %d, smlsiz %d, n %d, sqre %d, ldu %d, ldgcol %d",*icompq, *smlsiz, *n, *sqre, *ldu, *ldgcol);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

@@ -244,7 +244,7 @@ here the magnitude of a complex number */
 int strevc3_(char *side, char *howmny, logical *select, integer *n, real *t, integer *ldt, real *vl, integer *ldvl, real *vr, integer *ldvr, integer *mm, integer *m, real *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"strevc3 inputs: side %c, howmny %c, n %d, ldt %d, ldvl %d, ldvr %d, mm %d",*side, *howmny, *n, *ldt, *ldvl, *ldvr, *mm);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

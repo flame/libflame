@@ -287,7 +287,7 @@ the routine */
 int cggsvp3_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer *n, complex *a, integer *lda, complex *b, integer *ldb, real *tola, real *tolb, integer *k, integer *l, complex *u, integer *ldu, complex *v, integer *ldv, complex *q, integer *ldq, integer *iwork, real *rwork, complex *tau, complex *work, integer * lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cggsvp3 inputs: jobu %c, jobv %c, jobq %c, m %lld, p %lld, n %lld, lda %lld, ldb %lld, ldu %lld, ldv %lld, ldq %lld, lwork %lld",*jobu, *jobv, *jobq, *m, *p, *n, *lda, *ldb, *ldu, *ldv, *ldq, *lwork);

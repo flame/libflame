@@ -296,7 +296,7 @@ IL = 1 and IU = 0 if N = 0. */
 int chbgvx_(char *jobz, char *range, char *uplo, integer *n, integer *ka, integer *kb, complex *ab, integer *ldab, complex *bb, integer *ldbb, complex *q, integer *ldq, real *vl, real *vu, integer * il, integer *iu, real *abstol, integer *m, real *w, complex *z__, integer *ldz, complex *work, real *rwork, integer *iwork, integer * ifail, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"chbgvx inputs: jobz %c, range %c, uplo %c, n %lld, ka %lld, kb %lld, ldab %lld, ldbb %lld, ldq %lld, il %lld, iu %lld, ldz %lld",*jobz, *range, *uplo, *n, *ka, *kb, *ldab, *ldbb, *ldq, *il, *iu, *ldz);

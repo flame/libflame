@@ -139,7 +139,7 @@ for 1 <= i <= N, row i of the matrix was */
 int cgbcon_(char *norm, integer *n, integer *kl, integer *ku, complex *ab, integer *ldab, integer *ipiv, real *anorm, real *rcond, complex *work, real *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgbcon inputs: norm %c, n %lld, kl %lld, ku %lld, ldab %lld",*norm, *n, *kl, *ku, *ldab);

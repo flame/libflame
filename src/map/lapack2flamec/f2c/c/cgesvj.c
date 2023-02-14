@@ -363,7 +363,7 @@ kappa(A*D), where kappa(.) is the */
 int cgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, complex *a, integer *lda, real *sva, integer *mv, complex *v, integer *ldv, complex *cwork, integer *lwork, real *rwork, integer *lrwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgesvj inputs: joba %c, jobu %c, jobv %c, m %lld, n %lld, lda %lld, mv %lld, ldv %lld, lwork %lld, lrwork %lld",*joba, *jobu, *jobv, *m, *n, *lda, *mv, *ldv, *lwork, *lrwork);

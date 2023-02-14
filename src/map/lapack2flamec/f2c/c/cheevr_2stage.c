@@ -404,7 +404,7 @@ the */
 int cheevr_2stage_(char *jobz, char *range, char *uplo, integer *n, complex *a, integer *lda, real *vl, real *vu, integer *il, integer *iu, real *abstol, integer *m, real *w, complex *z__, integer *ldz, integer *isuppz, complex *work, integer *lwork, real * rwork, integer *lrwork, integer *iwork, integer *liwork, integer * info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cheevr_2stage inputs: jobz %c, range %c, uplo %c, n %lld, lda %lld, il %lld, iu %lld, ldz %lld, lwork %lld, lrwork %lld, liwork %lld",*jobz, *range, *uplo, *n, *lda, *il, *iu, *ldz, *lwork, *lrwork, *liwork);

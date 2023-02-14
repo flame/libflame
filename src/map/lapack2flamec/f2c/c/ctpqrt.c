@@ -179,7 +179,7 @@ that is, */
 int ctpqrt_(integer *m, integer *n, integer *l, integer *nb, complex *a, integer *lda, complex *b, integer *ldb, complex *t, integer *ldt, complex *work, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"ctpqrt inputs: m %lld, n %lld, l %lld, nb %lld, lda %lld, ldb %lld, ldt %lld",*m, *n, *l, *nb, *lda, *ldb, *ldt);

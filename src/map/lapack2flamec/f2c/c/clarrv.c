@@ -282,7 +282,7 @@ IBLOCK(i)=1 if eigenvalue */
 int clarrv_(integer *n, real *vl, real *vu, real *d__, real * l, real *pivmin, integer *isplit, integer *m, integer *dol, integer * dou, real *minrgp, real *rtol1, real *rtol2, real *w, real *werr, real *wgap, integer *iblock, integer *indexw, real *gers, complex * z__, integer *ldz, integer *isuppz, real *work, integer *iwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clarrv inputs: n %lld, isplit %lld, m %lld, dol %lld, dou %lld, iblock %lld, indexw %lld, ldz %lld",*n, *isplit, *m, *dol, *dou, *iblock, *indexw, *ldz);

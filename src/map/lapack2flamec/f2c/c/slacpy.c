@@ -93,7 +93,7 @@ if UPLO = 'L', only the lower */
 int slacpy_(char *uplo, integer *m, integer *n, real *a, integer *lda, real *b, integer *ldb)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"slacpy inputs: uplo %c, m %d, n %d, lda %d, ldb %d",*uplo, *m, *n, *lda, *ldb);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

@@ -18,7 +18,7 @@ int zungbr_check(char *vect, integer *m, integer *n, integer *k, dcomplex *a, in
       zungqr_check(integer *, integer *, integer *, dcomplex *, integer *, 
               dcomplex *, dcomplex *, integer *, integer *);
 
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     sprintf(buffer, "zungbr inputs: vect %c, m %d, n %d, k %d, lda %d\n", *vect, *m, *n, *k, *lda);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

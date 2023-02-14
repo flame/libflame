@@ -160,7 +160,7 @@
 int cgemqrt_(char *side, char *trans, integer *m, integer *n, integer *k, integer *nb, complex *v, integer *ldv, complex *t, integer *ldt, complex *c__, integer *ldc, complex *work, integer * info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgemqrt inputs: side %c, trans %c, m %lld, n %lld, k %lld, nb %lld, ldv %lld, ldt %lld, ldc %lld",*side, *trans, *m, *n, *k, *nb, *ldv, *ldt, *ldc);

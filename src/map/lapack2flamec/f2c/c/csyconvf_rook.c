@@ -194,7 +194,7 @@
 int csyconvf_rook_(char *uplo, char *way, integer *n, complex *a, integer *lda, complex *e, integer *ipiv, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"csyconvf_rook inputs: uplo %c, way %c, n %lld, lda %lld",*uplo, *way, *n, *lda);

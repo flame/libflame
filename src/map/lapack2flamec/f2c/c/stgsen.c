@@ -453,7 +453,7 @@ Computing Eigenspaces with Specified */
 int stgsen_(integer *ijob, logical *wantq, logical *wantz, logical *select, integer *n, real *a, integer *lda, real *b, integer * ldb, real *alphar, real *alphai, real *beta, real *q, integer *ldq, real *z__, integer *ldz, integer *m, real *pl, real *pr, real *dif, real *work, integer *lwork, integer *iwork, integer *liwork, integer * info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"stgsen inputs: ijob %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS "",*ijob, *n, *lda, *ldb, *ldq, *ldz);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

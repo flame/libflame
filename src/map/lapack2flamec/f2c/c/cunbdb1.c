@@ -192,7 +192,7 @@ int cunbdb1_(integer *m, integer *p, integer *q, complex * x11, integer *ldx11, 
 {
     /* System generated locals */
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cunbdb1 inputs: m %lld, p %lld, q %lld, ldx11 %lld, ldx21 %lld, lwork %lld", *m, *p, *q, *ldx11, *ldx21, *lwork);

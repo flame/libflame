@@ -264,7 +264,7 @@ the */
 int clals0_(integer *icompq, integer *nl, integer *nr, integer *sqre, integer *nrhs, complex *b, integer *ldb, complex *bx, integer *ldbx, integer *perm, integer *givptr, integer *givcol, integer *ldgcol, real *givnum, integer *ldgnum, real *poles, real * difl, real *difr, real *z__, integer *k, real *c__, real *s, real * rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clals0 inputs: icompq %lld, nl %lld, nr %lld, sqre %lld, nrhs %lld, ldb %lld, ldbx %lld, ldgcol %lld, ldgnum %lld, k %lld",*icompq, *nl, *nr, *sqre, *nrhs, *ldb, *ldbx, *ldgcol, *ldgnum, *k);

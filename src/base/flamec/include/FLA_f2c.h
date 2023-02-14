@@ -90,10 +90,8 @@
 		snprintf(buffer+strlen(buffer), 					\
 			sizeof(buffer) - strlen(buffer),				\
 			" time: %06.2f%s ",api_duration,unit);			\
-		AOCL_DTL_LOG(AOCL_DTL_LEVEL_INFO, buffer);   	\
+		AOCL_DTL_LOG(AOCL_DTL_LEVEL_INFO, buffer);   		\
 		AOCL_DTL_TRACE_EXIT_INDENT
-	
-	
 
 #elif LF_AOCL_DTL_LOG_ENABLE
 	#define AOCL_DTL_TRACE_LOG_INIT 						\

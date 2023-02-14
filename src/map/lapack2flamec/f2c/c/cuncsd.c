@@ -314,7 +314,7 @@ the routine */
 int cuncsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, char *signs, integer *m, integer *p, integer *q, complex *x11, integer *ldx11, complex *x12, integer *ldx12, complex * x21, integer *ldx21, complex *x22, integer *ldx22, real *theta, complex *u1, integer *ldu1, complex *u2, integer *ldu2, complex *v1t, integer *ldv1t, complex *v2t, integer *ldv2t, complex *work, integer * lwork, real *rwork, integer *lrwork, integer *iwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cuncsd inputs: jobu1 %c, jobu2 %c, jobv1t %c, jobv2t %c, trans %c, signs %c, m %lld, p %lld, q %lld, ldx11 %lld, ldx12 %lld, ldx21 %lld, ldx22 %lld, ldu1 %lld, ldu2 %lld, ldv1t %lld, ldv2t %lld, lwork %lld, lrwork %lld",*jobu1, *jobu2, *jobv1t, *jobv2t, *trans, *signs, *m, *p, *q, *ldx11, *ldx12, *ldx21, *ldx22, *ldu1, *ldu2, *ldv1t, *ldv2t, *lwork, *lrwork);

@@ -109,7 +109,7 @@ static integer c__1 = 1;
 int sptcon_(integer *n, real *d__, real *e, real *anorm, real *rcond, real *work, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"sptcon inputs: n %" FLA_IS "",*n);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

@@ -169,7 +169,7 @@
 int slasq3_(integer *i0, integer *n0, real *z__, integer *pp, real *dmin__, real *sigma, real *desig, real *qmax, integer *nfail, integer *iter, integer *ndiv, logical *ieee, integer *ttype, real * dmin1, real *dmin2, real *dn, real *dn1, real *dn2, real *g, real * tau)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"slasq3 inputs: i0 %d, n0 %d, pp %d, nfail %d, iter %d, ndiv %d, ttype %d",*i0, *n0, *pp, *nfail, *iter, *ndiv, *ttype);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

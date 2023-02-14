@@ -130,7 +130,7 @@ otherwise it is between d(1) and d(2). See */
 int slaed6_(integer *kniter, logical *orgati, real *rho, real *d__, real *z__, real *finit, real *tau, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"slaed6_ inputs: *kniter %d",*kniter);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

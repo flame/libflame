@@ -85,7 +85,7 @@ integer iladlr_(integer *m, integer *n, doublereal *a, integer *lda)
     /* .. Executable Statements .. */
     /* Logging and tracing code */
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     sprintf(buffer, "iladlr inputs: m %d, n %d lda %d\n", *m, *n, *lda);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

@@ -26,11 +26,11 @@
 
 /* Define the AOCL_DTL_INITIALIZE_ENABLE if any of the debug macro
  * are defined */
-#if (AOCL_DTL_TRACE_ENABLE || AOCL_DTL_DUMP_ENABLE || AOCL_DTL_LOG_ENABLE)
+#if (LF_AOCL_DTL_TRACE_ENABLE || AOCL_DTL_DUMP_ENABLE || LF_AOCL_DTL_LOG_ENABLE)
 #define AOCL_DTL_INITIALIZE_ENABLE
 #endif
 
-#if AOCL_DTL_TRACE_ENABLE
+#if LF_AOCL_DTL_TRACE_ENABLE
 /* Entry macro to trace the flow of control The parameter LogLevel specifies
       the log level String will preferably contains the function name in which
       this macro is invoked */
@@ -46,7 +46,7 @@
 #define AOCL_DTL_TRACE_ENTRY(LogLevel)
 #endif
 
-#if AOCL_DTL_TRACE_ENABLE
+#if LF_AOCL_DTL_TRACE_ENABLE
 /* Exit macro to trace the flow of control The parameter LogLevel specifies 
       log level String will preferably contains the function name in which this
       macro is invoked */
@@ -89,7 +89,7 @@
 
 #endif
 
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
 /* Macro to log the Data */
 #define AOCL_DTL_LOG(LogLevel, Message) \
     DTL_Trace(LogLevel,                 \
@@ -128,7 +128,7 @@ void DTL_Initialize(
 void DTL_Uninitialize(void);
 #endif
 
-#if (AOCL_DTL_TRACE_ENABLE || AOCL_DTL_LOG_ENABLE)
+#if (LF_AOCL_DTL_TRACE_ENABLE || LF_AOCL_DTL_LOG_ENABLE)
 /* Debug trace Function protoypes */
 void DTL_Trace(
     uint8 ui8LogLevel,

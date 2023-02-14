@@ -196,4 +196,4 @@
 
 /* Macro for logging the logs If the user wants to enable loging information he
    has to enable this macro by making it to 1 else 0 */
-#cmakedefine LF_AOCL_DTL_LOG_ENABLE         @LF_AOCL_DTL_TRACE_ENABLE@
+#cmakedefine LF_AOCL_DTL_LOG_ENABLE         @LF_AOCL_DTL_LOG_ENABLE@

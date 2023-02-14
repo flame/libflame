@@ -180,7 +180,7 @@ if STOREV = 'R', LDV >= K. */
 int clarzb_(char *side, char *trans, char *direct, char * storev, integer *m, integer *n, integer *k, integer *l, complex *v, integer *ldv, complex *t, integer *ldt, complex *c__, integer *ldc, complex *work, integer *ldwork)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clarzb inputs: side %c, trans %c, direct %c, storev %c, m %lld, n %lld, k %lld, l %lld, ldv %lld, ldt %lld, ldc %lld",*side, *trans, *direct, *storev, *m, *n, *k, *l, *ldv, *ldt, *ldc);

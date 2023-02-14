@@ -562,7 +562,7 @@ defaults */
 int cgbsvxx_(char *fact, char *trans, integer *n, integer * kl, integer *ku, integer *nrhs, complex *ab, integer *ldab, complex * afb, integer *ldafb, integer *ipiv, char *equed, real *r__, real *c__, complex *b, integer *ldb, complex *x, integer *ldx, real *rcond, real *rpvgrw, real *berr, integer *n_err_bnds__, real * err_bnds_norm__, real *err_bnds_comp__, integer *nparams, real * params, complex *work, real *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgbsvxx inputs: fact %c, trans %c, n %lld, kl %lld, ku %lld, nrhs %lld, ldab %lld, ldafb %lld, equed %c, ldb %lld, ldx %lld, n_err_bnds__ %lld, nparams %lld",*fact, *trans, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *equed, *ldb, *ldx, *n_err_bnds__, *nparams);

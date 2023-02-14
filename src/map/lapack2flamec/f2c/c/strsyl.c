@@ -163,7 +163,7 @@ perturbed */
 int strsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, real *a, integer *lda, real *b, integer *ldb, real * c__, integer *ldc, real *scale, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"strsyl inputs: trana %c, tranb %c, isgn %" FLA_IS ", m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldc %" FLA_IS "",*trana, *tranb, *isgn, *m, *n, *lda, *ldb, *ldc);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

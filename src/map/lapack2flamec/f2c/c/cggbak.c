@@ -141,7 +141,7 @@ ILO=1 and IHI=0, if N=0. */
 int cggbak_(char *job, char *side, integer *n, integer *ilo, integer *ihi, real *lscale, real *rscale, integer *m, complex *v, integer *ldv, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cggbak inputs: job %c, side %c, n %lld, ilo %lld, ihi %lld, m %lld, ldv %lld",*job, *side, *n, *ilo, *ihi, *m, *ldv);

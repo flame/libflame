@@ -108,7 +108,7 @@ B is M by N and complex;
 int clarcm_(integer *m, integer *n, real *a, integer *lda, complex *b, integer *ldb, complex *c__, integer *ldc, real *rwork)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clarcm inputs: m %lld, n %lld, lda %lld, ldb %lld, ldc %lld",*m, *n, *lda, *ldb, *ldc);

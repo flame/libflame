@@ -227,7 +227,7 @@ static real c_b18 = 1.f;
 int cgsvj1_(char *jobv, integer *m, integer *n, integer *n1, complex *a, integer *lda, complex *d__, real *sva, integer *mv, complex *v, integer *ldv, real *eps, real *sfmin, real *tol, integer * nsweep, complex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgsvj1 inputs: jobv %c, m %lld, n %lld, n1 %lld, lda %lld, mv %lld, ldv %lld, nsweep %lld",*jobv, *m, *n, *n1, *lda, *mv, *ldv, *nsweep);

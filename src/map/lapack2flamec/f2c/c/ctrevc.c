@@ -223,7 +223,7 @@ here the magnitude of a complex number */
 int ctrevc_(char *side, char *howmny, logical *select, integer *n, complex *t, integer *ldt, complex *vl, integer *ldvl, complex *vr, integer *ldvr, integer *mm, integer *m, complex *work, real *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"ctrevc inputs: side %c, howmny %c, n %lld, ldt %lld, ldvl %lld, ldvr %lld, mm %lld",*side, *howmny, *n, *ldt, *ldvl, *ldvr, *mm);

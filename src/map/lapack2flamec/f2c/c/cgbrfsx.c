@@ -439,7 +439,7 @@ defaults */
 int cgbrfsx_(char *trans, char *equed, integer *n, integer * kl, integer *ku, integer *nrhs, complex *ab, integer *ldab, complex * afb, integer *ldafb, integer *ipiv, real *r__, real *c__, complex *b, integer *ldb, complex *x, integer *ldx, real *rcond, real *berr, integer *n_err_bnds__, real *err_bnds_norm__, real *err_bnds_comp__, integer *nparams, real *params, complex *work, real *rwork, integer * info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgbrfsx inputs: trans %c, equed %c, n %lld, kl %lld, ku %lld, nrhs %lld, ldab %lld, ldafb %lld, ldb %lld, ldx %lld, n_err_bnds__ %lld, nparams %lld",*trans, *equed, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ldb, *ldx, *n_err_bnds__, *nparams);

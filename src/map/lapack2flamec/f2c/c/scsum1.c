@@ -68,7 +68,7 @@
 real scsum1_(integer *n, complex *cx, integer *incx)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"scsum1 inputs: n %d, incx %d",*n, *incx);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

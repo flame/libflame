@@ -241,7 +241,7 @@ if */
 int cgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, complex *a, integer *lda, integer *sdim, complex * w, complex *vs, integer *ldvs, real *rconde, real *rcondv, complex * work, integer *lwork, real *rwork, logical *bwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgeesx inputs: jobvs %c, sort %c, sense %c, n %lld, lda %lld, ldvs %lld, lwork %lld",*jobvs, *sort, *sense, *n, *lda, *ldvs, *lwork);

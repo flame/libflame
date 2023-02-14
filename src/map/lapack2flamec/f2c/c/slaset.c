@@ -101,7 +101,7 @@ the strictly upper */
 int slaset_(char *uplo, integer *m, integer *n, real *alpha, real *beta, real *a, integer *lda)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"slaset inputs: uplo %c, m %d, n %d, lda %d",*uplo, *m, *n, *lda);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

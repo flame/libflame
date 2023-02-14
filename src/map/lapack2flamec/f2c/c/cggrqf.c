@@ -211,7 +211,7 @@ v(i+1:p) is stored on exit in B(i+1:p,i), */
 int cggrqf_(integer *m, integer *p, integer *n, complex *a, integer *lda, complex *taua, complex *b, integer *ldb, complex *taub, complex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cggrqf inputs: m %lld, p %lld, n %lld, lda %lld, ldb %lld",*m, *p, *n, *lda, *ldb);

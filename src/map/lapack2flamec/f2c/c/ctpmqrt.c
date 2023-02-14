@@ -211,7 +211,7 @@ V2 is upper trapezoidal, consisting of the first L */
 int ctpmqrt_(char *side, char *trans, integer *m, integer *n, integer *k, integer *l, integer *nb, complex *v, integer *ldv, complex *t, integer *ldt, complex *a, integer *lda, complex *b, integer *ldb, complex *work, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"ctpmqrt inputs: side %c, trans %c, m %lld, n %lld, k %lld, l %lld, nb %lld, ldv %lld, ldt %lld, lda %lld, ldb %lld",*side, *trans, *m, *n, *k, *l, *nb, *ldv, *ldt, *lda, *ldb);

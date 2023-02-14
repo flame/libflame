@@ -207,7 +207,7 @@ v(i+1:n) is stored on exit in A(i+1:n,i), */
 int clatrd_(char *uplo, integer *n, integer *nb, complex *a, integer *lda, real *e, complex *tau, complex *w, integer *ldw)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clatrd inputs: uplo %c, n %lld, nb %lld, lda %lld, ldw %lld",*uplo, *n, *nb, *lda, *ldw);

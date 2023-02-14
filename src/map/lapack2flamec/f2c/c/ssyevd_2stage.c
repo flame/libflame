@@ -226,7 +226,7 @@ i off-diagonal elements of an intermediate */
 int ssyevd_2stage_(char *jobz, char *uplo, integer *n, real *a, integer *lda, real *w, real *work, integer *lwork, integer *iwork, integer *liwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"ssyevd_2stage inputs: jobz %c, uplo %c, n %" FLA_IS ", lda %" FLA_IS "",*jobz, *uplo, *n, *lda);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

@@ -15,7 +15,7 @@ int dgebrd_check(integer *m, integer *n, double *a, integer * lda, double *d__, 
     integer lwkopt;
     logical lquery;
 
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     sprintf(buffer, "dgebrd inputs: m %d, n %d, lda %d\n", *m, *n, *lda);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

@@ -120,7 +120,7 @@
 int slasq5_(integer *i0, integer *n0, real *z__, integer *pp, real *tau, real *sigma, real *dmin__, real *dmin1, real *dmin2, real *dn, real *dnm1, real *dnm2, logical *ieee, real *eps)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"slasq5 inputs: i0 %d, n0 %d, pp %d",*i0, *n0, *pp);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

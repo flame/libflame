@@ -301,7 +301,7 @@ static integer c__49 = 49;
 int chseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, complex *h__, integer *ldh, complex *w, complex *z__, integer *ldz, complex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"chseqr inputs: job %c, compz %c, n %lld, ilo %lld, ihi %lld, ldh %lld, ldz %lld, lwork %lld",*job, *compz, *n, *ilo, *ihi, *ldh, *ldz, *lwork);

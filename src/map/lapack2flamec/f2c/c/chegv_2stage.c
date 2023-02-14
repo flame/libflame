@@ -235,7 +235,7 @@ the routine */
 int chegv_2stage_(integer *itype, char *jobz, char *uplo, integer *n, complex *a, integer *lda, complex *b, integer *ldb, real * w, complex *work, integer *lwork, real *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"chegv_2stage inputs: itype %lld, jobz %c, uplo %c, n %lld, lda %lld, ldb %lld, lwork %lld",*itype, *jobz, *uplo, *n, *lda, *ldb, *lwork);

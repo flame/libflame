@@ -161,7 +161,7 @@ the routine */
 int cunm22_(char *side, char *trans, integer *m, integer *n, integer *n1, integer *n2, complex *q, integer *ldq, complex *c__, integer *ldc, complex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"cunm22 inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", n1 %" FLA_IS ", n2 %" FLA_IS ", ldq %" FLA_IS ", ldc %" FLA_IS ", lwork %" FLA_IS "",*side, *trans, *m, *n, *n1, *n2, *ldq, *ldc, *lwork);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

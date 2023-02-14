@@ -307,7 +307,7 @@ and VL(NL+2:M) */
 int slasd6_(integer *icompq, integer *nl, integer *nr, integer *sqre, real *d__, real *vf, real *vl, real *alpha, real *beta, integer *idxq, integer *perm, integer *givptr, integer *givcol, integer *ldgcol, real *givnum, integer *ldgnum, real *poles, real * difl, real *difr, real *z__, integer *k, real *c__, real *s, real * work, integer *iwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"slasd6 inputs: icompq %d, nl %d, nr %d, sqre %d, idxq %d, ldgcol %d, ldgnum %d",*icompq, *nl, *nr, *sqre, *idxq, *ldgcol, *ldgnum);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

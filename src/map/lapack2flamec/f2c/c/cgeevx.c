@@ -289,7 +289,7 @@ elements 1:ILO-1 and i+1:N of W */
 int cgeevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, complex *a, integer *lda, complex *w, complex *vl, integer *ldvl, complex *vr, integer *ldvr, integer *ilo, integer *ihi, real *scale, real *abnrm, real *rconde, real *rcondv, complex *work, integer *lwork, real *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgeevx inputs: balanc %c, jobvl %c, jobvr %c, sense %c, n %lld, lda %lld, ldvl %lld, ldvr %lld, lwork %lld",*balanc, *jobvl, *jobvr, *sense, *n, *lda, *ldvl, *ldvr, *lwork);

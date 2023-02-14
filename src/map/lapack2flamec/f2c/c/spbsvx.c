@@ -337,7 +337,7 @@ if EQUED = 'Y', */
 int spbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, real *ab, integer *ldab, real *afb, integer *ldafb, char *equed, real *s, real *b, integer *ldb, real *x, integer *ldx, real *rcond, real *ferr, real *berr, real *work, integer *iwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"spbsvx inputs: fact %c, uplo %c, n %d, kd %d, nrhs %d, ldab %d, ldafb %d, ldb %d, ldx %d",*fact, *uplo, *n, *kd, *nrhs, *ldab, *ldafb, *ldb, *ldx);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

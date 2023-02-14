@@ -164,7 +164,7 @@ static integer c__1 = 1;
 int ssb2st_kernels_(char *uplo, logical *wantz, integer * ttype, integer *st, integer *ed, integer *sweep, integer *n, integer * nb, integer *ib, real *a, integer *lda, real *v, real *tau, integer * ldvt, real *work)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"ssb2st_kernels inputs: uplo %c, ttype %" FLA_IS ", st %" FLA_IS ", ed %" FLA_IS ", sweep %" FLA_IS ", n %" FLA_IS ", nb %" FLA_IS ", ib %" FLA_IS ", lda %" FLA_IS ", ldvt %" FLA_IS "",*uplo, *ttype, *st, *ed, *sweep, *n, *nb, *ib, *lda, *ldvt);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

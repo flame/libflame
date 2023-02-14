@@ -196,7 +196,7 @@ for 1<=i<=N, row i of the */
 int sgbrfs_(char *trans, integer *n, integer *kl, integer * ku, integer *nrhs, real *ab, integer *ldab, real *afb, integer *ldafb, integer *ipiv, real *b, integer *ldb, real *x, integer *ldx, real * ferr, real *berr, real *work, integer *iwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"sgbrfs inputs: trans %c, n %d, kl %d, ku %d, nrhs %d, ldab %d, ldafb %d, ldb %d, ldx %d",*trans, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ldb, *ldx);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

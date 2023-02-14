@@ -237,7 +237,7 @@ if INFO = i, i */
 int sbdsqr_(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, real *d__, real *e, real *vt, integer *ldvt, real * u, integer *ldu, real *c__, integer *ldc, real *work, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"sbdsqr inputs: uplo %c, n %d, ncvt %d, nru %d, ncc %d, ldvt %d, ldu %d, ldc %d",*uplo, *n, *ncvt, *nru, *ncc, *ldvt, *ldu, *ldc);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

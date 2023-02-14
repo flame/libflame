@@ -256,7 +256,7 @@ if SIDE = 'R', A is of size M-by-K, */
 int ctprfb_(char *side, char *trans, char *direct, char * storev, integer *m, integer *n, integer *k, integer *l, complex *v, integer *ldv, complex *t, integer *ldt, complex *a, integer *lda, complex *b, integer *ldb, complex *work, integer *ldwork)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"ctprfb inputs: side %c, trans %c, direct %c, storev %c, m %lld, n %lld, k %lld, l %lld, ldv %lld, ldt %lld, lda %lld, ldb %lld, ldwork %lld",*side, *trans, *direct, *storev, *m, *n, *k, *l, *ldv, *ldt, *lda, *ldb, *ldwork);

@@ -150,7 +150,7 @@ static complex c_b19 =
 int clasyf_aa_(char *uplo, integer *j1, integer *m, integer *nb, complex *a, integer *lda, integer *ipiv, complex *h__, integer * ldh, complex *work)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clasyf_aa inputs: uplo %c, j1 %lld, m %lld, nb %lld, lda %lld, ldh %lld",*uplo, *j1, *m, *nb, *lda, *ldh);

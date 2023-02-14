@@ -157,7 +157,7 @@ i */
 int sstevd_(char *jobz, integer *n, real *d__, real *e, real *z__, integer *ldz, real *work, integer *lwork, integer *iwork, integer *liwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"sstevd inputs: jobz %c, n %" FLA_IS ", ldz %" FLA_IS "",*jobz, *n, *ldz);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

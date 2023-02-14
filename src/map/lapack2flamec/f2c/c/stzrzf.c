@@ -145,7 +145,7 @@ the routine */
 int stzrzf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"stzrzf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", lwork %" FLA_IS "",*m, *n, *lda, *lwork);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

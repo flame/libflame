@@ -162,7 +162,7 @@ if DIRECT = 'B', T is */
 int clarft_(char *direct, char *storev, integer *n, integer * k, complex *v, integer *ldv, complex *tau, complex *t, integer *ldt)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clarft inputs: direct %c, storev %c, n %lld, k %lld, ldv %lld, ldt %lld",*direct, *storev, *n, *k, *ldv, *ldt);

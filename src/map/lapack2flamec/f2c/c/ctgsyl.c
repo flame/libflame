@@ -302,7 +302,7 @@ the routine */
 int ctgsyl_(char *trans, integer *ijob, integer *m, integer * n, complex *a, integer *lda, complex *b, integer *ldb, complex *c__, integer *ldc, complex *d__, integer *ldd, complex *e, integer *lde, complex *f, integer *ldf, real *scale, real *dif, complex *work, integer *lwork, integer *iwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"ctgsyl inputs: trans %c, ijob %lld, m %lld, n %lld, lda %lld, ldb %lld, ldc %lld, ldd %lld, lde %lld, ldf %lld, lwork %lld",*trans, *ijob, *m, *n, *lda, *ldb, *ldc, *ldd, *lde, *ldf, *lwork);

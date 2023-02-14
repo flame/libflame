@@ -212,7 +212,7 @@ LDZ >= 1 otherwise. */
 int cgghrd_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, complex *a, integer *lda, complex *b, integer *ldb, complex *q, integer *ldq, complex *z__, integer *ldz, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgghrd inputs: compq %c, compz %c, n %lld, ilo %lld, ihi %lld, lda %lld, ldb %lld, ldq %lld, ldz %lld",*compq, *compz, *n, *ilo, *ihi, *lda, *ldb, *ldq, *ldz);

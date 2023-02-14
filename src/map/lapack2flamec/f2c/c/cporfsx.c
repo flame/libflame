@@ -390,7 +390,7 @@ defaults */
 int cporfsx_(char *uplo, char *equed, integer *n, integer * nrhs, complex *a, integer *lda, complex *af, integer *ldaf, real *s, complex *b, integer *ldb, complex *x, integer *ldx, real *rcond, real *berr, integer *n_err_bnds__, real *err_bnds_norm__, real * err_bnds_comp__, integer *nparams, real *params, complex *work, real * rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cporfsx inputs: uplo %c, equed %c, n %lld, nrhs %lld, lda %lld, ldaf %lld, ldb %lld, ldx %lld, n_err_bnds__ %lld, nparams %lld",*uplo, *equed, *n, *nrhs, *lda, *ldaf, *ldb, *ldx, *n_err_bnds__, *nparams);

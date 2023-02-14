@@ -136,7 +136,7 @@ static complex c_b2 =
 int ctrtrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, complex *a, integer *lda, complex *b, integer *ldb, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"ctrtrs inputs: uplo %c, trans %c, diag %c, n %lld, nrhs %lld, lda %lld, ldb %lld",*uplo, *trans, *diag, *n, *nrhs, *lda, *ldb);

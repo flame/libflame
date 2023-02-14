@@ -78,7 +78,7 @@
 int slasrt_(char *id, integer *n, real *d__, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"slasrt inputs: id %c, n %d",*id, *n);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

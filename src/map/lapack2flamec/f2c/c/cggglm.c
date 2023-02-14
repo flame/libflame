@@ -185,7 +185,7 @@ the least squares solution could not */
 int cggglm_(integer *n, integer *m, integer *p, complex *a, integer *lda, complex *b, integer *ldb, complex *d__, complex *x, complex *y, complex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cggglm inputs: n %lld, m %lld, p %lld, lda %lld, ldb %lld, lwork %lld",*n, *m, *p, *lda, *ldb, *lwork);
