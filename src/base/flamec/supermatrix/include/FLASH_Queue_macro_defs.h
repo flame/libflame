@@ -78,7 +78,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "Trsm ", \
                           FALSE, \
-                          FALSE, \
+                          TRUE, \
                           0, 1, 1, 1, \
                           p, A, C )
 
