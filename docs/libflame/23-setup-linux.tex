@@ -458,6 +458,30 @@ MUST be disabled.
 {\em Disabled by default.}
 }
 \noindent
+{\tt --enable-lapack2flash} \\
+\configpar{
+Compile and build into \libflame a compatibility layer that maps LAPACK
+invocations to their corresponding FLASH/C implementations.
+Note that erroneous input parameters are reported according to \libflame
+conventions, NOT LAPACK conventions.
+That is, if \libflame error checking is disabled, no error checking is
+performed, and if erroneous input parameters are detected, the library
+aborts.
+Also, if this option is enabled, supermatrix MUST be ENABLED while
+{\tt external-lapack-for-subproblems} and lapack2flame MUST be disabled.
+{\em Disabled by default.}
+}
+\noindent
+{\tt --enable-legacy-lapack} \\
+\configpar{
+Compile and build into \libflame the legacy f2c files of
+LAPACK (Version 3.5.0). If this option is not selected, the latest
+integrated version of LAPACK using the fortran files will be built.
+This option only works if the --enable-lapack2flash or --enable-lapack2flame
+are given. Otherwise no LAPACK will be built.
+{\em Disabled by default.}
+}
+\noindent
 {\tt --enable-external-lapack-for-subproblems} \\
 \configpar{
 Enable code that causes most of the computationally-intensive functions within

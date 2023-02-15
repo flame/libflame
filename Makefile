@@ -162,33 +162,29 @@ MK_BLAS_FLAMEC_OBJS                   :=
 MK_LAPACK_FLAMEC_SRC                  :=
 MK_LAPACK_FLAMEC_OBJS                 :=
 
+MK_FLABLAS_F2C_SRC                    :=
+MK_FLABLAS_F2C_OBJS                   :=
 
 MK_MAP_LAPACK2FLAMEC_SRC              :=
 MK_MAP_LAPACK2FLAMEC_OBJS             :=
 
-MK_MAP_LAPACK2FLAMEC_F2C_SRC          :=
-MK_MAP_LAPACK2FLAMEC_F2C_OBJS         :=
-
-MK_MAP_LAPACK2FLAMEC_F2C_FLAMEC_SRC   :=
-MK_MAP_LAPACK2FLAMEC_F2C_FLAMEC_OBJS  :=
-
-MK_MAP_LAPACK2FLAMEC_F2C_INSTALL_SRC  :=
-MK_MAP_LAPACK2FLAMEC_F2C_INSTALL_OBJS :=
-
 MK_MAP_LAPACK2FLASH_SRC               :=
 MK_MAP_LAPACK2FLASH_OBJS              :=
 
-MK_MAP_LAPACK2FLASH_F2C_SRC           :=
-MK_MAP_LAPACK2FLASH_F2C_OBJS          :=
+MK_MAP_FORTRAN_SRC                    :=
+MK_MAP_FORTRAN_OBJS                   :=
 
-MK_MAP_LAPACK2FLASH_F2C_FLAMEC_SRC    :=
-MK_MAP_LAPACK2FLASH_F2C_FLAMEC_OBJS   :=
+MK_MAP_F2C_SRC                        :=
+MK_MAP_F2C_OBJS                       :=
 
-MK_MAP_LAPACK2FLASH_F2C_INSTALL_SRC   :=
-MK_MAP_LAPACK2FLASH_F2C_INSTALL_OBJS  :=
+MK_MAP_INSTALL_SRC                    :=
+MK_MAP_INSTALL_OBJS                   :=
 
-MK_FLABLAS_F2C_SRC                    :=
-MK_FLABLAS_F2C_OBJS                   :=
+MK_MAP_FLAMEC_SRC                     :=
+MK_MAP_FLAMEC_OBJS                    :=
+
+MK_MAP_LAPACKCHECK_SRC                :=
+MK_MAP_LAPACKCHECK_OBJS               :=
 
 # --- Define install target names for static libraries ---
 
@@ -369,41 +365,38 @@ FFLAGS          := $(FFLAGS) $(INCLUDE_PATHS)
 # directory with the base object directory, and also replacing the source file
 # suffix (ie: '.c' or '.f') with '.o'.
 
-MK_FLABLAS_F2C_OBJS                   := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
-                                                    $(filter %.c, $(MK_FLABLAS_F2C_SRC)))
+MK_BASE_FLAMEC_OBJS                         := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
+                                                          $(filter %.c, $(MK_BASE_FLAMEC_SRC)))
 
-MK_BASE_FLAMEC_OBJS                   := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
-                                                    $(filter %.c, $(MK_BASE_FLAMEC_SRC)))
+MK_BLAS_FLAMEC_OBJS                         := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
+                                                          $(filter %.c, $(MK_BLAS_FLAMEC_SRC)))
 
-MK_BLAS_FLAMEC_OBJS                   := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
-                                                    $(filter %.c, $(MK_BLAS_FLAMEC_SRC)))
+MK_LAPACK_FLAMEC_OBJS                       := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
+                                                          $(filter %.c, $(MK_LAPACK_FLAMEC_SRC)))
 
-MK_LAPACK_FLAMEC_OBJS                 := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
-                                                    $(filter %.c, $(MK_LAPACK_FLAMEC_SRC)))
+MK_FLABLAS_F2C_OBJS                         := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
+                                                          $(filter %.c, $(MK_FLABLAS_F2C_SRC)))
 
-MK_MAP_LAPACK2FLAMEC_OBJS             := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
-                                                    $(filter %.c, $(MK_MAP_LAPACK2FLAMEC_SRC)))
+MK_MAP_LAPACK2FLAMEC_OBJS                   := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
+                                                          $(filter %.c, $(MK_MAP_LAPACK2FLAMEC_SRC)))
 
-MK_MAP_LAPACK2FLAMEC_F2C_OBJS         := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
-                                                    $(filter %.c, $(MK_MAP_LAPACK2FLAMEC_F2C_SRC)))
+MK_MAP_LAPACK2FLASH_OBJS                    := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
+                                                          $(filter %.c, $(MK_MAP_LAPACK2FLASH_SRC)))
 
-MK_MAP_LAPACK2FLAMEC_F2C_FLAMEC_OBJS  := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
-                                                    $(filter %.c, $(MK_MAP_LAPACK2FLAMEC_F2C_FLAMEC_SRC)))
+MK_MAP_FORTRAN_OBJS                         := $(patsubst $(SRC_PATH)/%.f, $(BASE_OBJ_PATH)/%.o, \
+                                                          $(filter %.f, $(MK_MAP_FORTRAN_SRC)))
 
-MK_MAP_LAPACK2FLAMEC_F2C_INSTALL_OBJS := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
-                                                    $(filter %.c, $(MK_MAP_LAPACK2FLAMEC_F2C_INSTALL_SRC)))
+MK_MAP_F2C_OBJS                             := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
+                                                          $(filter %.c, $(MK_MAP_F2C_SRC)))
 
-MK_MAP_LAPACK2FLASH_OBJS              := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
-                                                    $(filter %.c, $(MK_MAP_LAPACK2FLASH_SRC)))
+MK_MAP_INSTALL_OBJS                         := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
+                                                          $(filter %.c, $(MK_MAP_INSTALL_SRC)))
 
-MK_MAP_LAPACK2FLASH_F2C_OBJS          := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
-                                                    $(filter %.c, $(MK_MAP_LAPACK2FLASH_F2C_SRC)))
+MK_MAP_FLAMEC_OBJS                          := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
+                                                          $(filter %.c, $(MK_MAP_FLAMEC_SRC)))
 
-MK_MAP_LAPACK2FLASH_F2C_FLAMEC_OBJS   := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
-                                                    $(filter %.c, $(MK_MAP_LAPACK2FLASH_F2C_FLAMEC_SRC)))
-
-MK_MAP_LAPACK2FLASH_F2C_INSTALL_OBJS  := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
-                                                    $(filter %.c, $(MK_MAP_LAPACK2FLASH_F2C_INSTALL_SRC)))
+MK_MAP_LAPACKCHECK_OBJS                     := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
+                                                          $(filter %.c, $(MK_MAP_LAPACKCHECK_SRC)))
 
 # Combine the base, blas, and lapack libraries.
 MK_ALL_FLAMEC_OBJS        := $(MK_BASE_FLAMEC_OBJS) \
@@ -413,30 +406,49 @@ MK_ALL_FLAMEC_OBJS        := $(MK_BASE_FLAMEC_OBJS) \
 # Prepend the flablas source code files, if requested
 
 # LAPACK
+# Use legacy (3.5.0) f2c version of lapack
+# or default to the latest integrated version
+# Only build these when lapack2flame or lapack2flash is enabled
 ifeq ($(FLA_ENABLE_LAPACK2FLAME),yes)
 MK_ALL_FLAMEC_OBJS        := $(MK_MAP_LAPACK2FLAMEC_OBJS) \
-                             $(MK_MAP_LAPACK2FLAMEC_F2C_OBJS) \
-                             $(MK_MAP_LAPACK2FLAMEC_F2C_FLAMEC_OBJS) \
-                             $(MK_MAP_LAPACK2FLAMEC_F2C_INSTALL_OBJS) \
+                             $(MK_MAP_INSTALL_OBJS) \
+                             $(MK_MAP_FLAMEC_OBJS) \
+                             $(MK_MAP_LAPACKCHECK_OBJS) \
                              $(MK_ALL_FLAMEC_OBJS)
+
+ifeq ($(FLA_ENABLE_LEGACY_LAPACK),yes)
+MK_ALL_FLAMEC_OBJS        := $(MK_MAP_F2C_OBJS) \
+                             $(MK_ALL_FLAMEC_OBJS)
+else
+MK_ALL_FLAMEC_OBJS        := $(MK_MAP_FORTRAN_OBJS) \
+                             $(MK_ALL_FLAMEC_OBJS)
+endif
 endif
 
 ifeq ($(FLA_ENABLE_LAPACK2FLASH),yes)
 MK_ALL_FLAMEC_OBJS        := $(MK_MAP_LAPACK2FLASH_OBJS) \
-                             $(MK_MAP_LAPACK2FLASH_F2C_OBJS) \
-                             $(MK_MAP_LAPACK2FLASH_F2C_FLAMEC_OBJS) \
-                             $(MK_MAP_LAPACK2FLASH_F2C_INSTALL_OBJS) \
+                             $(MK_MAP_INSTALL_OBJS) \
+                             $(MK_MAP_FLAMEC_OBJS) \
+                             $(MK_MAP_LAPACKCHECK_OBJS) \
                              $(MK_ALL_FLAMEC_OBJS)
+
+ifeq ($(FLA_ENABLE_LEGACY_LAPACK),yes)
+MK_ALL_FLAMEC_OBJS        := $(MK_MAP_F2C_OBJS) \
+                             $(MK_ALL_FLAMEC_OBJS)
+else
+MK_ALL_FLAMEC_OBJS        := $(MK_MAP_FORTRAN_OBJS) \
+                             $(MK_ALL_FLAMEC_OBJS)
+endif
 endif
 
 # BLAS
 ifeq ($(FLA_ENABLE_BUILTIN_BLAS),yes)
 ifeq ($(FLA_ENABLE_LAPACK2FLAME),no)
-MK_FLABLAS_F2C_OBJS       := $(MK_MAP_LAPACK2FLAMEC_F2C_INSTALL_OBJS) \
+MK_FLABLAS_F2C_OBJS       := $(MK_MAP_INSTALL_OBJS) \
                              $(MK_FLABLAS_F2C_OBJS)
 endif
 ifeq ($(FLA_ENABLE_LAPACK2FLASH),no)
-MK_FLABLAS_F2C_OBJS       := $(MK_MAP_LAPACK2FLASH_F2C_INSTALL_OBJS) \
+MK_FLABLAS_F2C_OBJS       := $(MK_MAP_INSTALL_OBJS) \
                              $(MK_FLABLAS_F2C_OBJS)
 endif
 MK_ALL_FLAMEC_OBJS        := $(MK_FLABLAS_F2C_OBJS) \
@@ -558,6 +570,18 @@ ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 	@echo $@ >> $(AR_OBJ_LIST_FILE)
 endif
 
+# Default Fortran compilation rules
+# Might need -fallow-argument-mismatch for newer gfortran (untested)
+$(BASE_OBJ_PATH)/%.o: $(SRC_PATH)/%.f $(CONFIG_MK_FILE) $(HEADERS_TO_FLATTEN)
+ifeq ($(ENABLE_VERBOSE),yes)
+	$(F77) -cpp -c $< -o $@
+else
+	@echo "Compiling $<"
+	@$(F77) -cpp -c $< -o $@
+endif
+ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
+	@echo $@ >> $(AR_OBJ_LIST_FILE)
+endif
 
 # --- All-purpose library rule (static and shared) ---
 
