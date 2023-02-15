@@ -1,9 +1,9 @@
-/* ilaenv.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* ilaenv.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
-static real c_b176 = 0.f;
-static real c_b177 = 1.f;
+static real c_b174 = 0.f;
+static real c_b175 = 1.f;
 static integer c__0 = 0;
 /* > \brief \b ILAENV */
 /* =========== DOCUMENTATION =========== */
@@ -79,9 +79,9 @@ if the usable block size is less than */
 /* > = 9: maximum size of the subproblems at the bottom of the */
 /* > computation tree in the divide-and-conquer algorithm */
 /* > (used by xGELSD and xGESDD) */
-/* > =10: ieee infinity and NaN arithmetic can be trusted not to trap */
+/* > =10: ieee NaN arithmetic can be trusted not to trap */
 /* > =11: infinity arithmetic can be trusted not to trap */
-/* > 12 <= ISPEC <= 17: */
+/* > 12 <= ISPEC <= 16: */
 /* > xHSEQR or related subroutines, */
 /* > see IPARMQ for detailed explanation */
 /* > \endverbatim */
@@ -130,6 +130,7 @@ these may not all */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
+/* > \date November 2019 */
 /* > \ingroup OTHERauxiliary */
 /* > \par Further Details: */
 /* ===================== */
@@ -151,21 +152,20 @@ these may not all */
 /* > the optimal blocksize for STRTRI as follows: */
 /* > */
 /* > NB = ILAENV( 1, 'STRTRI', UPLO // DIAG, N, -1, -1, -1 ) */
-/* > IF( NB.LE.1 ) NB = fla_max( 1, N ) */
+/* > IF( NB.LE.1 ) NB = MAX( 1, N ) */
 /* > \endverbatim */
 /* > */
 /* ===================================================================== */
-integer ilaenv_(integer *ispec, char *name__, char *opts, integer *n1, integer *n2, integer *n3, integer *n4)
-{
+integer ilaenv_(integer *ispec, char *name__, char *opts, integer *n1, integer *n2, integer *n3, integer *n4) {
     /* System generated locals */
-    integer ret_val, i__1, i__2, i__3;
+    integer ret_val;
     /* Builtin functions */
     /* Subroutine */
     int s_copy(char *, char *, ftnlen, ftnlen);
-    integer i_len(char *), s_cmp(char *, char *);
-    /* Local variables */
+    integer i_len(char *), s_cmp(char *, char *, ftnlen, ftnlen);
+    /* strlen(s1)* Local variables */
     logical twostage;
-    integer i__;
+    integer i__, i__1, i__2, i__3;
     char c1[1], c2[2], c3[3], c4[2];
     integer ic, nb, iz, nx;
     logical cname;
@@ -175,9 +175,10 @@ integer ilaenv_(integer *ispec, char *name__, char *opts, integer *n1, integer *
     char subnam[16];
     extern integer iparmq_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     ftnlen name_len = strlen(name__);
-    /* -- LAPACK auxiliary routine -- */
+    /* -- LAPACK auxiliary routine (version 3.9.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
+    /* November 2019 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* ===================================================================== */
@@ -188,8 +189,7 @@ integer ilaenv_(integer *ispec, char *name__, char *opts, integer *n1, integer *
     /* .. External Functions .. */
     /* .. */
     /* .. Executable Statements .. */
-    switch (*ispec)
-    {
+    switch (*ispec) {
     case 1:
         goto L10;
     case 2:
@@ -231,59 +231,49 @@ integer ilaenv_(integer *ispec, char *name__, char *opts, integer *n1, integer *
 L10: /* Convert NAME to upper case if the first character is lower case. */
     ret_val = 1;
     s_copy(subnam, name__, (ftnlen) 16, name_len);
+    /*if(name_len < 15)
+      subnam[name_len] = '\0';*/
     ic = *(unsigned char *)subnam;
     iz = 'Z';
-    if (iz == 90 || iz == 122)
-    {
+    if (iz == 90 || iz == 122) {
         /* ASCII character set */
-        if (ic >= 97 && ic <= 122)
-        {
+        if (ic >= 97 && ic <= 122) {
             *(unsigned char *)subnam = (char) (ic - 32);
             for (i__ = 2;
                     i__ <= 6;
-                    ++i__)
-            {
+                    ++i__) {
                 ic = *(unsigned char *)&subnam[i__ - 1];
-                if (ic >= 97 && ic <= 122)
-                {
+                if (ic >= 97 && ic <= 122) {
                     *(unsigned char *)&subnam[i__ - 1] = (char) (ic - 32);
                 }
                 /* L20: */
             }
         }
     }
-    else if (iz == 233 || iz == 169)
-    {
+    else if (iz == 233 || iz == 169) {
         /* EBCDIC character set */
-        if (ic >= 129 && ic <= 137 || ic >= 145 && ic <= 153 || ic >= 162 && ic <= 169)
-        {
+        if (ic >= 129 && ic <= 137 || ic >= 145 && ic <= 153 || ic >= 162 && ic <= 169) {
             *(unsigned char *)subnam = (char) (ic + 64);
             for (i__ = 2;
                     i__ <= 6;
-                    ++i__)
-            {
+                    ++i__) {
                 ic = *(unsigned char *)&subnam[i__ - 1];
-                if (ic >= 129 && ic <= 137 || ic >= 145 && ic <= 153 || ic >= 162 && ic <= 169)
-                {
+                if (ic >= 129 && ic <= 137 || ic >= 145 && ic <= 153 || ic >= 162 && ic <= 169) {
                     *(unsigned char *)&subnam[i__ - 1] = (char) (ic + 64);
                 }
                 /* L30: */
             }
         }
     }
-    else if (iz == 218 || iz == 250)
-    {
+    else if (iz == 218 || iz == 250) {
         /* Prime machines: ASCII+128 */
-        if (ic >= 225 && ic <= 250)
-        {
+        if (ic >= 225 && ic <= 250) {
             *(unsigned char *)subnam = (char) (ic - 32);
             for (i__ = 2;
                     i__ <= 6;
-                    ++i__)
-            {
+                    ++i__) {
                 ic = *(unsigned char *)&subnam[i__ - 1];
-                if (ic >= 225 && ic <= 250)
-                {
+                if (ic >= 225 && ic <= 250) {
                     *(unsigned char *)&subnam[i__ - 1] = (char) (ic - 32);
                 }
                 /* L40: */
@@ -293,16 +283,14 @@ L10: /* Convert NAME to upper case if the first character is lower case. */
     *(unsigned char *)c1 = *(unsigned char *)subnam;
     sname = *(unsigned char *)c1 == 'S' || *(unsigned char *)c1 == 'D';
     cname = *(unsigned char *)c1 == 'C' || *(unsigned char *)c1 == 'Z';
-    if (! (cname || sname))
-    {
+    if (! (cname || sname)) {
         return ret_val;
     }
     s_copy(c2, subnam + 1, (ftnlen) 2, (ftnlen) 2);
     s_copy(c3, subnam + 3, (ftnlen) 3, (ftnlen) 3);
     s_copy(c4, c3 + 1, (ftnlen) 2, (ftnlen) 2);
     twostage = i_len(subnam) >= 11 && *(unsigned char *)&subnam[ 10] == '2';
-    switch (*ispec)
-    {
+    switch (*ispec) {
     case 1:
         goto L50;
     case 2:
@@ -315,343 +303,249 @@ L50: /* ISPEC = 1: block size */
     /* real and complex. We assume that NB will take the same value in */
     /* single or double precision. */
     nb = 1;
-    if (s_cmp(subnam + 1, "LAORH") == 0)
-    {
+    if (s_cmp(subnam + 1, "LAORH", (ftnlen) 5, (ftnlen) 5) == 0) {
         /* This is for *LAORHR_GETRFNP routine */
-        if (sname)
-        {
+        if (sname) {
             nb = 32;
         }
-        else
-        {
+        else {
             nb = 32;
         }
     }
-    else if (s_cmp(c2, "GE") == 0)
-    {
-        if (s_cmp(c3, "TRF") == 0)
-        {
-            if (sname)
-            {
+    else if (s_cmp(c2, "GE", (ftnlen) 2, (ftnlen) 2) == 0) {
+        if (s_cmp(c3, "TRF", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (sname) {
                 nb = 64;
             }
-            else
-            {
+            else {
                 nb = 64;
             }
         }
-        else if (s_cmp(c3, "QRF") == 0 || s_cmp(c3, "RQF") == 0 || s_cmp(c3, "LQF") == 0 || s_cmp(c3, "QLF") == 0)
-        {
-            if (sname)
-            {
+        else if (s_cmp(c3, "QRF", (ftnlen) 3, (ftnlen) 3) == 0 || s_cmp(c3, "RQF", (ftnlen) 3, (ftnlen) 3) == 0 || s_cmp(c3, "LQF", (ftnlen) 3, (ftnlen) 3) == 0 || s_cmp(c3, "QLF", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (sname) {
                 nb = 32;
             }
-            else
-            {
+            else {
                 nb = 32;
             }
         }
-        else if (s_cmp(c3, "QR ") == 0)
-        {
-            if (*n3 == 1)
-            {
-                if (sname)
-                {
+        else if (s_cmp(c3, "QR ", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (*n3 == 1) {
+                if (sname) {
                     /* M*N */
-                    if (*n1 * *n2 <= 131072 || *n1 <= 8192)
-                    {
+                    if (*n1 * *n2 <= 131072 || *n1 <= 8192) {
                         nb = *n1;
                     }
-                    else
-                    {
+                    else {
                         nb = 32768 / *n2;
                     }
                 }
-                else
-                {
-                    if (*n1 * *n2 <= 131072 || *n1 <= 8192)
-                    {
+                else {
+                    if (*n1 * *n2 <= 131072 || *n1 <= 8192) {
                         nb = *n1;
                     }
-                    else
-                    {
+                    else {
                         nb = 32768 / *n2;
                     }
                 }
             }
-            else
-            {
-                if (sname)
-                {
+            else {
+                if (sname) {
                     nb = 1;
                 }
-                else
-                {
+                else {
                     nb = 1;
                 }
             }
         }
-        else if (s_cmp(c3, "LQ ") == 0)
-        {
-            if (*n3 == 2)
-            {
-                if (sname)
-                {
+        else if (s_cmp(c3, "LQ ", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (*n3 == 2) {
+                if (sname) {
                     /* M*N */
-                    if (*n1 * *n2 <= 131072 || *n1 <= 8192)
-                    {
+                    if (*n1 * *n2 <= 131072 || *n1 <= 8192) {
                         nb = *n1;
                     }
-                    else
-                    {
+                    else {
                         nb = 32768 / *n2;
                     }
                 }
-                else
-                {
-                    if (*n1 * *n2 <= 131072 || *n1 <= 8192)
-                    {
+                else {
+                    if (*n1 * *n2 <= 131072 || *n1 <= 8192) {
                         nb = *n1;
                     }
-                    else
-                    {
+                    else {
                         nb = 32768 / *n2;
                     }
                 }
             }
-            else
-            {
-                if (sname)
-                {
+            else {
+                if (sname) {
                     nb = 1;
                 }
-                else
-                {
+                else {
                     nb = 1;
                 }
             }
         }
-        else if (s_cmp(c3, "HRD") == 0)
-        {
-            if (sname)
-            {
+        else if (s_cmp(c3, "HRD", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (sname) {
                 nb = 32;
             }
-            else
-            {
+            else {
                 nb = 32;
             }
         }
-        else if (s_cmp(c3, "BRD") == 0)
-        {
-            if (sname)
-            {
+        else if (s_cmp(c3, "BRD", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (sname) {
                 nb = 32;
             }
-            else
-            {
+            else {
                 nb = 32;
             }
         }
-        else if (s_cmp(c3, "TRI") == 0)
-        {
-            if (sname)
-            {
+        else if (s_cmp(c3, "TRI", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (sname) {
                 nb = 64;
             }
-            else
-            {
+            else {
                 nb = 64;
             }
         }
     }
-    else if (s_cmp(c2, "PO") == 0)
-    {
-        if (s_cmp(c3, "TRF") == 0)
-        {
-            if (sname)
-            {
+    else if (s_cmp(c2, "PO", (ftnlen) 2, (ftnlen) 2) == 0) {
+        if (s_cmp(c3, "TRF", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (sname) {
                 nb = 64;
             }
-            else
-            {
+            else {
                 nb = 64;
             }
         }
     }
-    else if (s_cmp(c2, "SY") == 0)
-    {
-        if (s_cmp(c3, "TRF") == 0)
-        {
-            if (sname)
-            {
-                if (twostage)
-                {
+    else if (s_cmp(c2, "SY", (ftnlen) 2, (ftnlen) 2) == 0) {
+        if (s_cmp(c3, "TRF", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (sname) {
+                if (twostage) {
                     nb = 192;
                 }
-                else
-                {
+                else {
                     nb = 64;
                 }
             }
-            else
-            {
-                if (twostage)
-                {
+            else {
+                if (twostage) {
                     nb = 192;
                 }
-                else
-                {
+                else {
                     nb = 64;
                 }
             }
         }
-        else if (sname && s_cmp(c3, "TRD") == 0)
-        {
+        else if (sname && s_cmp(c3, "TRD", (ftnlen) 3, (ftnlen) 3) == 0) {
             nb = 32;
         }
-        else if (sname && s_cmp(c3, "GST") == 0)
-        {
+        else if (sname && s_cmp(c3, "GST", (ftnlen) 3, (ftnlen) 3) == 0) {
             nb = 64;
         }
     }
-    else if (cname && s_cmp(c2, "HE") == 0)
-    {
-        if (s_cmp(c3, "TRF") == 0)
-        {
-            if (twostage)
-            {
+    else if (cname && s_cmp(c2, "HE", (ftnlen) 2, (ftnlen) 2) == 0) {
+        if (s_cmp(c3, "TRF", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (twostage) {
                 nb = 192;
             }
-            else
-            {
+            else {
                 nb = 64;
             }
         }
-        else if (s_cmp(c3, "TRD") == 0)
-        {
+        else if (s_cmp(c3, "TRD", (ftnlen) 3, (ftnlen) 3) == 0) {
             nb = 32;
         }
-        else if (s_cmp(c3, "GST") == 0)
-        {
+        else if (s_cmp(c3, "GST", (ftnlen) 3, (ftnlen) 3) == 0) {
             nb = 64;
         }
     }
-    else if (sname && s_cmp(c2, "OR") == 0)
-    {
-        if (*(unsigned char *)c3 == 'G')
-        {
-            if (s_cmp(c4, "QR") == 0 || s_cmp(c4, "RQ") == 0 || s_cmp(c4, "LQ") == 0 || s_cmp(c4, "QL") == 0 || s_cmp(c4, "HR") == 0 || s_cmp( c4, "TR") == 0 || s_cmp(c4, "BR") == 0)
-            {
+    else if (sname && s_cmp(c2, "OR", (ftnlen) 2, (ftnlen) 2) == 0) {
+        if (*(unsigned char *)c3 == 'G') {
+            if (s_cmp(c4, "QR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "RQ", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "LQ", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "QL", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "HR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp( c4, "TR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "BR", (ftnlen) 2, (ftnlen) 2) == 0) {
                 nb = 32;
             }
         }
-        else if (*(unsigned char *)c3 == 'M')
-        {
-            if (s_cmp(c4, "QR") == 0 || s_cmp(c4, "RQ") == 0 || s_cmp(c4, "LQ") == 0 || s_cmp(c4, "QL") == 0 || s_cmp(c4, "HR") == 0 || s_cmp( c4, "TR") == 0 || s_cmp(c4, "BR") == 0)
-            {
+        else if (*(unsigned char *)c3 == 'M') {
+            if (s_cmp(c4, "QR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "RQ", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "LQ", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "QL", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "HR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp( c4, "TR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "BR", (ftnlen) 2, (ftnlen) 2) == 0) {
                 nb = 32;
             }
         }
     }
-    else if (cname && s_cmp(c2, "UN") == 0)
-    {
-        if (*(unsigned char *)c3 == 'G')
-        {
-            if (s_cmp(c4, "QR") == 0 || s_cmp(c4, "RQ") == 0 || s_cmp(c4, "LQ") == 0 || s_cmp(c4, "QL") == 0 || s_cmp(c4, "HR") == 0 || s_cmp( c4, "TR") == 0 || s_cmp(c4, "BR") == 0)
-            {
+    else if (cname && s_cmp(c2, "UN", (ftnlen) 2, (ftnlen) 2) == 0) {
+        if (*(unsigned char *)c3 == 'G') {
+            if (s_cmp(c4, "QR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "RQ", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "LQ", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "QL", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "HR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp( c4, "TR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "BR", (ftnlen) 2, (ftnlen) 2) == 0) {
                 nb = 32;
             }
         }
-        else if (*(unsigned char *)c3 == 'M')
-        {
-            if (s_cmp(c4, "QR") == 0 || s_cmp(c4, "RQ") == 0 || s_cmp(c4, "LQ") == 0 || s_cmp(c4, "QL") == 0 || s_cmp(c4, "HR") == 0 || s_cmp( c4, "TR") == 0 || s_cmp(c4, "BR") == 0)
-            {
+        else if (*(unsigned char *)c3 == 'M') {
+            if (s_cmp(c4, "QR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "RQ", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "LQ", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "QL", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "HR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp( c4, "TR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "BR", (ftnlen) 2, (ftnlen) 2) == 0) {
                 nb = 32;
             }
         }
     }
-    else if (s_cmp(c2, "GB") == 0)
-    {
-        if (s_cmp(c3, "TRF") == 0)
-        {
-            if (sname)
-            {
-                if (*n4 <= 64)
-                {
+    else if (s_cmp(c2, "GB", (ftnlen) 2, (ftnlen) 2) == 0) {
+        if (s_cmp(c3, "TRF", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (sname) {
+                if (*n4 <= 64) {
                     nb = 1;
                 }
-                else
-                {
+                else {
                     nb = 32;
                 }
             }
-            else
-            {
-                if (*n4 <= 64)
-                {
+            else {
+                if (*n4 <= 64) {
                     nb = 1;
                 }
-                else
-                {
+                else {
                     nb = 32;
                 }
             }
         }
     }
-    else if (s_cmp(c2, "PB") == 0)
-    {
-        if (s_cmp(c3, "TRF") == 0)
-        {
-            if (sname)
-            {
-                if (*n2 <= 64)
-                {
+    else if (s_cmp(c2, "PB", (ftnlen) 2, (ftnlen) 2) == 0) {
+        if (s_cmp(c3, "TRF", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (sname) {
+                if (*n2 <= 64) {
                     nb = 1;
                 }
-                else
-                {
+                else {
                     nb = 32;
                 }
             }
-            else
-            {
-                if (*n2 <= 64)
-                {
+            else {
+                if (*n2 <= 64) {
                     nb = 1;
                 }
-                else
-                {
+                else {
                     nb = 32;
                 }
             }
         }
     }
-    else if (s_cmp(c2, "TR") == 0)
-    {
-        if (s_cmp(c3, "TRI") == 0)
-        {
-            if (sname)
-            {
+    else if (s_cmp(c2, "TR", (ftnlen) 2, (ftnlen) 2) == 0) {
+        if (s_cmp(c3, "TRI", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (sname) {
                 nb = 64;
             }
-            else
-            {
+            else {
                 nb = 64;
             }
         }
-        else if (s_cmp(c3, "EVC") == 0)
-        {
-            if (sname)
-            {
+        else if (s_cmp(c3, "EVC", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (sname) {
                 nb = 64;
             }
-            else
-            {
+            else {
                 nb = 64;
             }
         }
-        else if (s_cmp(c3, "SYL") == 0)
+        else if (s_cmp(c3, "SYL", (ftnlen) 3, (ftnlen) 3) == 0)
         {
             /* The upper bound is to prevent overly aggressive scaling. */
             if (sname)
@@ -674,20 +568,16 @@ L50: /* ISPEC = 1: block size */
             }
         }
     }
-    else if (s_cmp(c2, "LA") == 0)
-    {
-        if (s_cmp(c3, "UUM") == 0)
-        {
-            if (sname)
-            {
+    else if (s_cmp(c2, "LA", (ftnlen) 2, (ftnlen) 2) == 0) {
+        if (s_cmp(c3, "UUM", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (sname) {
                 nb = 64;
             }
-            else
-            {
+            else {
                 nb = 64;
             }
         }
-        else if (s_cmp(c3, "TRS") == 0)
+        else if (s_cmp(c3, "TRS", (ftnlen) 3, (ftnlen) 3) == 0)
         {
             if (sname)
             {
@@ -699,24 +589,18 @@ L50: /* ISPEC = 1: block size */
             }
         }
     }
-    else if (sname && s_cmp(c2, "ST") == 0)
-    {
-        if (s_cmp(c3, "EBZ") == 0)
-        {
+    else if (sname && s_cmp(c2, "ST", (ftnlen) 2, (ftnlen) 2) == 0) {
+        if (s_cmp(c3, "EBZ", (ftnlen) 3, (ftnlen) 3) == 0) {
             nb = 1;
         }
     }
-    else if (s_cmp(c2, "GG") == 0)
-    {
+    else if (s_cmp(c2, "GG", (ftnlen) 2, (ftnlen) 2) == 0) {
         nb = 32;
-        if (s_cmp(c3, "HD3") == 0)
-        {
-            if (sname)
-            {
+        if (s_cmp(c3, "HD3", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (sname) {
                 nb = 32;
             }
-            else
-            {
+            else {
                 nb = 32;
             }
         }
@@ -725,117 +609,85 @@ L50: /* ISPEC = 1: block size */
     return ret_val;
 L60: /* ISPEC = 2: minimum block size */
     nbmin = 2;
-    if (s_cmp(c2, "GE") == 0)
-    {
-        if (s_cmp(c3, "QRF") == 0 || s_cmp(c3, "RQF") == 0 || s_cmp(c3, "LQF") == 0 || s_cmp(c3, "QLF") == 0)
-        {
-            if (sname)
-            {
+    if (s_cmp(c2, "GE", (ftnlen) 2, (ftnlen) 2) == 0) {
+        if (s_cmp(c3, "QRF", (ftnlen) 3, (ftnlen) 3) == 0 || s_cmp(c3, "RQF", (ftnlen) 3, (ftnlen) 3) == 0 || s_cmp(c3, "LQF", (ftnlen) 3, (ftnlen) 3) == 0 || s_cmp(c3, "QLF", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (sname) {
                 nbmin = 2;
             }
-            else
-            {
+            else {
                 nbmin = 2;
             }
         }
-        else if (s_cmp(c3, "HRD") == 0)
-        {
-            if (sname)
-            {
+        else if (s_cmp(c3, "HRD", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (sname) {
                 nbmin = 2;
             }
-            else
-            {
+            else {
                 nbmin = 2;
             }
         }
-        else if (s_cmp(c3, "BRD") == 0)
-        {
-            if (sname)
-            {
+        else if (s_cmp(c3, "BRD", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (sname) {
                 nbmin = 2;
             }
-            else
-            {
+            else {
                 nbmin = 2;
             }
         }
-        else if (s_cmp(c3, "TRI") == 0)
-        {
-            if (sname)
-            {
+        else if (s_cmp(c3, "TRI", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (sname) {
                 nbmin = 2;
             }
-            else
-            {
+            else {
                 nbmin = 2;
             }
         }
     }
-    else if (s_cmp(c2, "SY") == 0)
-    {
-        if (s_cmp(c3, "TRF") == 0)
-        {
-            if (sname)
-            {
+    else if (s_cmp(c2, "SY", (ftnlen) 2, (ftnlen) 2) == 0) {
+        if (s_cmp(c3, "TRF", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (sname) {
                 nbmin = 8;
             }
-            else
-            {
+            else {
                 nbmin = 8;
             }
         }
-        else if (sname && s_cmp(c3, "TRD") == 0)
-        {
+        else if (sname && s_cmp(c3, "TRD", (ftnlen) 3, (ftnlen) 3) == 0) {
             nbmin = 2;
         }
     }
-    else if (cname && s_cmp(c2, "HE") == 0)
-    {
-        if (s_cmp(c3, "TRD") == 0)
-        {
+    else if (cname && s_cmp(c2, "HE", (ftnlen) 2, (ftnlen) 2) == 0) {
+        if (s_cmp(c3, "TRD", (ftnlen) 3, (ftnlen) 3) == 0) {
             nbmin = 2;
         }
     }
-    else if (sname && s_cmp(c2, "OR") == 0)
-    {
-        if (*(unsigned char *)c3 == 'G')
-        {
-            if (s_cmp(c4, "QR") == 0 || s_cmp(c4, "RQ") == 0 || s_cmp(c4, "LQ") == 0 || s_cmp(c4, "QL") == 0 || s_cmp(c4, "HR") == 0 || s_cmp( c4, "TR") == 0 || s_cmp(c4, "BR") == 0)
-            {
+    else if (sname && s_cmp(c2, "OR", (ftnlen) 2, (ftnlen) 2) == 0) {
+        if (*(unsigned char *)c3 == 'G') {
+            if (s_cmp(c4, "QR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "RQ", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "LQ", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "QL", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "HR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp( c4, "TR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "BR", (ftnlen) 2, (ftnlen) 2) == 0) {
                 nbmin = 2;
             }
         }
-        else if (*(unsigned char *)c3 == 'M')
-        {
-            if (s_cmp(c4, "QR") == 0 || s_cmp(c4, "RQ") == 0 || s_cmp(c4, "LQ") == 0 || s_cmp(c4, "QL") == 0 || s_cmp(c4, "HR") == 0 || s_cmp( c4, "TR") == 0 || s_cmp(c4, "BR") == 0)
-            {
+        else if (*(unsigned char *)c3 == 'M') {
+            if (s_cmp(c4, "QR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "RQ", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "LQ", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "QL", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "HR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp( c4, "TR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "BR", (ftnlen) 2, (ftnlen) 2) == 0) {
                 nbmin = 2;
             }
         }
     }
-    else if (cname && s_cmp(c2, "UN") == 0)
-    {
-        if (*(unsigned char *)c3 == 'G')
-        {
-            if (s_cmp(c4, "QR") == 0 || s_cmp(c4, "RQ") == 0 || s_cmp(c4, "LQ") == 0 || s_cmp(c4, "QL") == 0 || s_cmp(c4, "HR") == 0 || s_cmp( c4, "TR") == 0 || s_cmp(c4, "BR") == 0)
-            {
+    else if (cname && s_cmp(c2, "UN", (ftnlen) 2, (ftnlen) 2) == 0) {
+        if (*(unsigned char *)c3 == 'G') {
+            if (s_cmp(c4, "QR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "RQ", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "LQ", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "QL", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "HR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp( c4, "TR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "BR", (ftnlen) 2, (ftnlen) 2) == 0) {
                 nbmin = 2;
             }
         }
-        else if (*(unsigned char *)c3 == 'M')
-        {
-            if (s_cmp(c4, "QR") == 0 || s_cmp(c4, "RQ") == 0 || s_cmp(c4, "LQ") == 0 || s_cmp(c4, "QL") == 0 || s_cmp(c4, "HR") == 0 || s_cmp( c4, "TR") == 0 || s_cmp(c4, "BR") == 0)
-            {
+        else if (*(unsigned char *)c3 == 'M') {
+            if (s_cmp(c4, "QR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "RQ", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "LQ", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "QL", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "HR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp( c4, "TR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "BR", (ftnlen) 2, (ftnlen) 2) == 0) {
                 nbmin = 2;
             }
         }
     }
-    else if (s_cmp(c2, "GG") == 0)
-    {
+    else if (s_cmp(c2, "GG", (ftnlen) 2, (ftnlen) 2) == 0) {
         nbmin = 2;
-        if (s_cmp(c3, "HD3") == 0)
-        {
+        if (s_cmp(c3, "HD3", (ftnlen) 3, (ftnlen) 3) == 0) {
             nbmin = 2;
         }
     }
@@ -843,81 +695,59 @@ L60: /* ISPEC = 2: minimum block size */
     return ret_val;
 L70: /* ISPEC = 3: crossover point */
     nx = 0;
-    if (s_cmp(c2, "GE") == 0)
-    {
-        if (s_cmp(c3, "QRF") == 0 || s_cmp(c3, "RQF") == 0 || s_cmp(c3, "LQF") == 0 || s_cmp(c3, "QLF") == 0)
-        {
-            if (sname)
-            {
+    if (s_cmp(c2, "GE", (ftnlen) 2, (ftnlen) 2) == 0) {
+        if (s_cmp(c3, "QRF", (ftnlen) 3, (ftnlen) 3) == 0 || s_cmp(c3, "RQF", (ftnlen) 3, (ftnlen) 3) == 0 || s_cmp(c3, "LQF", (ftnlen) 3, (ftnlen) 3) == 0 || s_cmp(c3, "QLF", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (sname) {
                 nx = 128;
             }
-            else
-            {
+            else {
                 nx = 128;
             }
         }
-        else if (s_cmp(c3, "HRD") == 0)
-        {
-            if (sname)
-            {
+        else if (s_cmp(c3, "HRD", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (sname) {
                 nx = 128;
             }
-            else
-            {
+            else {
                 nx = 128;
             }
         }
-        else if (s_cmp(c3, "BRD") == 0)
-        {
-            if (sname)
-            {
+        else if (s_cmp(c3, "BRD", (ftnlen) 3, (ftnlen) 3) == 0) {
+            if (sname) {
                 nx = 128;
             }
-            else
-            {
+            else {
                 nx = 128;
             }
         }
     }
-    else if (s_cmp(c2, "SY") == 0)
-    {
-        if (sname && s_cmp(c3, "TRD") == 0)
-        {
+    else if (s_cmp(c2, "SY", (ftnlen) 2, (ftnlen) 2) == 0) {
+        if (sname && s_cmp(c3, "TRD", (ftnlen) 3, (ftnlen) 3) == 0) {
             nx = 32;
         }
     }
-    else if (cname && s_cmp(c2, "HE") == 0)
-    {
-        if (s_cmp(c3, "TRD") == 0)
-        {
+    else if (cname && s_cmp(c2, "HE", (ftnlen) 2, (ftnlen) 2) == 0) {
+        if (s_cmp(c3, "TRD", (ftnlen) 3, (ftnlen) 3) == 0) {
             nx = 32;
         }
     }
-    else if (sname && s_cmp(c2, "OR") == 0)
-    {
-        if (*(unsigned char *)c3 == 'G')
-        {
-            if (s_cmp(c4, "QR") == 0 || s_cmp(c4, "RQ") == 0 || s_cmp(c4, "LQ") == 0 || s_cmp(c4, "QL") == 0 || s_cmp(c4, "HR") == 0 || s_cmp( c4, "TR") == 0 || s_cmp(c4, "BR") == 0)
-            {
+    else if (sname && s_cmp(c2, "OR", (ftnlen) 2, (ftnlen) 2) == 0) {
+        if (*(unsigned char *)c3 == 'G') {
+            if (s_cmp(c4, "QR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "RQ", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "LQ", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "QL", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "HR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp( c4, "TR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "BR", (ftnlen) 2, (ftnlen) 2) == 0) {
                 nx = 128;
             }
         }
     }
-    else if (cname && s_cmp(c2, "UN") == 0)
-    {
-        if (*(unsigned char *)c3 == 'G')
-        {
-            if (s_cmp(c4, "QR") == 0 || s_cmp(c4, "RQ") == 0 || s_cmp(c4, "LQ") == 0 || s_cmp(c4, "QL") == 0 || s_cmp(c4, "HR") == 0 || s_cmp( c4, "TR") == 0 || s_cmp(c4, "BR") == 0)
-            {
+    else if (cname && s_cmp(c2, "UN", (ftnlen) 2, (ftnlen) 2) == 0) {
+        if (*(unsigned char *)c3 == 'G') {
+            if (s_cmp(c4, "QR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "RQ", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "LQ", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "QL", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "HR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp( c4, "TR", (ftnlen) 2, (ftnlen) 2) == 0 || s_cmp(c4, "BR", (ftnlen) 2, (ftnlen) 2) == 0) {
                 nx = 128;
             }
         }
     }
-    else if (s_cmp(c2, "GG") == 0)
-    {
+    else if (s_cmp(c2, "GG", (ftnlen) 2, (ftnlen) 2) == 0) {
         nx = 128;
-        if (s_cmp(c3, "HD3") == 0)
-        {
+        if (s_cmp(c3, "HD3", (ftnlen) 3, (ftnlen) 3) == 0) {
             nx = 128;
         }
     }
@@ -943,24 +773,22 @@ L130: /* ISPEC = 9: maximum size of the subproblems at the bottom of the */
     /* (used by xGELSD and xGESDD) */
     ret_val = 25;
     return ret_val;
-L140: /* ISPEC = 10: ieee and infinity NaN arithmetic can be trusted not to trap */
+L140: /* ISPEC = 10: ieee NaN arithmetic can be trusted not to trap */
     /* ILAENV = 0 */
     ret_val = 1;
-    if (ret_val == 1)
-    {
-        ret_val = ieeeck_(&c__1, &c_b176, &c_b177);
+    if (ret_val == 1) {
+        ret_val = ieeeck_(&c__1, &c_b174, &c_b175);
     }
     return ret_val;
-L150: /* ISPEC = 11: ieee infinity arithmetic can be trusted not to trap */
+L150: /* ISPEC = 11: infinity arithmetic can be trusted not to trap */
     /* ILAENV = 0 */
     ret_val = 1;
-    if (ret_val == 1)
-    {
-        ret_val = ieeeck_(&c__0, &c_b176, &c_b177);
+    if (ret_val == 1) {
+        ret_val = ieeeck_(&c__0, &c_b174, &c_b175);
     }
     return ret_val;
-L160: /* 12 <= ISPEC <= 17: xHSEQR or related subroutines. */
-    ret_val = iparmq_(ispec, name__, opts, n1, n2, n3, n4); //, name_len, opts_len) ;
+L160: /* 12 <= ISPEC <= 16: xHSEQR or related subroutines. */
+    ret_val = iparmq_(ispec, name__, opts, n1, n2, n3, n4); // , name_len, opts_len) ;
     return ret_val;
     /* End of ILAENV */
 }

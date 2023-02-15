@@ -1,4 +1,4 @@
-##Copyright (C) 2020, Advanced Micro Devices, Inc.##
+##Copyright (C) 2023, Advanced Micro Devices, Inc.##
 
 cmake_minimum_required(VERSION 3.0.0)
 
@@ -567,6 +567,7 @@ string (APPEND MK_HEADER_DIR_PATHS
 	" ${CMAKE_SOURCE_DIR}/src/lapack/util/app/qutinc/lhfc/flamec/"
 	" ${CMAKE_SOURCE_DIR}/src/lapack/util/app/qutinc/lnfc/flamec/"
 	" ${CMAKE_SOURCE_DIR}/src/lapack/x86/"
+	" ${CMAKE_SOURCE_DIR}/src/lapack/fblas/"
 	" ${CMAKE_SOURCE_DIR}/src/lapacke/LAPACKE/example/"
 	" ${CMAKE_SOURCE_DIR}/src/lapacke/LAPACKE/include/"
 	" ${CMAKE_SOURCE_DIR}/src/lapacke/LAPACKE/src/"
@@ -648,6 +649,8 @@ include_directories(${CMAKE_SOURCE_DIR}/src/lapacke/LAPACKE/src)
 include_directories(${CMAKE_SOURCE_DIR}/src/lapacke/LAPACKE/utils)
 include_directories(${CMAKE_SOURCE_DIR}/src/lapack/x86/front)
 include_directories(${CMAKE_SOURCE_DIR}/src/lapack/x86/avx2)
+include_directories(${CMAKE_SOURCE_DIR}/src/lapack/fblas/front)
+include_directories(${CMAKE_SOURCE_DIR}/src/lapack/fblas/src)
 file(GLOB headers ${CMAKE_SOURCE_DIR}/*.h)
 
 

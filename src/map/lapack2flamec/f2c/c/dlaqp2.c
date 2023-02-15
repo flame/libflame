@@ -160,6 +160,7 @@ int dlaqp2_(integer *m, integer *n, integer *offset, doublereal *a, integer *lda
     extern /* Subroutine */
     int dlarfg_(integer *, doublereal *, doublereal *, integer *, doublereal *);
     extern integer idamax_(integer *, doublereal *, integer *);
+    extern integer fla_idamax(integer *, doublereal *, integer *);
     /* -- LAPACK auxiliary routine (version 3.5.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -206,19 +207,9 @@ int dlaqp2_(integer *m, integer *n, integer *offset, doublereal *a, integer *lda
 #ifdef FLA_ENABLE_AMD_OPT
         /* Inline IDAMAX for small sizes (<= 128) */
         integer idmax = 1;
-        if(i__2 >= c__1 && i__2 <= FLA_IDAMAX_INLINE_SMALL_THRESH)
+        if(i__2 <= FLA_IDAMAX_INLINE_SMALL_THRESH)
         {
-            doublereal dmax = f2c_abs(vn1[i__]);
-            for(integer i = i__ + 1; i<= i__2; i++ )
-            {
-                temp = f2c_abs(vn1[i]);
-                if(temp > dmax)
-                {
-                    dmax = temp;
-                    idmax = i;
-                }
-            }
-            pvt = i__ - 1 + idmax;
+            pvt = i__ - 1 + fla_idamax(&i__2, &vn1[i__], &c__1);
         }
         else
         {

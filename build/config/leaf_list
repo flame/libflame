@@ -6,3 +6,4 @@ lapack2flamec:c
 f2c:c
 install:c
 x86:c
+fblas:c

@@ -51,6 +51,10 @@
 #include "fla_lapack_x86_common.h"
 #include "fla_lapack_avx2_kernels.h"
 
+// BLAS kernels
+#include "fla_lapack_fblas_common.h"
+#include "fla_lapack_fblas_kernels.h"
+
 // Utility
 #include "FLA_Accum_T_UT.h"
 #include "FLA_Apply_G.h"
