@@ -234,6 +234,29 @@ void* FLA_Obj_buffer_at_view( FLA_Obj obj )
   return ( void* ) ( buffer + byte_offset );
 }
 
+#ifdef FLA_ENABLE_HIP
+void* FLA_Obj_hip_buffer_at_view( FLA_Obj obj, void* hip_buffer )
+{
+  char*  buffer;
+  size_t elem_size, offm, offn, rs, cs;
+  size_t byte_offset;
+
+  if ( FLA_Check_error_level() >= FLA_MIN_ERROR_CHECKING )
+    FLA_Obj_buffer_at_view_check( obj );
+
+  elem_size   = ( size_t ) FLA_Obj_elem_size( obj );
+  rs          = ( size_t ) FLA_Obj_row_stride( obj );
+  cs          = ( size_t ) FLA_Obj_col_stride( obj );
+  offm        = ( size_t ) obj.offm;
+  offn        = ( size_t ) obj.offn;
+
+  byte_offset = elem_size * ( offn * cs + offm * rs );
+
+  buffer      = ( char * ) hip_buffer;
+
+  return ( void* ) ( buffer + byte_offset );
+}
+#endif
 
 
 FLA_Bool FLA_Obj_buffer_is_null( FLA_Obj obj )

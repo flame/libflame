@@ -97,7 +97,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "SA_FS", \
                           FALSE, \
-                          FALSE, \
+                          TRUE, \
                           1, 2, 1, 2, \
                           nb_alg, \
                           L, p, D, E, C )

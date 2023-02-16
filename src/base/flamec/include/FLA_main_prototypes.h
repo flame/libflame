@@ -301,6 +301,9 @@ dim_t         FLA_Obj_base_width( FLA_Obj obj );
 dim_t         FLA_Obj_num_elem_alloc( FLA_Obj obj );
 void*         FLA_Obj_base_buffer( FLA_Obj obj );
 void*         FLA_Obj_buffer_at_view( FLA_Obj obj );
+#ifdef FLA_ENABLE_HIP
+void*         FLA_Obj_hip_buffer_at_view( FLA_Obj obj, void* hip_buffer );
+#endif
 FLA_Bool      FLA_Obj_buffer_is_null( FLA_Obj obj );
 FLA_Bool      FLA_Obj_is_int( FLA_Obj A );
 FLA_Bool      FLA_Obj_is_floating_point( FLA_Obj A );
