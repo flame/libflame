@@ -469,6 +469,7 @@ void FLASH_Queue_exec_task_hip( FLASH_Task* t,
    typedef FLA_Error(*flash_eig_gest_hip_p)(rocblas_handle handle, FLA_Inv inv, FLA_Uplo uplo, FLA_Obj A, void* A_hip, FLA_Obj B, void* B_hip );
    typedef FLA_Error(*flash_lu_piv_hip_p)(rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj p );
    typedef FLA_Error(*flash_lu_piv_copy_hip_p)(rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj p, FLA_Obj U, void* U_hip );
+   typedef FLA_Error(*flash_sa_fs_hip_p)(rocblas_handle handle, FLA_Obj L, FLA_Obj D, void* D_hip, FLA_Obj p, FLA_Obj C, void* C_hip,FLA_Obj E, void* E_hip, dim_t nb_alg );
    typedef FLA_Error(*flash_trsm_piv_hip_p)(rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj B, void* B_hip, FLA_Obj p );
 
    // Level-3 BLAS
@@ -562,6 +563,23 @@ void FLASH_Queue_exec_task_hip( FLASH_Task* t,
                           t->fla_arg[0],
                           t->output_arg[1],
                           output_arg[1] );
+   }
+   // FLA_SA_FS
+   else if ( t->func == (void *) FLA_SA_FS_task )
+   {
+      flash_sa_fs_hip_p func;
+      func = (flash_sa_fs_hip_p) FLA_SA_FS_blk_hip;
+
+      func(                 handle,
+                            t->fla_arg[0],
+                            t->input_arg[0],
+                            input_arg[0],
+                            t->fla_arg[1],
+                            t->output_arg[1],
+                            output_arg[1],
+                            t->output_arg[0],
+                            output_arg[0],
+                            t->int_arg[0] );
    }
    // FLA_Trsm_piv
    else if ( t->func == (void *) FLA_Trsm_piv_task )
