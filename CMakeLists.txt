@@ -36,9 +36,15 @@ set(CMAKE_VERBOSE_MAKEFILE OFF)
 
 #enabling the configuration options
 option (ENABLE_AMD_OPT "Enable AMD optimized path" OFF)
-option (ENABLE_AMD_COMMON_FLAGS "Enable AMD FLAGS internally enables ENABLE_BLAS_EXT_GEMMT, ENABLE_AMD_OPT, ENABLE_BUILTIN_LAPACK2FLAME, ENABLE_EXT_LAPACK_INTERFACE, ENABLE_MULTITHREADING" ON)
+option (ENABLE_AMD_COMMON_FLAGS "Enable AMD FLAGS internally enables ENABLE_BLAS_EXT_GEMMT, ENABLE_AMD_OPT, ENABLE_BUILTIN_LAPACK2FLAME, ENABLE_EXT_LAPACK_INTERFACE, ENABLE_MULTITHREADING" OFF)
+# hiding this option form cmake gui
+mark_as_advanced(ENABLE_AMD_COMMON_FLAGS)
 option (ENABLE_AMD_FLAGS "Enable AMD FLAGS internally enables ENABLE_AMD_COMMON_FLAGS" OFF)
 option (ENABLE_AMD_AOCC_FLAGS "Enable AMD FLAGS internally enables Enable AMD FLAGS internally enables ENABLE_AMD_COMMON_FLAGS, ENABLE_F2C_DOTC, ENABLE_VOID_RETURN_COMPLEX_FUNCTION" OFF)
+# Since AOCC isn't used in windows hiding this option form cmake gui
+if(WIN32)
+	mark_as_advanced(ENABLE_AMD_AOCC_FLAGS)
+endif()
 option (ENABLE_ILP64 "Enable ILP64" OFF)
 option (ENABLE_UPPERCASE "Enable uppercase API's" OFF)
 option (ENABLE_WRAPPER "Enable wrapper code" ON)
@@ -174,6 +180,11 @@ if(ENABLE_AMD_FLAGS)
 endif()
 
 if(ENABLE_AMD_AOCC_FLAGS)
+	# time.h requires std=c11 when compiling with AOCC otherwise we get compilation issues
+	if(ENABLE_AOCL_DTL)
+		set	(CMAKE_C_STANDARD 11)
+		set	(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11")
+	endif()
     set (ENABLE_AMD_COMMON_FLAGS TRUE)
     set (ENABLE_F2C_DOTC TRUE)
     set (ENABLE_VOID_RETURN_COMPLEX_FUNCTION TRUE)
@@ -204,6 +215,7 @@ message(STATUS "Enabled ENABLE_F2C_DOTC : ${ENABLE_F2C_DOTC} ")
 message(STATUS "Enabled ENABLE_VOID_RETURN_COMPLEX_FUNCTION	: ${ENABLE_VOID_RETURN_COMPLEX_FUNCTION} ")
 message(STATUS "Enabled ENABLE_MULTITHREADING : ${ENABLE_MULTITHREADING} ")
 message(STATUS "Enabled MULTITHREADING_MODEL : ${MULTITHREADING_MODEL} ")
+message(STATUS "CMAKE_INSTALL_PREFIX : ${CMAKE_INSTALL_PREFIX}")
 
 if(ENABLE_MULTITHREADING)
     set (ENABLE_OPENMP TRUE)
@@ -447,7 +459,7 @@ if(WIN32)
 endif()
 
 #genreating the monolithic headers
-find_package(PythonLibs 3 REQUIRED)
+find_package(PythonInterp REQUIRED)
 if(WIN32)
 	set (MK_HEADER_DIR_PATHS "${CMAKE_SOURCE_DIR}/windows/build")
 elseif(UNIX)
@@ -715,6 +727,7 @@ string (APPEND MK_HEADER_DIR_PATHS
 	" ${CMAKE_SOURCE_DIR}/src/map/lapack2flamec/f2c/install/util/io/"
     " ${CMAKE_SOURCE_DIR}/src/map/lapack2flamec/f2c/install/static/"
 	)
+
 set (C_COMMENT "-c")
 set (VERBOSE "-v1")
 set (BASE_INC_PATH "include")
@@ -757,7 +770,10 @@ execute_process(
 	)
 
 include_directories(${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/.)
-include_directories(${CMAKE_SOURCE_DIR}/src/aocl_dtl)
+if(ENABLE_AOCL_DTL)
+	#only enabling aocl dtl when ENABLE_AOCL_DTL is set to a valid value
+	include_directories(${CMAKE_SOURCE_DIR}/src/aocl_dtl)
+endif()
 include_directories(${CMAKE_SOURCE_DIR}/src/base/flamec/include)
 include_directories(${CMAKE_SOURCE_DIR}/src/base/flamec/supermatrix/include)
 include_directories(${CMAKE_SOURCE_DIR}/src/base/flamec/supermatrix/gpu/include)
@@ -810,6 +826,7 @@ if (BUILD_SHARED_LIBS)
 	endif ()
 	target_compile_definitions("${PROJECT_NAME}" PUBLIC -DLIBFLAME_IS_BUILDING_LIBRARY)
 	target_compile_definitions("${PROJECT_NAME}" PUBLIC -DLIBFLAME_ENABLE_SHARED)
+	install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION "${CMAKE_INSTALL_PREFIX}")
 else ()
 	add_library("${PROJECT_NAME}" STATIC ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/blis1.h
                  ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLA_f2c.h
@@ -818,6 +835,7 @@ else ()
 	if(ENABLE_OPENMP)
 		set_target_properties("${PROJECT_NAME}" PROPERTIES STATIC_LIBRARY_OPTIONS "${OpenMP_libomp_LIBRARY}")
 	endif ()
+	install(TARGETS ${PROJECT_NAME} ARCHIVE DESTINATION "${CMAKE_INSTALL_PREFIX}")
 endif ()
 
 #Logic to create AOCL-libFLAME library name according to the linking AOCL-BLIS library name.
@@ -876,5 +894,10 @@ endif()
 get_directory_property( DirDefs COMPILE_DEFINITIONS ) 
 message(STATUS "COMPILE_DEFINITIONS : ${DirDefs} " )
 message(STATUS "CMAKE_C_FLAGS : ${CMAKE_C_FLAGS}")
-
-
+# make clean for additional header files any further files can be added in the list
+set_property(
+        TARGET ${PROJECT_NAME}
+        APPEND
+        PROPERTY ADDITIONAL_CLEAN_FILES 
+		${CMAKE_SOURCE_DIR}/build/FLA_config.h ${CMAKE_SOURCE_DIR}/include/
+)
