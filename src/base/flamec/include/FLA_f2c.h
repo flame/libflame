@@ -25,7 +25,9 @@
 
 #ifndef F2C_INCLUDE
 #define F2C_INCLUDE
-
+/* c_div/z_div methods mapped to cladiv_f2c_/zladiv_f2c_ */
+#define c_div(c, a, b) cladiv_f2c_(c, a, b)
+#define z_div(c, a, b) zladiv_f2c_(c, a, b)
 /* Call F2C convention for Complex DOTC and DOTU unctions */
 #ifdef FLA_ENABLE_F2C_DOTC
 #define cdotc_f2c_ cdotc_
