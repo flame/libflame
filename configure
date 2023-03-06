@@ -1557,8 +1557,8 @@ Optional Features:
                           default.)
   --enable-multithreading=model
                           Enable multithreading support. Valid values for
-                          model are "pthreads" and "openmp". Multithreading
-                          must be enabled to access SMP parallelized
+                          model are "pthreads", "openmp" and "no". 
+                          Multithreading must be enabled to access SMP parallelized
                           implementations. If enabled, use the environment
                           variable FLA_NUM_THREADS to specify the number of
                           threads to parallelize computations for LAPACK
@@ -6686,7 +6686,7 @@ if test "${enable_amd_flags+set}" = set; then :
             fla_enable_amd_flags=yes
             fla_enable_amd_opt=yes
 	    fla_enable_multithreading=yes
-	    fla_multithreading_model=amdopt
+	    fla_multithreading_model=openmp
     
         else 
             as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_ENABLE_AMD_FLAGS!" "$LINENO" 5
@@ -6731,7 +6731,7 @@ if test "${enable_amd_aocc_flags+set}" = set; then :
           fla_enable_amd_aocc_flags=yes
           fla_enable_amd_opt=yes
 	  fla_enable_multithreading=yes
-	  fla_multithreading_model=amdopt
+	  fla_multithreading_model=openmp
     
         else 
           as_fn_error $? "Reached. unreachable branch in FLA_CHECK_ENABLE_ENABLE_AMD_AOCC_FLAGS!" "$LINENO" 5
@@ -6766,12 +6766,8 @@ $as_echo_n "checking whether user requested support for multithreading... " >&6;
 # Check whether --enable-multithreading was given.
 if test "${enable_multithreading+set}" = set; then :
   enableval=$enable_multithreading;
-		if test "$enableval" = "amdopt"; then
-		
-			fla_enable_multithreading=yes
-			fla_multithreading_model=amdopt
 			
-		elif test "$enableval" = "openmp"; then
+		if test "$enableval" = "openmp"; then
 
 			fla_enable_multithreading=yes
 			fla_multithreading_model=openmp
@@ -6810,13 +6806,13 @@ $as_echo_n "checking user-requested multithreading model... " >&6; }
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $fla_multithreading_model" >&5
 $as_echo "$fla_multithreading_model" >&6; }
 
-				if test "$fla_multithreading_model" = "amdopt" ; then
+				if test "$fla_enable_amd_opt" = "yes" && test "$fla_multithreading_model" = "openmp"; then
                                               $as_echo "#define FLA_OPENMP_MULTITHREADING 1" >>confdefs.h
 				else
 					      $as_echo "#define FLA_ENABLE_MULTITHREADING 1" >>confdefs.h
 				fi
 
-				if test "$fla_multithreading_model" = "openmp" || test "$fla_multithreading_model" = "amdopt"; then
+				if test "$fla_multithreading_model" = "openmp" ; then
 
 						fla_model_val=1
 
