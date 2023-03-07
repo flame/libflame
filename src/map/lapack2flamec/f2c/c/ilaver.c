@@ -45,8 +45,8 @@ int ilaver_(integer *vers_major__, integer *vers_minor__, integer *vers_patch__)
     /* ===================================================================== */
     /* ===================================================================== */
     *vers_major__ = 3;
-    *vers_minor__ = 10;
-    *vers_patch__ = 1;
+    *vers_minor__ = 11;
+    *vers_patch__ = 0;
     /* ===================================================================== */
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
