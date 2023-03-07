@@ -181,6 +181,10 @@ extern int CGELSS(integer* m, integer* n, integer* nrhs, scomplex* a, integer* l
 extern int cgelss(integer* m, integer* n, integer* nrhs, scomplex* a, integer* lda, scomplex* b, integer* ldb, float* s, float* rcond, integer* rank, scomplex* work, integer* lwork, float* rwork, integer* info);
 extern int CGELSS_(integer* m, integer* n, integer* nrhs, scomplex* a, integer* lda, scomplex* b, integer* ldb, float* s, float* rcond, integer* rank, scomplex* work, integer* lwork, float* rwork, integer* info);
 
+extern int CGELST(char *trans, integer *m, integer *n, integer * nrhs, complex *a, integer *lda, complex *b, integer *ldb, complex * work, integer *lwork, integer *info);
+extern int cgelst(char *trans, integer *m, integer *n, integer * nrhs, complex *a, integer *lda, complex *b, integer *ldb, complex * work, integer *lwork, integer *info);
+extern int CGELST_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, integer *lda, complex *b, integer *ldb, complex * work, integer *lwork, integer *info);
+
 extern int CGELSX(integer* m, integer* n, integer* nrhs, scomplex* a, integer* lda, scomplex* b, integer* ldb, integer* jpvt, float* rcond, integer* rank, scomplex* work, float* rwork, integer* info);
 extern int cgelsx(integer* m, integer* n, integer* nrhs, scomplex* a, integer* lda, scomplex* b, integer* ldb, integer* jpvt, float* rcond, integer* rank, scomplex* work, float* rwork, integer* info);
 extern int CGELSX_(integer* m, integer* n, integer* nrhs, scomplex* a, integer* lda, scomplex* b, integer* ldb, integer* jpvt, float* rcond, integer* rank, scomplex* work, float* rwork, integer* info);
@@ -1117,6 +1121,10 @@ extern int CLATRS(char* uplo, char* trans, char* diag, char* normin, integer* n,
 extern int clatrs(char* uplo, char* trans, char* diag, char* normin, integer* n, scomplex* a, integer* lda, scomplex* x, float* scale, float* cnorm, integer* info);
 extern int CLATRS_(char* uplo, char* trans, char* diag, char* normin, integer* n, scomplex* a, integer* lda, scomplex* x, float* scale, float* cnorm, integer* info);
 
+extern int CLATRS3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, complex *a, integer *lda, complex * x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info);
+extern int clatrs3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, complex *a, integer *lda, complex * x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info);
+extern int CLATRS3_(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, complex *a, integer *lda, complex * x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info);
+
 extern int CLATRZ(integer* m, integer* n, integer* l, scomplex* a, integer* lda, scomplex* tau, scomplex* work);
 extern int clatrz(integer* m, integer* n, integer* l, scomplex* a, integer* lda, scomplex* tau, scomplex* work);
 extern int CLATRZ_(integer* m, integer* n, integer* l, scomplex* a, integer* lda, scomplex* tau, scomplex* work);
@@ -2013,6 +2021,10 @@ extern int DGELSS(integer* m, integer* n, integer* nrhs, double* a, integer* lda
 extern int dgelss(integer* m, integer* n, integer* nrhs, double* a, integer* lda, double* b, integer* ldb, double* s, double* rcond, integer* rank, double* work, integer* lwork, integer* info);
 extern int DGELSS_(integer* m, integer* n, integer* nrhs, double* a, integer* lda, double* b, integer* ldb, double* s, double* rcond, integer* rank, double* work, integer* lwork, integer* info);
 
+extern int DGELST(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *work, integer *lwork, integer *info);
+extern int dgelst(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *work, integer *lwork, integer *info);
+extern int DGELST_(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *work, integer *lwork, integer *info);
+
 extern int DGELSX(integer* m, integer* n, integer* nrhs, double* a, integer* lda, double* b, integer* ldb, integer* jpvt, double* rcond, integer* rank, double* work, integer* info);
 extern int dgelsx(integer* m, integer* n, integer* nrhs, double* a, integer* lda, double* b, integer* ldb, integer* jpvt, double* rcond, integer* rank, double* work, integer* info);
 extern int DGELSX_(integer* m, integer* n, integer* nrhs, double* a, integer* lda, double* b, integer* ldb, integer* jpvt, double* rcond, integer* rank, double* work, integer* info);
@@ -2812,6 +2824,10 @@ extern int DLATRD_(char* uplo, integer* n, integer* nb, double* a, integer* lda,
 extern int DLATRS(char* uplo, char* trans, char* diag, char* normin, integer* n, double* a, integer* lda, double* x, double* scale, double* cnorm, integer* info);
 extern int dlatrs(char* uplo, char* trans, char* diag, char* normin, integer* n, double* a, integer* lda, double* x, double* scale, double* cnorm, integer* info);
 extern int DLATRS_(char* uplo, char* trans, char* diag, char* normin, integer* n, double* a, integer* lda, double* x, double* scale, double* cnorm, integer* info);
+
+extern int DLATRS3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, doublereal *a, integer *lda, doublereal *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info);
+extern int dlatrs3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, doublereal *a, integer *lda, doublereal *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info);
+extern int DLATRS3_(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, doublereal *a, integer *lda, doublereal *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info);
 
 extern int DLATRZ(integer* m, integer* n, integer* l, double* a, integer* lda, double* tau, double* work);
 extern int dlatrz(integer* m, integer* n, integer* l, double* a, integer* lda, double* tau, double* work);
@@ -3921,6 +3937,10 @@ extern int SGELSS(integer* m, integer* n, integer* nrhs, float* a, integer* lda,
 extern int sgelss(integer* m, integer* n, integer* nrhs, float* a, integer* lda, float* b, integer* ldb, float* s, float* rcond, integer* rank, float* work, integer* lwork, integer* info);
 extern int SGELSS_(integer* m, integer* n, integer* nrhs, float* a, integer* lda, float* b, integer* ldb, float* s, float* rcond, integer* rank, float* work, integer* lwork, integer* info);
 
+extern int SGELST(char *trans, integer *m, integer *n, integer * nrhs, real *a, integer *lda, real *b, integer *ldb, real *work, integer *lwork, integer *info);
+extern int sgelst(char *trans, integer *m, integer *n, integer * nrhs, real *a, integer *lda, real *b, integer *ldb, real *work, integer *lwork, integer *info);
+extern int SGELST_(char *trans, integer *m, integer *n, integer * nrhs, real *a, integer *lda, real *b, integer *ldb, real *work, integer *lwork, integer *info);
+
 extern int SGELSX(integer* m, integer* n, integer* nrhs, float* a, integer* lda, float* b, integer* ldb, integer* jpvt, float* rcond, integer* rank, float* work, integer* info);
 extern int sgelsx(integer* m, integer* n, integer* nrhs, float* a, integer* lda, float* b, integer* ldb, integer* jpvt, float* rcond, integer* rank, float* work, integer* info);
 extern int SGELSX_(integer* m, integer* n, integer* nrhs, float* a, integer* lda, float* b, integer* ldb, integer* jpvt, float* rcond, integer* rank, float* work, integer* info);
@@ -4716,6 +4736,10 @@ extern int SLATRD_(char* uplo, integer* n, integer* nb, float* a, integer* lda, 
 extern int SLATRS(char* uplo, char* trans, char* diag, char* normin, integer* n, float* a, integer* lda, float* x, float* scale, float* cnorm, integer* info);
 extern int slatrs(char* uplo, char* trans, char* diag, char* normin, integer* n, float* a, integer* lda, float* x, float* scale, float* cnorm, integer* info);
 extern int SLATRS_(char* uplo, char* trans, char* diag, char* normin, integer* n, float* a, integer* lda, float* x, float* scale, float* cnorm, integer* info);
+
+extern int SLATRS3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, real *a, integer *lda, real *x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info);
+extern int slatrs3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, real *a, integer *lda, real *x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info);
+extern int SLATRS3_(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, real *a, integer *lda, real *x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info);
 
 extern int SLATRZ(integer* m, integer* n, integer* l, float* a, integer* lda, float* tau, float* work);
 extern int slatrz(integer* m, integer* n, integer* l, float* a, integer* lda, float* tau, float* work);
@@ -5745,6 +5769,10 @@ extern int ZGELSS(integer* m, integer* n, integer* nrhs, dcomplex* a, integer* l
 extern int zgelss(integer* m, integer* n, integer* nrhs, dcomplex* a, integer* lda, dcomplex* b, integer* ldb, double* s, double* rcond, integer* rank, dcomplex* work, integer* lwork, double* rwork, integer* info);
 extern int ZGELSS_(integer* m, integer* n, integer* nrhs, dcomplex* a, integer* lda, dcomplex* b, integer* ldb, double* s, double* rcond, integer* rank, dcomplex* work, integer* lwork, double* rwork, integer* info);
 
+extern int ZGELST_(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer *lwork, integer *info);
+extern int zgelst(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer *lwork, integer *info);
+extern int ZGELST_(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer *lwork, integer *info);
+
 extern int ZGELSX(integer* m, integer* n, integer* nrhs, dcomplex* a, integer* lda, dcomplex* b, integer* ldb, integer* jpvt, double* rcond, integer* rank, dcomplex* work, double* rwork, integer* info);
 extern int zgelsx(integer* m, integer* n, integer* nrhs, dcomplex* a, integer* lda, dcomplex* b, integer* ldb, integer* jpvt, double* rcond, integer* rank, dcomplex* work, double* rwork, integer* info);
 extern int ZGELSX_(integer* m, integer* n, integer* nrhs, dcomplex* a, integer* lda, dcomplex* b, integer* ldb, integer* jpvt, double* rcond, integer* rank, dcomplex* work, double* rwork, integer* info);
@@ -6684,6 +6712,10 @@ extern int ZLATRD_(char* uplo, integer* n, integer* nb, dcomplex* a, integer* ld
 extern int ZLATRS(char* uplo, char* trans, char* diag, char* normin, integer* n, dcomplex* a, integer* lda, dcomplex* x, double* scale, double* cnorm, integer* info);
 extern int zlatrs(char* uplo, char* trans, char* diag, char* normin, integer* n, dcomplex* a, integer* lda, dcomplex* x, double* scale, double* cnorm, integer* info);
 extern int ZLATRS_(char* uplo, char* trans, char* diag, char* normin, integer* n, dcomplex* a, integer* lda, dcomplex* x, double* scale, double* cnorm, integer* info);
+
+extern int zlatrs3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info);
+extern int zlatrs3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info);
+extern int ZLATRS3_(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info);
 
 extern int ZLATRZ(integer* m, integer* n, integer* l, dcomplex* a, integer* lda, dcomplex* tau, dcomplex* work);
 extern int zlatrz(integer* m, integer* n, integer* l, dcomplex* a, integer* lda, dcomplex* tau, dcomplex* work);
@@ -8069,6 +8101,10 @@ extern int DLARFB_GETT(char *ident, integer *m, integer *n, integer *k, doublere
 extern int dlarfb_gett(char *ident, integer *m, integer *n, integer *k, doublereal *t, integer *ldt, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *work, integer *ldwork);
 extern int DLARFB_GETT_(char *ident, integer *m, integer *n, integer *k, doublereal *t, integer *ldt, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *work, integer *ldwork);
 
+extern doublereal DLARMM(doublereal *anorm, doublereal *bnorm, doublereal *cnorm);
+extern doublereal dlarmm(doublereal *anorm, doublereal *bnorm, doublereal *cnorm);
+extern doublereal DLARMM_(doublereal *anorm, doublereal *bnorm, doublereal *cnorm);
+
 extern int DORGTSQR_ROW(integer *m, integer *n, integer *mb, integer *nb, doublereal *a, integer *lda, doublereal *t, integer *ldt, doublereal *work, integer *lwork, integer *info);
 extern int dorgtsqr_row(integer *m, integer *n, integer *mb, integer *nb, doublereal *a, integer *lda, doublereal *t, integer *ldt, doublereal *work, integer *lwork, integer *info);
 extern int DORGTSQR_ROW_(integer *m, integer *n, integer *mb, integer *nb, doublereal *a, integer *lda, doublereal *t, integer *ldt, doublereal *work, integer *lwork, integer *info);
@@ -8100,6 +8136,10 @@ extern int SLAQZ4_(logical *ilschur, logical *ilq, logical *ilz, integer *n, int
 extern int SLARFB_GETT(char *ident, integer *m, integer *n, integer *k, real *t, integer *ldt, real *a, integer *lda, real *b, integer *ldb, real *work, integer *ldwork);
 extern int slarfb_gett(char *ident, integer *m, integer *n, integer *k, real *t, integer *ldt, real *a, integer *lda, real *b, integer *ldb, real *work, integer *ldwork);
 extern int SLARFB_GETT_(char *ident, integer *m, integer *n, integer *k, real *t, integer *ldt, real *a, integer *lda, real *b, integer *ldb, real *work, integer *ldwork);
+
+extern real SLARMM(real *anorm, real *bnorm, real *cnorm);
+extern real slarmm(real *anorm, real *bnorm, real *cnorm);
+extern real SLARMM_(real *anorm, real *bnorm, real *cnorm);
 
 extern int SORGTSQR_ROW(integer *m, integer *n, integer *mb, integer *nb, real *a, integer *lda, real *t, integer *ldt, real *work, integer *lwork, integer *info);
 extern int sorgtsqr_row(integer *m, integer *n, integer *mb, integer *nb, real *a, integer *lda, real *t, integer *ldt, real *work, integer *lwork, integer *info);
