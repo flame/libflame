@@ -602,6 +602,22 @@ int CGELSS_(integer* m, integer* n, integer* nrhs, scomplex* a, integer* lda, sc
 	return cgelss_( m, n, nrhs, a, lda, b, ldb, s, rcond, rank, work, lwork, rwork, info);
 }
 
+int CGELST(char *trans, integer *m, integer *n, integer * nrhs, complex *a, integer *lda, complex *b, integer *ldb, complex * work, integer *lwork, integer *info)
+{
+	return cgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
+}
+
+int cgelst(char *trans, integer *m, integer *n, integer * nrhs, complex *a, integer *lda, complex *b, integer *ldb, complex * work, integer *lwork, integer *info)
+{
+	return cgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
+}
+
+int CGELST_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, integer *lda, complex *b, integer *ldb, complex * work, integer *lwork, integer *info)
+{
+	return cgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
+}
+
+
 int CGELSX(integer* m, integer* n, integer* nrhs, scomplex* a, integer* lda, scomplex* b, integer* ldb, integer* jpvt, float* rcond, integer* rank, scomplex* work, float* rwork, integer* info)
 {
 	return cgelsx_( m, n, nrhs, a, lda, b, ldb, jpvt, rcond, rank, work, rwork, info);
@@ -4117,6 +4133,21 @@ int CLATRS_(char* uplo, char* trans, char* diag, char* normin, integer* n, scomp
 	return clatrs_( uplo, trans, diag, normin, n, a, lda, x, scale, cnorm, info);
 }
 
+int CLATRS3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, complex *a, integer *lda, complex * x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info)
+{
+	return clatrs3_(uplo, trans, diag, normin, n, nrhs, a, lda, x, ldx, scale, cnorm, work, lwork, info);
+}
+
+int clatrs3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, complex *a, integer *lda, complex * x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info)
+{
+	return clatrs3_(uplo, trans, diag, normin, n, nrhs, a, lda, x, ldx, scale, cnorm, work, lwork, info);
+}
+
+int CLATRS3_(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, complex *a, integer *lda, complex * x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info)
+{
+	return clatrs3_(uplo, trans, diag, normin, n, nrhs, a, lda, x, ldx, scale, cnorm, work, lwork, info);
+}
+
 int CLATRZ(integer* m, integer* n, integer* l, scomplex* a, integer* lda, scomplex* tau, scomplex* work)
 {
 	return clatrz_( m, n, l, a, lda, tau, work);
@@ -7481,6 +7512,21 @@ int DGELSS_(integer* m, integer* n, integer* nrhs, double* a, integer* lda, doub
 	return dgelss_( m, n, nrhs, a, lda, b, ldb, s, rcond, rank, work, lwork, info);
 }
 
+int DGELST(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *work, integer *lwork, integer *info)
+{
+	return dgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
+}
+
+int dgelst(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *work, integer *lwork, integer *info)
+{
+	return dgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
+}
+
+int DGELST_(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *work, integer *lwork, integer *info)
+{
+	return dgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
+}
+
 int DGELSX(integer* m, integer* n, integer* nrhs, double* a, integer* lda, double* b, integer* ldb, integer* jpvt, double* rcond, integer* rank, double* work, integer* info)
 {
 	return dgelsx_( m, n, nrhs, a, lda, b, ldb, jpvt, rcond, rank, work, info);
@@ -9583,6 +9629,21 @@ int DLARGV_(integer* n, double* x, integer* incx, double* y, integer* incy, doub
 	return dlargv_( n, x, incx, y, incy, c, incc);
 }
 
+doublereal DLARMM(doublereal *anorm, doublereal *bnorm, doublereal *cnorm)
+{
+	return dlarmm_(anorm, bnorm, cnorm);
+}
+
+doublereal dlarmm(doublereal *anorm, doublereal *bnorm, doublereal *cnorm)
+{
+	return dlarmm_(anorm, bnorm, cnorm);
+}
+
+doublereal DLARMM_(doublereal *anorm, doublereal *bnorm, doublereal *cnorm)
+{
+	return dlarmm_(anorm, bnorm, cnorm);
+}
+
 int DLARNV(integer* idist, integer* iseed, integer* n, double* x)
 {
 	return dlarnv_( idist, iseed, n, x);
@@ -10481,6 +10542,21 @@ int dlatrs(char* uplo, char* trans, char* diag, char* normin, integer* n, double
 int DLATRS_(char* uplo, char* trans, char* diag, char* normin, integer* n, double* a, integer* lda, double* x, double* scale, double* cnorm, integer* info)
 {
 	return dlatrs_( uplo, trans, diag, normin, n, a, lda, x, scale, cnorm, info);
+}
+
+int DLATRS3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, doublereal *a, integer *lda, doublereal *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info)
+{
+	return dlatrs3_(uplo, trans, diag, normin, n, nrhs, a, lda, x, ldx, scale, cnorm, work, lwork, info);
+}
+
+int dlatrs3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, doublereal *a, integer *lda, doublereal *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info)
+{
+	return dlatrs3_(uplo, trans, diag, normin, n, nrhs, a, lda, x, ldx, scale, cnorm, work, lwork, info);
+}
+
+int DLATRS3_(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, doublereal *a, integer *lda, doublereal *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info)
+{
+	return dlatrs3_(uplo, trans, diag, normin, n, nrhs, a, lda, x, ldx, scale, cnorm, work, lwork, info);
 }
 
 int DLATRZ(integer* m, integer* n, integer* l, double* a, integer* lda, double* tau, double* work)
@@ -14641,6 +14717,21 @@ int SGELSS_(integer* m, integer* n, integer* nrhs, float* a, integer* lda, float
 	return sgelss_( m, n, nrhs, a, lda, b, ldb, s, rcond, rank, work, lwork, info);
 }
 
+int SGELST(char *trans, integer *m, integer *n, integer * nrhs, real *a, integer *lda, real *b, integer *ldb, real *work, integer *lwork, integer *info)
+{
+	sgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
+}
+
+int sgelst(char *trans, integer *m, integer *n, integer * nrhs, real *a, integer *lda, real *b, integer *ldb, real *work, integer *lwork, integer *info)
+{
+	sgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
+}
+
+int SGELST_(char *trans, integer *m, integer *n, integer * nrhs, real *a, integer *lda, real *b, integer *ldb, real *work, integer *lwork, integer *info)
+{
+	sgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
+}
+
 int SGELSX(integer* m, integer* n, integer* nrhs, float* a, integer* lda, float* b, integer* ldb, integer* jpvt, float* rcond, integer* rank, float* work, integer* info)
 {
 	return sgelsx_( m, n, nrhs, a, lda, b, ldb, jpvt, rcond, rank, work, info);
@@ -17627,6 +17718,21 @@ int slatrs(char* uplo, char* trans, char* diag, char* normin, integer* n, float*
 int SLATRS_(char* uplo, char* trans, char* diag, char* normin, integer* n, float* a, integer* lda, float* x, float* scale, float* cnorm, integer* info)
 {
 	return slatrs_( uplo, trans, diag, normin, n, a, lda, x, scale, cnorm, info);
+}
+
+int SLATRS3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, real *a, integer *lda, real *x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info)
+{
+	return slatrs3_(uplo, trans, diag, normin, n, nrhs, a, lda, x, ldx, scale, cnorm, work, lwork, info);
+}
+
+int slatrs3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, real *a, integer *lda, real *x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info)
+{
+	return slatrs3_(uplo, trans, diag, normin, n, nrhs, a, lda, x, ldx, scale, cnorm, work, lwork, info);
+}
+
+int SLATRS3_(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, real *a, integer *lda, real *x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info)
+{
+	return slatrs3_(uplo, trans, diag, normin, n, nrhs, a, lda, x, ldx, scale, cnorm, work, lwork, info);
 }
 
 int SLATRZ(integer* m, integer* n, integer* l, float* a, integer* lda, float* tau, float* work)
@@ -21488,6 +21594,21 @@ int ZGELSS_(integer* m, integer* n, integer* nrhs, dcomplex* a, integer* lda, dc
 	return zgelss_( m, n, nrhs, a, lda, b, ldb, s, rcond, rank, work, lwork, rwork, info);
 }
 
+int ZGELST(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer *lwork, integer *info)
+{
+	zgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
+}
+
+int zgelst(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer *lwork, integer *info)
+{
+	zgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
+}
+
+int ZGELST_(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer *lwork, integer *info)
+{
+	zgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
+}
+
 int ZGELSX(integer* m, integer* n, integer* nrhs, dcomplex* a, integer* lda, dcomplex* b, integer* ldb, integer* jpvt, double* rcond, integer* rank, dcomplex* work, double* rwork, integer* info)
 {
 	return zgelsx_( m, n, nrhs, a, lda, b, ldb, jpvt, rcond, rank, work, rwork, info);
@@ -25016,6 +25137,21 @@ int zlatrs(char* uplo, char* trans, char* diag, char* normin, integer* n, dcompl
 int ZLATRS_(char* uplo, char* trans, char* diag, char* normin, integer* n, dcomplex* a, integer* lda, dcomplex* x, double* scale, double* cnorm, integer* info)
 {
 	return zlatrs_( uplo, trans, diag, normin, n, a, lda, x, scale, cnorm, info);
+}
+
+int ZLATRS3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info)
+{
+	return zlatrs3_(uplo, trans, diag, normin, n, nrhs, a, lda, x, ldx, scale, cnorm, work, lwork, info);
+}
+
+int zlatrs3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info)
+{
+	return zlatrs3_(uplo, trans, diag, normin, n, nrhs, a, lda, x, ldx, scale, cnorm, work, lwork, info);
+}
+
+int ZLATRS3_(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info)
+{
+	return zlatrs3_(uplo, trans, diag, normin, n, nrhs, a, lda, x, ldx, scale, cnorm, work, lwork, info);
 }
 
 int ZLATRZ(integer* m, integer* n, integer* l, dcomplex* a, integer* lda, dcomplex* tau, dcomplex* work)
@@ -30316,6 +30452,21 @@ int slarfb_gett(char *ident, integer *m, integer *n, integer *k, real *t, intege
 int SLARFB_GETT_(char *ident, integer *m, integer *n, integer *k, real *t, integer *ldt, real *a, integer *lda, real *b, integer *ldb, real *work, integer *ldwork)
 {
 	return slarfb_gett_( ident, m, n, k, t, ldt, a, lda, b, ldb, work, ldwork);
+}
+
+real SLARMM(real *anorm, real *bnorm, real *cnorm)
+{
+	return slarmm_(anorm, bnorm, cnorm);
+}
+
+real slarmm(real *anorm, real *bnorm, real *cnorm)
+{
+	return slarmm_(anorm, bnorm, cnorm);
+}
+
+real SLARMM_(real *anorm, real *bnorm, real *cnorm)
+{
+	return slarmm_(anorm, bnorm, cnorm);
 }
 
 int SORGTSQR_ROW(integer *m, integer *n, integer *mb, integer *nb, real *a, integer *lda, real *t, integer *ldt, real *work, integer *lwork, integer *info)
