@@ -13,6 +13,11 @@
             cmake ../ -DENABLE_ILP64=ON -DENABLE_AMD_FLAGS=ON -DCMAKE_INSTALL_PREFIX=<path>
         AOCC:
         -----------
+        export CC=clang
+        export CXX=clang++
+        export FC=flang
+        export FLIBS="-lflang"
+
         With LP64
             cmake ../ -DENABLE_AMD_AOCC_FLAGS=ON -DCMAKE_INSTALL_PREFIX=<path>
         With ILP64
@@ -27,6 +32,7 @@
 ## 2. Building Test
     In order to build tests an an additional flag can be set to ON
         -DBUILD_TEST=ON -DCMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH=/path/to/blas/library -DEXT_BLAS_LIBNAME=blas_lib_name
+        -DBLAS_HEADER_PATH="<path to BLIS header file blis.h>"
     
     This will enable aocl progress feature tests, main testsuite and legacy libflame test suites. It will generate test_libFLAME_aocl , test_lapack.x ,test_libFLAME executables in the respective directories.
     Note: Building tests require path to an external blas library. Refer to Readme in respective test suite directory for more details
@@ -37,7 +43,7 @@
         -DENABLE_AOCL_DTL=[OPTION]
     along with setting the value of Macros AOCL_DTL_TRACE_ENABLE and AOCL_DTL_LOG_ENABLE to 1 in file libflame/src/aocl_dtl/aocldtlcf.h 
     e.g.
-        cmake ../ -DENABLE_ILP64=OFF -DENABLE_AMD_FLAGS=ON -DBUILD_TEST=ON -DENABLE_AOCL_DTL=[DTL_OPTION] -DCMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH=path/to/blas/lib -DEXT_BLAS_LIBNAME=<BLAS_lib_name> -DCMAKE_INSTALL_PREFIX=<path>
+        cmake ../ -DENABLE_ILP64=OFF -DENABLE_AMD_FLAGS=ON -DBUILD_TEST=ON -DENABLE_AOCL_DTL=[DTL_OPTION] -DCMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH=path/to/blas/lib -DEXT_BLAS_LIBNAME=<BLAS_lib_name> -DCMAKE_INSTALL_PREFIX=<path> -DBLAS_HEADER_PATH="<path to BLIS header file blis.h>"
     DTL_OPTION
     1. "ALL" to ENABLE TRACE and LOG
 	2. "TRACE" to ENABLE TRACE
