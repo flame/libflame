@@ -13,6 +13,7 @@ endif()
 if(WIN32)
 	SET(CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH "${CMAKE_SOURCE_DIR}/bin/Release" CACHE STRING "AOCL-BLIS library path name")
 	SET(EXT_BLAS_LIBNAME "AOCL-LibBlis-Win-MT-dll.lib" CACHE STRING "AOCL-BLIS library name")
+	SET(OpenMP_libomp_LIB "C:/Program Files/LLVM/lib/libomp.lib" CACHE STRING "openmp library path")
 endif()
 
 message(STATUS "External blas library Path : ${CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH}")
@@ -20,7 +21,7 @@ message(STATUS "External blas library name : ${EXT_BLAS_LIBNAME}")
 
 #gccopenmp
 if(WIN32)
-	SET(OpenMP_libomp_LIBRARY "C:/Program Files/LLVM/lib/libomp.lib" CACHE STRING "openmp library path")
+	SET(OpenMP_libomp_LIBRARY "${OpenMP_libomp_LIB}" CACHE STRING "openmp library path")
 endif()
 
 message(STATUS "CMAKE_C_COMPILER_ID: ${CMAKE_C_COMPILER_ID}")
@@ -817,13 +818,6 @@ if (BUILD_SHARED_LIBS)
                  ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLAME.h
                  )
 	message(STATUS "shared_lib PROJECT_NAME: ${PROJECT_NAME}")
-	if(ENABLE_OPENMP)
-		if(UNIX)
-			set_target_properties("${PROJECT_NAME}" PROPERTIES SHARED_LIBRARY_OPTIONS "${OpenMP_libomp_LIBRARY}")
-		elseif(WIN32)
-			target_link_libraries(${PROJECT_NAME}  OpenMP::OpenMP_CXX)
-		endif()
-	endif ()
 	target_compile_definitions("${PROJECT_NAME}" PUBLIC -DLIBFLAME_IS_BUILDING_LIBRARY)
 	target_compile_definitions("${PROJECT_NAME}" PUBLIC -DLIBFLAME_ENABLE_SHARED)
 	install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION "${CMAKE_INSTALL_PREFIX}")
@@ -832,10 +826,11 @@ else ()
                  ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLA_f2c.h
                  ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLAME.h
                  )
-	if(ENABLE_OPENMP)
-		set_target_properties("${PROJECT_NAME}" PROPERTIES STATIC_LIBRARY_OPTIONS "${OpenMP_libomp_LIBRARY}")
-	endif ()
 	install(TARGETS ${PROJECT_NAME} ARCHIVE DESTINATION "${CMAKE_INSTALL_PREFIX}")
+endif ()
+
+if(ENABLE_OPENMP)
+	target_link_libraries(${PROJECT_NAME}  OpenMP::OpenMP_CXX)
 endif ()
 
 #Logic to create AOCL-libFLAME library name according to the linking AOCL-BLIS library name.
@@ -878,9 +873,10 @@ Does not exist.\n Please check the path again")
 	endif()
 	add_subdirectory(test/legacyflame)
 	add_subdirectory(test/aoclflaprogress)
-	add_subdirectory(test/main)
 	#add_subdirectory(testcpp)
 endif()
+
+add_subdirectory(test/main)
 
 if (BUILD_NETLIB_TEST)
 	add_subdirectory(netlib-test)

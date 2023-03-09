@@ -21,7 +21,7 @@ elseif(UNIX)
 endif()
 
 if(WIN32)
-    set(OpenMP_libomp_LIBRARY "C:/Program Files/LLVM/lib/libomp.lib" CACHE STRING "openmp library path")
+    set(OpenMP_libomp_LIBRARY "${OpenMP_libomp_LIB}" CACHE STRING "openmp library path")
     set(TEST_FLAGS "${OpenMP_libomp_LIBRARY}")
 elseif(UNIX)
     set(OpenMP_libomp_LIBRARY "-fopenmp" CACHE STRING "openmp library path")
@@ -79,7 +79,7 @@ add_executable("${PROJECT_NAME}" "")
 
 message("${CMAKE_BUILD_TYPE}")
 
-target_link_libraries("${PROJECT_NAME}" debug "${TEST_FLAGS}" "${CMAKE_PROJECT_NAME}")
+target_link_libraries("${PROJECT_NAME}" debug "${TEST_FLAGS}" "${CMAKE_PROJECT_NAME}" ${CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH}/${EXT_BLAS_LIBNAME})
 target_link_libraries("${PROJECT_NAME}" optimized "${TEST_FLAGS}" "${CMAKE_PROJECT_NAME}")
 
 if(BLAS_HEADER_PATH)
