@@ -600,7 +600,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
     /* Builtin functions */
     double sqrt(doublereal), c_abs(complex *), log(doublereal);
     void r_cnjg(complex *, complex *), c_div(complex *, complex *, complex *);
-    integer i_nint(real *);
+    integer fla_i_nint(real *);
     /* Local variables */
     integer lwunmqrm, p, q, j1, n1, nr;
     real big;
@@ -2157,7 +2157,7 @@ L3302:
         /* the part which destroys triangular form (confusing?!)) */
         cgesvj_("L", "N", "N", &nr, &nr, &a[a_offset], lda, &sva[1], n, &v[ v_offset], ldv, &cwork[1], lwork, &rwork[1], lrwork, info);
         scalem = rwork[1];
-        numrank = i_nint(&rwork[2]);
+        numrank = fla_i_nint(&rwork[2]);
     }
     else if (rsvec && ! lsvec && ! jracc || jracc && ! lsvec && nr != *n)
     {
@@ -2181,7 +2181,7 @@ L3302:
             claset_("U", &i__1, &i__2, &c_b1, &c_b1, &v[(v_dim1 << 1) + 1], ldv);
             cgesvj_("L", "U", "N", n, &nr, &v[v_offset], ldv, &sva[1], &nr, & a[a_offset], lda, &cwork[1], lwork, &rwork[1], lrwork, info);
             scalem = rwork[1];
-            numrank = i_nint(&rwork[2]);
+            numrank = fla_i_nint(&rwork[2]);
         }
         else
         {
@@ -2215,7 +2215,7 @@ L3302:
             i__1 = *lwork - *n;
             cgesvj_("L", "U", "N", &nr, &nr, &v[v_offset], ldv, &sva[1], &nr, &u[u_offset], ldu, &cwork[*n + 1], &i__1, &rwork[1], lrwork, info);
             scalem = rwork[1];
-            numrank = i_nint(&rwork[2]);
+            numrank = fla_i_nint(&rwork[2]);
             if (nr < *n)
             {
                 i__1 = *n - nr;
@@ -2247,7 +2247,7 @@ L3302:
         claset_("L", &i__1, &i__2, &c_b1, &c_b1, &a[a_dim1 + 2], lda);
         cgesvj_("U", "N", "V", n, n, &a[a_offset], lda, &sva[1], n, &v[ v_offset], ldv, &cwork[1], lwork, &rwork[1], lrwork, info);
         scalem = rwork[1];
-        numrank = i_nint(&rwork[2]);
+        numrank = fla_i_nint(&rwork[2]);
         clapmr_(&c_false, n, n, &v[v_offset], ldv, &iwork[1]);
     }
     else if (lsvec && ! rsvec)
@@ -2288,7 +2288,7 @@ L3302:
         i__1 = *lwork - *n;
         cgesvj_("L", "U", "N", &nr, &nr, &u[u_offset], ldu, &sva[1], &nr, &a[ a_offset], lda, &cwork[*n + 1], &i__1, &rwork[1], lrwork, info);
         scalem = rwork[1];
-        numrank = i_nint(&rwork[2]);
+        numrank = fla_i_nint(&rwork[2]);
         if (nr < *m)
         {
             i__1 = *m - nr;
@@ -2657,7 +2657,7 @@ L3302:
                     i__1 = *lwork - (*n << 1) - *n * nr - nr;
                     cgesvj_("L", "U", "N", &nr, &nr, &v[v_offset], ldv, &sva[ 1], &nr, &u[u_offset], ldu, &cwork[(*n << 1) + *n * nr + nr + 1], &i__1, &rwork[1], lrwork, info);
                     scalem = rwork[1];
-                    numrank = i_nint(&rwork[2]);
+                    numrank = fla_i_nint(&rwork[2]);
                     i__1 = nr;
                     for (p = 1;
                             p <= i__1;
@@ -2706,7 +2706,7 @@ L3302:
                     i__1 = *lwork - (*n << 1) - *n * nr - nr;
                     cgesvj_("L", "U", "N", &nr, &nr, &v[v_offset], ldv, &sva[ 1], &nr, &u[u_offset], ldu, &cwork[(*n << 1) + *n * nr + nr + 1], &i__1, &rwork[1], lrwork, info);
                     scalem = rwork[1];
-                    numrank = i_nint(&rwork[2]);
+                    numrank = fla_i_nint(&rwork[2]);
                     i__1 = nr;
                     for (p = 1;
                             p <= i__1;
@@ -2776,7 +2776,7 @@ L3302:
                     i__1 = *lwork - (*n << 1) - *n * nr - nr;
                     cgesvj_("L", "U", "V", &nr, &nr, &v[v_offset], ldv, &sva[ 1], &nr, &u[u_offset], ldu, &cwork[(*n << 1) + *n * nr + nr + 1], &i__1, &rwork[1], lrwork, info);
                     scalem = rwork[1];
-                    numrank = i_nint(&rwork[2]);
+                    numrank = fla_i_nint(&rwork[2]);
                     if (nr < *n)
                     {
                         i__1 = *n - nr;
@@ -2944,7 +2944,7 @@ L3302:
                 i__1 = *lwork - *n - *n * *n;
                 cgesvj_("U", "U", "N", n, n, &cwork[*n + 1], n, &sva[1], n, & u[u_offset], ldu, &cwork[*n + *n * *n + 1], &i__1, & rwork[1], lrwork, info);
                 scalem = rwork[1];
-                numrank = i_nint(&rwork[2]);
+                numrank = fla_i_nint(&rwork[2]);
                 i__1 = *n;
                 for (p = 1;
                         p <= i__1;
@@ -3136,7 +3136,7 @@ L3302:
             i__1 = *lwork - (*n << 1) - *n * nr;
             cgesvj_("L", "U", "V", &nr, &nr, &u[u_offset], ldu, &sva[1], n, & v[v_offset], ldv, &cwork[(*n << 1) + *n * nr + 1], &i__1, &rwork[1], lrwork, info);
             scalem = rwork[1];
-            numrank = i_nint(&rwork[2]);
+            numrank = fla_i_nint(&rwork[2]);
             if (nr < *n)
             {
                 i__1 = *n - nr;

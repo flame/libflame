@@ -4,19 +4,19 @@
 extern "C" {
 #endif
 
-    double d_nint(doublereal *x)
+    double fla_d_nint(doublereal *x)
     {
         return( (*x)>=0 ? floor(*x + .5) : -floor(.5 - *x) );
     }
-    shortint h_nint(real *x)
+    shortint fla_h_nint(real *x)
     {
         return (shortint)(*x >= 0 ? floor(*x + .5) : -floor(.5 - *x));
     }
-    integer i_nint(real *x)
+    integer fla_i_nint(real *x)
     {
         return (integer)(*x >= 0 ? floor(*x + .5) : -floor(.5 - *x));
     }
-    double r_nint(real *x)
+    double fla_r_nint(real *x)
     {
         return( (*x)>=0 ? floor(*x + .5) : -floor(.5 - *x) );
     }

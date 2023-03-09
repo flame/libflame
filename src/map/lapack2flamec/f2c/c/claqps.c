@@ -192,7 +192,7 @@ int claqps_(integer *m, integer *n, integer *offset, integer *nb, integer *kb, c
     double sqrt(doublereal);
     void r_cnjg(complex *, complex *);
     double c_abs(complex *);
-    integer i_nint(real *);
+    integer fla_i_nint(real *);
     /* Local variables */
     integer j, k, rk;
     complex akk;
@@ -417,7 +417,7 @@ L10:
 L60:
     if (lsticc > 0)
     {
-        itemp = i_nint(&vn2[lsticc]);
+        itemp = fla_i_nint(&vn2[lsticc]);
         i__1 = *m - rk;
         vn1[lsticc] = scnrm2_(&i__1, &a[rk + 1 + lsticc * a_dim1], &c__1);
         /* NOTE: The computation of VN1( LSTICC ) relies on the fact that */

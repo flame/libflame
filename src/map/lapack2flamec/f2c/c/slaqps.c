@@ -172,7 +172,7 @@ int slaqps_(integer *m, integer *n, integer *offset, integer *nb, integer *kb, r
     real r__1, r__2;
     /* Builtin functions */
     double sqrt(doublereal);
-    integer i_nint(real *);
+    integer fla_i_nint(real *);
     /* Local variables */
     integer j, k, rk;
     real akk;
@@ -362,7 +362,7 @@ L10:
 L40:
     if (lsticc > 0)
     {
-        itemp = i_nint(&vn2[lsticc]);
+        itemp = fla_i_nint(&vn2[lsticc]);
         i__1 = *m - rk;
         vn1[lsticc] = snrm2_(&i__1, &a[rk + 1 + lsticc * a_dim1], &c__1);
         /* NOTE: The computation of VN1( LSTICC ) relies on the fact that */
