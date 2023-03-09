@@ -213,7 +213,7 @@
  real r__1;
  /* Builtin functions */
  double log(doublereal);
- integer i_nint(real *);
+ integer fla_i_nint(real *);
  /* Subroutine */
  int s_copy(char *, char *, ftnlen, ftnlen);
  integer s_cmp(char *, char *, ftnlen, ftnlen);
@@ -247,7 +247,7 @@
  if (nh >= 150) {
  /* Computing MAX */
  r__1 = log((real) nh) / log(2.f);
- i__1 = 10; i__2 = nh / i_nint(&r__1); // , expr subst  
+ i__1 = 10; i__2 = nh / fla_i_nint(&r__1); // , expr subst  
  ns = fla_max(i__1,i__2);
  }
  if (nh >= 590) {

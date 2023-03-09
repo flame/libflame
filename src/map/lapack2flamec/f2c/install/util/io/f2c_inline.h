@@ -66,7 +66,7 @@ static inline double d_int(const double *x) {
 static inline double d_lg10(const double *x) { return log10(*x); }
 
 static inline double d_log(const double *x) { return log(*x); }
-static inline double d_nint(const double *x) { return round(*x); }
+static inline double fla_d_nint(const double *x) { return round(*x); }
 static inline double d_prod(const float *x, const float *y) { return ((double)*x) * ((double)*x); }
 static inline double d_sin(const double *x) { return sin(*x); }
 static inline double d_tan(const double *x) { return tan(*x); }
@@ -98,7 +98,7 @@ static inline shortint h_mod(const shortint *a, const shortint *b)
 {
   return *a % *b;
 }
-static inline shortint h_nint(const float *x)
+static inline shortint fla_h_nint(const float *x)
 {
   return (shortint)round(*x);
 }
@@ -140,7 +140,7 @@ static inline integer i_mod(const integer *a, const integer *b)
 {
   return *a % *b;
 }
-static inline integer i_nint(const float *x)
+static inline integer fla_i_nint(const float *x)
 {
   return (integer)round(*x);
 }

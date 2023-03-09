@@ -129,7 +129,7 @@ int slacn2_(integer *n, real *v, real *x, integer *isgn, real *est, integer *kas
     integer i__1;
     real r__1;
     /* Builtin functions */
-    integer i_nint(real *);
+    integer fla_i_nint(real *);
     /* Local variables */
     integer i__;
     real xs, temp;
@@ -216,7 +216,7 @@ L20:
         {
             x[i__] = -1.f;
         }
-        isgn[i__] = i_nint(&x[i__]);
+        isgn[i__] = fla_i_nint(&x[i__]);
         /* L30: */
     }
     *kase = 2;
@@ -262,7 +262,7 @@ L70:
         {
             xs = -1.f;
         }
-        if (i_nint(&xs) != isgn[i__])
+        if (fla_i_nint(&xs) != isgn[i__])
         {
             goto L90;
         }
@@ -288,7 +288,7 @@ L90: /* TEST FOR CYCLING. */
         {
             x[i__] = -1.f;
         }
-        isgn[i__] = i_nint(&x[i__]);
+        isgn[i__] = fla_i_nint(&x[i__]);
         /* L100: */
     }
     *kase = 2;

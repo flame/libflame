@@ -110,7 +110,7 @@ int slacon_(integer *n, real *v, real *x, integer *isgn, real *est, integer *kas
     real r__1;
     /* Builtin functions */
     double r_sign(real *, real *);
-    integer i_nint(real *);
+    integer fla_i_nint(real *);
     /* Local variables */
     integer i__, j, iter;
     real temp;
@@ -191,7 +191,7 @@ L20:
             ++i__)
     {
         x[i__] = r_sign(&c_b11, &x[i__]);
-        isgn[i__] = i_nint(&x[i__]);
+        isgn[i__] = fla_i_nint(&x[i__]);
         /* L30: */
     }
     *kase = 2;
@@ -228,7 +228,7 @@ L70:
             ++i__)
     {
         r__1 = r_sign(&c_b11, &x[i__]);
-        if (i_nint(&r__1) != isgn[i__])
+        if (fla_i_nint(&r__1) != isgn[i__])
         {
             goto L90;
         }
@@ -247,7 +247,7 @@ L90: /* TEST FOR CYCLING. */
             ++i__)
     {
         x[i__] = r_sign(&c_b11, &x[i__]);
-        isgn[i__] = i_nint(&x[i__]);
+        isgn[i__] = fla_i_nint(&x[i__]);
         /* L100: */
     }
     *kase = 2;
