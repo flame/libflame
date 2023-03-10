@@ -22,10 +22,7 @@ void validate_orgqr(integer m,
     integer k;
     *info = 0;
 
-    if( m == n)
-        k = m;
-    else
-        k = n;
+    k = m;
 
     switch( datatype )
     {
@@ -36,15 +33,15 @@ void validate_orgqr(integer m,
 
             /* Test 1
                compute norm(R - Q'*A) / (N * norm(A) * EPS)*/
-            norm_A = fla_lapack_slange("1", &k, &k, R, &k, work);
-            sgemm_("T", "N", &k, &k, &m, &s_n_one, Q, &m, A, &lda, &s_one, R, &k);
+            norm_A = fla_lapack_slange("1", &n, &n, R, &n, work);
+            sgemm_("T", "N", &n, &n, &k, &s_n_one, Q, &lda, A, &lda, &s_one, R, &n);
 
-            norm = fla_lapack_slange("1", &k, &k, R, &k, work);
+            norm = fla_lapack_slange("1", &n, &n, R, &n, work);
             resid1 = norm/(eps * norm_A * (float)k);
 
             /* Test 2
                compute norm(I - Q*Q') / (N * EPS)*/
-            resid2 = (float)check_orthogonality(datatype, Q, m, k, m);
+            resid2 = (float)check_orthogonality(datatype, Q, m, n, lda);
 
             *residual = (double)fla_max(resid1, resid2);
             break;
@@ -56,15 +53,15 @@ void validate_orgqr(integer m,
 
             /* Test 1
                compute norm(R - Q'*A) / (N * norm(A) * EPS)*/
-            norm_A = fla_lapack_dlange("1", &k, &k, R, &k, work);
-            dgemm_("T", "N", &k, &k, &m, &d_n_one, Q, &m, A, &lda, &d_one, R, &k);
+            norm_A = fla_lapack_dlange("1", &n, &n, R, &n, work);
+            dgemm_("T", "N", &n, &n, &k, &d_n_one, Q, &lda, A, &lda, &d_one, R, &n);
 
-            norm = fla_lapack_dlange("1", &k, &k, R, &k, work);
+            norm = fla_lapack_dlange("1", &n, &n, R, &n, work);
             resid1 = norm/(eps * norm_A * (double)k);
 
             /* Test 2
                compute norm(I - Q*Q') / (N * EPS)*/
-            resid2 = check_orthogonality(datatype, Q, m, k, m);
+            resid2 = check_orthogonality(datatype, Q, m, n, lda);
    
             *residual = (double)fla_max(resid1, resid2);
             break;
@@ -76,15 +73,15 @@ void validate_orgqr(integer m,
 
             /* Test 1
                compute norm(R - Q'*A) / (N * norm(A) * EPS)*/
-            norm_A = fla_lapack_clange("1", &k, &k, R, &k, work);
-            cgemm_("C", "N", &k, &k, &m, &c_n_one, Q, &m, A, &lda, &c_one, R, &k);
+            norm_A = fla_lapack_clange("1", &n, &n, R, &n, work);
+            cgemm_("C", "N", &n, &n, &k, &c_n_one, Q, &lda, A, &lda, &c_one, R, &n);
 
-            norm = fla_lapack_clange("1", &k, &k, R, &k, work);
+            norm = fla_lapack_clange("1", &n, &n, R, &n, work);
             resid1 = norm/(eps * norm_A * (double)k);
 
             /* Test 2
                compute norm(I - Q*Q') / (N * EPS)*/
-            resid2 = (float)check_orthogonality(datatype, Q, m, k, m);
+            resid2 = (float)check_orthogonality(datatype, Q, m, n, lda);
 
             *residual = (double)fla_max(resid1, resid2);
             break;
@@ -96,15 +93,15 @@ void validate_orgqr(integer m,
 
             /* Test 1
                compute norm(R - Q'*A) / (N * norm(A) * EPS)*/
-            norm_A = fla_lapack_zlange("1", &k, &k, R, &k, work);
-            zgemm_("C", "N", &k, &k, &m, &z_n_one, Q, &m, A, &lda, &z_one, R, &k);
+            norm_A = fla_lapack_zlange("1", &n, &n, R, &n, work);
+            zgemm_("C", "N", &n, &n, &k, &z_n_one, Q, &lda, A, &lda, &z_one, R, &n);
 
-            norm = fla_lapack_zlange("1", &k, &k, R, &k, work);
+            norm = fla_lapack_zlange("1", &n, &n, R, &n, work);
             resid1 = norm/(eps * norm_A * (double)k);
 
             /* Test 2
                compute norm(I - Q*Q') / (N * EPS)*/
-            resid2 = check_orthogonality(datatype, Q, m, k, m);
+            resid2 = check_orthogonality(datatype, Q, m, n, lda);
 
             *residual = (double)fla_max(resid1, resid2);
             break;

@@ -202,6 +202,8 @@ void validate_spffrtx(integer n,
         }
     }
 
+    *residual = *residual / 10.0;
+
     free_vector(work);
     free_matrix(L);
     free_matrix(D);
