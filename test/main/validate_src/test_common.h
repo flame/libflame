@@ -60,10 +60,9 @@ void copy_matrix(integer datatype, char *uplo, integer M, integer N, void *A, in
 void copy_realtype_matrix(integer datatype, char *uplo, integer M, integer N, void *A, integer LDA, void *B, integer LDB);
 void reset_matrix(integer datatype, integer M, integer N, void *A, integer LDA);
 void set_identity_matrix(integer datatype, integer M, integer N, void *A, integer LDA);
-void copy_submatrix(integer datatype, void* A, integer m_A, integer n_A, void *B, integer m_B, integer n_B, integer srow, integer scol);
+void copy_submatrix(integer datatype, integer m, integer n, void *A, integer lda, void *B, integer ldb, integer srow, integer scol);
 /* orthgonality property of matrix */
 double check_orthogonality(integer datatype, void *A, integer m, integer n, integer lda);
-void copy_submatrix(integer datatype, void *A, integer m_A, integer n_A, void *B, integer m_B, integer n_B, integer srow, integer scol);
 void rand_sym_tridiag_matrix(integer datatype, void *A, integer M, integer N, integer LDA);
 void get_diagonal(integer datatype, void *A, integer m, integer n, integer lda, void *Diag);
 void get_subdiagonal(integer datatype, void *A, integer m, integer n, integer lda, void *Subdiag);

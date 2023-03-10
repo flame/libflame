@@ -54,8 +54,9 @@ void fla_test_orgqr(integer argc, char ** argv, test_params_t *params)
         num_types = strlen(argv[2]);
         M = strtoimax(argv[3], &endptr, CLI_DECIMAL_BASE);
         N = strtoimax(argv[4], &endptr, CLI_DECIMAL_BASE);
+        params->lin_solver_paramslist[0].lda = strtoimax(argv[4], &endptr, CLI_DECIMAL_BASE);
         g_lwork = strtoimax(argv[5], &endptr, CLI_DECIMAL_BASE);
-        
+
         n_repeats = strtoimax(argv[6], &endptr, CLI_DECIMAL_BASE);
 
         if(n_repeats > 0)
@@ -101,7 +102,7 @@ void fla_test_orgqr(integer argc, char ** argv, test_params_t *params)
     if(tests_not_run)
     {
         printf("\nIllegal arguments for orgqr\n");
-        printf("./<EXE> orgqr <precisions - sdcz> <M> <N> <LWORK> <repeats>\n");
+        printf("./<EXE> orgqr <precisions - sdcz> <M> <N> <lda> <LWORK> <repeats>\n");
     }
     if(invalid_dtype)
     {
@@ -127,7 +128,7 @@ void fla_test_orgqr_experiment(test_params_t *params,
     integer m, n, lda;
     void *A = NULL, *A_test = NULL, *T_test = NULL;
     void *work = NULL, *work_test = NULL;
-    void *Q = NULL, *R = NULL, *R_test = NULL;
+    void *Q = NULL, *R = NULL;
     integer lwork = -1, info = 0, vinfo = 0;
 
     /* Get input matrix dimensions.*/
@@ -168,8 +169,8 @@ void fla_test_orgqr_experiment(test_params_t *params,
         copy_matrix(datatype, "full", m, n, A, lda, A_test, lda);
 
         /* create Q matrix to check orthogonality */
-        create_matrix(datatype, &Q, m, n);
-        reset_matrix(datatype, m, n, Q, m);
+        create_matrix(datatype, &Q, lda, n);
+        reset_matrix(datatype, m, n, Q, lda);
  
         /* Make a workspace query the first time. This will provide us with
            and ideal workspace size based on internal block size.*/
@@ -230,13 +231,10 @@ void fla_test_orgqr_experiment(test_params_t *params,
         else
         {
             create_matrix(datatype, &R, n, n);
-            create_matrix(datatype, &R_test, n, n);
             reset_matrix(datatype, n, n, R, n);
-            reset_matrix(datatype, n, n, R_test, n);
-            copy_submatrix(datatype, A_test, m, n, R_test, n, n, 0, 0);
-            copy_matrix(datatype, "Upper", n, n, R_test, n, R, n);
+            copy_matrix(datatype, "Upper", n, n, A_test, lda, R, n);
         }
-        copy_matrix(datatype, "full", m, n, A_test, lda, Q, m);
+        copy_matrix(datatype, "full", m, n, A_test, lda, Q, lda);
 
         /*invoke orgqr API */
         prepare_orgqr_run(m, n, Q, lda, T_test, work_test, &lwork, datatype, n_repeats, time_min, &info);
@@ -263,8 +261,6 @@ void fla_test_orgqr_experiment(test_params_t *params,
         free_vector(T_test);
         free_matrix(Q);
         free_matrix(R);
-        if(m > n)
-            free_matrix(R_test);
     }
 }
 
