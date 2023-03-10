@@ -55,8 +55,12 @@ main()
 	# to libflame).
 	#cp -p ${netlib_path}/make.inc.example ./${testdir_new}/make.inc
 	cat ${netlib_path}/make.inc.example \
-	    | sed -e "s/liblapack\.a/liblapack\.a -lpthread/g" \
-	    | sed -e "s/librefblas\.a/libblas\.a/g" \
+	    | sed -e "s/liblapack\.a/liblapack\.so/g" \
+	    | sed -e "s/librefblas\.a/libblas\.so/g" \
+	    | sed -e "s/libtmglib\.a/libtmglib\.so/g" \
+	    | sed -e "s/AR = ar/AR = \$(CC)/g" \
+	    | sed -e "s/ARFLAGS = cr/ARFLAGS = -lm -shared/g" \
+	    | sed -e "s/RANLIB = ranlib/RANLIB = echo/g" \
 	    > ./${testdir_new}/make.inc
 
 	echo "Creating ./${testdir_new}/SRC"
@@ -65,6 +69,9 @@ main()
 	# Make a dummy 'SRC' directory with a dummy Makefile.
 	mkdir ./${testdir_new}/SRC
 	cp ./build/SRC-Makefile ./${testdir_new}/SRC/Makefile
+
+	# Adding README
+	cp ./build/README ./${testdir_new}/
 
 	# Make a dummy 'SRC/VARIANTS' directory with a dummy Makefile.
 	mkdir ./${testdir_new}/SRC/VARIANTS
@@ -102,6 +109,27 @@ main()
 	sed_expr="s/ABSTOL = UNFL + UNFL/ABSTOL = 0/g"
 
 	sed -e "${sed_expr}" ${ddrvsg_in} > ${ddrvsg_ou}
+
+	# Update makefiles to have the correct path
+	# There was an issue where the path is given during linking 
+	# as a relitive path. Then when run, it is executed from a different
+	# dir. This would cause it to fail
+	for make_file in BLAS/SRC/Makefile INSTALL/Makefile TESTING/Makefile TESTING/EIG/Makefile TESTING/LIN/Makefile TESTING/MATGEN/Makefile
+	do
+		sed -i 's/TOPSRCDIR = ../TOPSRCDIR = ${CURDIR}\/../' ${testdir_new}/$make_file
+	done
+
+	# Adding the '-o' flag needed to link
+	sed -i 's/$(AR) $(ARFLAGS) $@ $^/$(AR) $(ARFLAGS) -o $@ $^/' ${testdir_new}/TESTING/MATGEN/Makefile
+
+	# Updating these to point to libflame instead of internal files
+	sed -i 's/testieee: tstiee.o .*/testieee: tstiee.o $(LAPACKLIB) $(BLASLIB)/' ${testdir_new}/INSTALL/Makefile
+
+	sed -i 's/schkaa.o: schkaa.F/schkaa.o: schkaa.F $(LAPACKLIB) $(BLASLIB)/' ${testdir_new}/TESTING/LIN/Makefile
+	sed -i 's/dchkaa.o: dchkaa.F/dchkaa.o: dchkaa.F $(LAPACKLIB) $(BLASLIB)/' ${testdir_new}/TESTING/LIN/Makefile
+	sed -i 's/cchkaa.o: cchkaa.F/cchkaa.o: cchkaa.F $(LAPACKLIB) $(BLASLIB)/' ${testdir_new}/TESTING/LIN/Makefile
+	sed -i 's/zchkaa.o: zchkaa.F/zchkaa.o: zchkaa.F $(LAPACKLIB) $(BLASLIB)/' ${testdir_new}/TESTING/LIN/Makefile
+	sed -i 's/$(FC) $(FFLAGS_DRV) -c -o $@ $</$(FC) $(FFLAGS_DRV) -c -o $@ $^/g' ${testdir_new}/TESTING/LIN/Makefile
 
 	# Exit peacefully.
 	return 0

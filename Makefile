@@ -18,8 +18,8 @@
         check-env check-env-config check-env-fragments \
         flat-headers \
         test \
-        install-headers install-libs install-lib-symlinks \
-        clean cleanmk cleanh cleanlib cleanleaves distclean \
+        install-headers install-libs install-lib-symlinks install-netlib-tests\
+        clean cleanmk cleanh cleanlib cleanleaves distclean clean-netlib-tests \
         install \
         uninstall-libs uninstall-lib-symlinks uninstall-headers
 
@@ -355,7 +355,12 @@ CFLAGS_NOOPT    := $(CFLAGS_NOOPT) $(INCLUDE_PATHS)
 CPPFLAGS        := $(CPPFLAGS) $(INCLUDE_PATHS)
 FFLAGS          := $(FFLAGS) $(INCLUDE_PATHS)
 
-
+SCRIPTS_PATH    := $(DIST_PATH)/src/map/common/lapacksrc/scripts
+FDEPS_PATH      := $(DIST_PATH)/src/map/common/lapacksrc/fortran
+FDEPS1          := $(FDEPS_PATH)/la_constants.f90
+FDEPS2          := $(FDEPS_PATH)/la_xisnan.F90
+FDEPS           := $(FDEPS1) $(FDEPS2)
+FORT_EXT        := %.f %.F %.f90 %.F90
 
 #
 # --- Library object definitions -----------------------------------------------
@@ -383,8 +388,8 @@ MK_MAP_LAPACK2FLAMEC_OBJS                   := $(patsubst $(SRC_PATH)/%.c, $(BAS
 MK_MAP_LAPACK2FLASH_OBJS                    := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
                                                           $(filter %.c, $(MK_MAP_LAPACK2FLASH_SRC)))
 
-MK_MAP_FORTRAN_OBJS                         := $(patsubst $(SRC_PATH)/%.f, $(BASE_OBJ_PATH)/%.o, \
-                                                          $(filter %.f, $(MK_MAP_FORTRAN_SRC)))
+MK_MAP_FORTRAN_OBJS                         := $(foreach F_EXT, $(FORT_EXT), $(patsubst $(SRC_PATH)/$(F_EXT), $(BASE_OBJ_PATH)/%.o, \
+                                                          $(filter $(FORT_EXT), $(filter-out $(FDEPS), $(MK_MAP_FORTRAN_SRC)))))
 
 MK_MAP_F2C_OBJS                             := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
                                                           $(filter %.c, $(MK_MAP_F2C_SRC)))
@@ -469,11 +474,11 @@ all: libs
 
 libs: libflame
 
-install: libs install-libs install-lib-symlinks install-headers
+install: libs install-libs install-lib-symlinks install-headers install-netlib-tests
 
 uninstall: uninstall-libs uninstall-lib-symlinks uninstall-headers
 
-clean: cleanh cleanobj cleanlib
+clean: cleanh cleanobj cleanlib clean-netlib-tests
 
 
 
@@ -572,12 +577,37 @@ endif
 
 # Default Fortran compilation rules
 # Might need -fallow-argument-mismatch for newer gfortran (untested)
-$(BASE_OBJ_PATH)/%.o: $(SRC_PATH)/%.f $(CONFIG_MK_FILE) $(HEADERS_TO_FLATTEN)
-ifeq ($(ENABLE_VERBOSE),yes)
-	$(F77) -cpp -c $< -o $@
+define fortran_rule
+$$(BASE_OBJ_PATH)/%.o: $$(SRC_PATH)/$1 $$(CONFIG_MK_FILE) $$(HEADERS_TO_FLATTEN) $$(BASE_OBJ_PATH)/la_xisnan.mod
+ifeq ($$(ENABLE_VERBOSE),yes)
+	$(FC) -cpp -c $$< -o $$@
 else
-	@echo "Compiling $<"
-	@$(F77) -cpp -c $< -o $@
+	@echo "Compiling $$<"
+	@$(FC) -cpp -c $$< -o $$@
+endif
+ifeq ($$(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
+	@echo $$@ >> $$(AR_OBJ_LIST_FILE)
+endif
+endef
+$(foreach FEXT, $(FORT_EXT), $(eval $(call fortran_rule,$(FEXT))))
+
+$(BASE_OBJ_PATH)/la_xisnan.mod: $(FDEPS2) $(BASE_OBJ_PATH)/la_constants.mod
+ifeq ($(ENABLE_VERBOSE),yes)
+	$(FC) -cpp -c $< -o $@
+else
+	@echo "Building $<"
+	@$(FC) -cpp -c $< -o $@
+endif
+ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
+	@echo $@ >> $(AR_OBJ_LIST_FILE)
+endif
+
+$(BASE_OBJ_PATH)/la_constants.mod: $(FDEPS1)
+ifeq ($(ENABLE_VERBOSE),yes)
+	$(FC) -cpp -c $< -o $@
+else
+	@echo "Building $<"
+	@$(FC) -cpp -c $< -o $@
 endif
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 	@echo $@ >> $(AR_OBJ_LIST_FILE)
@@ -784,6 +814,27 @@ else
 	@$(MV) $(@F) $(INSTALL_LIBDIR)/
 endif
 
+# --- Install-netlibs-test dir ---
+
+install-netlib-tests:
+ifeq ($(FLA_ENABLE_LEGACY_LAPACK),no)
+ifeq ($(FLA_ENABLE_LAPACK2FLAME),yes)
+ifeq ($(ENABLE_VERBOSE),yes)
+	$(SCRIPTS_PATH)/regen-files.sh build_test
+else
+	@echo "Installing netlib-tests"
+	@$(SCRIPTS_PATH)/regen-files.sh build_test
+endif
+endif
+ifeq ($(FLA_ENABLE_LAPACK2FLASH),yes)
+ifeq ($(ENABLE_VERBOSE),yes)
+	$(SCRIPTS_PATH)/regen-files.sh build_test
+else
+	@echo "Installing netlib-tests"
+	@$(SCRIPTS_PATH)/regen-files.sh build_test
+endif
+endif
+endif
 
 # --- Clean rules ---
 
@@ -888,6 +939,16 @@ ifeq ($(ENABLE_VERBOSE),yes)
 else
 	@echo "Removing leaf-level build objects from source tree"
 	@$(FIND) $(BASE_OBJ_PATH) -name "*.[osx]" | $(XARGS) $(RM_F)
+endif
+endif
+
+clean-netlib-tests:
+ifeq ($(IS_CONFIGURED),yes)
+ifeq ($(ENABLE_VERBOSE),yes)
+	$(SCRIPTS_PATH)/regen-files.sh clean_test
+else
+	@echo "Removing netlib-tests"
+	@$(SCRIPTS_PATH)/regen-files.sh clean_test
 endif
 endif
 

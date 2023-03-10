@@ -1,0 +1,23 @@
+This is a modified netlibs test suite that is using either the lapack2flame or lapack2flash interface.
+This test suite is only built by the libflame makefile if one of these options are selected.
+This test is removed in a 'make clean' is run on libflame
+
+Below is an example of how to run this test:
+#ln -s ../../lib/x86_64-unknown-linux-gnu/libflame.so liblapack.so
+#ln -s PATH_TO_YOUR_BLAS/libblis.so libblas.so
+#export LD_LIBRARY_PATH=LOCATION_OF_YOUR_BLAS:LOCATION_OF_YOUR_LAPACK
+#make -j
+
+This should result with something like the following results:
+
+                        -->   LAPACK TESTING SUMMARY  <--
+                Processing LAPACK Testing output found in the TESTING directory
+SUMMARY                 nb test run     numerical error         other error  
+================        ===========     =================       ================  
+REAL                    1075089         2767    (0.257%)        0       (0.000%)
+DOUBLE PRECISION        1198641         2694    (0.225%)        1       (0.000%)
+COMPLEX                 650845          169     (0.026%)        0       (0.000%)
+COMPLEX16               783228          143     (0.018%)        0       (0.000%)
+
+--> ALL PRECISIONS      3707803         5773    (0.156%)        1       (0.000%)
+

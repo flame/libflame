@@ -6,5 +6,5 @@ lapack2flamec:c
 lapack2flash:c
 f2c:c
 lapackcheck:c
-fortran:f
+fortran:f,F,f90,F90
 install:c
