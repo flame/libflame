@@ -114,9 +114,11 @@ int dlacon_(integer *n, doublereal *v, doublereal *x, integer *isgn, doublereal 
     double d_sign(doublereal *, doublereal *);
     integer i_dnnt(doublereal *);
     /* Local variables */
-    integer i__, j, iter;
+    integer i__;
     doublereal temp;
-    integer jump;
+    static integer jump = 0;
+    static integer j = 0;
+    static integer iter = 0;
     extern doublereal dasum_(integer *, doublereal *, integer *);
     integer jlast;
     extern /* Subroutine */
@@ -177,6 +179,8 @@ int dlacon_(integer *n, doublereal *v, doublereal *x, integer *isgn, doublereal 
         goto L110;
     case 5:
         goto L140;
+    default:
+        goto L150;
     }
     /* ................ ENTRY (JUMP = 1) */
     /* FIRST ITERATION. X HAS BEEN OVERWRITTEN BY A*X. */
