@@ -119,9 +119,11 @@ int clacon_(integer *n, complex *v, complex *x, real *est, integer *kase)
     /* Builtin functions */
     double c_abs(complex *), r_imag(complex *);
     /* Local variables */
-    integer i__, j, iter;
+    integer i__;
     real temp;
-    integer jump;
+    static integer jump = 0;
+    static integer j = 0;
+    static integer iter = 0;
     real absxi;
     integer jlast;
     extern /* Subroutine */
@@ -188,6 +190,8 @@ int clacon_(integer *n, complex *v, complex *x, real *est, integer *kase)
         goto L90;
     case 5:
         goto L120;
+    default:
+        goto L130;
     }
     /* ................ ENTRY (JUMP = 1) */
     /* FIRST ITERATION. X HAS BEEN OVERWRITTEN BY A*X. */
