@@ -1026,17 +1026,29 @@ add_definitions(-DEXPMODULE)
 add_subdirectory(src)
 
 if (BUILD_TEST OR BUILD_LEGACY_TEST)
+
 # CHECKS if blas library exists 
 	if(NOT EXISTS ${CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH}/${EXT_BLAS_LIBNAME})
 		message(FATAL_ERROR "\n Invalid path to blas Library \n \
 ${CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH}/${EXT_BLAS_LIBNAME} \
 Does not exist.\n Please check the path again")
 	else()
-		target_link_libraries(${PROJECT_NAME} ${CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH}/${EXT_BLAS_LIBNAME})
+		add_library(blas SHARED IMPORTED)
+		if(UNIX)
+			set_target_properties(blas PROPERTIES
+			IMPORTED_LOCATION ${CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH}/${EXT_BLAS_LIBNAME}
+			POSITION_INDEPENDENT_CODE ON
+			)
+		elseif(WIN32)
+			set_target_properties(blas PROPERTIES
+			IMPORTED_IMPLIB ${CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH}/${EXT_BLAS_LIBNAME}
+			POSITION_INDEPENDENT_CODE ON
+			)
+		endif()
 	endif()
 
 	# if user wants to run tests on an external lapack library
-	# needs to be modified for external libraries 
+	# needs to be modified for external lapack libraries same way as done for blas
 	if((NOT EXT_LAPACK_LIBRARY_PATH) OR (NOT EXT_LAPACK_LIBNAME))
 		set(EXT_LAPACK_LIBRARY_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
 		message(STATUS "Missing External lapack library. Using ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/${EXT_LAPACK_LIBNAME} ")

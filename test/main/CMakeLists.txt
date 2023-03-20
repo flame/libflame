@@ -79,8 +79,12 @@ add_executable("${PROJECT_NAME}" "")
 
 message("${CMAKE_BUILD_TYPE}")
 
-target_link_libraries("${PROJECT_NAME}" debug "${TEST_FLAGS}" "${CMAKE_PROJECT_NAME}")
-target_link_libraries("${PROJECT_NAME}" optimized "${TEST_FLAGS}" "${CMAKE_PROJECT_NAME}")
+if(UNIX)
+    target_link_libraries("${PROJECT_NAME}" PRIVATE "${TEST_FLAGS}" "${CMAKE_PROJECT_NAME}" blas)
+elseif(WIN32)
+    target_link_libraries("${PROJECT_NAME}" debug "${TEST_FLAGS}" "${CMAKE_PROJECT_NAME}" blas)
+    target_link_libraries("${PROJECT_NAME}" optimized "${TEST_FLAGS}" "${CMAKE_PROJECT_NAME}" blas)
+endif()
 
 if(BLAS_HEADER_PATH)
    target_include_directories("${PROJECT_NAME}" PRIVATE ${BLAS_HEADER_PATH})
