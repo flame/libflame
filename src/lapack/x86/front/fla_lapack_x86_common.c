@@ -1,5 +1,5 @@
 /******************************************************************************
- * * Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+ * * Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
  * *******************************************************************************/
 
 /*! @file fla_lapack_x86_common.c
@@ -39,4 +39,19 @@ int fla_zscal(integer *n, doublecomplex *alpha, doublecomplex *x, integer *incx)
     }
     return 0;
 }
+
+/* scales a vector by a constant when threshold <= 128 */
+int fla_dscal(integer *n, doublereal *da, doublereal *dx, integer *incx)
+{
+    if(*incx == 1 && *da != 0)
+    {
+        fla_dscal_ix1_avx2(n, da, dx, incx);
+    }
+    else
+    {
+        dscal_(n, da, dx, incx);
+    }    
+    return 0;
+}
+
 #endif
