@@ -125,6 +125,10 @@ if(UNIX)
 	set(COMPILER_LANGUAGE_FLAGS "-Wno-unused-function -Wno-parentheses -Wfatal-errors ")
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COMPILER_DEBUG_FLAG} ${GCC_WARNING_FLAGS} ${COMPILER_LANGUAGE_FLAGS}")
 endif()
+
+#Temporary hack. Enable -Wno-error=implicit-function-declaration
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-error=implicit-function-declaration")
+
 # Adding missing Macros
 if(UNIX)
 	set(FLA_PORTABLE_TIMER_IS_CLOCK_GETTIME TRUE)
