@@ -207,6 +207,7 @@ int clahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
     /* Builtin functions */
     double c_abs(complex *);
     void c_sqrt(complex *, complex *), pow_ci(complex *, complex *, integer *) ;
+    void r_cnjg(complex *, complex *);
     /* Local variables */
     integer i__, j, k, l, m;
     real s;
@@ -691,9 +692,10 @@ L70: /* Single-shift QR step */
                     j <= i__3;
                     ++j)
             {
+                r_cnjg(&q__3, &t1);
                 i__4 = k + j * h_dim1;
-                q__2.r = t1r * h__[i__4].r + t1i * h__[i__4].i;
-                q__2.i = t1r * h__[i__4].i - t1i * h__[i__4].r; // , expr subst
+                q__2.r = q__3.r * h__[i__4].r - q__3.i * h__[i__4].i;
+                q__2.i = q__3.r * h__[i__4].i + q__3.i * h__[i__4].r; // , expr subst
                 i__5 = k + 1 + j * h_dim1;
                 q__4.r = t2 * h__[i__5].r;
                 q__4.i = t2 * h__[i__5].i; // , expr subst
@@ -737,8 +739,9 @@ L70: /* Single-shift QR step */
                 q__1.i = h__[i__4].i - sum.i; // , expr subst
                 h__[i__4].r = q__1.r;
                 h__[i__4].i = q__1.i; // , expr subst
-                q__2.r = sum.r * v2r + sum.i * v2i;
-                q__2.i = - sum.r * v2i + sum.i * v2r; // , expr subst
+                r_cnjg(&q__3, &v2);
+                q__2.r = sum.r * q__3.r - sum.i * q__3.i;
+                q__2.i = sum.r * q__3.i + sum.i * q__3.r; // , expr subst
                 q__1.r = h__[i__5].r - q__2.r;
                 q__1.i = h__[i__5].i - q__2.i; // , expr subst
                 h__[i__5].r = q__1.r;
