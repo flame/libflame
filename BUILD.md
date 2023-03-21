@@ -32,22 +32,19 @@
     compile library using following command. This will generate libflame.a/libflame.so library in the bin directory
         cmake --build . -j OR make -j
 
-## 2. Building Legacy Test and AOCL_FLA_PROGRESS Test Suite
+## 2. Building main Test and AOCL_FLA_PROGRESS Test Suite
     In order to build tests an an additional flag can be set to ON
         -DBUILD_TEST=ON -DCMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH=/path/to/blas/library -DEXT_BLAS_LIBNAME=blas_lib_name
         -DBLAS_HEADER_PATH="<path to BLIS header file blis.h>"
     
-    This will enable aocl progress feature tests, legacy libflame test suites. It will generate test_libFLAME_aocl , test_libFLAME executables in the respective directories.
+    This will enable aocl progress feature tests, main test suite. It will generate test_libFLAME_aocl , test_lapack.x executables in the respective directories.
     Note: Building tests require path to an external blas library. Refer to Readme in respective test suite directory for more details
     Recomended to use blis sharedlib with libflame sharedlib
-## 3 Building main test 
-    Main Test suite is built by default when libflame library is built. 
-    -DCMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH=/path/to/blas/library -DEXT_BLAS_LIBNAME=blas_lib_name
-    -DBLAS_HEADER_PATH="<path to BLIS header file blis.h>"
+## 3 Building Legacy test 
+    To build Legacy test suite use 
+     -DBUILD_LEGACY_TEST=ON -DCMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH=/path/to/blas/library -DEXT_BLAS_LIBNAME=blas_lib_name
+    -DBLAS_HEADER_PATH="<path to BLIS header file blis.h>" 
 
-    To build main test executable withouth building the library again pass the following command on Linux
-        cmake  --build .  --target test_lapack.x -j
-    Note: This requires library to be built atleast once.
 
 ## 4. ENABLE TRACE and LOGS
     User may also enable trace and logs by passing

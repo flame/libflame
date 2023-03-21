@@ -51,7 +51,8 @@ option (ENABLE_UPPERCASE "Enable uppercase API's" OFF)
 option (ENABLE_WRAPPER "Enable wrapper code" ON)
 option (INCLUDE_LAPACKE "INCLUDE LAPACKE Code" ON)
 option (BUILD_SHARED_LIBS "Building shared Library" ON)
-option (BUILD_TEST "Building test directory" OFF)
+option (BUILD_TEST "Building aoclflaprogress and main test directory" OFF)
+option (BUILD_LEGACY_TEST "Building legacy test directory" OFF)
 option (BUILD_NETLIB_TEST "Building test directory" OFF)
 option (ENABLE_NON_CRITICAL_CODE "Enable non-critical" ON)
 option (ENABLE_BUILTIN_LAPACK2FLAME "lapack2flame library" OFF)
@@ -460,7 +461,6 @@ endif()
 
 if(WIN32)
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP")
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W0 ")
 endif()
 
 #genreating the monolithic headers
@@ -855,7 +855,8 @@ endif()
 link_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 add_definitions(-DEXPMODULE)
 add_subdirectory(src)
-if (BUILD_TEST)
+
+if (BUILD_TEST OR BUILD_LEGACY_TEST)
 # CHECKS if blas library exists 
 	if(NOT EXISTS ${CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH}/${EXT_BLAS_LIBNAME})
 		message(FATAL_ERROR "\n Invalid path to blas Library \n \
@@ -866,6 +867,7 @@ Does not exist.\n Please check the path again")
 	endif()
 
 	# if user wants to run tests on an external lapack library
+	# needs to be modified for external libraries 
 	if((NOT EXT_LAPACK_LIBRARY_PATH) OR (NOT EXT_LAPACK_LIBNAME))
 		set(EXT_LAPACK_LIBRARY_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
 		message(STATUS "Missing External lapack library. Using ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/${EXT_LAPACK_LIBNAME} ")
@@ -875,12 +877,16 @@ Does not exist.\n Please check the path again")
 	Does not exist.\n Please check the path again, or avoid passing \n \
 	-DEXT_LAPACK_LIBRARY_PATH and -DEXT_LAPACK_LIBNAME to use libflame")
 	endif()
-	add_subdirectory(test/legacyflame)
-	add_subdirectory(test/aoclflaprogress)
 	#add_subdirectory(testcpp)
 endif()
 
-add_subdirectory(test/main)
+if(BUILD_TEST)
+	add_subdirectory(test/main)
+	add_subdirectory(test/aoclflaprogress)
+endif()
+if(BUILD_LEGACY_TEST)
+	add_subdirectory(test/legacyflame)
+endif()
 
 if (BUILD_NETLIB_TEST)
 	add_subdirectory(netlib-test)
