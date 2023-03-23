@@ -15,9 +15,9 @@
 /* > \endhtmlonly */
 /* Definition: */
 /* =========== */
-/* SUBROUTINE DLABAD( SMALL, LARGE ) */
+/* SUBROUTINE DLABAD( SMALL_VAL, LARGE ) */
 /* .. Scalar Arguments .. */
-/* DOUBLE PRECISION LARGE, SMALL */
+/* DOUBLE PRECISION LARGE, SMALL_VAL */
 /* .. */
 /* > \par Purpose: */
 /* ============= */
@@ -35,12 +35,12 @@
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
-/* > \param[in,out] SMALL */
+/* > \param[in,out] SMALL_VAL */
 /* > \verbatim */
-/* > SMALL is DOUBLE PRECISION */
+/* > SMALL_VAL is DOUBLE PRECISION */
 /* > On entry, the underflow threshold as computed by DLAMCH. */
 /* > On exit, if LOG10(LARGE) is sufficiently large, the square */
-/* > root of SMALL, otherwise unchanged. */
+/* > root of SMALL_VAL, otherwise unchanged. */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] LARGE */
@@ -60,10 +60,10 @@
 /* > \ingroup auxOTHERauxiliary */
 /* ===================================================================== */
 /* Subroutine */
-int dlabad_(doublereal *small, doublereal *large)
+int dlabad_(doublereal *small_val, doublereal *large)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dlabad inputs: small %lf, large %lf", *small, *large);
+    AOCL_DTL_SNPRINTF("dlabad inputs: small_val %lf, large %lf", *small_val, *large);
     /* -- LAPACK auxiliary routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -75,10 +75,10 @@ int dlabad_(doublereal *small, doublereal *large)
     /* .. */
     /* .. Executable Statements .. */
     /* If it looks like we're on a Cray, take the square root of */
-    /* SMALL and LARGE to avoid overflow and underflow problems. */
+    /* SMALL_VAL and LARGE to avoid overflow and underflow problems. */
     if (d_lg10(large) > 2e3)
     {
-        *small = sqrt(*small);
+        *small_val = sqrt(*small_val);
         *large = sqrt(*large);
     }
     AOCL_DTL_TRACE_LOG_EXIT

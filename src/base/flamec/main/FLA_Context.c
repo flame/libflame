@@ -22,7 +22,7 @@
  * ************************************************************************ */
 
 #include "FLAME.h"
-
+#include "alci/arch.h"
 
 #if defined(FLA_NO_CONTEXT)
 
@@ -174,10 +174,10 @@ void fla_thread_init_rntm_from_env(fla_context *context)
 
 void fla_isa_init(fla_context *context)
 {
-    // Check if the target supports AVX512
-    if(alc_cpu_has_avx512f())
+    // Check if the target supports AVX2
+    if(alcpu_flag_is_available(ALC_E_FLAG_AVX2))
     {
-        context->is_avx512 = TRUE;
+        context->is_avx2 = TRUE;
     }
 }
 

@@ -151,7 +151,7 @@ int dlaqgb_(integer *m, integer *n, integer *kl, integer *ku, doublereal *ab, in
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     /* Local variables */
     integer i__, j;
-    doublereal cj, large, small;
+    doublereal cj, large, small_val;
     extern doublereal dlamch_(char *);
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -186,9 +186,9 @@ int dlaqgb_(integer *m, integer *n, integer *kl, integer *ku, doublereal *ab, in
         return 0;
     }
     /* Initialize LARGE and SMALL. */
-    small = dlamch_("Safe minimum") / dlamch_("Precision");
-    large = 1. / small;
-    if (*rowcnd >= .1 && *amax >= small && *amax <= large)
+    small_val = dlamch_("Safe minimum") / dlamch_("Precision");
+    large = 1. / small_val;
+    if (*rowcnd >= .1 && *amax >= small_val && *amax <= large)
     {
         /* No row scaling */
         if (*colcnd >= .1)

@@ -162,7 +162,7 @@ int claqgb_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
     complex q__1;
     /* Local variables */
     integer i__, j;
-    real cj, large, small;
+    real cj, large, small_val;
     extern real slamch_(char *);
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -197,9 +197,9 @@ int claqgb_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
         return 0;
     }
     /* Initialize LARGE and SMALL. */
-    small = slamch_("Safe minimum") / slamch_("Precision");
-    large = 1.f / small;
-    if (*rowcnd >= .1f && *amax >= small && *amax <= large)
+    small_val = slamch_("Safe minimum") / slamch_("Precision");
+    large = 1.f / small_val;
+    if (*rowcnd >= .1f && *amax >= small_val && *amax <= large)
     {
         /* No row scaling */
         if (*colcnd >= .1f)

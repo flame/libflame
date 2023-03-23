@@ -366,7 +366,7 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
     int dscal_(integer *, doublereal *, doublereal *, integer *);
     doublereal large, apoaq, aqoap;
     extern logical lsame_(char *, char *);
-    doublereal theta, small, sfmin;
+    doublereal theta, small_val, sfmin;
     logical lsvec;
     extern /* Subroutine */
     int dcopy_(integer *, doublereal *, integer *, doublereal *, integer *);
@@ -536,7 +536,7 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
     rooteps = sqrt(epsln);
     sfmin = dlamch_("SafeMinimum");
     rootsfmin = sqrt(sfmin);
-    small = sfmin / epsln;
+    small_val = sfmin / epsln;
     big = dlamch_("Overflow");
     /* BIG = ONE / SFMIN */
     rootbig = 1. / rootsfmin;
@@ -1034,7 +1034,7 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
                                 aapp0 = aapp;
                                 if (aaqq >= 1.)
                                 {
-                                    rotok = small * aapp <= aaqq;
+                                    rotok = small_val * aapp <= aaqq;
                                     if (aapp < big / aaqq)
                                     {
                                         aapq = ddot_(m, &a[p * a_dim1 + 1], & c__1, &a[q * a_dim1 + 1], & c__1) * work[p] * work[q] / aaqq / aapp;
@@ -1048,8 +1048,8 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
                                 }
                                 else
                                 {
-                                    rotok = aapp <= aaqq / small;
-                                    if (aapp > small / aaqq)
+                                    rotok = aapp <= aaqq / small_val;
+                                    if (aapp > small_val / aaqq)
                                     {
                                         aapq = ddot_(m, &a[p * a_dim1 + 1], & c__1, &a[q * a_dim1 + 1], & c__1) * work[p] * work[q] / aaqq / aapp;
                                     }
@@ -1351,11 +1351,11 @@ L2103: /* bailed out of q-loop */
                                 {
                                     if (aapp >= aaqq)
                                     {
-                                        rotok = small * aapp <= aaqq;
+                                        rotok = small_val * aapp <= aaqq;
                                     }
                                     else
                                     {
-                                        rotok = small * aaqq <= aapp;
+                                        rotok = small_val * aaqq <= aapp;
                                     }
                                     if (aapp < big / aaqq)
                                     {
@@ -1372,13 +1372,13 @@ L2103: /* bailed out of q-loop */
                                 {
                                     if (aapp >= aaqq)
                                     {
-                                        rotok = aapp <= aaqq / small;
+                                        rotok = aapp <= aaqq / small_val;
                                     }
                                     else
                                     {
-                                        rotok = aaqq <= aapp / small;
+                                        rotok = aaqq <= aapp / small_val;
                                     }
-                                    if (aapp > small / aaqq)
+                                    if (aapp > small_val / aaqq)
                                     {
                                         aapq = ddot_(m, &a[p * a_dim1 + 1], & c__1, &a[q * a_dim1 + 1], & c__1) * work[p] * work[q] / aaqq / aapp;
                                     }

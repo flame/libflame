@@ -113,4 +113,4 @@ then
 	TESTLAPACKLIB="$PWD/liblapack.a $PWD/libaocldtl.a -lpthread"
 fi
 
-OMP_NUM_THREADS=1 make CC=clang FC="$FORTRAN_FLAGS" LDFLAGS="-lpthread -fopenmp" LAPACKLIB="$TESTLAPACKLIB" TIMER=NONE -j
+OMP_NUM_THREADS=1 make CC=clang FC="$FORTRAN_FLAGS" LDFLAGS="-lstdc++ -lpthread -fopenmp" LAPACKLIB="$TESTLAPACKLIB" TIMER=NONE -j

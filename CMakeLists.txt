@@ -14,6 +14,8 @@ if(WIN32)
 	SET(CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH "${CMAKE_SOURCE_DIR}/bin/Release" CACHE STRING "AOCL-BLIS library path name")
 	SET(EXT_BLAS_LIBNAME "AOCL-LibBlis-Win-MT-dll.lib" CACHE STRING "AOCL-BLIS library name")
 	SET(OpenMP_libomp_LIB "C:/Program Files/LLVM/lib/libomp.lib" CACHE STRING "openmp library path")
+	SET(LIBCPUID_LIBRARY_PATH "cpu_static.lib" CACHE STRING "CPU detection library name")
+	SET(LIBCPUID_INCLUDE_PATH "" CACHE STRING "CPU detection library header files path")
 endif()
 
 message(STATUS "External blas library Path : ${CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH}")
@@ -831,10 +833,21 @@ if (BUILD_SHARED_LIBS)
 	target_compile_definitions("${PROJECT_NAME}" PUBLIC -DLIBFLAME_ENABLE_SHARED)
 	install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION "${CMAKE_INSTALL_PREFIX}")
 else ()
-	add_library("${PROJECT_NAME}" STATIC ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/blis1.h
-                 ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLA_f2c.h
-                 ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLAME.h
-                 )
+	if(UNIX)
+		#In unix, extract the libcpu library object files(alci_init.cc.o c_arch.cc.o c_cache.cc.o)
+		#and combine it with libflame object files 
+		add_library("${PROJECT_NAME}" STATIC ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/blis1.h
+        	         ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLA_f2c.h
+                	 ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLAME.h
+                 	alci_init.cc.o c_arch.cc.o c_cache.cc.o 
+			)
+	elseif(WIN32)
+		add_library("${PROJECT_NAME}" STATIC ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/blis1.h
+        	         ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLA_f2c.h
+                	 ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLAME.h
+			)
+	endif ()
+	message(STATUS "static_lib PROJECT_NAME: ${PROJECT_NAME}")
 	install(TARGETS ${PROJECT_NAME} ARCHIVE DESTINATION "${CMAKE_INSTALL_PREFIX}")
 endif ()
 
@@ -858,6 +871,38 @@ if(WIN32)
 	set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "${TEMP_VAR}")
 	message(STATUS "Library Name : ${TEMP_VAR}${CMAKE_SHARED_LIBRARY_SUFFIX}")
 endif()
+
+if(LIBCPUID_LIBRARY_PATH AND LIBCPUID_INCLUDE_PATH)
+	message(STATUS "CPU-ID detection library(libcpu) path : " ${LIBCPUID_LIBRARY_PATH})
+	message(STATUS "CPU-ID detection library headers path : " ${LIBCPUID_INCLUDE_PATH})
+	if (BUILD_SHARED_LIBS)
+		target_link_libraries(${PROJECT_NAME} ${LIBCPUID_LIBRARY_PATH})
+	else ()
+		if(UNIX)
+			#Extract libcpu object files so it can be merged with libflame object files
+			target_link_libraries(${PROJECT_NAME} "libstdc++.so")
+			message(STATUS "Extracting libcpu object files so it can be merged with libflame object files")		
+			add_custom_command(TARGET ${PROJECT_NAME}
+					PRE_BUILD
+					COMMAND ar -x ${LIBCPUID_LIBRARY_PATH}
+					COMMENT "Extracting libcpu library object files"
+					)
+		elseif(WIN32)
+			#Merge libcpu static library with libflame static library in post build step
+			set(LIBFLAME_STATICLIB_PATH ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIG>/${TEMP_VAR}${CMAKE_STATIC_LIBRARY_SUFFIX})
+			message(STATUS "Static library full path : ${LIBFLAME_STATICLIB_PATH}")		
+			add_custom_command(TARGET ${PROJECT_NAME}
+					POST_BUILD
+					COMMAND lib.exe /OUT:${LIBFLAME_STATICLIB_PATH} ${LIBFLAME_STATICLIB_PATH} ${LIBCPUID_LIBRARY_PATH}
+					COMMENT "Merging libflame and libcpu libraries"
+					)
+		endif ()
+	endif ()
+	target_include_directories(${PROJECT_NAME} PUBLIC ${LIBCPUID_INCLUDE_PATH})	
+else(LIBCPUID_LIBRARY_PATH AND LIBCPUID_INCLUDE_PATH)
+	message(FATAL_ERROR "Error : CPU-ID detection library, libcpu, not provided!")
+endif()
+
 # TODO : enable this flag to build source supplied blas library
 # link externally built blas library
 if(WIN32)

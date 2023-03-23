@@ -235,7 +235,7 @@ int zgsvj0_(char *jobv, integer *m, integer *n, doublecomplex *a, integer *lda, 
     int zrot_(integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublecomplex *);
     doublereal aapp0, aapq1, temp1, apoaq, aqoap;
     extern logical lsame_(char *, char *);
-    doublereal theta, small;
+    doublereal theta, small_val;
     logical applv, rsvec;
     extern /* Double Complex */
     VOID zdotc_f2c_(doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *);
@@ -355,7 +355,7 @@ int zgsvj0_(char *jobv, integer *m, integer *n, doublecomplex *a, integer *lda, 
     rsvec = rsvec || applv;
     rooteps = sqrt(*eps);
     rootsfmin = sqrt(*sfmin);
-    small = *sfmin / *eps;
+    small_val = *sfmin / *eps;
     big = 1. / *sfmin;
     rootbig = 1. / rootsfmin;
     bigtheta = 1. / rooteps;
@@ -502,7 +502,7 @@ int zgsvj0_(char *jobv, integer *m, integer *n, doublecomplex *a, integer *lda, 
                                 aapp0 = aapp;
                                 if (aaqq >= 1.)
                                 {
-                                    rotok = small * aapp <= aaqq;
+                                    rotok = small_val * aapp <= aaqq;
                                     if (aapp < big / aaqq)
                                     {
                                         zdotc_f2c_(&z__3, m, &a[p * a_dim1 + 1], & c__1, &a[q * a_dim1 + 1], & c__1);
@@ -526,8 +526,8 @@ int zgsvj0_(char *jobv, integer *m, integer *n, doublecomplex *a, integer *lda, 
                                 }
                                 else
                                 {
-                                    rotok = aapp <= aaqq / small;
-                                    if (aapp > small / aaqq)
+                                    rotok = aapp <= aaqq / small_val;
+                                    if (aapp > small_val / aaqq)
                                     {
                                         zdotc_f2c_(&z__3, m, &a[p * a_dim1 + 1], & c__1, &a[q * a_dim1 + 1], & c__1);
                                         z__2.r = z__3.r / aapp;
@@ -784,11 +784,11 @@ L2103: /* bailed out of q-loop */
                                 {
                                     if (aapp >= aaqq)
                                     {
-                                        rotok = small * aapp <= aaqq;
+                                        rotok = small_val * aapp <= aaqq;
                                     }
                                     else
                                     {
-                                        rotok = small * aaqq <= aapp;
+                                        rotok = small_val * aaqq <= aapp;
                                     }
                                     if (aapp < big / aaqq)
                                     {
@@ -815,13 +815,13 @@ L2103: /* bailed out of q-loop */
                                 {
                                     if (aapp >= aaqq)
                                     {
-                                        rotok = aapp <= aaqq / small;
+                                        rotok = aapp <= aaqq / small_val;
                                     }
                                     else
                                     {
-                                        rotok = aaqq <= aapp / small;
+                                        rotok = aaqq <= aapp / small_val;
                                     }
-                                    if (aapp > small / aaqq)
+                                    if (aapp > small_val / aaqq)
                                     {
                                         zdotc_f2c_(&z__3, m, &a[p * a_dim1 + 1], & c__1, &a[q * a_dim1 + 1], & c__1);
                                         d__1 = fla_max(aaqq,aapp);

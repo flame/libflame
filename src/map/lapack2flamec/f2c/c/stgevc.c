@@ -324,7 +324,7 @@ int stgevc_(char *side, char *howmny, logical *select, integer *n, real *s, inte
     extern logical lsame_(char *, char *);
     logical il2by2;
     integer iinfo;
-    real small;
+    real small_val;
     logical compl;
     real anorm, bnorm;
     logical compr;
@@ -565,8 +565,8 @@ L10:
     big = 1.f / safmin;
     slabad_(&safmin, &big);
     ulp = slamch_("Epsilon") * slamch_("Base");
-    small = safmin * *n / ulp;
-    big = 1.f / small;
+    small_val = safmin * *n / ulp;
+    big = 1.f / small_val;
     bignum = 1.f / (safmin * *n);
     /* Compute the 1-norm of each column of the strictly upper triangular */
     /* part (i.e., excluding all elements belonging to the diagonal */
@@ -716,17 +716,17 @@ L10:
                 bcoefi = 0.f;
                 /* Scale to avoid underflow */
                 scale = 1.f;
-                lsa = f2c_abs(sbeta) >= safmin && f2c_abs(acoef) < small;
-                lsb = f2c_abs(salfar) >= safmin && f2c_abs(bcoefr) < small;
+                lsa = f2c_abs(sbeta) >= safmin && f2c_abs(acoef) < small_val;
+                lsb = f2c_abs(salfar) >= safmin && f2c_abs(bcoefr) < small_val;
                 if (lsa)
                 {
-                    scale = small / f2c_abs(sbeta) * fla_min(anorm,big);
+                    scale = small_val / f2c_abs(sbeta) * fla_min(anorm,big);
                 }
                 if (lsb)
                 {
                     /* Computing MAX */
                     r__1 = scale;
-                    r__2 = small / f2c_abs(salfar) * fla_min(bnorm,big); // , expr subst
+                    r__2 = small_val / f2c_abs(salfar) * fla_min(bnorm,big); // , expr subst
                     scale = fla_max(r__1,r__2);
                 }
                 if (lsa || lsb)
@@ -1152,17 +1152,17 @@ L220:
                 bcoefi = 0.f;
                 /* Scale to avoid underflow */
                 scale = 1.f;
-                lsa = f2c_abs(sbeta) >= safmin && f2c_abs(acoef) < small;
-                lsb = f2c_abs(salfar) >= safmin && f2c_abs(bcoefr) < small;
+                lsa = f2c_abs(sbeta) >= safmin && f2c_abs(acoef) < small_val;
+                lsb = f2c_abs(salfar) >= safmin && f2c_abs(bcoefr) < small_val;
                 if (lsa)
                 {
-                    scale = small / f2c_abs(sbeta) * fla_min(anorm,big);
+                    scale = small_val / f2c_abs(sbeta) * fla_min(anorm,big);
                 }
                 if (lsb)
                 {
                     /* Computing MAX */
                     r__1 = scale;
-                    r__2 = small / f2c_abs(salfar) * fla_min(bnorm,big); // , expr subst
+                    r__2 = small_val / f2c_abs(salfar) * fla_min(bnorm,big); // , expr subst
                     scale = fla_max(r__1,r__2);
                 }
                 if (lsa || lsb)

@@ -1,5 +1,4 @@
 ##Copyright (C) 2020-2022, Advanced Micro Devices, Inc.##
-add_subdirectory(alci)
 add_subdirectory(blis)
 add_subdirectory(check)
 add_subdirectory(control)
