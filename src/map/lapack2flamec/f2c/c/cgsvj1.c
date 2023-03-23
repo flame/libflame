@@ -263,7 +263,7 @@ int cgsvj1_(char *jobv, integer *m, integer *n, integer *n1, complex *a, integer
     VOID cdotc_f2c_(complex *, integer *, complex *, integer *, complex *, integer *);
     real apoaq, aqoap;
     extern logical lsame_(char *, char *);
-    real theta, small;
+    real theta, small_val;
     extern /* Subroutine */
     int ccopy_(integer *, complex *, integer *, complex *, integer *), cswap_(integer *, complex *, integer *, complex *, integer *);
     logical applv, rsvec;
@@ -383,7 +383,7 @@ int cgsvj1_(char *jobv, integer *m, integer *n, integer *n1, complex *a, integer
     rsvec = rsvec || applv;
     rooteps = sqrt(*eps);
     rootsfmin = sqrt(*sfmin);
-    small = *sfmin / *eps;
+    small_val = *sfmin / *eps;
     big = 1.f / *sfmin;
     rootbig = 1.f / rootsfmin;
     /* LARGE = BIG / SQRT( REAL( M*N ) ) */
@@ -482,11 +482,11 @@ int cgsvj1_(char *jobv, integer *m, integer *n, integer *n1, complex *a, integer
                                 {
                                     if (aapp >= aaqq)
                                     {
-                                        rotok = small * aapp <= aaqq;
+                                        rotok = small_val * aapp <= aaqq;
                                     }
                                     else
                                     {
-                                        rotok = small * aaqq <= aapp;
+                                        rotok = small_val * aaqq <= aapp;
                                     }
                                     if (aapp < big / aaqq)
                                     {
@@ -513,13 +513,13 @@ int cgsvj1_(char *jobv, integer *m, integer *n, integer *n1, complex *a, integer
                                 {
                                     if (aapp >= aaqq)
                                     {
-                                        rotok = aapp <= aaqq / small;
+                                        rotok = aapp <= aaqq / small_val;
                                     }
                                     else
                                     {
-                                        rotok = aaqq <= aapp / small;
+                                        rotok = aaqq <= aapp / small_val;
                                     }
-                                    if (aapp > small / aaqq)
+                                    if (aapp > small_val / aaqq)
                                     {
                                         cdotc_f2c_(&q__3, m, &a[p * a_dim1 + 1], & c__1, &a[q * a_dim1 + 1], & c__1);
                                         r__1 = fla_max(aaqq,aapp);

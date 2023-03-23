@@ -132,7 +132,7 @@ int claqhp_(char *uplo, integer *n, complex *ap, real *s, real *scond, real *ama
     integer i__, j, jc;
     real cj, large;
     extern logical lsame_(char *, char *);
-    real small;
+    real small_val;
     extern real slamch_(char *);
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -164,9 +164,9 @@ int claqhp_(char *uplo, integer *n, complex *ap, real *s, real *scond, real *ama
         return 0;
     }
     /* Initialize LARGE and SMALL. */
-    small = slamch_("Safe minimum") / slamch_("Precision");
-    large = 1.f / small;
-    if (*scond >= .1f && *amax >= small && *amax <= large)
+    small_val = slamch_("Safe minimum") / slamch_("Precision");
+    large = 1.f / small_val;
+    if (*scond >= .1f && *amax >= small_val && *amax <= large)
     {
         /* No equilibration */
         *(unsigned char *)equed = 'N';

@@ -253,7 +253,7 @@ int ztgevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex
     integer iside;
     doublereal sbeta;
     extern logical lsame_(char *, char *);
-    doublereal small;
+    doublereal small_val;
     logical compl;
     doublereal anorm, bnorm;
     logical compr;
@@ -456,8 +456,8 @@ int ztgevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex
     big = 1. / safmin;
     dlabad_(&safmin, &big);
     ulp = dlamch_("Epsilon") * dlamch_("Base");
-    small = safmin * *n / ulp;
-    big = 1. / small;
+    small_val = safmin * *n / ulp;
+    big = 1. / small_val;
     bignum = 1. / (safmin * *n);
     /* Compute the 1-norm of each column of the strictly upper triangular */
     /* part of A and B to check for possible overflow in the triangular */
@@ -567,18 +567,18 @@ int ztgevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex
                 bcoeff.r = z__1.r;
                 bcoeff.i = z__1.i; // , expr subst
                 /* Scale to avoid underflow */
-                lsa = f2c_dabs(sbeta) >= safmin && f2c_dabs(acoeff) < small;
-                lsb = (d__1 = salpha.r, f2c_dabs(d__1)) + (d__2 = d_imag(&salpha), f2c_dabs(d__2)) >= safmin && (d__3 = bcoeff.r, f2c_dabs(d__3)) + (d__4 = d_imag(&bcoeff), f2c_dabs(d__4)) < small;
+                lsa = f2c_dabs(sbeta) >= safmin && f2c_dabs(acoeff) < small_val;
+                lsb = (d__1 = salpha.r, f2c_dabs(d__1)) + (d__2 = d_imag(&salpha), f2c_dabs(d__2)) >= safmin && (d__3 = bcoeff.r, f2c_dabs(d__3)) + (d__4 = d_imag(&bcoeff), f2c_dabs(d__4)) < small_val;
                 scale = 1.;
                 if (lsa)
                 {
-                    scale = small / f2c_dabs(sbeta) * fla_min(anorm,big);
+                    scale = small_val / f2c_dabs(sbeta) * fla_min(anorm,big);
                 }
                 if (lsb)
                 {
                     /* Computing MAX */
                     d__3 = scale;
-                    d__4 = small / ((d__1 = salpha.r, f2c_dabs(d__1)) + (d__2 = d_imag(&salpha), f2c_dabs(d__2))) * fla_min( bnorm,big); // , expr subst
+                    d__4 = small_val / ((d__1 = salpha.r, f2c_dabs(d__1)) + (d__2 = d_imag(&salpha), f2c_dabs(d__2))) * fla_min( bnorm,big); // , expr subst
                     scale = fla_max(d__3,d__4);
                 }
                 if (lsa || lsb)
@@ -891,18 +891,18 @@ L140:
                 bcoeff.r = z__1.r;
                 bcoeff.i = z__1.i; // , expr subst
                 /* Scale to avoid underflow */
-                lsa = f2c_dabs(sbeta) >= safmin && f2c_dabs(acoeff) < small;
-                lsb = (d__1 = salpha.r, f2c_dabs(d__1)) + (d__2 = d_imag(&salpha), f2c_dabs(d__2)) >= safmin && (d__3 = bcoeff.r, f2c_dabs(d__3)) + (d__4 = d_imag(&bcoeff), f2c_dabs(d__4)) < small;
+                lsa = f2c_dabs(sbeta) >= safmin && f2c_dabs(acoeff) < small_val;
+                lsb = (d__1 = salpha.r, f2c_dabs(d__1)) + (d__2 = d_imag(&salpha), f2c_dabs(d__2)) >= safmin && (d__3 = bcoeff.r, f2c_dabs(d__3)) + (d__4 = d_imag(&bcoeff), f2c_dabs(d__4)) < small_val;
                 scale = 1.;
                 if (lsa)
                 {
-                    scale = small / f2c_dabs(sbeta) * fla_min(anorm,big);
+                    scale = small_val / f2c_dabs(sbeta) * fla_min(anorm,big);
                 }
                 if (lsb)
                 {
                     /* Computing MAX */
                     d__3 = scale;
-                    d__4 = small / ((d__1 = salpha.r, f2c_dabs(d__1)) + (d__2 = d_imag(&salpha), f2c_dabs(d__2))) * fla_min( bnorm,big); // , expr subst
+                    d__4 = small_val / ((d__1 = salpha.r, f2c_dabs(d__1)) + (d__2 = d_imag(&salpha), f2c_dabs(d__2))) * fla_min( bnorm,big); // , expr subst
                     scale = fla_max(d__3,d__4);
                 }
                 if (lsa || lsb)

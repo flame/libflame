@@ -67,6 +67,7 @@ TEST_DIR_MAIN_TEST  := test/main
 CPP_TEST_DIR        := testcpp
 LAPACKE_S_SRC_PATH  := $(SRC_DIR)/$(LAPACKE_DIR)/$(LAPACKE_SRC_DIR)
 LAPACKE_U_SRC_PATH  := $(SRC_DIR)/$(LAPACKE_DIR)/$(LAPACKE_UTIL_DIR)
+LIBCPUID_OBJ_DIR    := libcpuobjdir
 
 # Use the system type to name the config, object, and library directories.
 # These directories are special in that they will contain products specific
@@ -319,8 +320,6 @@ BLIS1_H_FLAT  := $(BASE_INC_PATH)/$(BLIS1_H)
 FLAF2C_H      := FLA_f2c.h
 FLAF2C_H_FLAT := $(BASE_INC_PATH)/$(FLAF2C_H)
 
-CPUFEATURES_H      := cpu_features.h
-CPUFEATURES_H_FLAT := $(BASE_INC_PATH)/$(CPUFEATURES_H)
 
 #Define path of CPP Template header files
 CPP_TEMPLATE_H_PATH := ./$(SRC_DIR)/src_cpp
@@ -460,6 +459,19 @@ MK_ALL_FLAMEC_OBJS        := $(MK_FLABLAS_F2C_OBJS) \
                              $(MK_ALL_FLAMEC_OBJS)
 endif
 
+ifeq ($(strip $(LIBCPUID_LIBRARY_PATH)),)
+LIBCPUID_OBJS 		  := 
+else
+LIBCPUID_OBJS             := $(shell mkdir -p $(LIBCPUID_OBJ_DIR); \
+				cd $(LIBCPUID_OBJ_DIR); \
+				ar -x $(LIBCPUID_LIBRARY_PATH); \
+				cd ..; \
+				ls $(LIBCPUID_OBJ_DIR)/*.o)
+endif
+
+MK_ALL_FLAMEC_OBJS        := $(LIBCPUID_OBJS) \
+                             $(MK_ALL_FLAMEC_OBJS)
+
 ### Kyungjoo 2015.10.21
 #AR_CHUNK_SIZE=4096
 AR_CHUNK_SIZE=1024
@@ -534,15 +546,6 @@ else
 	@echo "Generated monolithic $@"
 endif
 
-# Consolidated cpu_features.h header creation
-$(CPUFEATURES_H_FLAT): $(MK_HEADER_FILES) $(FLAME_H_FLAT) $(BLIS1_H_FLAT) $(FLAF2C_H_FLAT)
-ifeq ($(ENABLE_VERBOSE),yes)
-	$(FLATTEN_H) -c -v1 $(CPUFEATURES_H_SRC_PATH) $@ $(BASE_INC_PATH) "$(MK_HEADER_DIR_PATHS)"
-else
-	@echo -n "Generating monolithic $(@)"
-	@$(FLATTEN_H) -c -v1 $(CPUFEATURES_H_SRC_PATH) $@ $(BASE_INC_PATH) "$(MK_HEADER_DIR_PATHS)"
-	@echo "Generated monolithic $@"
-endif
 
 # Consolidated FLA_f2c.h header creation
 
@@ -756,9 +759,9 @@ TEST_OUT_FILE := output.test
 # Check the results of the LIBLFLAME tests.
 $(TEST_BIN):
 ifeq ($(ENABLE_VERBOSE),yes)
-	$(MAKE) -C $(TEST_DIR)
+	$(MAKE) -C $(TEST_DIR) -j
 else
-	@$(MAKE) -C $(TEST_DIR)
+	@$(MAKE) -C $(TEST_DIR) -j
 endif
 
 test-run: test-bin
@@ -791,9 +794,9 @@ export ILP64
 # Check the results of the LIBLFLAME tests.
 $(TEST_BIN_MAIN_TEST):
 ifeq ($(ENABLE_VERBOSE),yes)
-	$(MAKE) -C $(TEST_DIR_MAIN_TEST)
+	$(MAKE) -C $(TEST_DIR_MAIN_TEST) -j
 else	
-	@$(MAKE) -C $(TEST_DIR_MAIN_TEST)
+	@$(MAKE) -C $(TEST_DIR_MAIN_TEST) -j
 endif
 
 test-run-main-test: test-bin-main-test
@@ -927,6 +930,7 @@ ifeq ($(ENABLE_VERBOSE),yes)
 	- $(RM_F) $(AOCLDTL_obj_PATH)
 	- $(RM_F) $(AOCLDTL_gch_PATH)
 	- $(RM_F) $(BASE_LIB_PATH)/*
+	- $(RM_F) $(LIBCPUID_OBJ_DIR)/*
 else
 	@echo "Removing object files from $(BASE_OBJ_PATH)"
 	@$(FIND) $(BASE_OBJ_PATH) -name "*.o" | $(XARGS) $(RM_F)
@@ -938,6 +942,7 @@ else
 	@$(RM_F) $(AOCLDTL_obj_PATH)
 	@$(RM_F) $(AOCLDTL_gch_PATH)
 	@$(RM_F) $(BASE_LIB_PATH)/*
+	@$(RM_F) $(LIBCPUID_OBJ_DIR)/*
 endif
 endif
 

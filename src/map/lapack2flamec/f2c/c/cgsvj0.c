@@ -245,7 +245,7 @@ int cgsvj0_(char *jobv, integer *m, integer *n, complex *a, integer *lda, comple
     VOID cdotc_f2c_(complex *, integer *, complex *, integer *, complex *, integer *);
     real apoaq, aqoap;
     extern logical lsame_(char *, char *);
-    real theta, small;
+    real theta, small_val;
     extern /* Subroutine */
     int ccopy_(integer *, complex *, integer *, complex *, integer *), cswap_(integer *, complex *, integer *, complex *, integer *);
     logical applv, rsvec;
@@ -363,7 +363,7 @@ int cgsvj0_(char *jobv, integer *m, integer *n, complex *a, integer *lda, comple
     rsvec = rsvec || applv;
     rooteps = sqrt(*eps);
     rootsfmin = sqrt(*sfmin);
-    small = *sfmin / *eps;
+    small_val = *sfmin / *eps;
     big = 1.f / *sfmin;
     rootbig = 1.f / rootsfmin;
     bigtheta = 1.f / rooteps;
@@ -510,7 +510,7 @@ int cgsvj0_(char *jobv, integer *m, integer *n, complex *a, integer *lda, comple
                                 aapp0 = aapp;
                                 if (aaqq >= 1.f)
                                 {
-                                    rotok = small * aapp <= aaqq;
+                                    rotok = small_val * aapp <= aaqq;
                                     if (aapp < big / aaqq)
                                     {
                                         cdotc_f2c_(&q__3, m, &a[p * a_dim1 + 1], & c__1, &a[q * a_dim1 + 1], & c__1);
@@ -534,8 +534,8 @@ int cgsvj0_(char *jobv, integer *m, integer *n, complex *a, integer *lda, comple
                                 }
                                 else
                                 {
-                                    rotok = aapp <= aaqq / small;
-                                    if (aapp > small / aaqq)
+                                    rotok = aapp <= aaqq / small_val;
+                                    if (aapp > small_val / aaqq)
                                     {
                                         cdotc_f2c_(&q__3, m, &a[p * a_dim1 + 1], & c__1, &a[q * a_dim1 + 1], & c__1);
                                         q__2.r = q__3.r / aapp;
@@ -792,11 +792,11 @@ L2103: /* bailed out of q-loop */
                                 {
                                     if (aapp >= aaqq)
                                     {
-                                        rotok = small * aapp <= aaqq;
+                                        rotok = small_val * aapp <= aaqq;
                                     }
                                     else
                                     {
-                                        rotok = small * aaqq <= aapp;
+                                        rotok = small_val * aaqq <= aapp;
                                     }
                                     if (aapp < big / aaqq)
                                     {
@@ -823,13 +823,13 @@ L2103: /* bailed out of q-loop */
                                 {
                                     if (aapp >= aaqq)
                                     {
-                                        rotok = aapp <= aaqq / small;
+                                        rotok = aapp <= aaqq / small_val;
                                     }
                                     else
                                     {
-                                        rotok = aaqq <= aapp / small;
+                                        rotok = aaqq <= aapp / small_val;
                                     }
-                                    if (aapp > small / aaqq)
+                                    if (aapp > small_val / aaqq)
                                     {
                                         cdotc_f2c_(&q__3, m, &a[p * a_dim1 + 1], & c__1, &a[q * a_dim1 + 1], & c__1);
                                         r__1 = fla_max(aaqq,aapp);

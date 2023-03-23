@@ -15,9 +15,9 @@
 /* > \endhtmlonly */
 /* Definition: */
 /* =========== */
-/* SUBROUTINE SLABAD( SMALL, LARGE ) */
+/* SUBROUTINE SLABAD( SMALL_VAL, LARGE ) */
 /* .. Scalar Arguments .. */
-/* REAL LARGE, SMALL */
+/* REAL LARGE, SMALL_VAL */
 /* .. */
 /* > \par Purpose: */
 /* ============= */
@@ -35,12 +35,12 @@
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
-/* > \param[in,out] SMALL */
+/* > \param[in,out] SMALL_VAL */
 /* > \verbatim */
-/* > SMALL is REAL */
+/* > SMALL_VAL is REAL */
 /* > On entry, the underflow threshold as computed by SLAMCH. */
 /* > On exit, if LOG10(LARGE) is sufficiently large, the square */
-/* > root of SMALL, otherwise unchanged. */
+/* > root of SMALL_VAL, otherwise unchanged. */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] LARGE */
@@ -60,7 +60,7 @@
 /* > \ingroup auxOTHERauxiliary */
 /* ===================================================================== */
 /* Subroutine */
-int slabad_(real *small, real *large)
+int slabad_(real *small_val, real *large)
 {
     /* Builtin functions */
     double r_lg10(real *), sqrt(doublereal);
@@ -75,10 +75,10 @@ int slabad_(real *small, real *large)
     /* .. */
     /* .. Executable Statements .. */
     /* If it looks like we're on a Cray, take the square root of */
-    /* SMALL and LARGE to avoid overflow and underflow problems. */
+    /* SMALL_VAL and LARGE to avoid overflow and underflow problems. */
     if (r_lg10(large) > 2e3f)
     {
-        *small = sqrt(*small);
+        *small_val = sqrt(*small_val);
         *large = sqrt(*large);
     }
     return 0;

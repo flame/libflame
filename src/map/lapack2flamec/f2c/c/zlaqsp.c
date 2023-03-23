@@ -124,7 +124,7 @@ int zlaqsp_(char *uplo, integer *n, doublecomplex *ap, doublereal *s, doublereal
     integer i__, j, jc;
     doublereal cj, large;
     extern logical lsame_(char *, char *);
-    doublereal small;
+    doublereal small_val;
     extern doublereal dlamch_(char *);
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -154,9 +154,9 @@ int zlaqsp_(char *uplo, integer *n, doublecomplex *ap, doublereal *s, doublereal
         return 0;
     }
     /* Initialize LARGE and SMALL. */
-    small = dlamch_("Safe minimum") / dlamch_("Precision");
-    large = 1. / small;
-    if (*scond >= .1 && *amax >= small && *amax <= large)
+    small_val = dlamch_("Safe minimum") / dlamch_("Precision");
+    large = 1. / small_val;
+    if (*scond >= .1 && *amax >= small_val && *amax <= large)
     {
         /* No equilibration */
         *(unsigned char *)equed = 'N';

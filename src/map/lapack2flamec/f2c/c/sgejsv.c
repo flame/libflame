@@ -491,7 +491,7 @@ int sgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
     int sscal_(integer *, real *, real *, integer *);
-    real small, entra, sfmin;
+    real small_val, entra, sfmin;
     logical lsvec;
     real epsln;
     logical rsvec;
@@ -696,7 +696,7 @@ int sgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
     /* ! NOTE: Make sure SLAMCH() does not fail on the target architecture. */
     epsln = slamch_("Epsilon");
     sfmin = slamch_("SafeMinimum");
-    small = sfmin / epsln;
+    small_val = sfmin / epsln;
     big = slamch_("O");
     /* BIG = ONE / SFMIN */
     /* Initialize SVA(1:N) = diag( ||A e_i||_2 )_1^N */
@@ -1065,7 +1065,7 @@ int sgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
     }
     else
     {
-        xsc = small;
+        xsc = small_val;
         /* Now, if the condition number of A is too big, */
         /* sigma_max(A) / sigma_min(A) .GT. SQRT(BIG/N) * EPSLN / SFMIN, */
         /* as a precaution measure, the full SVD is computed using SGESVJ */
@@ -1188,7 +1188,7 @@ L3002:
                 p <= i__1;
                 ++p)
         {
-            if ((r__2 = a[p + p * a_dim1], f2c_abs(r__2)) < epsln * (r__1 = a[p - 1 + (p - 1) * a_dim1], f2c_abs(r__1)) || (r__3 = a[p + p * a_dim1], f2c_abs(r__3)) < small || l2kill && (r__4 = a[p + p * a_dim1], f2c_abs(r__4)) < temp1)
+            if ((r__2 = a[p + p * a_dim1], f2c_abs(r__2)) < epsln * (r__1 = a[p - 1 + (p - 1) * a_dim1], f2c_abs(r__1)) || (r__3 = a[p + p * a_dim1], f2c_abs(r__3)) < small_val || l2kill && (r__4 = a[p + p * a_dim1], f2c_abs(r__4)) < temp1)
             {
                 goto L3402;
             }
@@ -1213,7 +1213,7 @@ L3402:
                 p <= i__1;
                 ++p)
         {
-            if ((r__1 = a[p + p * a_dim1], f2c_abs(r__1)) < small || l2kill && ( r__2 = a[p + p * a_dim1], f2c_abs(r__2)) < temp1)
+            if ((r__1 = a[p + p * a_dim1], f2c_abs(r__1)) < small_val || l2kill && ( r__2 = a[p + p * a_dim1], f2c_abs(r__2)) < temp1)
             {
                 goto L3302;
             }
@@ -1606,7 +1606,7 @@ L3302:
                 /* transposed copy above. */
                 if (l2pert)
                 {
-                    xsc = sqrt(small);
+                    xsc = sqrt(small_val);
                     i__1 = nr;
                     for (q = 1;
                             q <= i__1;
@@ -1671,7 +1671,7 @@ L3302:
                     sgeqrf_(n, &nr, &v[v_offset], ldv, &work[*n + 1], &work[(* n << 1) + 1], &i__1, &ierr);
                     if (l2pert)
                     {
-                        xsc = sqrt(small) / epsln;
+                        xsc = sqrt(small_val) / epsln;
                         i__1 = nr;
                         for (p = 2;
                                 p <= i__1;
@@ -1735,7 +1735,7 @@ L3302:
                     /* * $ LWORK-2*N, IERR ) */
                     if (l2pert)
                     {
-                        xsc = sqrt(small);
+                        xsc = sqrt(small_val);
                         i__1 = nr;
                         for (p = 2;
                                 p <= i__1;
@@ -1762,7 +1762,7 @@ L3302:
                     slacpy_("A", n, &nr, &v[v_offset], ldv, &work[(*n << 1) + 1], n);
                     if (l2pert)
                     {
-                        xsc = sqrt(small);
+                        xsc = sqrt(small_val);
                         i__1 = nr;
                         for (p = 2;
                                 p <= i__1;
@@ -1819,7 +1819,7 @@ L3302:
                 }
                 if (l2pert)
                 {
-                    xsc = sqrt(small);
+                    xsc = sqrt(small_val);
                     i__1 = nr;
                     for (q = 2;
                             q <= i__1;
@@ -2088,7 +2088,7 @@ L3302:
                 slacpy_("Upper", n, n, &a[a_offset], lda, &work[*n + 1], n);
                 if (l2pert)
                 {
-                    xsc = sqrt(small);
+                    xsc = sqrt(small_val);
                     i__1 = *n;
                     for (p = 2;
                             p <= i__1;
@@ -2206,7 +2206,7 @@ L3302:
             }
             if (l2pert)
             {
-                xsc = sqrt(small / epsln);
+                xsc = sqrt(small_val / epsln);
                 i__1 = nr;
                 for (q = 1;
                         q <= i__1;
@@ -2251,7 +2251,7 @@ L3302:
             }
             if (l2pert)
             {
-                xsc = sqrt(small / epsln);
+                xsc = sqrt(small_val / epsln);
                 i__1 = nr;
                 for (q = 2;
                         q <= i__1;

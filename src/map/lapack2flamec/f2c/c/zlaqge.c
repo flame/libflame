@@ -137,7 +137,7 @@ int zlaqge_(integer *m, integer *n, doublecomplex *a, integer *lda, doublereal *
     doublecomplex z__1;
     /* Local variables */
     integer i__, j;
-    doublereal cj, large, small;
+    doublereal cj, large, small_val;
     extern doublereal dlamch_(char *);
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -170,9 +170,9 @@ int zlaqge_(integer *m, integer *n, doublecomplex *a, integer *lda, doublereal *
         return 0;
     }
     /* Initialize LARGE and SMALL. */
-    small = dlamch_("Safe minimum") / dlamch_("Precision");
-    large = 1. / small;
-    if (*rowcnd >= .1 && *amax >= small && *amax <= large)
+    small_val = dlamch_("Safe minimum") / dlamch_("Precision");
+    large = 1. / small_val;
+    if (*rowcnd >= .1 && *amax >= small_val && *amax <= large)
     {
         /* No row scaling */
         if (*colcnd >= .1)

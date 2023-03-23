@@ -447,7 +447,7 @@ int slasd7_(integer *icompq, integer *nl, integer *nr, integer *sqre, integer *k
     tol = eps * 64.f * fla_max(r__2,tol);
     /* There are 2 kinds of deflation -- first a value in the z-vector */
     /* is small, second two (or more) singular values are very close */
-    /* together (their difference is small). */
+    /* together (their difference is (*small_val). */
     /* If the value in the z-vector is small, we simply permute the */
     /* array so that the corresponding singular value is moved to the */
     /* end. */
