@@ -58,10 +58,15 @@
 	3. "LOG" to ENABLE LOGS
 	4. "OFF" to Disable trace and log, if -DENABLE_AOCL_DTL is not passed with the cmake command, DTL is turned off
 
-## 5. using an external Lapack library to run tests
+## 5. Using an external Lapack library to run tests
     In order to run tests on an external lapack library an additional option 
     -DEXT_LAPACK_LIBRARY_PATH="path/to/external/lapack/library" and -DEXT_LAPACK_LIBNAME="NAME_OF_THE_LAPACK_LIB" can be passed. 
     if the above options are left blank libflame library will be used
+
+## 6. Linking with an external openmp library
+    In Order to link with an external openmp library user can pass 
+        -DEXT_OPENMP_PATH=<openmp lib path> -DEXT_OPENMP_LIB=<openmp lib name>
+    Note: In order to use openmp from the system -DEXT_OPENMP_PATH is to be left blank
 
     
 
