@@ -53,16 +53,12 @@ extern void DTL_Trace(
 #ifndef FLA_ENABLE_SUPERMATRIX
 
 #if FLA_AMD_OPT /* FLA_AMD_OPT */
-
 /* FLA_AMD_OPT enables the code which selects algorithm variants based on size */
 #define LAPACK_getrf_body_d(prefix)                                                    \
-  if( *m <= FLA_DGETRF_SMALL_THRESH0 && *n <= FLA_DGETRF_SMALL_THRESH0 )               \
+extern fla_context global_context;                                                     \
+  if(global_context.is_avx2 && *m < FLA_DGETRF_SMALL_THRESH0 && *n < FLA_DGETRF_SMALL_THRESH0 )            \
   {                                                                                    \
-    FLA_LU_piv_small_d_var0( m, n, buff_A, ldim_A, buff_p, info );                     \
-  }                                                                                    \
-  else if( *m < FLA_DGETRF_SMALL_THRESH1 && *n < FLA_DGETRF_SMALL_THRESH1 )            \
-  {                                                                                    \
-    FLA_LU_piv_small_d_var1( m, n, buff_A, ldim_A, buff_p, info );                     \
+    fla_lu_piv_small_d_avx2( m, n, buff_A, ldim_A, buff_p, info );                     \
   }                                                                                    \
   else                                                                                 \
   {                                                                                    \
@@ -256,6 +252,8 @@ LAPACK_getrf(d)
     }
     if (fla_error == LAPACK_SUCCESS)
     {
+        /* Initialize global context data */
+        aocl_fla_init();
         LAPACK_getrf_body_d(d)
              /** fla_error set to 0 on LAPACK_SUCCESS */
         fla_error = 0;
