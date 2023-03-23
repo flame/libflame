@@ -252,8 +252,7 @@
 #define FLA_GETRF_COMPLEX             (670)
 #define FLA_GETRF_DOUBLE_COMPLEX      (1630)
 
-#define FLA_DGETRF_SMALL_THRESH0      (22)
-#define FLA_DGETRF_SMALL_THRESH1      (80)
+#define FLA_DGETRF_SMALL_THRESH0      (81)
 
 #define FLA_ZGETRF_SMALL_THRESH0      (22)
 #define FLA_ZGETRF_SMALL_THRESH1      (50)
