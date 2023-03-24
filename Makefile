@@ -115,9 +115,9 @@ LIBFLAME             := libflame
 LIBFLAME_A           := $(LIBFLAME).a
 LIBFLAME_SO          := $(LIBFLAME).$(SHLIB_EXT)
 
-LAPACKE_A	     := liblapacke.a
+LAPACKE_A            := liblapacke.a
 AOCLDTL_A            := libaocldtl.a
-AOCLDTL_SO           := libaocldtl.so
+AOCLDTL_SO           := libaocldtl.$(SHLIB_EXT)
 
 # --- Library filepaths ---
 
@@ -205,22 +205,26 @@ MK_LAPACK_FBLAS_OBJS                  :=
 # --- Define install target names for static libraries ---
 
 LIBFLAME_A_INST       := $(INSTALL_LIBDIR)/$(LIBFLAME_A)
+LIBFLAME_DTL_A_INST   := $(INSTALL_LIBDIR)/$(AOCLDTL_A)
 
 # --- Define install target names for dynamic libraries ---
 
 LIBFLAME_SO_INST      := $(INSTALL_LIBDIR)/$(LIBFLAME_SO)
 LIBFLAME_SO_MAJ_INST  := $(INSTALL_LIBDIR)/$(LIBFLAME_SONAME)
 LIBFLAME_SO_MMB_INST  := $(INSTALL_LIBDIR)/$(LIBFLAME).$(LIBFLAME_SO_MMB_EXT)
+LIBFLAME_DTL_SO_INST   := $(INSTALL_LIBDIR)/$(AOCLDTL_SO)
 # --- Determine which libraries to build ---
 
 MK_LIBS                   :=
 MK_LIBS_INST              :=
 MK_LIBS_SYML              :=
+MK_DTL_LIBS_INST          :=
 
 ifeq ($(FLA_ENABLE_STATIC_BUILD),yes)
 MK_LIBS                   += $(LIBFLAME_A_PATH)
 MK_LIBS_INST              += $(LIBFLAME_A_INST)
 MK_LIBS_SYML              +=
+MK_DTL_LIBS_INST          += $(LIBFLAME_DTL_A_INST)
 endif
 
 MK_LIBS                   += $(AOCLDTL_A_PATH)
@@ -230,7 +234,8 @@ MK_LIBS                   += $(LIBFLAME_SO_PATH) \
                              $(LIBFLAME_SO_MAJ_PATH)
 MK_LIBS_INST              += $(LIBFLAME_SO_MMB_INST)
 MK_LIBS_SYML              += $(LIBFLAME_SO_INST) \
-			     $(LIBFLAME_SO_MAJ_INST)
+                             $(LIBFLAME_SO_MAJ_INST)
+MK_DTL_LIBS_INST          += $(LIBFLAME_DTL_SO_INST)
 endif
 
 # Strip leading, internal, and trailing whitespace.
@@ -946,9 +951,6 @@ endif
 	- $(RM_RF) $(OBJ_DIR)
 	- $(RM_RF) $(LIB_DIR)
 	- $(RM_RF) $(INC_DIR)
-	- $(RM_RF) $(INSTALL_LIBDIR)/$(LIBFLAME).*
-	- $(RM_RF) $(INSTALL_LIBDIR)/$(AOCLDTL_A)
-	- $(RM_RF) $(INSTALL_LIBDIR)/$(AOCLDTL_SO)
 	- $(RM_RF) config.log
 	- $(RM_RF) aclocal.m4
 	- $(RM_RF) autom4te.cache
@@ -966,10 +968,6 @@ endif
 	@$(RM_RF) $(OBJ_DIR)
 	@echo "Removing $(LIB_DIR)"
 	@$(RM_RF) $(LIB_DIR)
-	@echo "Removing libflame libraries from $(INSTALL_LIBDIR)"
-	@$(RM_RF) $(INSTALL_LIBDIR)/$(LIBFLAME).*
-	@$(RM_RF) $(INSTALL_LIBDIR)/$(AOCLDTL_A)
-	@$(RM_RF) $(INSTALL_LIBDIR)/$(AOCLDTL_SO)
 	@echo "Removing $(INC_DIR)"
 	@$(RM_RF) $(INC_DIR)
 	@echo "Removing intermediate configure files"
@@ -1010,9 +1008,12 @@ endif
 uninstall-libs: check-env
 ifeq ($(ENABLE_VERBOSE),yes)
 	- $(RM_F) $(MK_LIBS_INST)
+	- $(RM_F) $(MK_DTL_LIBS_INST)
 else
 	@echo "Uninstalling libraries $(notdir $(MK_LIBS_INST)) from $(dir $(firstword $(MK_LIBS_INST)))."
 	@- $(RM_F) $(MK_LIBS_INST)
+	@echo "Uninstalling AOCL DTL libraries $(notdir $(MK_DTL_LIBS_INST)) from $(dir $(firstword $(MK_DTL_LIBS_INST)))."
+	@- $(RM_F) $(MK_DTL_LIBS_INST)
 endif
 
 uninstall-lib-symlinks: check-env
