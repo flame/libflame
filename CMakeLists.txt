@@ -127,8 +127,11 @@ if(UNIX)
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COMPILER_DEBUG_FLAG} ${GCC_WARNING_FLAGS} ${COMPILER_LANGUAGE_FLAGS}")
 endif()
 
-#Temporary hack. Enable -Wno-error=implicit-function-declaration
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-error=implicit-function-declaration")
+#Temporary hack for Clang. Enable -Wno-error=implicit-function-declaration
+#and -Wno-error=incompatible-function-pointer-types
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-error=implicit-function-declaration -Wno-error=incompatible-function-pointer-types")
+endif ()
 
 # Adding missing Macros
 if(UNIX)
