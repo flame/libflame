@@ -23,5 +23,8 @@ int fla_zscal_ix1_avx2(integer *n, doublecomplex *alpha,
 int fla_dgeqrf_small_avx2(integer *m, integer *n,
                           doublereal *a, integer *lda,
                           doublereal *tau, doublereal *work);
+int fla_zgetrf_small_avx2(integer *m, integer *n,
+                          doublecomplex *a, integer *lda,
+                          integer *ipiv, integer *info);
 #endif
 

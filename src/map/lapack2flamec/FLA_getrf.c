@@ -72,16 +72,12 @@ extern void DTL_Trace(
 #define LAPACK_getrf_body_z(prefix)                                                    \
   if( *m <= FLA_ZGETRF_SMALL_THRESH0 && *n <= FLA_ZGETRF_SMALL_THRESH0 )               \
   {                                                                                    \
-    FLA_LU_piv_small_z_var0( m, n, (dcomplex *)buff_A, ldim_A, buff_p, info );                     \
-  }                                                                                    \
-  else if( *m < FLA_ZGETRF_SMALL_THRESH1 && *n < FLA_ZGETRF_SMALL_THRESH1 )            \
-  {                                                                                    \
-    lapack_zgetrf( m, n, buff_A, ldim_A, buff_p, info);                                \
+    fla_zgetrf_small_avx2( m, n, (dcomplex *)buff_A, ldim_A, buff_p, info );           \
   }                                                                                    \
   else                                                                                 \
   {                                                                                    \
-    zgetrf2_( m, n, buff_A, ldim_A, buff_p, info);                                     \
-  }
+    FLA_LU_piv_z_var0( m, n, buff_A, ldim_A, buff_p, info);                            \
+  }                                                                                    \
 
 #else /* FLA_AMD_OPT */
 
@@ -91,7 +87,7 @@ extern void DTL_Trace(
 #define LAPACK_getrf_body_d(prefix)                                                    \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);                               \
   FLA_Obj      A, p;                                                                   \
-  integer      min_m_n    = fla_min( *m, *n );                                             \
+  integer      min_m_n    = fla_min( *m, *n );                                         \
   FLA_Error    e_val = FLA_SUCCESS;                                                    \
   FLA_Error    init_result;                                                            \
   FLA_Bool skip = FALSE;                                                               \
