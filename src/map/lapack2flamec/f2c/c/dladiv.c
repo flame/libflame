@@ -83,7 +83,8 @@ int dladiv_(doublereal *a, doublereal *b, doublereal *c__, doublereal *d__, doub
     /* System generated locals */
     doublereal d__1, d__2;
     /* Local variables */
-    doublereal s, aa, ab, bb, cc, cd, dd, be, un, ov, eps;
+    static TLS_CLASS_SPEC doublereal be, un, ov, eps;
+    doublereal s, aa, ab, bb, cc, cd, dd;
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
     int dladiv1_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
@@ -116,35 +117,41 @@ int dladiv_(doublereal *a, doublereal *b, doublereal *c__, doublereal *d__, doub
     d__1 = f2c_abs(*c__);
     d__2 = f2c_abs(*d__); // , expr subst
     cd = fla_max(d__1,d__2);
+
+    if(ov == 0)
+    {
+        ov = dlamch_("Overflow threshold") * .5;
+        eps = dlamch_("Epsilon");
+        un = dlamch_("Safe minimum") * 2. / eps;
+        be = 2. / (eps * eps);
+    }
+
     s = 1.;
-    ov = dlamch_("Overflow threshold");
-    un = dlamch_("Safe minimum");
-    eps = dlamch_("Epsilon");
-    be = 2. / (eps * eps);
-    if (ab >= ov * .5)
+    if (ab >= ov )
     {
         aa *= .5;
         bb *= .5;
         s *= 2.;
     }
-    if (cd >= ov * .5)
+    if (cd >= ov )
     {
         cc *= .5;
         dd *= .5;
         s *= .5;
     }
-    if (ab <= un * 2. / eps)
+    if (ab <= un )
     {
         aa *= be;
         bb *= be;
         s /= be;
     }
-    if (cd <= un * 2. / eps)
+    if (cd <= un )
     {
         cc *= be;
         dd *= be;
         s *= be;
     }
+
     if (f2c_abs(*d__) <= f2c_abs(*c__))
     {
         dladiv1_(&aa, &bb, &cc, &dd, p, q);
