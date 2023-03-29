@@ -831,7 +831,6 @@ if (BUILD_SHARED_LIBS)
 	message(STATUS "shared_lib PROJECT_NAME: ${PROJECT_NAME}")
 	target_compile_definitions("${PROJECT_NAME}" PUBLIC -DLIBFLAME_IS_BUILDING_LIBRARY)
 	target_compile_definitions("${PROJECT_NAME}" PUBLIC -DLIBFLAME_ENABLE_SHARED)
-	install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION "${CMAKE_INSTALL_PREFIX}")
 else ()
 	if(UNIX)
 		#In unix, extract the libcpu library object files(alci_init.cc.o c_arch.cc.o c_cache.cc.o)
@@ -848,8 +847,20 @@ else ()
 			)
 	endif ()
 	message(STATUS "static_lib PROJECT_NAME: ${PROJECT_NAME}")
-	install(TARGETS ${PROJECT_NAME} ARCHIVE DESTINATION "${CMAKE_INSTALL_PREFIX}")
 endif ()
+
+set(LIBFLAME_PUBLIC_HEADERS	"include/FLAME.h"
+							"src/lapacke/LAPACKE/include/lapacke_mangling.h"
+							"src/lapacke/LAPACKE/include/lapacke.h"
+							"src/lapacke/LAPACKE/include/lapack.h"
+							"src/src_cpp/libflame_interface.hh"
+							"src/src_cpp/libflame.hh")
+
+set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${LIBFLAME_PUBLIC_HEADERS}")
+
+install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+								ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+								PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
 
 if(ENABLE_OPENMP)
 	if(EXT_OPENMP_PATH)

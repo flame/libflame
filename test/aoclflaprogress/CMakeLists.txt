@@ -5,7 +5,7 @@ if(WIN32)
     set_target_properties(test_libFLAME_aocl PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 elseif(UNIX)
     set(LDFLAGS "-lm -lpthread")
-    set_target_properties(test_libFLAME_aocl PROPERTIES OUTPUT_NAME test_libFLAME_aocl.x)
+    set_target_properties(test_libFLAME_aocl PROPERTIES OUTPUT_NAME test_libflame_aocl_progress.x)
     set_target_properties(test_libFLAME_aocl PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 endif()
 

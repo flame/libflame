@@ -14,7 +14,7 @@ target_include_directories(test_libFLAME PRIVATE "${CMAKE_SOURCE_DIR}/${BASE_INC
 target_include_directories(test_libFLAME PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 # to move executable to the legacy flame folder LINUX
 if(UNIX)
-    set_target_properties(test_libFLAME PROPERTIES OUTPUT_NAME test_libFLAME.x)
+    set_target_properties(test_libFLAME PROPERTIES OUTPUT_NAME test_libflame.x)
     set_target_properties(test_libFLAME PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 endif()
 
