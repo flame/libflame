@@ -20,4 +20,9 @@ int fla_zscal(integer *n, doublecomplex *alpha,
 int fla_dgeqrf_small(integer *m, integer *n,
                      doublereal *a, integer *lda,
                      doublereal *tau, doublereal *work);
+int fla_sscal(integer *n, real *alpha, 
+              real *x, integer *incx);
+int fla_sger(integer *m, integer *n, real *alpha,
+             real *x, integer *incx, real *y, 
+             integer *incy, real *a, integer *lda);
 #endif

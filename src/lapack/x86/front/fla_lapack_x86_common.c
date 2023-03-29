@@ -74,4 +74,28 @@ int fla_dgeqrf_small(integer *m, integer *n,
     fla_dgeqrf_small_avx2(m, n, a, lda, tau, work);
     return 0;
 }
+
+/* real vector scaling when increment is 1 */
+int fla_sscal(integer *n, real *alpha, real *x, integer *incx)
+{
+    /* Take AVX path only for increment equal to 1 */
+    if(*incx == 1)
+    {
+        fla_sscal_ix1_avx2(n, alpha, x);
+    }
+    else
+    {
+        sscal_(n, (real *) alpha,(real *)  x, incx);
+    }
+    return 0;
+}
+
+/* Rank 1 Operation */
+int fla_sger(integer *m, integer *n, real *alpha, real *x,
+             integer *incx, real *y, integer *incy,
+             real *a, integer *lda)
+{
+    fla_sger_avx2(m, n, alpha, x, incx, y, incy, a, lda);
+    return 0;
+}
 #endif

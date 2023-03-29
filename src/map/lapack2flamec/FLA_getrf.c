@@ -77,9 +77,50 @@ extern fla_context global_context;                                              
     FLA_LU_piv_z_var0( m, n, buff_A, ldim_A, buff_p, info);                            \
   }                                                                                    \
 
+#define LAPACK_getrf_body_s(prefix)                                                    \
+  FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
+  FLA_Obj      A, p;                                            \
+  integer      min_m_n    = fla_min( *m, *n );                      \
+  FLA_Error    e_val = FLA_SUCCESS;                             \
+  FLA_Error    init_result;                                     \
+                                                                                        \
+  if( *m <= FLA_SGETRF_SMALL_THRESH0 && *n <= FLA_SGETRF_SMALL_THRESH0 )               \
+  {                                                                                    \
+    FLA_LU_piv_small_s_var0( m, n, buff_A, ldim_A, buff_p, info );                     \
+  }                                                                                    \
+  else if( *m <= FLA_SGETRF_SMALL_THRESH1 && *n <= FLA_SGETRF_SMALL_THRESH1 )           \
+  {                                                                                    \
+    FLA_LU_piv_small_s_var1( m, n, buff_A, ldim_A, buff_p, info );                     \
+  }                                                                                   \
+  else if( *m <= FLA_SGETRF_MEDIUM_THRESH0 && *n <= FLA_SGETRF_MEDIUM_THRESH0 )         \
+  {                                                                                   \
+    FLA_Init_safe( &init_result );                                                     \
+                                                                                       \
+    FLA_Obj_create_without_buffer( datatype, *m, *n, &A );                             \
+    FLA_Obj_attach_buffer( buff_A, 1, *ldim_A, &A );                                   \
+                                                                                       \
+    FLA_Obj_create_without_buffer( FLA_INT, min_m_n, 1, &p );                          \
+    FLA_Obj_attach_buffer( buff_p, 1, min_m_n, &p );                                   \
+                                                                                       \
+    e_val = FLA_LU_piv( A, p );                                                        \
+    FLA_Shift_pivots_to( FLA_LAPACK_PIVOTS, p );                                       \
+                                                                                       \
+    FLA_Obj_free_without_buffer( &A );                                                 \
+    FLA_Obj_free_without_buffer( &p );                                                 \
+                                                                                       \
+    FLA_Finalize_safe( init_result );                                                  \
+    if ( e_val != FLA_SUCCESS ) *info = e_val + 1;                                      \
+  }                                                                                     \
+  else                                                                                 \
+  {                                                                                   \
+    sgetrf2_( m, n, (float *)buff_A, ldim_A, buff_p, info);                           \
+  }
+
 #else /* FLA_AMD_OPT */
 
 #define LAPACK_getrf_body_z LAPACK_getrf_body
+
+#define LAPACK_getrf_body_s LAPACK_getrf_body
 
 /* Original FLA path */
 #define LAPACK_getrf_body_d(prefix)                                                    \
@@ -234,7 +275,7 @@ LAPACK_getrf(s)
     }
     if (fla_error == LAPACK_SUCCESS)
     {
-        LAPACK_getrf_body(s)
+        LAPACK_getrf_body_s(s)
          /** fla_error set to 0 on LAPACK_SUCCESS */
         fla_error = 0;
     }
