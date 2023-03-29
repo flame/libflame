@@ -31,5 +31,7 @@ int fla_drot_avx2(integer *n, doublereal *dx, integer *incx, doublereal *dy, int
 int fla_zscal_avx2(integer *n, doublecomplex *alpha, doublecomplex *x, integer *incx);
 integer fla_lu_piv_small_d_avx2( integer *m, integer *n, doublereal *a, integer *lda, integer *ipiv, integer *info);
 int fla_dscal_ix1_avx2(integer *n, doublereal *da, doublereal *dx, integer *incx);
+int fla_sscal_ix1_avx2(integer *n, real *alpha, real *x);
+int fla_sger_avx2(integer *m, integer *n, real *alpha, real *x, integer *incx, real *y, integer *incy, real *a, integer *lda);
 #endif
 
