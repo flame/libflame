@@ -32,16 +32,8 @@ void validate_geqrf(integer m_A,
     reset_matrix(datatype, m_A, n_A, R, m_A);
 
     // Extract R matrix and elementary reflectors from the input/output matrix parameter A_test.
-    if(m_A <= n_A)
-    {
-        copy_matrix(datatype, "full", m_A, m_A, A_test, lda, Q, m_A);
-        copy_matrix(datatype, "Upper", m_A, n_A, A_test, lda, R, m_A);
-    }
-    else
-    {
-        copy_matrix(datatype, "full", m_A, n_A, get_m_ptr(datatype, A_test, 1, 0, lda), lda, get_m_ptr(datatype, Q, 1, 0, m_A), m_A);
-        copy_matrix(datatype, "Upper", n_A, n_A, A_test, lda, R, m_A);
-    }
+    copy_matrix(datatype, "full", m_A, min_A, A_test, lda, Q, m_A);
+    copy_matrix(datatype, "Upper", min_A, n_A, A_test, lda, R, m_A);
 
     switch( datatype )
     {

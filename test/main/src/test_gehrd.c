@@ -181,6 +181,7 @@ void fla_test_gehrd_experiment(test_params_t *params,
     /* Free up the buffers */
     free_matrix(A);
     free_matrix(A_Test);
+    free_vector(tau);
 }
 
 void prepare_gehrd_run(integer n, integer* ilo, integer* ihi, void* A, integer lda, void* tau,
@@ -248,7 +249,8 @@ void prepare_gehrd_run(integer n, integer* ilo, integer* ihi, void* A, integer l
     }
     *time_min_ = time_min;
 
-    free(A_save);
+    free_matrix(A_save);
+    free_vector(tau_test);
 }
 
 void invoke_gehrd(integer datatype, integer* n, integer* ilo, integer* ihi, void* A, integer* lda, void *tau, void* work, integer* lwork, integer* info)
