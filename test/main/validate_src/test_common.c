@@ -2318,6 +2318,7 @@ void get_orthogonal_matrix_from_QR(integer datatype, integer n, void *A, integer
                 break;
             else
                 lwork = get_work_value(datatype, work);
+            free_vector(work);
             create_vector(datatype, &work, lwork);
             /* Call to SGEQRF to decompose matrix to QR form */
             fla_lapack_sgeqrf(&n, &n, Q, &ldq, tau, work, &lwork, info);
@@ -2341,6 +2342,7 @@ void get_orthogonal_matrix_from_QR(integer datatype, integer n, void *A, integer
                 break;
             else
                 lwork = get_work_value(datatype, work);
+            free_vector(work);
             create_vector(datatype, &work, lwork);
             /* Call to DGEQRF to decompose matrix to QR form */
             fla_lapack_dgeqrf(&n, &n, Q, &ldq, tau, work, &lwork, info);
@@ -2364,6 +2366,7 @@ void get_orthogonal_matrix_from_QR(integer datatype, integer n, void *A, integer
                 break;
             else
                 lwork = get_work_value(datatype, work);
+            free_vector(work);
             create_vector(datatype, &work, lwork);
             /* Call to CGEQRF to decompose matrix to QR form */
             fla_lapack_cgeqrf(&n, &n, Q, &ldq, tau, work, &lwork, info);
@@ -2387,6 +2390,7 @@ void get_orthogonal_matrix_from_QR(integer datatype, integer n, void *A, integer
                 break;
             else
                 lwork = get_work_value(datatype, work);
+            free_vector(work);
             create_vector(datatype, &work, lwork);
             /* Call to ZGEQRF to decompose matrix to QR form */
             fla_lapack_zgeqrf(&n, &n, Q, &ldq, tau, work, &lwork, info);
