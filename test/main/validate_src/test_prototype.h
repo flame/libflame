@@ -66,6 +66,11 @@
 #define fla_lapack_cgeqrf CGEQRF_
 #define fla_lapack_zgeqrf ZGEQRF_
 
+#define fla_lapack_sgelqf SGELQF_
+#define fla_lapack_dgelqf DGELQF_
+#define fla_lapack_cgelqf CGELQF_
+#define fla_lapack_zgelqf ZGELQF_
+
 #define fla_lapack_sgerqf SGERQF_
 #define fla_lapack_dgerqf DGERQF_
 #define fla_lapack_cgerqf CGERQF_
@@ -140,6 +145,11 @@
 #define fla_lapack_dorgqr DORGQR_
 #define fla_lapack_cungqr CUNGQR_
 #define fla_lapack_zungqr ZUNGQR_
+
+#define fla_lapack_sorglq SORGLQ_
+#define fla_lapack_dorglq DORGLQ_
+#define fla_lapack_cunglq CUNGLQ_
+#define fla_lapack_zunglq ZUNGLQ_
 
 #define fla_lapack_ssteqr SSTEQR_
 #define fla_lapack_dsteqr DSTEQR_
@@ -263,6 +273,11 @@
 #define fla_lapack_cgeqrf CGEQRF
 #define fla_lapack_zgeqrf ZGEQRF
 
+#define fla_lapack_sgelqf SGELQF
+#define fla_lapack_dgelqf DGELQF
+#define fla_lapack_cgelqf CGELQF
+#define fla_lapack_zgelqf ZGELQF
+
 #define fla_lapack_sgerqf SGERQF
 #define fla_lapack_dgerqf DGERQF
 #define fla_lapack_cgerqf CGERQF
@@ -337,6 +352,11 @@
 #define fla_lapack_dorgqr DORGQR
 #define fla_lapack_cungqr CUNGQR
 #define fla_lapack_zungqr ZUNGQR
+
+#define fla_lapack_sorglq SORGLQ
+#define fla_lapack_dorglq DORGLQ
+#define fla_lapack_cunglq CUNGLQ
+#define fla_lapack_zunglq ZUNGLQ
 
 #define fla_lapack_ssteqr SSTEQR
 #define fla_lapack_dsteqr DSTEQR
@@ -459,6 +479,11 @@
 #define fla_lapack_cgeqrf cgeqrf
 #define fla_lapack_zgeqrf zgeqrf
 
+#define fla_lapack_sgelqf sgelqf
+#define fla_lapack_dgelqf dgelqf
+#define fla_lapack_cgelqf cgelqf
+#define fla_lapack_zgelqf zgelqf
+
 #define fla_lapack_sgerqf sgerqf
 #define fla_lapack_dgerqf dgerqf
 #define fla_lapack_cgerqf cgerqf
@@ -533,6 +558,11 @@
 #define fla_lapack_dorgqr dorgqr
 #define fla_lapack_cungqr cungqr
 #define fla_lapack_zungqr zungqr
+
+#define fla_lapack_sorglq sorglq
+#define fla_lapack_dorglq dorglq
+#define fla_lapack_cunglq cunglq
+#define fla_lapack_zunglq zunglq
 
 #define fla_lapack_ssteqr ssteqr
 #define fla_lapack_dsteqr dsteqr
@@ -655,6 +685,11 @@
 #define fla_lapack_cgeqrf cgeqrf_
 #define fla_lapack_zgeqrf zgeqrf_
 
+#define fla_lapack_sgelqf sgelqf_
+#define fla_lapack_dgelqf dgelqf_
+#define fla_lapack_cgelqf cgelqf_
+#define fla_lapack_zgelqf zgelqf_
+
 #define fla_lapack_sgerqf sgerqf_
 #define fla_lapack_dgerqf dgerqf_
 #define fla_lapack_cgerqf cgerqf_
@@ -729,6 +764,11 @@
 #define fla_lapack_dorgqr dorgqr_
 #define fla_lapack_cungqr cungqr_
 #define fla_lapack_zungqr zungqr_
+
+#define fla_lapack_sorglq sorglq_
+#define fla_lapack_dorglq dorglq_
+#define fla_lapack_cunglq cunglq_
+#define fla_lapack_zunglq zunglq_
 
 #define fla_lapack_ssteqr ssteqr_
 #define fla_lapack_dsteqr dsteqr_
