@@ -11,6 +11,7 @@ void fla_test_gesdd(integer argc, char ** argv, test_params_t *params);
 void fla_test_geqrf(integer argc, char ** argv, test_params_t *params);
 void fla_test_gerqf(integer argc, char ** argv, test_params_t *params);
 void fla_test_gerq2(integer argc, char ** argv, test_params_t *params);
+void fla_test_gelqf(integer argc, char ** argv, test_params_t *params);
 void fla_test_geqp3(integer argc, char ** argv, test_params_t *params);
 void fla_test_potrf(integer argc, char ** argv, test_params_t *params);
 void fla_test_getrf(integer argc, char ** argv, test_params_t *params);
@@ -47,6 +48,7 @@ OPERATIONS API_test_functions[] =
     {LIN_ID,    "geqrf"               , fla_test_geqrf},
     {LIN_ID,    "gerqf"               , fla_test_gerqf},
     {LIN_ID,    "gerq2"               , fla_test_gerq2},
+    {LIN_ID,    "gelqf"               , fla_test_gelqf},
     {LIN_ID,    "geqp3"               , fla_test_geqp3},
     {LIN_ID,    "getrf"               , fla_test_getrf},
     {LIN_ID,    "getri"               , fla_test_getri},

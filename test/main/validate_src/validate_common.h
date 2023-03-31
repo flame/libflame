@@ -42,6 +42,16 @@ void validate_gerqf(integer m_A,
     double* residual,
     integer *info);
 
+void validate_gelqf(integer m_A,
+    integer n_A,
+    void *A,
+    void *A_test,
+    integer lda,
+    void *T_test,
+    integer datatype,
+    double* residual,
+    integer *info);
+
 void validate_gesdd(char *jobz,
     integer m,
     integer n,

@@ -18,6 +18,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/test_getrs.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_geqrf.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_gerq2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_gerqf.c
+${CMAKE_CURRENT_SOURCE_DIR}/test_gelqf.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_geevx.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_geev.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_ggev.c

@@ -8,6 +8,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/test_common.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_geqrf.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_gerq2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_gerqf.c
+${CMAKE_CURRENT_SOURCE_DIR}/validate_gelqf.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_gesdd.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_gesvd.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_getrf.c
