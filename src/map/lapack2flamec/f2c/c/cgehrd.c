@@ -225,6 +225,7 @@ int cgehrd_(integer *n, integer *ilo, integer *ihi, complex * a, integer *lda, c
     /* Function Body */
     *info = 0;
     lquery = *lwork == -1;
+    nx = 0;
     if (*n < 0)
     {
         *info = -1;

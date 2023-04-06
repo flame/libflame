@@ -249,13 +249,13 @@ int chetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     /* Builtin functions */
     double c_abs(complex *);
     /* Local variables */
-    integer abofdpos, nthreads, i__, k, m, stepercol, ed, ib, st, blklastind, lda, tid, ldv;
+    integer abofdpos, i__, k, m, stepercol, ed, ib, st, blklastind, lda, tid, ldv;
     complex tmp;
     integer stt, inda;
     extern integer ilaenv2stage_(integer *, char *, char *, integer *, integer *, integer *, integer *);
-    integer thed, indv, myid, indw, apos, dpos, edind, debug;
+    integer thed, indv, myid, indw, apos, dpos, edind;
     extern logical lsame_(char *, char *);
-    integer lhmin, sicev, sizea, shift, stind, colpt, lwmin, awpos;
+    integer lhmin, sizea, shift, stind, colpt, lwmin, awpos;
     logical wantq, upper;
     integer grsiz, ttype;
     extern /* Subroutine */
@@ -304,7 +304,6 @@ int chetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     --hous;
     --work;
     /* Function Body */
-    debug = 0;
     *info = 0;
     afters1 = lsame_(stage1, "Y");
     wantq = lsame_(vect, "V");
@@ -378,14 +377,12 @@ int chetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     /* Determine pointer position */
     ldv = *kd + ib;
     sizetau = *n << 1;
-    sicev = *n << 1;
     indtau = 1;
     indv = indtau + sizetau;
     lda = (*kd << 1) + 1;
     sizea = lda * *n;
     inda = 1;
     indw = inda + sizea;
-    nthreads = 1;
     tid = 0;
     if (upper)
     {

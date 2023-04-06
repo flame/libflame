@@ -13,7 +13,6 @@ static complex c_b2 =
 ;
 static integer c__1 = 1;
 static integer c_n1 = -1;
-static integer c__2 = 2;
 /* > \brief \b CTREVC3 */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
@@ -268,8 +267,7 @@ int ctrevc3_(char *side, char *howmny, logical *select, integer *n, complex *t, 
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */
-    address a__1[2];
-    integer t_dim1, t_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1, i__2[2], i__3, i__4, i__5, i__6;
+    integer t_dim1, t_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1, i__3, i__4, i__5, i__6;
     real r__1, r__2, r__3;
     complex q__1, q__2;
     char ch__1[2];

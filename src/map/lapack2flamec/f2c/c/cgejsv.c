@@ -715,6 +715,10 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
     defr = lsame_(jobr, "N");
     l2pert = lsame_(jobp, "P");
     lquery = *lwork == -1 || *lrwork == -1;
+    iwoff = 0;
+    lwrk_cgeqrf__ = 0;
+    lwrk_cgelqf__ = 0;
+    lwrk_cgeqp3__ = 0;
     if (! (rowpiv || l2rank || l2aber || errest || lsame_(joba, "C")))
     {
         *info = -1;

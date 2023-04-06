@@ -163,6 +163,7 @@ int cspr_(char *uplo, integer *n, complex *alpha, complex *x, integer *incx, com
     --x;
     /* Function Body */
     info = 0;
+    kx = 0;
     if (! lsame_(uplo, "U") && ! lsame_(uplo, "L"))
     {
         info = 1;

@@ -250,6 +250,11 @@ int cstein_(integer *n, real *d__, real *e, integer *m, real *w, integer *iblock
     --ifail;
     /* Function Body */
     *info = 0;
+    stpcrt = 0.f;
+    onenrm = 0.f;
+    ortol = 0.f;
+    gpind= 0;
+    xjm = 0.f;
     i__1 = *m;
     for (i__ = 1;
             i__ <= i__1;

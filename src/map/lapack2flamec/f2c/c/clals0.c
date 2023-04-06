@@ -340,6 +340,7 @@ int clals0_(integer *icompq, integer *nl, integer *nr, integer *sqre, integer *n
     /* Function Body */
     *info = 0;
     n = *nl + *nr + 1;
+    difrj = 0.f;
     if (*icompq < 0 || *icompq > 1)
     {
         *info = -1;

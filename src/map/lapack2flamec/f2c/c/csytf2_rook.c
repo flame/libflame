@@ -261,6 +261,8 @@ int csytf2_rook_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv
     --ipiv;
     /* Function Body */
     *info = 0;
+    imax = 0;
+    jmax = 0;
     upper = lsame_(uplo, "U");
     if (! upper && ! lsame_(uplo, "L"))
     {

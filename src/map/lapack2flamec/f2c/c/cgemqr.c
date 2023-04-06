@@ -1,3 +1,6 @@
+/*
+    Copyright (c) 2021-2023 Advanced Micro Devices, Inc. All rights reserved.
+*/
 /* ../netlib/v3.9.0/cgemqr.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* > \brief \b CGEMQR */
@@ -185,7 +188,6 @@ int cgemqr_(char *side, char *trans, integer *m, integer *n, integer *k, complex
     logical left, tran;
     extern logical lsame_(char *, char *);
     logical right;
-    integer nblcks;
     extern /* Subroutine */
     int xerbla_(char *, integer *);
     logical notran, lquery;
@@ -237,21 +239,6 @@ int cgemqr_(char *side, char *trans, integer *m, integer *n, integer *k, complex
     {
         lw = mb * nb;
         mn = *n;
-    }
-    if (mb > *k && mn > *k)
-    {
-        if ((mn - *k) % (mb - *k) == 0)
-        {
-            nblcks = (mn - *k) / (mb - *k);
-        }
-        else
-        {
-            nblcks = (mn - *k) / (mb - *k) + 1;
-        }
-    }
-    else
-    {
-        nblcks = 1;
     }
     *info = 0;
     if (! left && ! right)

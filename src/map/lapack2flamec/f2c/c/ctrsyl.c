@@ -184,7 +184,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
     int slabad_(real *, real *);
     extern real clange_(char *, integer *, integer *, complex *, integer *, real *);
     extern /* Complex */
-    VOID cladiv_(complex *, complex *, complex *);
+    void cladiv_f2c_(complex *, complex *, complex *);
     real scaloc;
     extern real slamch_(char *);
     extern /* Subroutine */

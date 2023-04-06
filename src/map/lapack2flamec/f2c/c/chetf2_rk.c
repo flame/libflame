@@ -313,6 +313,8 @@ int chetf2_rk_(char *uplo, integer *n, complex *a, integer * lda, complex *e, in
     --ipiv;
     /* Function Body */
     *info = 0;
+    imax = 0;
+    jmax = 0;
     upper = lsame_(uplo, "U");
     if (! upper && ! lsame_(uplo, "L"))
     {

@@ -16,6 +16,15 @@
   symmetric matrix in packed storage format.
 */
 
+extern void sspffrtx_fla(float *ap, integer *n, integer * ncolm, float *work, float *work2);
+extern void dspffrtx_fla(double *ap, integer *n, integer * ncolm, double *work, double *work2);
+extern void cspffrtx_fla(scomplex *ap, integer *n, integer * ncolm, scomplex *work, scomplex *work2);
+extern void zspffrtx_fla(dcomplex *ap, integer *n, integer * ncolm, dcomplex *work, dcomplex *work2);
+extern int sspffrtx_check(float *ap, integer *n, integer * ncolm, float *work, float *work2);
+extern int dspffrtx_check(double *ap, integer *n, integer * ncolm, double *work, double *work2);
+extern int cspffrtx_check(scomplex *ap, integer *n, integer * ncolm, scomplex *work, scomplex *work2);
+extern int zspffrtx_check(dcomplex *ap, integer *n, integer * ncolm, dcomplex *work, dcomplex *work2);
+
 #define LAPACK_spffrtx(prefix)                                           \
   int F77_ ## prefix ## spffrtx( PREFIX2LAPACK_TYPEDEF(prefix)* buff_AP, \
                                  integer* n,                                 \

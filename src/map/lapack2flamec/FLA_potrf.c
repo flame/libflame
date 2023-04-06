@@ -31,6 +31,19 @@
   completed.
 */
 
+extern int spotrf_check(char *uplo, integer *n, float *a, integer *lda, integer *info);
+extern int dpotrf_check(char *uplo, integer *n, double *a, integer * lda, integer *info);
+extern int cpotrf_check(char *uplo, integer *n, scomplex *a, integer *lda, integer *info);
+extern int zpotrf_check(char *uplo, integer *n, dcomplex *a, integer *lda, integer *info);
+extern int lapack_spotrf(char *uplo, integer *n, float *a, integer *lda,	integer *info);
+extern int lapack_dpotrf(char *uplo, integer *n, double *a, integer *lda, integer *info);
+extern int spotf2_check(char *uplo, integer *n, float *a, integer *lda, integer *info);
+extern int dpotf2_check(char *uplo, integer *n, double *a, integer * lda, integer *info);
+extern int cpotf2_check(char *uplo, integer *n, scomplex *a, integer *lda, integer *info);
+extern int zpotf2_check(char *uplo, integer *n, dcomplex *a, integer *lda, integer *info);
+extern int lapack_spotf2(char *uplo, integer *n, float *a, integer *lda,	integer *info);
+extern int lapack_dpotf2(char *uplo, integer *n, double *a, integer *lda, integer *info);
+
 extern void DTL_Trace(
 		    uint8 ui8LogLevel,
 		    uint8 ui8LogType,

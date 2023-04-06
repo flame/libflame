@@ -277,7 +277,7 @@ int clatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, comp
     int ctrsv_(char *, char *, char *, integer *, complex *, integer *, complex *, integer *);
     extern integer icamax_(integer *, complex *, integer *);
     extern /* Complex */
-    VOID cladiv_f2c_(complex *, complex *, complex *);
+    void cladiv_f2c_(complex *, complex *, complex *);
     extern real slamch_(char *);
     extern /* Subroutine */
     int csscal_(integer *, real *, complex *, integer *), xerbla_(char *, integer *);

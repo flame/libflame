@@ -192,7 +192,7 @@ int cgelss_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
     integer i__, bl, ie, il, mm;
     complex dum[1];
     real eps, thr, anrm, bnrm;
-    integer itau, lwork_cgebrd__, lwork_cgelqf__, lwork_cgeqrf__, lwork_cungbr__, lwork_cunmbr__, lwork_cunmlq__, lwork_cunmqr__;
+    integer itau, lwork_cgebrd__, lwork_cgelqf__, lwork_cungbr__, lwork_cunmbr__, lwork_cunmlq__;
     extern /* Subroutine */
     int cgemm_(char *, char *, integer *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer *);
     integer iascl, ibscl;
@@ -259,6 +259,7 @@ int cgelss_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
     minmn = fla_min(*m,*n);
     maxmn = fla_max(*m,*n);
     lquery = *lwork == -1;
+    mnthr = 0;
     if (*m < 0)
     {
         *info = -1;
@@ -298,12 +299,6 @@ int cgelss_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
             {
                 /* Path 1a - overdetermined, with many more rows than */
                 /* columns */
-                /* Compute space needed for CGEQRF */
-                cgeqrf_(m, n, &a[a_offset], lda, dum, dum, &c_n1, info);
-                lwork_cgeqrf__ = (integer) dum[0].r;
-                /* Compute space needed for CUNMQR */
-                cunmqr_("L", "C", m, nrhs, n, &a[a_offset], lda, dum, &b[ b_offset], ldb, dum, &c_n1, info);
-                lwork_cunmqr__ = (integer) dum[0].r;
                 mm = *n;
                 /* Computing MAX */
                 i__1 = maxwrk;

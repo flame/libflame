@@ -161,6 +161,7 @@ real clangb_(char *norm, integer *n, integer *kl, integer *ku, complex *ab, inte
     ab -= ab_offset;
     --work;
     /* Function Body */
+    value = 0.f;
     if (*n == 0)
     {
         value = 0.f;

@@ -165,10 +165,14 @@ the routine */
 /* Subroutine */
 int cunmql_(char *side, char *trans, integer *m, integer *n, integer *k, complex *a, integer *lda, complex *tau, complex *c__, integer *ldc, complex *work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("cunmql inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS ", ldc %" FLA_IS "",*side, *trans, *m, *n, *k, *lda, *ldc);
-    address a__1[2];
-    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__3[2], i__4, i__5;
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if LF_AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"cunmql inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS ", ldc %" FLA_IS ", lwork %" FLA_IS "",*side, *trans, *m, *n, *k, *lda, *ldc, *lwork);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
+    /* System generated locals */
+    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__4, i__5;
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */
@@ -215,6 +219,7 @@ int cunmql_(char *side, char *trans, integer *m, integer *n, integer *k, complex
     --work;
     /* Function Body */
     *info = 0;
+    nb = 0;
     left = lsame_(side, "L");
     notran = lsame_(trans, "N");
     lquery = *lwork == -1;

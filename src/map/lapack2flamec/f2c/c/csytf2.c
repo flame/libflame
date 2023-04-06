@@ -256,6 +256,8 @@ int csytf2_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv, int
     --ipiv;
     /* Function Body */
     *info = 0;
+    imax = 0;
+    jmax = 0;
     upper = lsame_(uplo, "U");
     if (! upper && ! lsame_(uplo, "L"))
     {

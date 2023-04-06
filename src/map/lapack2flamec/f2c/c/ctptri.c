@@ -168,6 +168,7 @@ int ctptri_(char *uplo, char *diag, integer *n, complex *ap, integer *info)
     *info = 0;
     upper = lsame_(uplo, "U");
     nounit = lsame_(diag, "N");
+    jclast = 0;
     if (! upper && ! lsame_(uplo, "L"))
     {
         *info = -1;

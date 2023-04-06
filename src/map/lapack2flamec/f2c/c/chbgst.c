@@ -244,6 +244,7 @@ int chbgst_(char *vect, char *uplo, integer *n, integer *ka, integer *kb, comple
     ka1 = *ka + 1;
     kb1 = *kb + 1;
     *info = 0;
+    j2 = 0;
     if (! wantx && ! lsame_(vect, "N"))
     {
         *info = -1;

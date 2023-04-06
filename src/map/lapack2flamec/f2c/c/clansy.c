@@ -160,6 +160,7 @@ real clansy_(char *norm, char *uplo, integer *n, complex *a, integer *lda, real 
     a -= a_offset;
     --work;
     /* Function Body */
+    value = 0.f;
     if (*n == 0)
     {
         value = 0.f;

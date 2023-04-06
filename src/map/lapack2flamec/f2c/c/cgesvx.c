@@ -430,6 +430,8 @@ int cgesvx_(char *fact, char *trans, integer *n, integer * nrhs, complex *a, int
     nofact = lsame_(fact, "N");
     equil = lsame_(fact, "E");
     notran = lsame_(trans, "N");
+    smlnum = 0.f;
+    bignum = 0.f;
     if (nofact || equil)
     {
         *(unsigned char *)equed = 'N';

@@ -302,8 +302,6 @@ int claqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     void r_cnjg(complex *, complex *), c_div(complex *, complex *, complex *);
     /* Local variables */
     integer aed_info__;
-    extern /* Subroutine */
-    int f90_cycle_(void);
     integer shiftpos, lworkreq, k;
     real c1;
     integer k2;
@@ -345,8 +343,6 @@ int claqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     integer iwantq, iwants, istart;
     real smlnum;
     integer istopm, iwantz, istart2;
-    extern /* Subroutine */
-    int f90_exit_(void);
     logical ilschur;
     integer nshifts, istartm;
     /* Arguments */
@@ -372,6 +368,8 @@ int claqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     --work;
     --rwork;
     /* Function Body */
+    eshift.r = 0.f;
+    eshift.i = 0.f;
     if (lsame_(wants, "E"))
     {
         ilschur = FALSE_;

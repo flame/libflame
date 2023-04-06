@@ -166,6 +166,7 @@ int cungql_(integer *m, integer *n, integer *k, complex *a, integer *lda, comple
     --work;
     /* Function Body */
     *info = 0;
+    nb = 0;
     lquery = *lwork == -1;
     if (*m < 0)
     {

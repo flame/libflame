@@ -36,6 +36,13 @@
   Note that the routine returns V**T, not V.
 */
 
+extern int lapack_sgesvd(char *jobu, char *jobvt, integer *m, integer *n, real *a, integer *lda, real *s, real *u, integer *ldu, real *vt, integer *ldvt, real *work, integer *lwork, integer *info);
+extern int lapack_dgesvd(char *jobu, char *jobvt, integer *m, integer *n, doublereal *a, integer *lda, doublereal *s, doublereal *u, integer * ldu, doublereal *vt, integer *ldvt, doublereal *work, integer *lwork, integer *info);
+extern int sgesvd_check(char *jobu, char *jobvt, integer *m, integer *n, float *a, integer *lda, float *s, float *u, integer *ldu, float *vt, integer *ldvt, float *work, integer *lwork, integer *info);
+extern int dgesvd_check(char *jobu, char *jobvt, integer *m, integer *n, double *a, integer *lda, double *s, double *u, integer * ldu, double *vt, integer *ldvt, double *work, integer *lwork, integer *info);
+extern int cgesvd_check(char *jobu, char *jobvt, integer *m, integer *n, scomplex *a, integer *lda, float *s, scomplex *u, integer *ldu, scomplex * vt, integer *ldvt, scomplex *work, integer *lwork, float *rwork, integer *info);
+extern int zgesvd_check(char *jobu, char *jobvt, integer *m, integer *n, dcomplex *a, integer *lda, double *s, dcomplex *u, integer *ldu, dcomplex *vt, integer *ldvt, dcomplex *work, integer *lwork, double *rwork, integer *info);
+
 #define LAPACK_gesvd_real(prefix)                                       \
   int F77_ ## prefix ## gesvd( char* jobu,                              \
                                char* jobv,                              \

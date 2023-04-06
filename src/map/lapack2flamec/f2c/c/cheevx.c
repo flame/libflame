@@ -347,6 +347,7 @@ int cheevx_(char *jobz, char *range, char *uplo, integer *n, complex *a, integer
     valeig = lsame_(range, "V");
     indeig = lsame_(range, "I");
     lquery = *lwork == -1;
+    lwkopt = 0;
     *info = 0;
     if (! (wantz || lsame_(jobz, "N")))
     {

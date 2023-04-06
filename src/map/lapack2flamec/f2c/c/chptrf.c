@@ -226,6 +226,8 @@ int chptrf_(char *uplo, integer *n, complex *ap, integer * ipiv, integer *info)
     --ap;
     /* Function Body */
     *info = 0;
+    imax = 0;
+    jmax = 0;
     upper = lsame_(uplo, "U");
     if (! upper && ! lsame_(uplo, "L"))
     {

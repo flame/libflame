@@ -180,6 +180,7 @@ int cgerqf_(integer *m, integer *n, complex *a, integer *lda, complex *tau, comp
     --work;
     /* Function Body */
     *info = 0;
+    nb = 0;
     lquery = *lwork == -1;
     if (*m < 0)
     {

@@ -124,7 +124,7 @@ int clarfg_(integer *n, complex *alpha, complex *x, integer * incx, complex *tau
     real alphi, alphr, xnorm;
     extern real scnrm2_(integer *, complex *, integer *), slapy3_(real *, real *, real *);
     extern /* Complex */
-    VOID cladiv_(complex *, complex *, complex *);
+    void cladiv_f2c_(complex *, complex *, complex *);
     extern real slamch_(char *);
     extern /* Subroutine */
     int csscal_(integer *, real *, complex *, integer *);

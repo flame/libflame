@@ -380,6 +380,7 @@ int ctgsyl_(char *trans, integer *ijob, integer *m, integer * n, complex *a, int
     --iwork;
     /* Function Body */
     *info = 0;
+    scale2 = 0.f;
     notran = lsame_(trans, "N");
     lquery = *lwork == -1;
     if (! notran && ! lsame_(trans, "C"))

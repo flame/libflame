@@ -380,6 +380,8 @@ int cppsvx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *ap, com
     *info = 0;
     nofact = lsame_(fact, "N");
     equil = lsame_(fact, "E");
+    smlnum = 0.f;
+    bignum = 0.f;
     if (nofact || equil)
     {
         *(unsigned char *)equed = 'N';

@@ -169,6 +169,7 @@ real clanhb_(char *norm, char *uplo, integer *n, integer *k, complex *ab, intege
     ab -= ab_offset;
     --work;
     /* Function Body */
+    value = 0.f;
     if (*n == 0)
     {
         value = 0.f;
