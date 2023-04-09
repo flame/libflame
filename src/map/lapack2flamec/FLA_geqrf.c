@@ -133,6 +133,9 @@ LAPACK_geqrf(d)
     return fla_error;
 #else
     {
+      /* Initialize global context data */
+      aocl_fla_init();
+
       dgeqrf_fla(m, n, buff_A, ldim_A, buff_t, buff_w, lwork, info);
       AOCL_DTL_TRACE_LOG_EXIT
       return 0;
