@@ -108,14 +108,143 @@ static integer c__1 = 1;
 /* Subroutine */
 int dorg2r_fla(integer *m, integer *n, integer *k, doublereal * a, integer *lda, doublereal *tau, doublereal *work, integer *info)
 {
+    extern fla_context global_context;
+    extern int dorg2r_fla_opt(integer *m, integer *n, integer *k, doublereal * a, integer *lda, doublereal *tau, doublereal *work, integer *info);
+    extern int dorg2r_fla_native(integer *m, integer *n, integer *k, doublereal * a, integer *lda, doublereal *tau, doublereal *work, integer *info);
+    int retval = 0;
+
+    /* Initialize global context data */
+    aocl_fla_init();
+
+#ifdef FLA_ENABLE_AMD_OPT
+    if (global_context.is_avx2)
+    {
+       retval = dorg2r_fla_opt(m, n, k, a, lda, tau, work, info);
+    }
+    else
+    {
+       retval = dorg2r_fla_native(m, n, k, a, lda, tau, work, info);
+    }
+#else
+    retval = dorg2r_fla_native(m, n, k, a, lda, tau, work, info);
+#endif
+
+    return retval;
+}
+
+int dorg2r_fla_opt(integer *m, integer *n, integer *k, doublereal * a, integer *lda, doublereal *tau, doublereal *work, integer *info)
+{
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     doublereal d__1;
-#ifdef FLA_ENABLE_AMD_OPT
     integer i;
     doublereal *dx;
     __m256d alphav, x0v;
-#endif
+    /* Local variables */
+    integer i__, j, l;
+    extern /* Subroutine */
+    int dscal_(integer *, doublereal *, doublereal *, integer *), dlarf_(char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *), xerbla_(char *, integer *);
+    /* Test the input arguments */
+    /* Parameter adjustments */
+    a_dim1 = *lda;
+    a_offset = 1 + a_dim1;
+    a -= a_offset;
+    --tau;
+    --work;
+    /* Function Body */
+    *info = 0;
+    if (*m < 0)
+    {
+        *info = -1;
+    }
+    else if (*n < 0 || *n > *m)
+    {
+        *info = -2;
+    }
+    else if (*k < 0 || *k > *n)
+    {
+        *info = -3;
+    }
+    else if (*lda < fla_max(1,*m))
+    {
+        *info = -5;
+    }
+    if (*info != 0)
+    {
+        i__1 = -(*info);
+        xerbla_("DORG2R", &i__1);
+        return 0;
+    }
+    /* Quick return if possible */
+    if (*n <= 0)
+    {
+        return 0;
+    }
+    /* Initialise columns k+1:n to columns of the unit matrix */
+    i__1 = *n;
+    for (j = *k + 1;
+            j <= i__1;
+            ++j)
+    {
+        i__2 = *m;
+        for (l = 1;
+                l <= i__2;
+                ++l)
+        {
+            a[l + j * a_dim1] = 0.;
+            /* L10: */
+        }
+        a[j + j * a_dim1] = 1.;
+        /* L20: */
+    }
+
+    for (i__ = *k;
+            i__ >= 1;
+            --i__)
+    {
+        /* Apply H(i) to A(i:m,i:n) from the left */
+        if (i__ < *n)
+        {
+            a[i__ + i__ * a_dim1] = 1.;
+            i__1 = *m - i__ + 1;
+            i__2 = *n - i__;
+            dlarf_("Left", &i__1, &i__2, &a[i__ + i__ * a_dim1], &c__1, &tau[ i__], &a[i__ + (i__ + 1) * a_dim1], lda, &work[1]);
+        }
+
+        /* Inline DSCAL for small size */
+	i__1 = *m - i__;
+	d__1 = -tau[i__];
+        
+	if (i__ < *m)
+        {
+	    fla_dscal(&i__1, &d__1, &a[i__ + 1 + i__ * a_dim1], &c__1);
+        }
+        else
+        {
+            dscal_(&i__1, &d__1, &a[i__ + 1 + i__ * a_dim1], &c__1);
+        }
+        
+	a[i__ + i__ * a_dim1] = 1. - tau[i__];
+        /* Set A(1:i-1,i) to zero */
+        i__1 = i__ - 1;
+        for (l = 1;
+                l <= i__1;
+                ++l)
+        {
+            a[l + i__ * a_dim1] = 0.;
+            /* L30: */
+        }
+        /* L40: */
+    }
+    return 0;
+    /* End of DORG2R */
+}
+
+int dorg2r_fla_native(integer *m, integer *n, integer *k, doublereal * a, integer *lda, doublereal *tau, doublereal *work, integer *info)
+{
+    /* System generated locals */
+    integer a_dim1, a_offset, i__1, i__2;
+    doublereal d__1;
     /* Local variables */
     integer i__, j, l;
     extern /* Subroutine */
@@ -205,83 +334,12 @@ int dorg2r_fla(integer *m, integer *n, integer *k, doublereal * a, integer *lda,
             dlarf_("Left", &i__1, &i__2, &a[i__ + i__ * a_dim1], &c__1, &tau[ i__], &a[i__ + (i__ + 1) * a_dim1], lda, &work[1]);
         }
 
-#ifdef FLA_ENABLE_AMD_OPT
-        /* Inline DSCAL for small size */
-        if (i__ < *m && *m <= FLA_DSCAL_INLINE_SMALL)
-        {
-            i__1 = *m - i__;
-            d__1 = -tau[i__];
-            dx = &a[i__ + i__ * a_dim1];
-
-            /* Load scaling factor */
-            alphav = _mm256_set1_pd(d__1);
-
-            /* Scaling with 0 */
-            if(d__1 == 0.0)
-            {
-                for (i = 1; i <= (i__1-3); i+=4 )
-                {
-                    dx[i] = 0.0;
-                    dx[i+1] = 0.0;
-                    dx[i+2] = 0.0;
-                    dx[i+3] = 0.0;
-                }
-                for (; i <= i__1; ++i)
-                {
-                    dx[i] = 0.0;
-                }
-            }
-            /* Scaling factor other than 0 */
-            else
-            {
-                for ( i = 1; i <= (i__1 - 3); i += 4)
-                {
-                    /* Load the input values */
-                    x0v = _mm256_loadu_pd((double const *) &dx[i]);
-
-                    /* perform alpha * x  */
-                    x0v = _mm256_mul_pd( alphav, x0v );  
-
-                    /* Store the output */
-                    _mm256_storeu_pd((double *) &dx[i], x0v);
-                }
-
-                /* Remainder iterations */
-                if((i__1-i) >= 2)
-                {
-                    for ( ; i <= (i__1-1); i += 2 )
-                    {
-                        dx[i] *= d__1;
-                        dx[i+1] *= d__1;
-                    }
-                    for ( ; i <= i__1; ++i )
-                    {
-                        dx[i] *= d__1;
-                    }
-                }
-                else
-                {
-                    for ( ; i <= i__1; ++i )
-                    {
-                        dx[i] *= d__1;
-                    }
-                }
-            }
-        }
-        else
-        {
-            i__1 = *m - i__;
-            d__1 = -tau[i__];
-            dscal_(&i__1, &d__1, &a[i__ + 1 + i__ * a_dim1], &c__1);
-        }
-#else
         if (i__ < *m)
         {
             i__1 = *m - i__;
             d__1 = -tau[i__];
             dscal_(&i__1, &d__1, &a[i__ + 1 + i__ * a_dim1], &c__1);
         }
-#endif
         a[i__ + i__ * a_dim1] = 1. - tau[i__];
         /* Set A(1:i-1,i) to zero */
         i__1 = i__ - 1;

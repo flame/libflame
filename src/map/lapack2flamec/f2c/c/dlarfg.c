@@ -134,6 +134,10 @@ int dlarfg_(integer *n, doublereal *alpha, doublereal *x, integer *incx, doubler
     /* .. */
     /* .. Executable Statements .. */
     /* Parameter adjustments */
+    
+    /* Initialize global context data */
+    aocl_fla_init();
+
     --x;
     /* Function Body */
     if (*n <= 1)
@@ -142,6 +146,7 @@ int dlarfg_(integer *n, doublereal *alpha, doublereal *x, integer *incx, doubler
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
+
     i__1 = *n - 1;
     xnorm = dnrm2_(&i__1, &x[1], incx);
     if (xnorm == 0.)
@@ -184,16 +189,10 @@ L10:
         *tau = (beta - *alpha) / beta;
         i__1 = *n - 1;
         d__1 = 1. / (*alpha - beta);
+
 #ifdef FLA_ENABLE_AMD_OPT
-        /* Inline DSCAL for small sizes (<= 128) */
-        if(i__1 >= c__1 && i__1 <= FLA_DSCAL_INLINE_SMALL)
-        {
-            fla_dscal(&i__1, &d__1, &x[1], incx);
-        }
-        else
-        {
-           dscal_(&i__1, &d__1, &x[1], incx);
-        }
+        /* Inline DSCAL for small sizes */
+        fla_dscal(&i__1, &d__1, &x[1], incx);
 #else
         dscal_(&i__1, &d__1, &x[1], incx);
 #endif

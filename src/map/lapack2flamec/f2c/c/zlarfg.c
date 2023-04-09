@@ -146,6 +146,10 @@ int zlarfg_(integer *n, doublecomplex *alpha, doublecomplex * x, integer *incx, 
     /* .. */
     /* .. Executable Statements .. */
     /* Parameter adjustments */
+
+    /* Initialize global context data */
+    aocl_fla_init();
+
     --x;
     /* Function Body */
     if (*n <= 0)
@@ -205,19 +209,13 @@ L10:
         zladiv_f2c_(&z__1, &c_b5, &z__2);
         alpha->r = z__1.r, alpha->i = z__1.i;
         i__1 = *n - 1;
+
 #ifdef FLA_ENABLE_AMD_OPT
-        if(i__1 <= FLA_ZSCAL_INLINE_SMALL)
-        {
-            /* use avx2 implementation of ZSCAL */
-            fla_zscal(&i__1, alpha, &x[1], incx);
-        }
-        else
-        {
-            zscal_(&i__1, alpha, &x[1], incx);
-        }
+        fla_zscal(&i__1, alpha, &x[1], incx);
 #else
         zscal_(&i__1, alpha, &x[1], incx);
 #endif
+
         /* If ALPHA is subnormal, it may lose relative accuracy */
         i__1 = knt;
         for (j = 1;

@@ -30,12 +30,15 @@ int fla_drot(integer *n,
     return 0;
 }
 
-/* complex vector scaling when increment is 1 and threshold <= 128 */
+/* complex vector scaling when increment is 1 and specific threshold */
 int fla_zscal(integer *n, doublecomplex *alpha,
               doublecomplex *x, integer *incx)
 {
-    /* Take AVX path only for increment equal to 1 */
-    if(*incx == 1)
+    /* Initialize global context data */
+    aocl_fla_init();
+
+    /* Take AVX path only for increment equal to 1 and particular threshold size*/
+    if(global_context.is_avx2 && *incx == 1 && *n <= FLA_ZSCAL_INLINE_SMALL)
     {
         fla_zscal_ix1_avx2(n, alpha, x);
     }
@@ -49,7 +52,10 @@ int fla_zscal(integer *n, doublecomplex *alpha,
 /* scales a vector by a constant when threshold <= 128 */
 int fla_dscal(integer *n, doublereal *da, doublereal *dx, integer *incx)
 {
-    if(*incx == 1 && *da != 0)
+    /* Initialize global context data */
+    aocl_fla_init();
+
+    if(global_context.is_avx2 && *incx == 1 && *da != 0 && *n >= 1 && *n <= FLA_DSCAL_INLINE_SMALL)
     {
         fla_dscal_ix1_avx2(n, da, dx, incx);
     }

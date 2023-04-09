@@ -242,12 +242,13 @@ extern int fla_dgeqrf_small(integer *m, integer *n,
 
 /* Path for small sizes */
 #ifdef FLA_ENABLE_AMD_OPT
- if (*m <= FLA_GEQRF_STHRESH && *n <= FLA_GEQRF_STHRESH)
+ if (global_context.is_avx2 && *m <= FLA_GEQRF_STHRESH && *n <= FLA_GEQRF_STHRESH)
  {
      fla_dgeqrf_small(m, n, &a[a_offset], lda, &tau[1], &work[1]);
      return 0;
  }
 #endif
+
  if (nb > 1 && nb < k) {
  /* Determine when to cross over from blocked to unblocked code. */
  /* Computing MAX */

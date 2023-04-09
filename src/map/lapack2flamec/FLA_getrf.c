@@ -66,7 +66,9 @@ extern fla_context global_context;                                              
   }
 
 #define LAPACK_getrf_body_z(prefix)                                                    \
-  if( *m <= FLA_ZGETRF_SMALL_THRESH0 && *n <= FLA_ZGETRF_SMALL_THRESH0 )               \
+  extern fla_context global_context;	                                               \
+  aocl_fla_init();                                                                     \
+  if( global_context.is_avx2 && *m <= FLA_ZGETRF_SMALL_THRESH0 && *n <= FLA_ZGETRF_SMALL_THRESH0 )               \
   {                                                                                    \
     fla_zgetrf_small_avx2( m, n, (dcomplex *)buff_A, ldim_A, buff_p, info );           \
   }                                                                                    \

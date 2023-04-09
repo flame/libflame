@@ -137,6 +137,10 @@ int zung2r_(integer *m, integer *n, integer *k, doublecomplex *a, integer *lda, 
     /* .. Executable Statements .. */
     /* Test the input arguments */
     /* Parameter adjustments */
+
+    /* Initialize global context data */
+    aocl_fla_init();
+
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;
     a -= a_offset;
