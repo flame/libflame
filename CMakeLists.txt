@@ -398,7 +398,7 @@ if(BUILD_SHARED_LIBS AND ENABLE_WINDOWS_BUILD)
   add_compile_definitions(WINDOWS_FLA_SHARED_BUILD=1)
 endif()
 
-if(BUILD_TEST)
+if(BUILD_LEGACY_TEST)
 	if(WIN32)
 		add_compile_definitions(WINDOWS_FLA_TEST=1)
 	endif()
