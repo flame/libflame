@@ -135,6 +135,7 @@ doublereal dlangt_(char *norm, integer *n, doublereal *dl, doublereal *d__, doub
     --d__;
     --dl;
     /* Function Body */
+    anorm = 0.;
     if (*n <= 0)
     {
         anorm = 0.;

@@ -363,6 +363,7 @@ int dgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, doub
     --bwork;
     /* Function Body */
     *info = 0;
+    maxwrk = 0;
     wantvs = lsame_(jobvs, "V");
     wantst = lsame_(sort, "S");
     wantsn = lsame_(sense, "N");

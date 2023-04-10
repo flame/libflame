@@ -4,7 +4,6 @@
 static doublereal c_b11 = 0.;
 static doublereal c_b12 = 1.;
 static integer c__12 = 12;
-static integer c__2 = 2;
 static integer c__49 = 49;
 /* > \brief \b DHSEQR */
 /* =========== DOCUMENTATION =========== */
@@ -312,8 +311,7 @@ int dhseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, doub
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("dhseqr inputs: job %c, compz %c, n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", ldh %" FLA_IS ", ldz %" FLA_IS ", lwork %" FLA_IS "",*job, *compz, *n, *ilo, *ihi, *ldh, *ldz, *lwork);
     /* System generated locals */
-    address a__1[2];
-    integer h_dim1, h_offset, z_dim1, z_offset, i__1, i__2[2], i__3;
+    integer h_dim1, h_offset, z_dim1, z_offset, i__1, i__3;
     doublereal d__1;
     char ch__1[2];
     /* Builtin functions */

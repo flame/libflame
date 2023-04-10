@@ -364,7 +364,7 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
     doublereal temp1;
     extern /* Subroutine */
     int dscal_(integer *, doublereal *, doublereal *, integer *);
-    doublereal large, apoaq, aqoap;
+    doublereal apoaq, aqoap;
     extern logical lsame_(char *, char *);
     doublereal theta, small_val, sfmin;
     logical lsvec;
@@ -540,7 +540,6 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
     big = dlamch_("Overflow");
     /* BIG = ONE / SFMIN */
     rootbig = 1. / rootsfmin;
-    large = big / sqrt((doublereal) (*m * *n));
     bigtheta = 1. / rooteps;
     tol = ctol * epsln;
     roottol = sqrt(tol);

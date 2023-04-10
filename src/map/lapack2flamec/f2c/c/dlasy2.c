@@ -210,10 +210,10 @@ int dlasy2_(logical *ltranl, logical *ltranr, integer *isgn, integer *n1, intege
     integer ipsv, jpsv;
     logical bswap;
     extern /* Subroutine */
-    int dcopy_(integer *, doublereal *, integer *, doublereal *, integer *), dswap_(integer *, doublereal *, integer *, doublereal *, integer *);
+    int dcopy_(const integer *, doublereal *, const integer *, doublereal *, const integer *), dswap_(const integer *, doublereal *, const integer *, doublereal *, const integer *);
     logical xswap;
     extern doublereal dlamch_(char *);
-    extern integer idamax_(integer *, doublereal *, integer *);
+    extern integer idamax_(const integer *, doublereal *, const integer *);
     doublereal smlnum;
     /* -- LAPACK auxiliary routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -255,6 +255,8 @@ int dlasy2_(logical *ltranl, logical *ltranr, integer *isgn, integer *n1, intege
     /* .. Executable Statements .. */
     /* Do not check the input parameters for errors */
     *info = 0;
+    jpsv = 0;
+    ipsv = 0;
     /* Quick return if possible */
     if (*n1 == 0 || *n2 == 0)
     {

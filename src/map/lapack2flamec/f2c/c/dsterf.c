@@ -95,7 +95,6 @@ int dsterf_(integer *n, doublereal *d__, doublereal *e, integer *info)
     integer lsv;
     doublereal eps2, oldc;
     integer lend;
-    doublereal rmax;
     integer jtot;
     extern /* Subroutine */
     int dlae2_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
@@ -164,7 +163,6 @@ int dsterf_(integer *n, doublereal *d__, doublereal *e, integer *info)
     safmax = 1. / safmin;
     ssfmax = sqrt(safmax) / 3.;
     ssfmin = sqrt(safmin) / eps2;
-    rmax = dlamch_("O");
     /* Compute the eigenvalues of the tridiagonal matrix. */
     nmaxit = *n * 30;
     sigma = 0.;
