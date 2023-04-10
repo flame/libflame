@@ -23,7 +23,7 @@ void fla_test_potrs(integer argc, char ** argv, test_params_t *params)
         fla_test_op_driver(front_str, SQUARE_INPUT, params, LIN, fla_test_potrs_experiment);
         tests_not_run = 0;
     }
-    if (argc == 8)
+    if (argc == 10)
     {
         /* Read matrix input data from a file */
         g_ext_fptr = fopen(argv[7], "r");
@@ -33,7 +33,7 @@ void fla_test_potrs(integer argc, char ** argv, test_params_t *params)
             return;
         }
     }
-    if (argc >= 7 && argc <= 8)
+    if (argc >= 9 && argc <= 10)
     {
         /* Test with parameters from commandline */
         integer i, num_types, N;
@@ -47,8 +47,10 @@ void fla_test_potrs(integer argc, char ** argv, test_params_t *params)
         params->lin_solver_paramslist[0].Uplo = argv[3][0];
         N = strtoimax(argv[4], &endptr, CLI_DECIMAL_BASE);
         params->lin_solver_paramslist[0].nrhs = strtoimax(argv[5], &endptr, CLI_DECIMAL_BASE);
+        params->lin_solver_paramslist[0].lda = strtoimax(argv[6], &endptr, CLI_DECIMAL_BASE);
+        params->lin_solver_paramslist[0].ldb = strtoimax(argv[7], &endptr, CLI_DECIMAL_BASE);
         
-        n_repeats = strtoimax(argv[6], &endptr, CLI_DECIMAL_BASE);
+        n_repeats = strtoimax(argv[8], &endptr, CLI_DECIMAL_BASE);
 
         if(n_repeats > 0)
         {
@@ -93,7 +95,7 @@ void fla_test_potrs(integer argc, char ** argv, test_params_t *params)
     if(tests_not_run)
     {
         printf("\nIllegal arguments for potrs\n");
-        printf("./<EXE> potrs <precisions - sdcz> <UPLO> <N> <NRHS> <repeats>\n");
+        printf("./<EXE> potrs <precisions - sdcz> <UPLO> <N> <NRHS> <LDA> <LDB> <repeats>\n");
     }
     if(invalid_dtype)
     {

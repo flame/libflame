@@ -46,9 +46,9 @@ void fla_test_gesv(integer argc, char ** argv, test_params_t *params)
         /* Parse the arguments */
         num_types = strlen(argv[2]);
         N = strtoimax(argv[3], &endptr, CLI_DECIMAL_BASE);
-        params->lin_solver_paramslist[0].lda = strtoimax(argv[4], &endptr, CLI_DECIMAL_BASE);
-        params->lin_solver_paramslist[0].ldb = strtoimax(argv[5], &endptr, CLI_DECIMAL_BASE);
-        params->lin_solver_paramslist[0].nrhs = strtoimax(argv[6], &endptr, CLI_DECIMAL_BASE);
+        params->lin_solver_paramslist[0].nrhs = strtoimax(argv[4], &endptr, CLI_DECIMAL_BASE);
+        params->lin_solver_paramslist[0].lda = strtoimax(argv[5], &endptr, CLI_DECIMAL_BASE);
+        params->lin_solver_paramslist[0].ldb = strtoimax(argv[6], &endptr, CLI_DECIMAL_BASE);
 
         n_repeats = strtoimax(argv[7], &endptr, CLI_DECIMAL_BASE);
 
@@ -95,7 +95,7 @@ void fla_test_gesv(integer argc, char ** argv, test_params_t *params)
     if(tests_not_run)
     {
         printf("\nIllegal arguments for gesv\n");
-        printf("./<EXE> gesv <precisions - sdcz>  <N> <LDA> <LDB> <NRHS> <repeats>\n");
+        printf("./<EXE> gesv <precisions - sdcz>  <N> <NRHS> <LDA> <LDB> <repeats>\n");
     }
     if(invalid_dtype)
     {
