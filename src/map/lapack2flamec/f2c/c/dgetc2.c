@@ -148,6 +148,9 @@ int dgetc2_(integer *n, doublereal *a, integer *lda, integer *ipiv, integer *jpi
     --jpiv;
     /* Function Body */
     *info = 0;
+    smin = 0;
+    jpv = 0;
+    ipv = 0;
     /* Quick return if possible */
     if (*n == 0)
     {

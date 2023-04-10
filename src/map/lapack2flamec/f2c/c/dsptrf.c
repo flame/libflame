@@ -207,6 +207,7 @@ int dsptrf_(char *uplo, integer *n, doublereal *ap, integer * ipiv, integer *inf
     /* Function Body */
     *info = 0;
     upper = lsame_(uplo, "U");
+    imax = 0;
     if (! upper && ! lsame_(uplo, "L"))
     {
         *info = -1;

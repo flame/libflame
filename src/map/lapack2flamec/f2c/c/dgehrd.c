@@ -212,6 +212,7 @@ int dgehrd_(integer *n, integer *ilo, integer *ihi, doublereal *a, integer *lda,
     --work;
     /* Function Body */
     *info = 0;
+    nx = 0;
     lquery = *lwork == -1;
     if (*n < 0)
     {

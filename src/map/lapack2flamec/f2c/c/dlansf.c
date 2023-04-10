@@ -240,6 +240,7 @@ doublereal dlansf_(char *norm, char *transr, char *uplo, integer *n, doublereal 
     /* .. Intrinsic Functions .. */
     /* .. */
     /* .. Executable Statements .. */
+    value = 0.;
     if (*n == 0)
     {
         ret_val = 0.;

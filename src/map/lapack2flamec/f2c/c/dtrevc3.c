@@ -246,8 +246,7 @@ int dtrevc3_(char *side, char *howmny, logical *select, integer *n, doublereal *
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("dtrevc3 inputs: side %c, howmny %c, n %" FLA_IS ", ldt %" FLA_IS ", ldvl %" FLA_IS ", ldvr %" FLA_IS ", mm %" FLA_IS ", lwork %" FLA_IS "",*side, *howmny, *n, *ldt, *ldvl, *ldvr, *mm, *lwork);
     /* System generated locals */
-    address a__1[2];
-    integer t_dim1, t_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1[2], i__2, i__3, i__4;
+    integer t_dim1, t_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__2, i__3, i__4;
     doublereal d__1, d__2, d__3, d__4;
     char ch__1[2];
     /* Builtin functions */

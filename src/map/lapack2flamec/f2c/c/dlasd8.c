@@ -213,6 +213,7 @@ int dlasd8_(integer *icompq, integer *k, doublereal *d__, doublereal *z__, doubl
     --work;
     /* Function Body */
     *info = 0;
+    difrj = 0.;
     if (*icompq < 0 || *icompq > 1)
     {
         *info = -1;

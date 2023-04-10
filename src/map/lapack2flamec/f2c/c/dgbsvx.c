@@ -443,6 +443,8 @@ int dgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
     nofact = lsame_(fact, "N");
     equil = lsame_(fact, "E");
     notran = lsame_(trans, "N");
+    smlnum = 0.;
+    bignum = 0.;
     if (nofact || equil)
     {
         *(unsigned char *)equed = 'N';

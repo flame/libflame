@@ -334,6 +334,7 @@ int dlasd2_(integer *nl, integer *nr, integer *sqre, integer *k, doublereal *d__
     --coltyp;
     /* Function Body */
     *info = 0;
+    jprev = 0;
     if (*nl < 1)
     {
         *info = -1;

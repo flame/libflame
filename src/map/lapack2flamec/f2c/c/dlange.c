@@ -142,6 +142,7 @@ doublereal dlange_(char *norm, integer *m, integer *n, doublereal *a, integer *l
     a -= a_offset;
     --work;
     /* Function Body */
+    value = 0.;
     if (fla_min(*m,*n) == 0)
     {
         value = 0.;

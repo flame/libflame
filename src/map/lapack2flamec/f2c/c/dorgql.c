@@ -162,6 +162,7 @@ int dorgql_(integer *m, integer *n, integer *k, doublereal * a, integer *lda, do
     --work;
     /* Function Body */
     *info = 0;
+    nb = 0;
     lquery = *lwork == -1;
     if (*m < 0)
     {

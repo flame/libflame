@@ -116,7 +116,7 @@ int dlassq_(integer *n, doublereal *x, integer *incx, doublereal *scl, doublerea
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("dlassq inputs: n %" FLA_IS ", incx %" FLA_IS "",*n, *incx);
     /* System generated locals */
-    integer i__1, i__2;
+    integer i__1;
     doublereal r__1, r__2;
     /* Builtin functions */
     double pow_ri(doublereal *, doublereal *), sqrt(doublereal);

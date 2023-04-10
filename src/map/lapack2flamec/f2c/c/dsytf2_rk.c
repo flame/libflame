@@ -294,6 +294,8 @@ int dsytf2_rk_(char *uplo, integer *n, doublereal *a, integer *lda, doublereal *
     /* Function Body */
     *info = 0;
     upper = lsame_(uplo, "U");
+    jmax = 0;
+    imax = 0;
     if (! upper && ! lsame_(uplo, "L"))
     {
         *info = -1;

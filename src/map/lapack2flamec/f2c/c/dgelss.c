@@ -242,6 +242,7 @@ int dgelss_(integer *m, integer *n, integer *nrhs, doublereal *a, integer *lda, 
     minmn = fla_min(*m,*n);
     maxmn = fla_max(*m,*n);
     lquery = *lwork == -1;
+    mnthr = 0;
     if (*m < 0)
     {
         *info = -1;

@@ -175,7 +175,6 @@ int dgemlq_(char *side, char *trans, integer *m, integer *n, integer *k, doubler
     logical left, tran;
     extern logical lsame_(char *, char *);
     logical right;
-    integer nblcks;
     extern /* Subroutine */
     int xerbla_(char *, integer *);
     logical notran, lquery;
@@ -227,21 +226,6 @@ int dgemlq_(char *side, char *trans, integer *m, integer *n, integer *k, doubler
     {
         lw = *m * mb;
         mn = *n;
-    }
-    if (nb > *k && mn > *k)
-    {
-        if ((mn - *k) % (nb - *k) == 0)
-        {
-            nblcks = (mn - *k) / (nb - *k);
-        }
-        else
-        {
-            nblcks = (mn - *k) / (nb - *k) + 1;
-        }
-    }
-    else
-    {
-        nblcks = 1;
     }
     *info = 0;
     if (! left && ! right)
