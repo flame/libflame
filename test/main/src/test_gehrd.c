@@ -8,7 +8,7 @@
 
 /* Local prototypes */
 void fla_test_gehrd_experiment(test_params_t *params, integer datatype, integer p_cur, integer  q_cur, integer pci,
-                                    integer n_repeats, double* perf, double* t, double* residual);
+                                    integer n_repeats, integer einfo, double* perf, double* t, double* residual);
 void prepare_gehrd_run(integer n, integer* ilo, integer* ihi, void* A, integer lda, void *tau, integer datatype,
                         integer n_repeats, double* time_min_, integer* info);
 void invoke_gehrd(integer datatype, integer* n, integer* ilo, integer* ihi, void* a, integer* lda, void *tau, void* work,
@@ -24,7 +24,7 @@ void fla_test_gehrd(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Reduces matrix to upper hessenberg from";
     char* front_str = "GEHRD";
-    integer tests_not_run = 1, invalid_dtype = 0;
+    integer tests_not_run = 1, invalid_dtype = 0, einfo = 0;
     if(argc == 1)
     {
         fla_test_output_info("--- %s ---\n", op_str);
@@ -34,13 +34,7 @@ void fla_test_gehrd(integer argc, char ** argv, test_params_t *params)
     }
     if(argc == 10)
     {
-        /* Read matrix input data from a file */
-        g_ext_fptr = fopen(argv[9], "r");
-        if (g_ext_fptr == NULL)
-        {
-            printf("\n Invalid input file argument \n");
-            return;
-        }
+        FLA_TEST_PARSE_LAST_ARG(argv[9]);
     }
     if(argc >=9 && argc <= 10)
     {
@@ -84,7 +78,7 @@ void fla_test_gehrd(integer argc, char ** argv, test_params_t *params)
                 fla_test_gehrd_experiment(params, datatype,
                                           N, N,
                                           0,
-                                          n_repeats,
+                                          n_repeats, einfo,
                                           &perf, &time_min, &residual);
                 /* Print the results */
                 fla_test_print_status(front_str,
@@ -120,6 +114,7 @@ void fla_test_gehrd_experiment(test_params_t *params,
     integer  q_cur,
     integer  pci,
     integer  n_repeats,
+    integer  einfo,
     double   *perf,
     double   *time_min,
     double   *residual)
@@ -175,9 +170,9 @@ void fla_test_gehrd_experiment(test_params_t *params,
     /* Output Validation */
     if(info == 0)
         validate_gehrd(n, ilo, ihi, A, A_Test, lda, tau, datatype, residual, &vinfo);
-    else
-        *residual = DBL_MAX;
 
+    FLA_TEST_CHECK_EINFO(residual, info, einfo);
+    
     /* Free up the buffers */
     free_matrix(A);
     free_matrix(A_Test);
@@ -211,20 +206,16 @@ void prepare_gehrd_run(integer n, integer* ilo, integer* ihi, void* A, integer l
         {
             /* Get work size */
             lwork = get_work_value( datatype, work );
-            free_vector(work);
         }
-        else
-        {
-            free_vector(work);
-            free_matrix(A_save);
-            return;
-        }
+
+        free_vector(work);
     }
     else
     {
         lwork = g_lwork;
     }
 
+    *info = 0;
     for(i = 0; i < n_repeats && *info == 0; ++i)
     {
         /* Restore input matrix H and Z value and allocate memory to output buffers

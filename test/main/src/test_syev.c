@@ -8,7 +8,7 @@
 
 /* Local prototypes.*/
 void fla_test_syev_experiment(test_params_t *params, integer datatype, integer p_cur, integer  q_cur, integer pci,
-                                integer n_repeats, double* perf, double* t, double* residual);
+                                integer n_repeats, integer einfo, double* perf, double* t, double* residual);
 void prepare_syev_run(char* jobz, char* uplo, integer n, void* A, integer lda, void* w, integer datatype, integer n_repeats,
                         double* time_min_, integer* info);
 void invoke_syev(integer datatype, char* jobz, char* uplo, integer* n, void* a, integer* lda, void* w, void* work, integer* lwork,
@@ -25,7 +25,7 @@ void fla_test_syev(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Eigen Values and Vectors";
     char* front_str = "SYEV";
-    integer tests_not_run = 1, invalid_dtype = 0;
+    integer tests_not_run = 1, invalid_dtype = 0, einfo = 0;
 
     if(argc == 1)
     {
@@ -37,13 +37,7 @@ void fla_test_syev(integer argc, char ** argv, test_params_t *params)
     }
     if (argc == 10)
     {
-        /* Read matrix input data from a file */
-        g_ext_fptr = fopen(argv[9], "r");
-        if (g_ext_fptr == NULL)
-        {
-            printf("\n Invalid input file argument \n");
-            return;
-        }
+        FLA_TEST_PARSE_LAST_ARG(argv[9]);
     }
     if (argc >= 9 && argc <= 10)
     {
@@ -87,7 +81,7 @@ void fla_test_syev(integer argc, char ** argv, test_params_t *params)
                 fla_test_syev_experiment(params, datatype,
                                           N, N,
                                           0,
-                                          n_repeats,
+                                          n_repeats, einfo,
                                           &perf, &time_min, &residual);
                 /* Print the results */
                 fla_test_print_status(front_str,
@@ -123,6 +117,7 @@ void fla_test_syev_experiment(test_params_t *params,
                                integer  q_cur,
                                integer pci,
                                integer n_repeats,
+                               integer einfo,
                                double* perf,
                                double *time_min,
                                double* residual)
@@ -180,10 +175,8 @@ void fla_test_syev_experiment(test_params_t *params,
     /* output validation */
     if (info == 0)
         validate_syevd(&jobz, n, A, A_test, lda, w, datatype, residual, &vinfo);
-
-    /* Assigning bigger value to residual as execution fails */
-    if (info < 0 || vinfo < 0)
-        *residual = DBL_MAX;
+    
+    FLA_TEST_CHECK_EINFO(residual, info, einfo);
         
     /* Free up the buffers */
     free_matrix(A);
@@ -224,20 +217,16 @@ void prepare_syev_run(char *jobz,
         if(*info == 0)
         {
             lwork = get_work_value(datatype, work);
-            free_vector(work);
         }
-        else
-        {
-            free_vector(work);
-            free_matrix(A_save);
-            return;
-        }
+
+        free_vector(work);
     }
     else
     {
         lwork = g_lwork;
     }
 
+    *info = 0;
     for (i = 0; i < n_repeats && *info == 0; ++i)
     {
         /* Restore input matrix A value and allocate memory to output buffers

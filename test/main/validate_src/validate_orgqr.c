@@ -19,6 +19,8 @@ void validate_orgqr(integer m,
     double* residual,
     integer* info)
 {
+   if(m == 0 || n == 0)
+        return;
     integer k;
     *info = 0;
 

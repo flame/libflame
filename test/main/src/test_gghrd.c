@@ -8,7 +8,7 @@
 
 /* Local prototypes */
 void fla_test_gghrd_experiment(test_params_t *params, integer datatype, integer p_cur, integer  q_cur, integer pci,
-                                    integer n_repeats, double* perf, double* t, double* residual);
+                                    integer n_repeats, integer einfo, double* perf, double* t, double* residual);
 void prepare_gghrd_run(char* compq, char* compz, integer n, integer* ilo, integer* ihi, void* a, integer lda,
                             void* b, integer ldb, void* q, integer ldq, void* z, integer ldz, integer datatype,
                             integer n_repeats, double* time_min_, integer* info);
@@ -21,7 +21,7 @@ void fla_test_gghrd(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Reduces a pair matrices (A,B) to generalized upper Hessenberg form";
     char* front_str = "GGHRD";
-    integer tests_not_run = 1, invalid_dtype = 0;
+    integer tests_not_run = 1, invalid_dtype = 0, einfo = 0;
     if(argc == 1)
     {
         fla_test_output_info("--- %s ---\n", op_str);
@@ -31,13 +31,7 @@ void fla_test_gghrd(integer argc, char ** argv, test_params_t *params)
     }
     if(argc == 14)
     {
-        /* Read matrix input data from a file */
-        g_ext_fptr = fopen(argv[13], "r");
-        if (g_ext_fptr == NULL)
-        {
-            printf("\n Invalid input file argument \n");
-            return;
-        }
+        FLA_TEST_PARSE_LAST_ARG(argv[13]);
     }
     if(argc >= 13 && argc <=14)
     {
@@ -85,7 +79,7 @@ void fla_test_gghrd(integer argc, char ** argv, test_params_t *params)
                 fla_test_gghrd_experiment(params, datatype,
                                           N, N,
                                           0,
-                                          n_repeats,
+                                          n_repeats, einfo,
                                           &perf, &time_min, &residual);
                 /* Print the results */
                 fla_test_print_status(front_str,
@@ -122,6 +116,7 @@ void fla_test_gghrd_experiment(test_params_t *params,
     integer  q_cur,
     integer  pci,
     integer  n_repeats,
+    integer  einfo,
     double   *perf,
     double   *time_min,
     double   *residual)
@@ -168,15 +163,6 @@ void fla_test_gghrd_experiment(test_params_t *params,
     {
         rand_matrix(datatype, B, n, n, ldb);
         get_orthogonal_matrix_from_QR(datatype, n, B, ldb, Q, ldq, &info);
-        if(info < 0)
-        {
-            *residual = DBL_MAX;
-            free_matrix(A);
-            free_matrix(B);
-            free_matrix(Q);
-            free_matrix(Z);
-            return;
-        }
         if(compq == 'I')
             set_identity_matrix(datatype, n, n, Q, ldq);
         get_generic_triangular_matrix(datatype, n, A, lda, ilo, ihi);
@@ -193,7 +179,7 @@ void fla_test_gghrd_experiment(test_params_t *params,
     copy_matrix(datatype, "full", n, n, Q, ldq, Q_test, ldq);
     copy_matrix(datatype, "full", n, n, Z, ldz, Z_test, ldz);
 
-    prepare_gghrd_run(&compq, &compq, n, &ilo, &ihi, A_test, lda, B_test, ldb, Q_test, ldq, Z_test, ldz, datatype, n_repeats, time_min, &info);
+    prepare_gghrd_run(&compq, &compz, n, &ilo, &ihi, A_test, lda, B_test, ldb, Q_test, ldq, Z_test, ldz, datatype, n_repeats, time_min, &info);
 
     /* Performance computation
        (7)n^3 flops for eigen vectors for real
@@ -228,8 +214,8 @@ void fla_test_gghrd_experiment(test_params_t *params,
     /* Output Validation */
     if(info == 0)
         validate_gghrd(&compq, &compz, n, A, A_test, lda, B, B_test, ldb, Q, Q_test, ldq, Z, Z_test, ldz, datatype, residual, &vinfo);
-    if(info < 0 || vinfo < 0)
-        *residual = DBL_MAX;
+    
+    FLA_TEST_CHECK_EINFO(residual, info, einfo);
 
     /* Free up the buffers */
     free_matrix(A);
@@ -260,6 +246,7 @@ void prepare_gghrd_run(char* compq, char* compz, integer n, integer* ilo, intege
     copy_matrix(datatype, "full", n, n, Q, ldq, Q_save, ldq);
     copy_matrix(datatype, "full", n, n, Z, ldz, Z_save, ldz);
 
+    *info = 0;
     for(i = 0; i < n_repeats && *info == 0; ++i)
     {
         /* Restore input matrix A,B,Q and Z value and allocate memory to output buffers

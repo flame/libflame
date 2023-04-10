@@ -6,7 +6,7 @@
 
 /* Local prototypes. */
 void fla_test_stedc_experiment(test_params_t *params, integer  datatype, integer  p_cur, integer  q_cur, integer  pci,
-                                    integer  n_repeats, double* perf, double* t, double* residual);
+                                    integer  n_repeats, integer einfo, double* perf, double* t, double* residual);
 void prepare_stedc_run(char* compz, integer n, void* D, void* E, void* Z,
                       integer ldz, integer datatype, integer n_repeats, double* time_min_, integer* info);
 void invoke_stedc(integer datatype, char* compz, integer* n, void* D, void* E, void* Z,
@@ -26,7 +26,7 @@ void fla_test_stedc(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Eigenvalues/eigenvectors of symmetric tridiagonal matrix";
     char* front_str = "STEDC";
-    integer tests_not_run = 1, invalid_dtype = 0;
+    integer tests_not_run = 1, invalid_dtype = 0, einfo = 0;
 
     if(argc == 1)
     {
@@ -40,13 +40,7 @@ void fla_test_stedc(integer argc, char ** argv, test_params_t *params)
     }
     if(argc == 11)
     {
-        /* Read matrix input data from a file */
-        g_ext_fptr = fopen(argv[10], "r");
-        if (g_ext_fptr == NULL)
-        {
-            printf("\n Invalid input file argument \n");
-            return;
-        }
+        FLA_TEST_PARSE_LAST_ARG(argv[10]);
     }
     if(argc >= 10 && argc <= 11)
     {
@@ -93,7 +87,7 @@ void fla_test_stedc(integer argc, char ** argv, test_params_t *params)
                 fla_test_stedc_experiment(params, datatype,
                                           N, N,
                                           0,
-                                          n_repeats,
+                                          n_repeats, einfo,
                                           &perf, &time_min, &residual);
                 /* Print the results */
                 fla_test_print_status(front_str,
@@ -130,6 +124,7 @@ void fla_test_stedc_experiment(test_params_t *params,
     integer  q_cur,
     integer  pci,
     integer  n_repeats,
+    integer  einfo,
     double* perf,
     double* t,
     double* residual)
@@ -146,6 +141,7 @@ void fla_test_stedc_experiment(test_params_t *params,
     /* Initialize parameter needed for STEDC() call. */
     compz = params->eig_sym_paramslist[pci].compz;
     lda = params->eig_sym_paramslist[pci].lda;
+    *residual = params->eig_sym_paramslist[pci].threshold_value;
 
     if(lda < n)
     {
@@ -158,43 +154,43 @@ void fla_test_stedc_experiment(test_params_t *params,
     realtype = get_realtype(datatype);
     create_vector(realtype, &D, n);
     create_vector(realtype, &E, n-1);
- 
-        if (g_ext_fptr != NULL)
-        {
-            /* Initialize input matrix with custom data */
 
-            if (compz == 'V')
-            {
-                init_matrix_from_file(datatype, A, n, n, lda, g_ext_fptr);
-            }
-            else
-            { 
-                init_vector_from_file(datatype, D, n, 1, g_ext_fptr);
-                init_vector_from_file(datatype, E, n, 1, g_ext_fptr);
-                copy_sym_tridiag_matrix(datatype, D, E, n, n, A, lda);
-            }
+    if (g_ext_fptr != NULL)
+    {
+        /* Initialize input matrix with custom data */
+
+        if (compz == 'V')
+        {
+            init_matrix_from_file(datatype, A, n, n, lda, g_ext_fptr);
         }
         else
         {
-            /* Create random symmetric/hermitian matrix if compz = V. */
-            if (compz == 'V')
+            init_vector_from_file(datatype, D, n, 1, g_ext_fptr);
+            init_vector_from_file(datatype, E, n, 1, g_ext_fptr);
+            copy_sym_tridiag_matrix(datatype, D, E, n, n, A, lda);
+        }
+    }
+    else
+    {
+        /* Create random symmetric/hermitian matrix if compz = V. */
+        if (compz == 'V')
+        {
+            if ((datatype == FLOAT) || (datatype == DOUBLE))
             {
-                if ((datatype == FLOAT) || (datatype == DOUBLE))
-                {
-                    rand_sym_matrix(datatype, A, n, n, lda);
-                }
-                else
-                {
-                    rand_hermitian_matrix(datatype, n, &A, lda);
-                }
+                rand_sym_matrix(datatype, A, n, n, lda);
             }
             else
-            { /* Create tridiagonal matrix using random Diagonal, subdiagonal elements if compz != V. */
-                rand_vector(realtype, D, n, 1);
-                rand_vector(realtype, E, n - 1, 1);
-                copy_sym_tridiag_matrix(datatype, D, E, n, n, A, lda);
+            {
+                rand_hermitian_matrix(datatype, n, &A, lda);
             }
-        } 
+        }
+        else
+        { /* Create tridiagonal matrix using random Diagonal, subdiagonal elements if compz != V. */
+            rand_vector(realtype, D, n, 1);
+            rand_vector(realtype, E, n - 1, 1);
+            copy_sym_tridiag_matrix(datatype, D, E, n, n, A, lda);
+        }
+    }
 
     ldz = lda;
     create_matrix(datatype, &Z_input, ldz, n);
@@ -207,14 +203,6 @@ void fla_test_stedc_experiment(test_params_t *params,
         /* Call SYTRD() orthogonal matrix and tridiagonal elements.
            invoke_sytrd() internally calls ORGTR() to get orthogonal matrix.*/
         invoke_sytrd(datatype, &uplo, compz, n, A, lda, D, E, &info);
-        if (info != 0) {
-            free_matrix(A);
-            free_vector(D);
-            free_vector(E);
-            free_matrix(Z_input);
-            *residual = DBL_MAX;
-            return;
-        }
     }
     /* Make a copy of input matrices. This is required to validate the API functionality. */
     create_matrix(datatype, &Z_test, ldz, n);
@@ -243,14 +231,10 @@ void fla_test_stedc_experiment(test_params_t *params,
     }
 
     /* Output validation. */
-    if (compz != 'N' && info == 0)
+    if (info == 0)
         validate_stedc(compz, n, D_test, Z_input, Z_test, ldz, datatype, residual, &vinfo);
-    else
-        *residual = 0.0;
-
-    /* Assigning bigger value to residual as execution fails */
-    if(info < 0 || vinfo < 0)
-        *residual = DBL_MAX;
+    
+    FLA_TEST_CHECK_EINFO(residual, info, einfo);
 
     /* Free up buffers. */
     free_matrix(Z_input);
@@ -301,17 +285,11 @@ void prepare_stedc_run(char* compz, integer n, void* D, void* E, void* Z,
             lwork = get_work_value(datatype, work );
             liwork = get_work_value(INTEGER, iwork );
             lrwork = get_work_value(realtype, rwork );
-            free_vector(work);
-            free_vector(rwork);
-            free_vector(iwork);
         }
-        else
-        {
-            free_vector(work);
-            free_vector(rwork);
-            free_vector(iwork);
-            return;
-        }
+
+        free_vector(work);
+        free_vector(rwork);
+        free_vector(iwork);
     }
     else
     {   
@@ -326,6 +304,7 @@ void prepare_stedc_run(char* compz, integer n, void* D, void* E, void* Z,
     create_vector(INTEGER, &iwork, liwork);
     create_vector(realtype, &E_test, n-1);
 
+    *info = 0;
     for (index = 0; index < n_repeats && *info == 0; ++index)
     {
         /* Restore input matrices and allocate memory to output buffers

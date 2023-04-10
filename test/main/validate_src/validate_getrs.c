@@ -20,6 +20,8 @@ void validate_getrs(char *trans,
     double* residual,
     integer* info)
 {
+    if(n == 0 || nrhs == 0)
+        return;
     void* work = NULL;
     integer ldx;
     *info = 0;

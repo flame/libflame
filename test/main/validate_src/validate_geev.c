@@ -24,6 +24,8 @@ void validate_geev(char* jobvl, char* jobvr,
     double* residual,
     integer* info)
 {
+    if(m == 0)
+        return;
     void *work = NULL;
     void *lambda = NULL, *Vlambda = NULL;
     *info = 0;

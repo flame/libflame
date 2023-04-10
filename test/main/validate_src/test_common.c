@@ -43,31 +43,31 @@ void create_vector(integer datatype, void **A, integer M)
     {
         case INTEGER:
         {
-            *A = (integer *)fla_mem_alloc(M * sizeof(integer));
+            *A = (integer *)fla_mem_alloc(fla_max(1, M) * sizeof(integer));
             break;
         }
 
         case FLOAT:
         {
-            *A = (float *)fla_mem_alloc(M * sizeof(float));
+            *A = (float *)fla_mem_alloc(fla_max(1, M) * sizeof(float));
             break;
         }
 
         case DOUBLE:
         {
-            *A = (double *)fla_mem_alloc(M * sizeof(double));
+            *A = (double *)fla_mem_alloc(fla_max(1, M) * sizeof(double));
             break;
         }
 
         case COMPLEX:
         {
-            *A = (scomplex *)fla_mem_alloc(M * sizeof(scomplex));
+            *A = (scomplex *)fla_mem_alloc(fla_max(1, M) * sizeof(scomplex));
             break;
         }
 
         case DOUBLE_COMPLEX:
         {
-            *A = (dcomplex *)fla_mem_alloc(M * sizeof(dcomplex));
+            *A = (dcomplex *)fla_mem_alloc(fla_max(1, M) * sizeof(dcomplex));
             break;
         }
     }
@@ -81,9 +81,9 @@ void create_realtype_vector(integer datatype, void **A, integer M)
     *A = NULL;
 
     if(datatype == FLOAT || datatype == COMPLEX)
-        *A = (float *)fla_mem_alloc(M * sizeof(float));
+        *A = (float *)fla_mem_alloc(fla_max(1, M) * sizeof(float));
     else
-        *A = (double *)fla_mem_alloc(M * sizeof(double));
+        *A = (double *)fla_mem_alloc(fla_max(1, M) * sizeof(double));
 
     return;
 }
@@ -262,31 +262,31 @@ void create_matrix(integer datatype, void **A, integer M, integer N)
     {
         case INTEGER:
         {
-            *A = (integer *)fla_mem_alloc(M * N * sizeof(integer));
+            *A = (integer *)fla_mem_alloc(fla_max(1, M) * fla_max(1, N) * sizeof(integer));
             break;
         }
 
         case FLOAT:
         {
-            *A = (float *)fla_mem_alloc(M * N * sizeof(float));
+            *A = (float *)fla_mem_alloc(fla_max(1, M) * fla_max(1, N) * sizeof(float));
             break;
         }
 
         case DOUBLE:
         {
-            *A = (double *)fla_mem_alloc(M * N * sizeof(double));
+            *A = (double *)fla_mem_alloc(fla_max(1, M) * fla_max(1, N) * sizeof(double));
             break;
         }
 
         case COMPLEX:
         {
-            *A = (scomplex *)fla_mem_alloc(M * N * sizeof(scomplex));
+            *A = (scomplex *)fla_mem_alloc(fla_max(1, M) * fla_max(1, N) * sizeof(scomplex));
             break;
         }
 
         case DOUBLE_COMPLEX:
         {
-            *A = (dcomplex *)fla_mem_alloc(M * N * sizeof(dcomplex));
+            *A = (dcomplex *)fla_mem_alloc(fla_max(1, M) * fla_max(1, N) * sizeof(dcomplex));
             break;
         }
     }
@@ -300,9 +300,9 @@ void create_realtype_matrix(integer datatype, void **A, integer M, integer N)
     *A = NULL;
 
     if(datatype == FLOAT || datatype == COMPLEX)
-        *A = (float *)fla_mem_alloc(M * N * sizeof(float));
+        *A = (float *)fla_mem_alloc(fla_max(1, M) * fla_max(1, N) * sizeof(float));
     else
-        *A = (double *)fla_mem_alloc(M * N * sizeof(double));
+        *A = (double *)fla_mem_alloc(fla_max(1, M) * fla_max(1, N) * sizeof(double));
 
     return;
 }
@@ -702,7 +702,7 @@ void diagmv( integer datatype, integer m, integer n, void* x, integer incx, void
     integer n_elem;
     integer j;
 
-    if(m == 0 || n == 0)
+    if(m <= 0 || n <= 0)
         return;
 
     // Initialize with optimal values for column-major storage.
@@ -1978,11 +1978,6 @@ void get_hessenberg_matrix(integer datatype, integer n, void* A, integer lda, vo
                     lwork = get_work_value(datatype, work);
                     free_vector(work);
                 }
-                else
-                {
-                    free_vector(work);
-                    break;
-                }
             }
             else
             {
@@ -2018,11 +2013,6 @@ void get_hessenberg_matrix(integer datatype, integer n, void* A, integer lda, vo
                 {
                     lwork = get_work_value(datatype, work);
                     free_vector(work);
-                }
-                else
-                {
-                    free_vector(work);
-                    break;
                 }
             }
             else
@@ -2061,11 +2051,6 @@ void get_hessenberg_matrix(integer datatype, integer n, void* A, integer lda, vo
                     lwork = get_work_value(datatype, work);
                     free_vector(work);
                 }
-                else
-                {
-                    free_vector(work);
-                    break;
-                }
             }
             else
             {
@@ -2101,11 +2086,6 @@ void get_hessenberg_matrix(integer datatype, integer n, void* A, integer lda, vo
                 {
                     lwork = get_work_value(datatype, work);
                     free_vector(work);
-                }
-                else
-                {
-                    free_vector(work);
-                    break;
                 }
             }
             else

@@ -18,6 +18,8 @@ void validate_getri(integer m_A,
     double* residual,
     integer* info)
 {
+    if(m_A == 0 || n_A == 0)
+        return;
     /* System generated locals */
     void *a_temp, *work;
     *info = 0;

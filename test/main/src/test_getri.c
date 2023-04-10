@@ -6,7 +6,7 @@
 
 /* Local prototypes */
 void fla_test_getri_experiment(test_params_t *params, integer  datatype, integer  p_cur, integer  q_cur, integer pci,
-                                    integer n_repeats, double* perf, double* t, double* residual);
+                                    integer n_repeats, integer einfo, double* perf, double* t, double* residual);
 void prepare_getri_run(integer m_A, integer n_A, void *A, integer lda, integer* ipiv, integer datatype, integer n_repeats, double* time_min_, integer *info);
 void invoke_getri(integer datatype, integer *n, void *a, integer *lda, integer *ipiv, void *work, integer *lwork, integer *info);
 
@@ -21,7 +21,7 @@ void fla_test_getri(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Inverse through LU factorization";
     char* front_str = "GETRI";
-    integer tests_not_run = 1, invalid_dtype = 0;
+    integer tests_not_run = 1, invalid_dtype = 0, einfo = 0;
 
     if(argc == 1)
     {
@@ -33,13 +33,7 @@ void fla_test_getri(integer argc, char ** argv, test_params_t *params)
     }
     if(argc == 8)
     {
-        /* Read matrix input data from a file */
-        g_ext_fptr = fopen(argv[7], "r");
-        if (g_ext_fptr == NULL)
-        {
-            printf("\n Invalid input file argument \n");
-            return;
-        }
+        FLA_TEST_PARSE_LAST_ARG(argv[7]);
     }
     if(argc >= 7 && argc <= 8)
     {
@@ -82,7 +76,7 @@ void fla_test_getri(integer argc, char ** argv, test_params_t *params)
                 fla_test_getri_experiment(params, datatype,
                                           N, N,
                                           0,
-                                          n_repeats,
+                                          n_repeats, einfo,
                                           &perf, &time_min, &residual);
                 /* Print the results */
                 fla_test_print_status(front_str,
@@ -121,6 +115,7 @@ void fla_test_getri_experiment(test_params_t *params,
     integer  q_cur,
     integer pci,
     integer n_repeats,
+    integer einfo,
     double* perf,
     double* t,
     double* residual)
@@ -134,6 +129,7 @@ void fla_test_getri_experiment(test_params_t *params,
     /* Determine the dimensions*/
     n = p_cur;
     lda = params->lin_solver_paramslist[pci].lda;
+    *residual = params->lin_solver_paramslist[pci].solver_threshold;
 
     if(lda < n)
     {
@@ -175,10 +171,8 @@ void fla_test_getri_experiment(test_params_t *params,
     /* output validation */
     if (info == 0)
         validate_getri(n, n, A, A_test, lda, IPIV, datatype, residual, &vinfo);
-
-    /* Assigning bigger value to residual as execution fails */
-    if(info < 0 || vinfo < 0)
-        *residual = DBL_MAX;
+    
+    FLA_TEST_CHECK_EINFO(residual, info, einfo);
 
     /* Free up the buffers */
     free_matrix(A);
@@ -213,15 +207,11 @@ void prepare_getri_run(integer m_A,
 
         // call to  getri API
         invoke_getri(datatype, &n_A, NULL, &lda, NULL, work, &lwork, info);
-        if(*info < 0)
+        if(*info == 0)
         {
-            free_matrix(A_save);
-            free_vector(work);
-            return;
+            // Get work siz`e
+            lwork = get_work_value(datatype, work);
         }
-
-        // Get work size
-        lwork = get_work_value(datatype, work);
 
         /* Output buffers will be freshly allocated for each iterations, free up 
         the current output buffers.*/ 
@@ -232,6 +222,7 @@ void prepare_getri_run(integer m_A,
         lwork = g_lwork;
     }
 
+    *info = 0;
     for (i = 0; i < n_repeats && *info == 0; ++i)
     {
 
@@ -243,12 +234,7 @@ void prepare_getri_run(integer m_A,
 
         /*  call to API getrf to get AFACT */
         invoke_getrf(datatype, &m_A, &n_A, A_save, &lda, IPIV, info);
-        if(*info < 0)
-        {
-            free_matrix(work);
-            free_matrix(A_save);
-            return;
-        }
+
         /*  call  getri API with AFACT to get A INV */
         invoke_getri(datatype, &n_A, A_save, &lda, IPIV, work, &lwork, info);
 

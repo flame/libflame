@@ -10,6 +10,8 @@
 
 void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer lda, integer datatype, double* residual, integer* info)
 {
+    if(m == 0)
+        return;
     void *b = NULL, *x = NULL;
     void *x_test = NULL, *b_test = NULL;
     void *work = NULL;

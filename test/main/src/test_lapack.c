@@ -18,7 +18,6 @@ char fla_test_binary_name[ MAX_BINARY_NAME_LENGTH + 1 ];
 char fla_test_pass_string[ MAX_PASS_STRING_LENGTH + 1 ];
 char fla_test_warn_string[ MAX_PASS_STRING_LENGTH + 1 ];
 char fla_test_fail_string[ MAX_PASS_STRING_LENGTH + 1 ];
-char fla_test_incomplete_string [ MAX_PASS_STRING_LENGTH + 1];
 char fla_test_invalid_string [ MAX_PASS_STRING_LENGTH + 1];
 char fla_test_storage_format_string[ 200 ];
 char fla_test_stor_chars[ NUM_STORAGE_CHARS + 1 ];
@@ -1898,29 +1897,25 @@ char* fla_test_get_string_for_result( double residual, integer datatype, double 
 
     if ( datatype == FLOAT )
     {
-        if      ( residual == DBL_MAX )   r_val = fla_test_incomplete_string;
-        else if ( residual == DBL_MIN )   r_val = fla_test_invalid_string;
+        if ( residual == DBL_MIN )        r_val = fla_test_invalid_string;
         else if ( residual > thresh )     r_val = fla_test_fail_string;
         else                              r_val = fla_test_pass_string;
     }
     else if ( datatype == DOUBLE )
     {
-        if      ( residual == DBL_MAX )   r_val = fla_test_incomplete_string;
-        else if ( residual == DBL_MIN )   r_val = fla_test_invalid_string;
+        if ( residual == DBL_MIN )        r_val = fla_test_invalid_string;
         else if ( residual > thresh )     r_val = fla_test_fail_string;
         else                              r_val = fla_test_pass_string;
     }
     else if ( datatype == COMPLEX )
     {
-        if      ( residual == DBL_MAX )   r_val = fla_test_incomplete_string;
-        else if ( residual == DBL_MIN )   r_val = fla_test_invalid_string;
+        if ( residual == DBL_MIN )        r_val = fla_test_invalid_string;
         else if ( residual > thresh )     r_val = fla_test_fail_string;
         else                              r_val = fla_test_pass_string;
     }
     else
     {
-        if      ( residual == DBL_MAX )   r_val = fla_test_incomplete_string;
-        else if ( residual == DBL_MIN )   r_val = fla_test_invalid_string;
+        if ( residual == DBL_MIN )        r_val = fla_test_invalid_string;
         else if ( residual > thresh )     r_val = fla_test_fail_string;
         else                              r_val = fla_test_pass_string;
     }
@@ -1934,7 +1929,6 @@ void fla_test_init_strings( void )
     sprintf( fla_test_pass_string, "PASS" );
     sprintf( fla_test_warn_string, "MARGINAL" );
     sprintf( fla_test_fail_string, "FAIL" );
-    sprintf( fla_test_incomplete_string, "INCOMPLETE" );
     sprintf( fla_test_invalid_string, "INVALID_LDA" );
     sprintf( fla_test_storage_format_string, "Row(r) and General(g) storage format is not supported by External LAPACK interface" );
     sprintf( fla_test_stor_chars, STORAGE_SCHEME_CHARS );
@@ -1951,6 +1945,7 @@ void fla_test_op_driver( char*         func_str,
                                            integer,          // q_cur
                                            integer,          // pci (param combo counter)
                                            integer,          // n_repeats
+                                           integer,          // einfo
                                            double*,          // perf
                                            double*,          //time
                                            double* ) )       // residual
@@ -1960,7 +1955,7 @@ void fla_test_op_driver( char*         func_str,
     integer num_ranges, range_loop_counter;
     integer p_first, p_max, p_inc;
     integer q_first, q_max, q_inc;
-    integer dt, p_cur, q_cur;
+    integer dt, p_cur, q_cur, einfo = 0;
     char    datatype_char;
     integer datatype;
     double thresh;
@@ -2073,7 +2068,7 @@ void fla_test_op_driver( char*         func_str,
 #pragma omp for
                     for ( ith = 0; ith < n_threads; ith++ )
                     {
-                        f_exp(params, datatype, p_cur, q_cur, range_loop_counter, n_repeats, (perf+ith), (time+ith), (residual+ith));
+                        f_exp(params, datatype, p_cur, q_cur, range_loop_counter, n_repeats, einfo, (perf+ith), (time+ith), (residual+ith));
                     }
 
                     get_max(DOUBLE, (void*)residual, (void*)&residual_max_val, n_threads);
@@ -2084,7 +2079,7 @@ void fla_test_op_driver( char*         func_str,
                 }
                 else
                 {
-                    f_exp(params, datatype, p_cur, q_cur, range_loop_counter, n_repeats, perf, time, residual);
+                    f_exp(params, datatype, p_cur, q_cur, range_loop_counter, n_repeats, einfo, perf, time, residual);
                     fla_test_print_status(func_str, datatype_char, sqr_inp, p_cur, q_cur, *residual, thresh, *time, *perf);
                 }
 

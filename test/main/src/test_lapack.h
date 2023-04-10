@@ -9,6 +9,7 @@
 #include <time.h>
 #include <float.h>
 #include <sys/stat.h>
+#include <ctype.h>
 #ifdef _WIN32
 #include <Windows.h>
 #endif
@@ -75,6 +76,40 @@
 #if AOCL_FLA_SET_PROGRESS_ENABLE == 2
 int test_progress(const char* const api,const integer lenapi,const integer* const progress,const integer* const current_thread,const integer* const total_threads);
 #endif
+
+#define FLA_TEST_PARSE_LAST_ARG(argv)                     \
+    integer i;                                            \
+    char *info;                                           \
+    char info_value[2][MAX_PASS_STRING_LENGTH];           \
+                                                          \
+    i = 0;                                                \
+    if(strstr(argv,"--einfo") != NULL)                    \
+    {                                                     \
+        info = strtok(argv,"=");                          \
+        while( info != NULL && i < 2 )                    \
+        {                                                 \
+            strcpy( info_value[i], info);                 \
+            i++;                                          \
+            info = strtok(NULL, "=");                     \
+        }                                                 \
+        einfo = atoi(info_value[1]);                      \
+    }                                                     \
+    else                                                  \
+    {                                                     \ 
+        g_ext_fptr = fopen(argv, "r");                    \
+        if (g_ext_fptr == NULL)                           \
+        {                                                 \
+            printf("\n Invalid input file argument \n");  \
+            return;                                       \
+        }                                                 \
+    }                                                     \
+
+#define FLA_TEST_CHECK_EINFO(residual, info, einfo)       \
+    if(einfo != 0)                                        \
+    {                                                     \
+        if(info != einfo)                                 \
+            *residual = DBL_MAX;                          \
+    }                                                     \
 
 typedef struct Lin_solver_paramlist_t
 {
@@ -377,6 +412,7 @@ void fla_test_op_driver( char*            func_str,
                                         integer,        // q_cur
                                         integer,        // pci (param combo counter)
                                         integer,        // n_repeats
+                                        integer,        // einfo
                                         double*,        // perf
                                         double*,        // time
                                         double* ) );    // residual

@@ -20,6 +20,8 @@ void validate_hseqr(char* job, char* compz,
     double* residual,
     integer *info)
 {
+    if(n == 0)
+        return;
     if (*job == 'E' || *compz == 'N')
         return;
 

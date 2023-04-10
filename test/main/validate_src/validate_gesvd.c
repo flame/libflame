@@ -10,6 +10,8 @@
 
 void validate_gesvd(char *jobu, char *jobvt, integer m, integer n, void* A, void* A_test, integer lda, void* s, void* U, integer ldu, void* V, integer ldvt, integer datatype, double *residual, integer* info)
 {
+    if(m == 0 || n == 0)
+      return;
     void *sigma = NULL, *Usigma = NULL;
     void *work = NULL;
     *info = 0;

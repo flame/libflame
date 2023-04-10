@@ -6,7 +6,7 @@
 
 // Local prototypes.
 void fla_test_gerq2_experiment(test_params_t *params, integer  datatype, integer  p_cur, integer  q_cur, integer  pci,
-                                    integer  n_repeats, double* perf, double* t, double* residual);
+                                    integer  n_repeats, integer einfo, double* perf, double* t, double* residual);
 void prepare_gerq2_run(integer m_A, integer n_A, void *A, integer lda, void *T, integer datatype, integer n_repeats, double* time_min_, integer *info);
 void invoke_gerq2(integer datatype, integer *m, integer *n, void *a, integer *lda, void *tau, void *work, integer *info);
 static FILE* g_ext_fptr = NULL;
@@ -15,7 +15,7 @@ void fla_test_gerq2(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "RQ factorization with unblocked algorithm";
     char* front_str = "GERQ2";
-    integer tests_not_run = 1, invalid_dtype = 0;
+    integer tests_not_run = 1, invalid_dtype = 0, einfo = 0;
     if(argc == 1)
     {
         fla_test_output_info("--- %s ---\n", op_str);
@@ -25,13 +25,7 @@ void fla_test_gerq2(integer argc, char ** argv, test_params_t *params)
     }
     if (argc == 8)
     {
-        /* Read matrix input data from a file */
-        g_ext_fptr = fopen(argv[7], "r");
-        if (g_ext_fptr == NULL)
-        {
-            printf("\n Invalid input file argument \n");
-            return;
-        }
+        FLA_TEST_PARSE_LAST_ARG(argv[7]);
     }
     if (argc >= 7 && argc <= 8)
     {
@@ -74,7 +68,7 @@ void fla_test_gerq2(integer argc, char ** argv, test_params_t *params)
                 fla_test_gerq2_experiment(params, datatype,
                                           M, N,
                                           0,
-                                          n_repeats,
+                                          n_repeats, einfo,
                                           &perf, &time_min, &residual);
                 /* Print the results */
                 fla_test_print_status(front_str,
@@ -113,6 +107,7 @@ void fla_test_gerq2_experiment(test_params_t *params,
     integer  q_cur,
     integer  pci,
     integer  n_repeats,
+    integer  einfo,
     double* perf,
     double* t,
     double* residual)
@@ -126,6 +121,7 @@ void fla_test_gerq2_experiment(test_params_t *params,
     m = p_cur;
     n = q_cur;
     lda = params->lin_solver_paramslist[pci].lda;
+    *residual = params->lin_solver_paramslist[pci].solver_threshold;
 
     if(lda < m)
     {
@@ -169,10 +165,8 @@ void fla_test_gerq2_experiment(test_params_t *params,
     // output validation
     if(info == 0)
         validate_gerq2(m, n, A, A_test, lda, T, datatype, residual, &vinfo);
-
-    /* Assigning bigger value to residual as execution fails */
-    if (info < 0 || vinfo < 0)
-        *residual = DBL_MAX;
+    
+    FLA_TEST_CHECK_EINFO(residual, info, einfo);
 
     // Free up buffers
     free_matrix(A);
@@ -201,6 +195,7 @@ void prepare_gerq2_run(integer m_A, integer n_A,
     create_matrix(datatype, &A_save, lda, n_A);
     copy_matrix(datatype, "full", m_A, n_A, A, lda, A_save, lda);
 
+    *info = 0;
     for (i = 0; i < n_repeats && *info == 0; ++i)
     {
         /* Restore input matrix A value and allocate memory to output buffers

@@ -8,7 +8,7 @@
 
 /* Local prototypes */
 void fla_test_hseqr_experiment(test_params_t *params, integer datatype, integer p_cur, integer  q_cur, integer pci,
-                                    integer n_repeats, double* perf, double* t, double* residual);
+                                    integer n_repeats, integer einfo, double* perf, double* t, double* residual);
 void prepare_hseqr_run(char* job, char* compz, integer n, integer* ilo, integer* ihi, void* h, integer ldh, void *w, void *wr, void* wi,
                             void* z, integer ldz, integer datatype, integer n_repeats, double* time_min_, integer* info);
 void invoke_hseqr(integer datatype,char* job, char* compz, integer* n, integer* ilo, integer* ihi, void* h, integer* ldh, void *w,
@@ -24,7 +24,7 @@ void fla_test_hseqr(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Computing Eigen value of a Hessenberg matrix";
     char* front_str = "HSEQR";
-    integer tests_not_run = 1, invalid_dtype = 0;
+    integer tests_not_run = 1, invalid_dtype = 0, einfo = 0;
     if(argc == 1)
     {
         fla_test_output_info("--- %s ---\n", op_str);
@@ -34,13 +34,7 @@ void fla_test_hseqr(integer argc, char ** argv, test_params_t *params)
     }
     if(argc == 13)
     {
-        /* Read matrix input data from a file */
-        g_ext_fptr = fopen(argv[12], "r");
-        if (g_ext_fptr == NULL)
-        {
-            printf("\n Invalid input file argument \n");
-            return;
-        }
+        FLA_TEST_PARSE_LAST_ARG(argv[12]);
     }
     if(argc >= 12 && argc <=13)
     {
@@ -87,7 +81,7 @@ void fla_test_hseqr(integer argc, char ** argv, test_params_t *params)
                 fla_test_hseqr_experiment(params, datatype,
                                           N, N,
                                           0,
-                                          n_repeats,
+                                          n_repeats, einfo,
                                           &perf, &time_min, &residual);
                 /* Print the results */
                 fla_test_print_status(front_str,
@@ -123,6 +117,7 @@ void fla_test_hseqr_experiment(test_params_t *params,
     integer  q_cur,
     integer  pci,
     integer  n_repeats,
+    integer  einfo,
     double   *perf,
     double   *time_min,
     double   *residual)
@@ -175,23 +170,6 @@ void fla_test_hseqr_experiment(test_params_t *params,
     {
         /* Generate Hessenberg matrix H */
         get_hessenberg_matrix(datatype, n, H, ldh, Z, ldz, &ilo, &ihi, scale, &info);
-        if(info < 0)
-        {
-            *residual = DBL_MAX;
-            free_vector(scale);
-            free_matrix(H);
-            free_matrix(Z);
-            if(datatype == COMPLEX || datatype == DOUBLE_COMPLEX)
-            {
-                free_vector(w);
-            }
-            else
-            {
-                free_vector(wr);
-                free_vector(wi);
-            }
-            return;
-        }
         if(compz == 'I')
             set_identity_matrix(datatype, n, n, Z, ldz);
     }
@@ -237,8 +215,8 @@ void fla_test_hseqr_experiment(test_params_t *params,
     /* Output Validation */
     if(info == 0)
         validate_hseqr(&job, &compz, n, H, H_test, ldh, Z, Z_Test, ldz, datatype, residual, &vinfo);
-    if(info < 0 || vinfo < 0)
-        *residual = DBL_MAX;
+    
+    FLA_TEST_CHECK_EINFO(residual, info, einfo);
 
     /* Free up the buffers */
     free_vector(scale);
@@ -257,9 +235,22 @@ void fla_test_hseqr_experiment(test_params_t *params,
     }
 }
 
-void prepare_hseqr_run(char* job, char* compz, integer n, integer* ilo, integer* ihi, void* H, integer ldh,
-                        void *w, void *wr, void* wi, void* Z, integer ldz, integer datatype,
-                        integer n_repeats, double* time_min_, integer* info)
+void prepare_hseqr_run(char* job,
+    char* compz,
+    integer n,
+    integer* ilo,
+    integer* ihi,
+    void* H,
+    integer ldh,
+    void *w,
+    void *wr,
+    void* wi,
+    void* Z,
+    integer ldz,
+    integer datatype,
+    integer n_repeats,
+    double* time_min_,
+    integer* info)
 {
     void *H_save = NULL, *work = NULL, *Z_save = NULL;
     integer i, lwork;
@@ -288,21 +279,16 @@ void prepare_hseqr_run(char* job, char* compz, integer n, integer* ilo, integer*
         {
             /* Get work size */
             lwork = get_work_value( datatype, work );
-            free_vector(work);
         }
-        else
-        {
-            free_vector(work);
-            free_matrix(H_save);
-            free_matrix(Z_save);
-            return;
-        }
+
+        free_vector(work);
     }
     else
     {
         lwork = g_lwork;
     }
 
+    *info = 0;
     for(i = 0; i < n_repeats && *info == 0; ++i)
     {
         /* Restore input matrix H and Z value and allocate memory to output buffers

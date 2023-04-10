@@ -6,7 +6,7 @@
 
 /* Local prototypes */
 void fla_test_getrs_experiment(test_params_t *params, integer  datatype, integer  p_cur, integer  q_cur, integer pci,
-                                    integer n_repeats, double* perf, double* t, double* residual);
+                                    integer n_repeats, integer einfo, double* perf, double* t, double* residual);
 void prepare_getrs_run(char *trans, integer m_A, integer n_A, void *A, integer lda, void *B, integer ldb, integer* ipiv, integer datatype, integer n_repeats, double* time_min_, integer *info);
 void invoke_getrs(integer datatype, char *trans, integer *nrhs, integer *n, void *a, integer *lda, integer *ipiv, void *b, integer *ldb, integer *info);
 
@@ -16,7 +16,7 @@ void fla_test_getrs(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "LU factorization";
     char* front_str = "GETRS";
-    integer tests_not_run = 1, invalid_dtype = 0;
+    integer tests_not_run = 1, invalid_dtype = 0, einfo = 0;
 
     if(argc == 1)
     {
@@ -27,13 +27,7 @@ void fla_test_getrs(integer argc, char ** argv, test_params_t *params)
     }
     if(argc == 10)
     {
-        /* Read matrix input data from a file */
-        g_ext_fptr = fopen(argv[9], "r");
-        if (g_ext_fptr == NULL)
-        {
-            printf("\n Invalid input file argument \n");
-            return;
-        }
+        FLA_TEST_PARSE_LAST_ARG(argv[9]);
     }
     if(argc >= 9 && argc <= 10)
     {
@@ -79,7 +73,7 @@ void fla_test_getrs(integer argc, char ** argv, test_params_t *params)
                 fla_test_getrs_experiment(params, datatype,
                                           N, N,
                                           0,
-                                          n_repeats,
+                                          n_repeats, einfo,
                                           &perf, &time_min, &residual);
                 /* Print the results */
                 fla_test_print_status(front_str,
@@ -118,6 +112,7 @@ void fla_test_getrs_experiment(test_params_t *params,
     integer  q_cur,
     integer pci,
     integer n_repeats,
+    integer einfo,
     double* perf,
     double* t,
     double* residual)
@@ -170,17 +165,7 @@ void fla_test_getrs_experiment(test_params_t *params,
 
     /*  call to API getrf to get AFACT */
     invoke_getrf(datatype, &n, &n, A_test, &lda, IPIV, &info);
-    if(info < 0)
-    {
-        *residual = DBL_MAX;
-        free_matrix(A);
-        free_matrix(A_test);
-        free_vector(IPIV);
-        free_matrix(B);
-        free_matrix(X);
-        free_matrix(B_save);
-        return;
-    }
+
     /* call to API */
     prepare_getrs_run(&TRANS, n, NRHS, A_test, lda, B, ldb, IPIV, datatype, n_repeats, &time_min, &info);
     copy_matrix(datatype, "full", n, NRHS, B, ldb, X, n);
@@ -196,10 +181,8 @@ void fla_test_getrs_experiment(test_params_t *params,
     /* output validation */
     if(info == 0)
         validate_getrs(&TRANS, n, NRHS, A, lda, B_save, ldb, X, datatype, residual, &vinfo);
-
-    /* Assigning bigger value to residual as execution fails */
-    if(info < 0 || vinfo < 0)
-        *residual = DBL_MAX;
+    
+    FLA_TEST_CHECK_EINFO(residual, info, einfo);
         
     /* Free up the buffers */
     free_matrix(A);
@@ -234,6 +217,7 @@ void prepare_getrs_run(char *TRANS,
     create_matrix(datatype, &B_test, ldb, nrhs);
 
 
+    *info = 0;
     for (i = 0; i < n_repeats && *info == 0; ++i)
     {
         /* Copy original input data */

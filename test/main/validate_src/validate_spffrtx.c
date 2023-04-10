@@ -15,6 +15,8 @@ void validate_spffrtx(integer n,
     integer datatype,
     double* residual)
 {
+    if(n == 0 || ncolm == 0)
+        return;
     integer i, j, di;
     void* work = NULL;
     void* L = NULL, *D = NULL, *T = NULL;

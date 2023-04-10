@@ -8,7 +8,7 @@
 
 /* Local prototypes */
 void fla_test_hgeqz_experiment(test_params_t *params, integer datatype, integer p_cur, integer  q_cur, integer pci,
-                                    integer n_repeats, double* perf, double* t, double* residual);
+                                    integer n_repeats, integer einfo, double* perf, double* t, double* residual);
 void prepare_hgeqz_run(char* job, char* compq, char* compz, integer n, integer* ilo, integer* ihi, void* h, integer ldh,
                             void* t, integer ldt, void *alpha, void *alphar, void *alphai, void* beta, void* q, integer ldq, void* z,
                             integer ldz, integer datatype, integer n_repeats, double* time_min_, integer* info);
@@ -26,7 +26,7 @@ void fla_test_hgeqz(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Computing Eigen value of a real matrix pair (H,T)";
     char* front_str = "HGEQZ";
-    integer tests_not_run = 1, invalid_dtype = 0;
+    integer tests_not_run = 1, invalid_dtype = 0, einfo = 0;
     if(argc == 1)
     {
         fla_test_output_info("--- %s ---\n", op_str);
@@ -36,13 +36,7 @@ void fla_test_hgeqz(integer argc, char ** argv, test_params_t *params)
     }
     if(argc == 16)
     {
-        /* Read matrix input data from a file */
-        g_ext_fptr = fopen(argv[15], "r");
-        if (g_ext_fptr == NULL)
-        {
-            printf("\n Invalid input file argument \n");
-            return;
-        }
+        FLA_TEST_PARSE_LAST_ARG(argv[15]);
     }
     if(argc >= 15 && argc <=16)
     {
@@ -92,7 +86,7 @@ void fla_test_hgeqz(integer argc, char ** argv, test_params_t *params)
                 fla_test_hgeqz_experiment(params, datatype,
                                           N, N,
                                           0,
-                                          n_repeats,
+                                          n_repeats, einfo,
                                           &perf, &time_min, &residual);
                 /* Print the results */
                 fla_test_print_status(front_str,
@@ -128,6 +122,7 @@ void fla_test_hgeqz_experiment(test_params_t *params,
     integer  q_cur,
     integer  pci,
     integer  n_repeats,
+    integer  einfo,
     double   *perf,
     double   *time_min,
     double   *residual)
@@ -195,6 +190,7 @@ void fla_test_hgeqz_experiment(test_params_t *params,
         rand_matrix(datatype, B, n, n, ldt);
         /* Decompose matrix B in to QR and store orthogonal matrix in Q and R in B */
         get_orthogonal_matrix_from_QR(datatype, n, B, ldt, Q, ldq, &info);
+        info = 0;
         /* Make copy of matrix A and B. This is required to validate the API functionality */
         copy_matrix(datatype, "full", n, n, A, ldh, H, ldh);
         copy_matrix(datatype, "full", n, n, B, ldt, T, ldt);
@@ -206,27 +202,6 @@ void fla_test_hgeqz_experiment(test_params_t *params,
         copy_matrix(datatype, "full", n, n, Z, ldz, Z_A, ldz);
         /* Call to GGHRD API */
         invoke_gghrd(datatype, &compq, &compz, &n, &ilo, &ihi, H, &ldh, T, &ldt, Q, &ldq, Z, &ldz, &info);
-        if(info < 0)
-        {
-            *residual = DBL_MAX;
-            free_matrix(H);
-            free_matrix(T);
-            free_matrix(Q);
-            free_matrix(Z);
-            free_matrix(A);
-            free_matrix(B);
-            free_matrix(Q_A);
-            free_matrix(Z_A);
-            if (datatype == FLOAT || datatype == DOUBLE)
-            {
-                free_vector(alphar);
-                free_vector(alphai);
-            }
-            else
-                free_vector(alpha);
-            free_vector(beta);
-            return;
-        }
         if(compq == 'I')
             set_identity_matrix(datatype, n, n, Q, ldq);
         if(compz == 'I')
@@ -279,8 +254,8 @@ void fla_test_hgeqz_experiment(test_params_t *params,
     /* Output Validation */
     if(info == 0)
         validate_hgeqz(&job, &compq, &compz, n, H, H_test, A, ldh, T, T_test, B, ldt, Q, Q_test, Q_A, ldq, Z, Z_test, Z_A, ldz, datatype, residual, &vinfo);
-    if(info < 0 || vinfo < 0)
-        *residual = DBL_MAX;
+    
+    FLA_TEST_CHECK_EINFO(residual, info, einfo);
 
     /* Free up the buffers */
     free_vector(scale);
@@ -338,21 +313,13 @@ void prepare_hgeqz_run(char* job, char* compq, char* compz, integer n, integer* 
             lwork = get_work_value( datatype, work );
             free_vector(work);
         }
-        else
-        {
-            free_vector(work);
-            free_matrix(H_save);
-            free_matrix(T_save);
-            free_matrix(Q_save);
-            free_matrix(Z_save);
-            return;
-        }
     }
     else
     {
         lwork = g_lwork;
     }
 
+    *info = 0;
     for(i = 0; i < n_repeats && *info == 0; ++i)
     {
         /* Restore input matrix H and Z value and allocate memory to output buffers

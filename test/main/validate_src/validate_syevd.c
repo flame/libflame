@@ -10,6 +10,8 @@
 
 void validate_syevd(char* jobz, integer n, void* A, void* A_test, integer lda, void* w, integer datatype, double* residual, integer* info)
 {
+   if(n == 0)
+        return;
     *info = 0;
     if(*jobz != 'N')
     {
