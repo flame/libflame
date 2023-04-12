@@ -67,7 +67,9 @@ TEST_DIR_MAIN_TEST  := test/main
 CPP_TEST_DIR        := testcpp
 LAPACKE_S_SRC_PATH  := $(SRC_DIR)/$(LAPACKE_DIR)/$(LAPACKE_SRC_DIR)
 LAPACKE_U_SRC_PATH  := $(SRC_DIR)/$(LAPACKE_DIR)/$(LAPACKE_UTIL_DIR)
-LIBCPUID_OBJ_DIR    := libcpuobjdir
+LIBAOCLUTILS_DIR    := libaoclutils
+LIBAOCLUTILS_REPO   := aocl-utils
+LIBAOCLUTILS_OBJ_DIR := libaoclutils_objdir
 
 # Use the system type to name the config, object, and library directories.
 # These directories are special in that they will contain products specific
@@ -376,13 +378,15 @@ INCLUDE_PATHS   += $(strip $(patsubst %, -I%, $(L2F_HEADER_DIR_PATHS)))
 endif
 
 INCLUDE_PATHS += $(strip $(patsubst %, -I%, $(LAPACKE_HEADERS_DIR)))
+ifeq ($(strip $(LIBAOCLUTILS_LIBRARY_PATH)),)
+INCLUDE_PATHS += "-I$(LIBAOCLUTILS_DIR)/$(LIBAOCLUTILS_REPO)/include"
+endif
 
 # Add the include flags determined above to various compiler flags variables.
 CFLAGS          := $(CFLAGS) $(INCLUDE_PATHS)
 CFLAGS_NOOPT    := $(CFLAGS_NOOPT) $(INCLUDE_PATHS)
 CPPFLAGS        := $(CPPFLAGS) $(INCLUDE_PATHS)
 FFLAGS          := $(FFLAGS) $(INCLUDE_PATHS)
-
 
 
 #
@@ -459,18 +463,16 @@ MK_ALL_FLAMEC_OBJS        := $(MK_FLABLAS_F2C_OBJS) \
                              $(MK_ALL_FLAMEC_OBJS)
 endif
 
-ifeq ($(strip $(LIBCPUID_LIBRARY_PATH)),)
-LIBCPUID_OBJS 		  := 
+ifeq ($(strip $(LIBAOCLUTILS_LIBRARY_PATH)),)
+LIBAOCLUTILS_OBJS         := 
 else
-LIBCPUID_OBJS             := $(shell mkdir -p $(LIBCPUID_OBJ_DIR); \
-				cd $(LIBCPUID_OBJ_DIR); \
-				ar -x $(LIBCPUID_LIBRARY_PATH); \
-				cd ..; \
-				ls $(LIBCPUID_OBJ_DIR)/*.o)
-endif
-
-MK_ALL_FLAMEC_OBJS        := $(LIBCPUID_OBJS) \
+LIBAOCLUTILS_OBJS         := $(shell mkdir -p $(LIBAOCLUTILS_OBJ_DIR); \
+                                cd $(LIBAOCLUTILS_OBJ_DIR); \
+                                ar -x $(LIBAOCLUTILS_LIBRARY_PATH); \
+                                cd ..)
+MK_ALL_FLAMEC_OBJS        := $(LIBAOCLUTILS_OBJS) \
                              $(MK_ALL_FLAMEC_OBJS)
+endif
 
 ### Kyungjoo 2015.10.21
 #AR_CHUNK_SIZE=4096
@@ -482,7 +484,11 @@ AR_CHUNK_SIZE=1024
 
 # --- Primary targets ---
 
+ifeq ($(strip $(LIBAOCLUTILS_LIBRARY_PATH)),)
+all: aoclutillib libs
+else
 all: libs
+endif
 
 libs: libflame
 
@@ -493,7 +499,6 @@ install: libs install-libs install-lib-symlinks install-headers
 uninstall: uninstall-libs uninstall-lib-symlinks uninstall-headers
 
 clean: cleanh cleanlib
-
 
 # --- Environment check rules ---
 
@@ -509,6 +514,9 @@ ifeq ($(MAKEFILE_FRAGMENTS_PRESENT),no)
 	$(error Cannot proceed: makefile fragments not detected! Run configure first)
 endif
 
+aoclutillib:
+	bash script_aoclutil.sh
+	
 # --- Cosolidated header creation ---
 
 flat-headers: check-env $(FLAME_H_FLAT) $(BLIS1_H_FLAT) $(FLAF2C_H_FLAT)
@@ -621,7 +629,7 @@ ifeq ($(OS_NAME),Darwin)
 #	$(CAT) $(AR_OBJ_LIST_FILE) >> $(AR_ARG_LIST_FILE)
 #	$(AR) @$(AR_ARG_LIST_FILE)
 else
-	$(file > $@.in,$^)
+	$(file > $@.in,$^ $(shell ls $(LIBAOCLUTILS_OBJ_DIR)/*.o))
 	$(AR) $(ARFLAGS) $@ @$@.in
 	$(RM_F) $@.in
 endif 
@@ -644,7 +652,7 @@ ifeq ($(OS_NAME),Darwin)
 #	@$(CAT) $(AR_OBJ_LIST_FILE) >> $(AR_ARG_LIST_FILE)
 #	@$(AR) @$(AR_ARG_LIST_FILE)
 else
-	@$(file > $@.in,$^)
+	@$(file > $@.in,$^ $(shell ls $(LIBAOCLUTILS_OBJ_DIR)/*.o))
 	@$(AR) $(ARFLAGS) $@ @$@.in
 	@$(RM_F) $@.in
 endif
@@ -668,7 +676,7 @@ ifeq ($(OS_NAME),Darwin)
 	$(CAT) $(AR_OBJ_LIST_FILE) | xargs -n$(AR_CHUNK_SIZE) $(AR) $(ARFLAGS) $(LIBFLAME_A)
 	$(LINKER) $(SOFLAGS) -o $@ -Wl,-force_load,$(LIBFLAME_A) $(LDFLAGS)
 else
-	$(file > $@.in,$^)
+	$(file > $@.in,$^ $(shell ls $(LIBAOCLUTILS_OBJ_DIR)/*.o))
 	$(LINKER) $(SOFLAGS) -o $(LIBFLAME_SO_OUTPUT_NAME) @$@.in $(LDFLAGS)
 	$(RM_F) $@.in
 endif
@@ -684,7 +692,7 @@ ifeq ($(OS_NAME),Darwin)
 	@$(CAT) $(AR_OBJ_LIST_FILE) | xargs -n$(AR_CHUNK_SIZE) $(AR) $(ARFLAGS) $(LIBFLAME_A)
 	@$(LINKER) $(SOFLAGS) -o $@ -Wl,-force_load,$(LIBFLAME_A) $(LDFLAGS)
 else
-	@$(file > $@.in,$^)
+	@$(file > $@.in,$^ $(shell ls $(LIBAOCLUTILS_OBJ_DIR)/*.o))
 	@$(LINKER) $(SOFLAGS) -o $(LIBFLAME_SO_OUTPUT_NAME) @$@.in $(LDFLAGS)
 	@$(RM_F) $@.in
 endif
@@ -930,7 +938,8 @@ ifeq ($(ENABLE_VERBOSE),yes)
 	- $(RM_F) $(AOCLDTL_obj_PATH)
 	- $(RM_F) $(AOCLDTL_gch_PATH)
 	- $(RM_F) $(BASE_LIB_PATH)/*
-	- $(RM_F) $(LIBCPUID_OBJ_DIR)/*
+	- $(RM_F) -r $(LIBAOCLUTILS_DIR)
+	- $(RM_F) -r $(LIBAOCLUTILS_OBJ_DIR)
 else
 	@echo "Removing object files from $(BASE_OBJ_PATH)"
 	@$(FIND) $(BASE_OBJ_PATH) -name "*.o" | $(XARGS) $(RM_F)
@@ -942,7 +951,8 @@ else
 	@$(RM_F) $(AOCLDTL_obj_PATH)
 	@$(RM_F) $(AOCLDTL_gch_PATH)
 	@$(RM_F) $(BASE_LIB_PATH)/*
-	@$(RM_F) $(LIBCPUID_OBJ_DIR)/*
+	@$(RM_F) -r $(LIBAOCLUTILS_DIR)
+	@$(RM_F) -r $(LIBAOCLUTILS_OBJ_DIR)
 endif
 endif
 
