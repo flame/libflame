@@ -116,7 +116,7 @@ int fla_dgeqrf_small_avx2(integer *m, integer *n,
     integer min_m_n, kcnt;
     integer slen, a_offset;
     integer acols, arows;
-    doublereal xnorm, vnorm;
+    doublereal xnorm, vnorm, dtmp;
     doublereal fnorm, scale;
     doublereal med_sum, sml_sum, big_sum;
     doublereal alpha, beta, ntau;
@@ -272,7 +272,10 @@ int fla_dgeqrf_small_avx2(integer *m, integer *n,
                     beta = beta * safmin;
                 }
 
-                /* Part 2: Apply the Householder rotation on the rest of the matrix */
+                /* Part 2: Apply the Householder rotation on the rest of the matrix 
+                 *    A = A - tau * v * v**T * A
+                 *      = A - v * tau * (A**T * v)**T
+                 *    */
 
                 arows = *m - i + 1;
                 acols = *n - i;
@@ -281,52 +284,44 @@ int fla_dgeqrf_small_avx2(integer *m, integer *n,
                 vd2_ntau = _mm_set1_pd(ntau);
 
                 /* work = A**T * v */
-                for (j = 1; j <= acols; j++) /* for every column of A */
+                for (j = 1; j <= acols; j++) /* for every column c_A of A */
                 {
                     ac = &A[(j - 1) * *lda - 1];
-                    vd2_dtmp = _mm_setzero_pd();
 
-                    /* Compute v**T * c_A */
+                    /* Compute tmp = c_A**T . v */
+                    dtmp = 0;
                     for (k = 1; k <= (arows - 1); k += 2)
                     {
-                        /* load column elements */
-                        vd2_inp = _mm_loadu_pd((const doublereal *) &ac[k]);
-                        vd2_vj1 = _mm_loadu_pd((const doublereal *) &v[k]);
-
-                        /* take dot product */
-                        vd2_dtmp = _mm_fmadd_pd(vd2_inp, vd2_vj1, vd2_dtmp);
+                        dtmp = dtmp + ac[k] * v[k];
+                        dtmp = dtmp + ac[k + 1] * v[k + 1];
                     }
-
                     if (k == arows)
                     {
-                        /* load single elements from column */
-                        vd2_inp = _mm_load_sd((const doublereal *) &ac[k]);
-                        vd2_vj1 = _mm_load_sd((const doublereal *) &v[k]);
-
-                        /* take dot product */
-                        vd2_dtmp = _mm_fmadd_pd(vd2_inp, vd2_vj1, vd2_dtmp);
+                        dtmp = dtmp + ac[k] * v[k];
                     }
+                    vd2_dtmp = _mm_set1_pd(dtmp);
 
-                    vd2_dtmp = _mm_hadd_pd(vd2_dtmp, vd2_dtmp);
+                    /* Compute tmp = -tau * tmp */
                     vd2_dtmp = _mm_mul_pd(vd2_dtmp, vd2_ntau);
 
+                    /* Compute c_A + tmp * v */
                     for (k = 1; k <= (arows - 1); k += 2)
                     {
-                        /* load column elements */
+                        /* load column elements of c_A and v */
                         vd2_inp = _mm_loadu_pd((const doublereal *) &ac[k]);
                         vd2_vj1 = _mm_loadu_pd((const doublereal *) &v[k]);
 
-                        /* mul by dtmp and store */
+                        /* mul by dtmp, add and store */
                         vd2_inp = _mm_fmadd_pd(vd2_vj1, vd2_dtmp, vd2_inp);
                         _mm_storeu_pd((doublereal *) &ac[k], vd2_inp);
                     }
                     if (k == arows)
                     {
-                        /* load single elements from column */
+                        /* load single remaining element from c_A and v */
                         vd2_inp = _mm_load_sd((const doublereal *) &ac[k]);
                         vd2_vj1 = _mm_load_sd((const doublereal *) &v[k]);
 
-                        /* mul by dtmp and store */
+                        /* multiply with tau and store */
                         vd2_inp = _mm_fmadd_pd(vd2_vj1, vd2_dtmp, vd2_inp);
                         _mm_store_sd((doublereal *) &ac[k], vd2_inp);
                     }
@@ -463,7 +458,10 @@ int fla_dgeqrf_small_avx2(integer *m, integer *n,
                     beta = beta * safmin;
                 }
 
-                /* Part 2: Apply the Householder rotation on the rest of the matrix */
+                /* Part 2: Apply the Householder rotation on the rest of the matrix 
+                 *    A = A - tau * v * v**T * A
+                 *      = A - v * tau * (A**T * v)**T
+                 *    */
 
                 arows = *m - i + 1;
                 acols = *n - i;
@@ -472,16 +470,16 @@ int fla_dgeqrf_small_avx2(integer *m, integer *n,
                 vd2_ntau = _mm_set1_pd(ntau);
 
                 /* work = A**T * v */
-                for (j = 1; j <= acols; j++) /* for every column of A */
+                for (j = 1; j <= acols; j++) /* for every column c_A of A */
                 {
                     ac = &A[(j - 1) * *lda - 1];
                     vd2_dtmp = _mm_setzero_pd();
                     vd4_dtmp = _mm256_setzero_pd();
 
-                    /* Compute v**T * c_A */
+                    /* Compute tmp = c_A**T . v */
                     for (k = 1; k <= (arows - 3); k += 4)
                     {
-                        /* load column elements */
+                        /* load column elements of A and v */
                         vd4_inp = _mm256_loadu_pd((const doublereal *) &ac[k]);
                         vd4_vj  = _mm256_loadu_pd((const doublereal *) &v[k]);
 
@@ -490,7 +488,7 @@ int fla_dgeqrf_small_avx2(integer *m, integer *n,
                     }
                     if (k < arows)
                     {
-                        /* load column elements */
+                        /* load column elements of A and v */
                         vd2_inp = _mm_loadu_pd((const doublereal *) &ac[k]);
                         vd2_vj1 = _mm_loadu_pd((const doublereal *) &v[k]);
 
@@ -500,13 +498,14 @@ int fla_dgeqrf_small_avx2(integer *m, integer *n,
                     }
                     if (k == arows)
                     {
-                        /* load single elements */
+                        /* load single remaining element from c_A and v */
                         vd2_inp = _mm_load_sd((const doublereal *) &ac[k]);
                         vd2_vj1 = _mm_load_sd((const doublereal *) &v[k]);
 
                         /* take dot product */
                         vd2_dtmp = _mm_fmadd_pd(vd2_inp, vd2_vj1, vd2_dtmp);
                     }
+                    /* Horizontal add of dtmp */
                     vd2_ltmp = _mm256_castpd256_pd128(vd4_dtmp);
                     vd2_htmp = _mm256_extractf128_pd(vd4_dtmp, 0x1);
 
@@ -514,6 +513,7 @@ int fla_dgeqrf_small_avx2(integer *m, integer *n,
                     vd2_dtmp = _mm_add_pd(vd2_dtmp, vd2_htmp);
                     vd2_dtmp = _mm_hadd_pd(vd2_dtmp, vd2_dtmp);
 
+                    /* Compute tmp = - tau * tmp */
                     vd2_dtmp = _mm_mul_pd(vd2_dtmp, vd2_ntau);
                     vd4_dtmp = _mm256_castpd128_pd256(vd2_dtmp);
                     vd4_dtmp = _mm256_insertf128_pd(vd4_dtmp, vd2_dtmp, 0x1);
@@ -523,34 +523,35 @@ int fla_dgeqrf_small_avx2(integer *m, integer *n,
                      * Both will be same in terms of latency though */
                     /* vd4_dtmp = _mm256_set_m128d(vd2_dtmp, vd2_dtmp); */
 
+                    /* Compute c_A + tmp * v */
                     for (k = 1; k <= (arows - 3); k += 4)
                     {
-                        /* load column elements */
+                        /* load column elements of c_A and v */
                         vd4_inp = _mm256_loadu_pd((const doublereal *) &ac[k]);
                         vd4_vj  = _mm256_loadu_pd((const doublereal *) &v[k]);
 
-                        /* multiply with tau and store */
+                        /* mul by dtmp, add and store */
                         vd4_inp = _mm256_fmadd_pd(vd4_dtmp, vd4_vj, vd4_inp);
                         _mm256_storeu_pd((doublereal *) &ac[k], vd4_inp);
                     }
                     if (k < arows)
                     {
-                        /* load column elements */
+                        /* load column elements of c_A and v */
                         vd2_inp = _mm_loadu_pd((const doublereal *) &ac[k]);
                         vd2_vj1 = _mm_loadu_pd((const doublereal *) &v[k]);
 
-                        /* multiply with tau and store */
+                        /* mul by dtmp, add and store */
                         vd2_inp = _mm_fmadd_pd(vd2_dtmp, vd2_vj1, vd2_inp);
                         _mm_storeu_pd((doublereal *) &ac[k], vd2_inp);
                         k += 2;
                     }
                     if (k == arows)
                     {
-                        /* load single elements */
+                        /* load single remaining element from c_A and v */
                         vd2_inp = _mm_load_sd((const doublereal *) &ac[k]);
                         vd2_vj1 = _mm_load_sd((const doublereal *) &v[k]);
 
-                        /* multiply with tau and store */
+                        /* mul by dtmp, add and store */
                         vd2_inp = _mm_fmadd_pd(vd2_dtmp, vd2_vj1, vd2_inp);
                         _mm_storel_pd((doublereal *) &ac[k], vd2_inp);
                     }
