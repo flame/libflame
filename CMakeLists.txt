@@ -14,8 +14,8 @@ if(WIN32)
 	SET(CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH "${CMAKE_SOURCE_DIR}/bin/Release" CACHE STRING "AOCL-BLIS library path name")
 	SET(EXT_BLAS_LIBNAME "AOCL-LibBlis-Win-MT-dll.lib" CACHE STRING "AOCL-BLIS library name")
 	SET(OpenMP_libomp_LIB "C:/Program Files/LLVM/lib/libomp.lib" CACHE STRING "openmp library path")
-	SET(LIBCPUID_LIBRARY_PATH "cpu_static.lib" CACHE STRING "CPU detection library name")
-	SET(LIBCPUID_INCLUDE_PATH "" CACHE STRING "CPU detection library header files path")
+	SET(LIBAOCLUTILS_LIBRARY_PATH "" CACHE STRING "AOCLUtils library name")
+	SET(LIBAOCLUTILS_INCLUDE_PATH "" CACHE STRING "AOCLUtils library header files path")
 endif()
 
 message(STATUS "External blas library Path : ${CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH}")
@@ -36,6 +36,24 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 # Added for debugging purpose
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 
+#set AOCL Utilities library path values
+set(LIBAOCLUTILS_GIT_URL "git@github.amd.com:AOCL/aocl-utils.git")
+set(LIBAOCLUTILS_GIT_TAG "amd-main")
+
+if(BUILD_SHARED_LIBS)
+	if(UNIX)
+		set(LIBAOCLUTILS_SHAREDLIB "libaoclutils.so")
+	else()
+		set(LIBAOCLUTILS_SHAREDLIB "libaoclutils.dll")
+	endif ()
+else()
+	if(UNIX)
+		set(LIBAOCLUTILS_STATICLIB "libaoclutils.a")
+	else()
+		set(LIBAOCLUTILS_STATICLIB "libaoclutils_static.lib")
+	endif ()
+
+endif()
 
 #enabling the configuration options
 option (ENABLE_AMD_OPT "Enable AMD optimized path" OFF)
@@ -125,7 +143,7 @@ endif()
 if(UNIX)
 	SET(COMPILER_DEBUG_FLAG "-g0")
 	set(GCC_WARNING_FLAGS "-Wall -Wno-comment")
-	set(COMPILER_LANGUAGE_FLAGS "-Wno-unused-function -Wno-parentheses -Wfatal-errors ")
+	set(COMPILER_LANGUAGE_FLAGS "-std=gnu99 -Wno-unused-function -Wno-parentheses -Wfatal-errors ")
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COMPILER_DEBUG_FLAG} ${GCC_WARNING_FLAGS} ${COMPILER_LANGUAGE_FLAGS}")
 endif()
 
@@ -828,39 +846,39 @@ if (BUILD_SHARED_LIBS)
                  ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLA_f2c.h
                  ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLAME.h
                  )
-	message(STATUS "shared_lib PROJECT_NAME: ${PROJECT_NAME}")
+	message(STATUS "Shared library PROJECT_NAME: ${PROJECT_NAME}")
 	target_compile_definitions("${PROJECT_NAME}" PUBLIC -DLIBFLAME_IS_BUILDING_LIBRARY)
 	target_compile_definitions("${PROJECT_NAME}" PUBLIC -DLIBFLAME_ENABLE_SHARED)
 else ()
-	if(UNIX)
-		#In unix, extract the libcpu library object files(alci_init.cc.o c_arch.cc.o c_cache.cc.o)
-		#and combine it with libflame object files 
-		add_library("${PROJECT_NAME}" STATIC ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/blis1.h
-        	         ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLA_f2c.h
-                	 ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLAME.h
-                 	alci_init.cc.o c_arch.cc.o c_cache.cc.o 
-			)
-	elseif(WIN32)
-		add_library("${PROJECT_NAME}" STATIC ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/blis1.h
-        	         ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLA_f2c.h
-                	 ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLAME.h
-			)
-	endif ()
-	message(STATUS "static_lib PROJECT_NAME: ${PROJECT_NAME}")
+
+	add_library("${PROJECT_NAME}" STATIC ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/blis1.h
+                 ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLA_f2c.h
+               	 ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLAME.h
+		)
+
+	message(STATUS "Static library PROJECT_NAME: ${PROJECT_NAME}")
 endif ()
 
 set(LIBFLAME_PUBLIC_HEADERS	"include/FLAME.h"
-							"src/lapacke/LAPACKE/include/lapacke_mangling.h"
-							"src/lapacke/LAPACKE/include/lapacke.h"
-							"src/lapacke/LAPACKE/include/lapack.h"
-							"src/src_cpp/libflame_interface.hh"
-							"src/src_cpp/libflame.hh")
+				"src/lapacke/LAPACKE/include/lapacke_mangling.h"
+				"src/lapacke/LAPACKE/include/lapacke.h"
+				"src/lapacke/LAPACKE/include/lapack.h"
+				"src/src_cpp/libflame_interface.hh"
+				"src/src_cpp/libflame.hh")
 
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${LIBFLAME_PUBLIC_HEADERS}")
 
 install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
 								ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
 								PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
+
+#Logic to create AOCL-libFLAME library name according to the linking AOCL-BLIS library name.
+if(WIN32)
+	string(REPLACE "LibBlis" "LibFlame" TEMP_VAR ${EXT_BLAS_LIBNAME})
+	string(REPLACE ".lib" "" TEMP_VAR ${TEMP_VAR})
+	set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "${TEMP_VAR}")
+	message(STATUS "Library Name : ${TEMP_VAR}${CMAKE_SHARED_LIBRARY_SUFFIX}")
+endif()
 
 if(ENABLE_OPENMP)
 	if(EXT_OPENMP_PATH)
@@ -875,43 +893,92 @@ if(ENABLE_OPENMP)
 		target_link_libraries(${PROJECT_NAME}  OpenMP::OpenMP_CXX)
 	endif()
 endif ()
-#Logic to create AOCL-libFLAME library name according to the linking AOCL-BLIS library name.
-if(WIN32)
-	string(REPLACE "LibBlis" "LibFlame" TEMP_VAR ${EXT_BLAS_LIBNAME})
-	string(REPLACE ".lib" "" TEMP_VAR ${TEMP_VAR})
-	set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "${TEMP_VAR}")
-	message(STATUS "Library Name : ${TEMP_VAR}${CMAKE_SHARED_LIBRARY_SUFFIX}")
+
+#Set variable for static library path string
+if(NOT BUILD_SHARED_LIBS)
+	if(UNIX)
+		set(LIBFLAME_STATICLIB_NAME lib${PROJECT_NAME}${CMAKE_STATIC_LIBRARY_SUFFIX})
+		set(LIBFLAME_STATICLIB_PATH ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/${LIBFLAME_STATICLIB_NAME})
+		message(STATUS "libflame static library path ${LIBFLAME_STATICLIB_PATH}")
+	else ()	
+		set(LIBFLAME_STATICLIB_PATH ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIG>/${TEMP_VAR}${CMAKE_STATIC_LIBRARY_SUFFIX})
+		message(STATUS "libflame static library path ${LIBFLAME_STATICLIB_PATH}")
+	endif ()
 endif()
 
-if(LIBCPUID_LIBRARY_PATH AND LIBCPUID_INCLUDE_PATH)
-	message(STATUS "CPU-ID detection library(libcpu) path : " ${LIBCPUID_LIBRARY_PATH})
-	message(STATUS "CPU-ID detection library headers path : " ${LIBCPUID_INCLUDE_PATH})
-	if (BUILD_SHARED_LIBS)
-		target_link_libraries(${PROJECT_NAME} ${LIBCPUID_LIBRARY_PATH})
+#AOCLUtils library path handling
+#If user has provided the library path, use it. 
+if(LIBAOCLUTILS_LIBRARY_PATH AND LIBAOCLUTILS_INCLUDE_PATH)
+
+	message(STATUS "User provided AOCLUtils library path : " ${LIBAOCLUTILS_LIBRARY_PATH})
+	message(STATUS "User provided AOCLUtils library headers path : " ${LIBAOCLUTILS_INCLUDE_PATH})
+	
+	target_include_directories(${PROJECT_NAME} PUBLIC ${LIBAOCLUTILS_INCLUDE_PATH})	
+
+else(LIBAOCLUTILS_LIBRARY_PATH AND LIBAOCLUTILS_INCLUDE_PATH)
+	#Else build from source
+
+	message(STATUS "LIBAOCLUTILS_LIBRARY_PATH and LIBAOCLUTILS_INCLUDE_PATH flags not provded")
+	message(STATUS "AOCLUtils library not provided by user. Downloading from GitHub repository")
+	#Download AOCLUtils library from Github
+	include(ExternalProject)
+	ExternalProject_Add(
+        	libaoclutils
+		GIT_REPOSITORY ${LIBAOCLUTILS_GIT_URL}
+		GIT_TAG ${LIBAOCLUTILS_GIT_TAG}
+		CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=install_aoclutils
+		LOG_DOWNLOAD TRUE
+		LOG_CONFIGURE TRUE
+		LOG_BUILD TRUE
+	)
+
+	ExternalProject_Get_Property(libaoclutils source_dir)
+	ExternalProject_Get_Property(libaoclutils binary_dir)
+	
+	set(LIBAOCLUTILS_SOURCE_DIR ${source_dir})
+	set(LIBAOCLUTILS_INSTALL_DIR ${binary_dir}/install_aoclutils)
+	
+	message(STATUS "libaoclutils source directory ${LIBAOCLUTILS_SOURCE_DIR}")
+	message(STATUS "libaoclutils install directory ${LIBAOCLUTILS_INSTALL_DIR}")
+
+	if(BUILD_SHARED_LIBS)
+		set(LIBAOCLUTILS_LIBRARY_PATH ${LIBAOCLUTILS_INSTALL_DIR}/lib/${LIBAOCLUTILS_SHAREDLIB})
 	else ()
-		if(UNIX)
-			#Extract libcpu object files so it can be merged with libflame object files
-			target_link_libraries(${PROJECT_NAME} "libstdc++.so")
-			message(STATUS "Extracting libcpu object files so it can be merged with libflame object files")		
-			add_custom_command(TARGET ${PROJECT_NAME}
-					PRE_BUILD
-					COMMAND ar -x ${LIBCPUID_LIBRARY_PATH}
-					COMMENT "Extracting libcpu library object files"
-					)
-		elseif(WIN32)
-			#Merge libcpu static library with libflame static library in post build step
-			set(LIBFLAME_STATICLIB_PATH ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIG>/${TEMP_VAR}${CMAKE_STATIC_LIBRARY_SUFFIX})
-			message(STATUS "Static library full path : ${LIBFLAME_STATICLIB_PATH}")		
-			add_custom_command(TARGET ${PROJECT_NAME}
-					POST_BUILD
-					COMMAND lib.exe /OUT:${LIBFLAME_STATICLIB_PATH} ${LIBFLAME_STATICLIB_PATH} ${LIBCPUID_LIBRARY_PATH}
-					COMMENT "Merging libflame and libcpu libraries"
-					)
-		endif ()
+		set(LIBAOCLUTILS_LIBRARY_PATH ${LIBAOCLUTILS_INSTALL_DIR}/lib/${LIBAOCLUTILS_STATICLIB})
+	endif()
+
+	add_dependencies(${PROJECT_NAME} libaoclutils)
+	target_include_directories(${PROJECT_NAME} PUBLIC ${LIBAOCLUTILS_SOURCE_DIR}/include)	
+
+endif()
+
+#For libflame shared library, Link directly with libaoclutils library 
+#For libflame static library, merge libaoclutils and libflame binaries into a single static library
+if(BUILD_SHARED_LIBS)
+	target_link_libraries(${PROJECT_NAME} ${LIBAOCLUTILS_LIBRARY_PATH})
+else ()
+	if(UNIX)
+		#Merge libflame and libaoclutils libraries in post build step using archive command
+		add_custom_command(TARGET ${PROJECT_NAME}
+				POST_BUILD
+				COMMAND ar -x ${LIBAOCLUTILS_LIBRARY_PATH}
+				COMMAND ar -x ${LIBFLAME_STATICLIB_PATH}
+				COMMAND ar -crs ${LIBFLAME_STATICLIB_NAME} *.o
+				COMMAND rm *.o
+				COMMAND mv ${LIBFLAME_STATICLIB_NAME} ${LIBFLAME_STATICLIB_PATH}
+				COMMENT "Merging libflame and libaoclutils library object files into single binary"
+				)
+		
+		#Linking with libstdc++ library is needed for libaoclutils library dependency
+		target_link_libraries(${PROJECT_NAME} "libstdc++.so")
+	elseif(WIN32)
+		#Merge libaoclutils static library with libflame static library in post build step
+		add_custom_command(TARGET ${PROJECT_NAME}
+				POST_BUILD
+				COMMAND lib.exe /OUT:${LIBFLAME_STATICLIB_PATH} ${LIBFLAME_STATICLIB_PATH} ${LIBAOCLUTILS_LIBRARY_PATH}
+				COMMENT "Merging libflame and libaoclutils libraries"
+				)
 	endif ()
-	target_include_directories(${PROJECT_NAME} PUBLIC ${LIBCPUID_INCLUDE_PATH})	
-else(LIBCPUID_LIBRARY_PATH AND LIBCPUID_INCLUDE_PATH)
-	message(FATAL_ERROR "Error : CPU-ID detection library, libcpu, not provided!")
 endif()
 
 # TODO : enable this flag to build source supplied blas library
