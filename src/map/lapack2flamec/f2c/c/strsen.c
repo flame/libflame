@@ -397,6 +397,8 @@ int strsen_(char *job, char *compq, logical *select, integer *n, real *t, intege
     wantq = lsame_(compq, "V");
     *info = 0;
     lquery = *lwork == -1;
+    liwmin = 0;
+    lwmin = 0;
     if (! lsame_(job, "N") && ! wants && ! wantsp)
     {
         *info = -1;

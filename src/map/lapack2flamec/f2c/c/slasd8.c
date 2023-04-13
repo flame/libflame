@@ -219,6 +219,7 @@ int slasd8_(integer *icompq, integer *k, real *d__, real * z__, real *vf, real *
     --work;
     /* Function Body */
     *info = 0;
+    difrj = 0.f;
     if (*icompq < 0 || *icompq > 1)
     {
         *info = -1;

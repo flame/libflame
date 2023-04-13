@@ -349,8 +349,6 @@ int slaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     integer iwantq, iwants, istart;
     real smlnum;
     integer istopm, iwantz, istart2;
-    extern /* Subroutine */
-    int f90_exit_(void);
     logical ilschur;
     integer nshifts, istartm;
     /* Arguments */
@@ -376,6 +374,7 @@ int slaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     z__ -= z_offset;
     --work;
     /* Function Body */
+    eshift = 0.f;
     if (lsame_(wants, "E"))
     {
         ilschur = FALSE_;

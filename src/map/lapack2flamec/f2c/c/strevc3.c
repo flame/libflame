@@ -250,8 +250,7 @@ int strevc3_(char *side, char *howmny, logical *select, integer *n, real *t, int
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */
-    address a__1[2];
-    integer t_dim1, t_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1[2], i__2, i__3, i__4;
+    integer t_dim1, t_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__2, i__3, i__4;
     real r__1, r__2, r__3, r__4;
     char ch__1[2];
     /* Builtin functions */

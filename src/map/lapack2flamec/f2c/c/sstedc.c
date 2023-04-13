@@ -257,6 +257,8 @@ int sstedc_(char *compz, integer *n, real *d__, real *e, real *z__, integer *ldz
     /* Function Body */
     *info = 0;
     lquery = *lwork == -1 || *liwork == -1;
+    lwmin = 0;
+    liwmin = 0;
     if (lsame_(compz, "N"))
     {
         icompz = 0;

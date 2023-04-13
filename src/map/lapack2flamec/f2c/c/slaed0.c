@@ -227,6 +227,13 @@ int slaed0_(integer *icompq, integer *qsiz, integer *n, real *d__, real *e, real
     --iwork;
     /* Function Body */
     *info = 0;
+    iprmpt = 0;
+    igivpt = 0;
+    igivcl = 0;
+    iqptr = 0;
+    iwrem = 0;
+    iperm = 0;
+    iq = 0;
     if (*icompq < 0 || *icompq > 2)
     {
         *info = -1;

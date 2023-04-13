@@ -376,6 +376,7 @@ int stgsyl_(char *trans, integer *ijob, integer *m, integer * n, real *a, intege
     *info = 0;
     notran = lsame_(trans, "N");
     lquery = *lwork == -1;
+    scale2 = 0.f;
     if (! notran && ! lsame_(trans, "T"))
     {
         *info = -1;

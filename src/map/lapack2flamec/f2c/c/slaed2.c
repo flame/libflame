@@ -264,6 +264,7 @@ int slaed2_(integer *k, integer *n, integer *n1, real *d__, real *q, integer *ld
     --coltyp;
     /* Function Body */
     *info = 0;
+    pj = 0;
     if (*n < 0)
     {
         *info = -2;

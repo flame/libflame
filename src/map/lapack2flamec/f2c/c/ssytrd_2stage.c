@@ -237,7 +237,7 @@ int ssytrd_2stage_(char *vect, char *uplo, integer *n, real *a, integer *lda, re
     int ssytrd_sb2st_(char *, char *, char *, integer *, integer *, real *, integer *, real *, real *, real *, integer *, real *, integer *, integer *), ssytrd_sy2sb_(char *, integer *, integer *, real *, integer *, real *, integer *, real *, real *, integer *, integer *);
     extern logical lsame_(char *, char *);
     integer abpos, lhmin, lwmin;
-    logical wantq, upper;
+    logical upper;
     extern /* Subroutine */
     int xerbla_(char *, integer *);
     logical lquery;
@@ -270,7 +270,6 @@ int ssytrd_2stage_(char *vect, char *uplo, integer *n, real *a, integer *lda, re
     --work;
     /* Function Body */
     *info = 0;
-    wantq = lsame_(vect, "V");
     upper = lsame_(uplo, "U");
     lquery = *lwork == -1 || *lhous2 == -1;
     /* Determine the block size, the workspace size and the hous size. */

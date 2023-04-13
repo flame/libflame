@@ -278,6 +278,15 @@ int sbdsdc_(char *uplo, char *compq, integer *n, real *d__, real *e, real *u, in
     /* Function Body */
     *info = 0;
     iuplo = 0;
+    givnum = 0;
+    givcol = 0;
+    poles = 0;
+    difr = 0;
+    difl = 0;
+    ivt = 0;
+    is = 0;
+    ic = 0;
+    z__ = 0;
     if (lsame_(uplo, "U"))
     {
         iuplo = 1;

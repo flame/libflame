@@ -243,7 +243,7 @@ int sgsvj1_(char *jobv, integer *m, integer *n, integer *n1, real *a, integer *l
     extern real sdot_(integer *, real *, integer *, real *, integer *);
     real aapp0, temp1;
     extern real snrm2_(integer *, real *, integer *);
-    real large, apoaq, aqoap;
+    real apoaq, aqoap;
     extern logical lsame_(char *, char *);
     real theta, small_val, fastr[5];
     logical applv, rsvec;
@@ -366,7 +366,6 @@ int sgsvj1_(char *jobv, integer *m, integer *n, integer *n1, real *a, integer *l
     small_val = *sfmin / *eps;
     big = 1.f / *sfmin;
     rootbig = 1.f / rootsfmin;
-    large = big / sqrt((real) (*m * *n));
     bigtheta = 1.f / rooteps;
     roottol = sqrt(*tol);
     /* .. Initialize the right singular vector matrix .. */
