@@ -31,7 +31,7 @@
     Shared library is turned on by default. To generate Static library provide additional option
         -DBUILD_SHARED_LIBS=OFF
 
-    compile library using following command. This will generate libflame.a/libflame.so library in the bin directory
+    compile library using following command. This will generate libflame.a/libflame.so library in the lib directory
         cmake --build . -j OR make -j
 
 Linking with AOCL Utilities library
