@@ -174,6 +174,7 @@ int slasq4_(integer *i0, integer *n0, real *z__, integer *pp, integer *n0in, rea
     /* Parameter adjustments */
     --z__;
     /* Function Body */
+    s = 0.f;
     if (*dmin__ <= 0.f)
     {
         *tau = -(*dmin__);

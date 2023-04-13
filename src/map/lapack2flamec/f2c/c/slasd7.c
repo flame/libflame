@@ -338,6 +338,7 @@ int slasd7_(integer *icompq, integer *nl, integer *nr, integer *sqre, integer *k
     *info = 0;
     n = *nl + *nr + 1;
     m = n + *sqre;
+    jprev = 0;
     if (*icompq < 0 || *icompq > 1)
     {
         *info = -1;

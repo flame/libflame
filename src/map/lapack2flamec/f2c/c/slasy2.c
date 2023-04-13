@@ -208,10 +208,10 @@ int slasy2_(logical *ltranl, logical *ltranr, integer *isgn, integer *n1, intege
     integer ipsv, jpsv;
     logical bswap;
     extern /* Subroutine */
-    int scopy_(integer *, real *, integer *, real *, integer *), sswap_(integer *, real *, integer *, real *, integer * );
+    int scopy_(const integer *, real *, const integer *, real *, const integer *), sswap_(const integer *, real *, const integer *, real *, const integer * );
     logical xswap;
     extern real slamch_(char *);
-    extern integer isamax_(integer *, real *, integer *);
+    extern integer isamax_(const integer *, real *, const integer *);
     real smlnum;
     /* -- LAPACK auxiliary routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -253,6 +253,8 @@ int slasy2_(logical *ltranl, logical *ltranr, integer *isgn, integer *n1, intege
     /* .. Executable Statements .. */
     /* Do not check the input parameters for errors */
     *info = 0;
+    jpsv = 0;
+    ipsv = 0;
     /* Quick return if possible */
     if (*n1 == 0 || *n2 == 0)
     {

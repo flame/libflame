@@ -187,6 +187,7 @@ int sgerqf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
     {
         *info = -4;
     }
+    nb = ilaenv_(&c__1, "SGERQF", " ", m, n, &c_n1, &c_n1);
     if (*info == 0)
     {
         k = fla_min(*m,*n);
@@ -196,7 +197,6 @@ int sgerqf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
         }
         else
         {
-            nb = ilaenv_(&c__1, "SGERQF", " ", m, n, &c_n1, &c_n1);
             lwkopt = *m * nb;
         }
         work[1] = (real) lwkopt;

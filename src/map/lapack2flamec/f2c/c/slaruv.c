@@ -130,6 +130,10 @@ int slaruv_(integer *iseed, integer *n, real *x)
     i3 = iseed[3];
     i4 = iseed[4];
     i__1 = fla_min(*n,128);
+    it1 = 0;
+    it2 = 0;
+    it3 = 0;
+    it4 = 0;
     for (i__ = 1;
             i__ <= i__1;
             ++i__)

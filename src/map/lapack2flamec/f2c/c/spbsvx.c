@@ -410,6 +410,8 @@ int spbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, real
     nofact = lsame_(fact, "N");
     equil = lsame_(fact, "E");
     upper = lsame_(uplo, "U");
+    smlnum = 0.f;
+    bignum = 0.f;
     if (nofact || equil)
     {
         *(unsigned char *)equed = 'N';

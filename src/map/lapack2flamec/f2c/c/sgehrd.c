@@ -207,6 +207,7 @@ int sgehrd_(integer *n, integer *ilo, integer *ihi, real *a, integer *lda, real 
     --work;
     /* Function Body */
     *info = 0;
+    nx = 0;
     lquery = *lwork == -1;
     if (*n < 0)
     {

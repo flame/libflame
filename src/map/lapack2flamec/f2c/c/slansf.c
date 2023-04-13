@@ -245,6 +245,7 @@ real slansf_(char *norm, char *transr, char *uplo, integer *n, real *a, real * w
     /* .. Intrinsic Functions .. */
     /* .. */
     /* .. Executable Statements .. */
+    value = 0.f;
     if (*n == 0)
     {
         ret_val = 0.f;

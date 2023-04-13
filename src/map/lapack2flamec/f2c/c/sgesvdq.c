@@ -526,6 +526,10 @@ int sgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
     acclh = lsame_(joba, "H") || conda;
     rowprm = lsame_(jobp, "P");
     rtrans = lsame_(jobr, "T");
+    sconda = 0.f;
+    lworq = 0;
+    lwrk_sormqr__ = 0;
+    lwrk_sgeqp3__ = 0;
     if (rowprm)
     {
         if (conda)

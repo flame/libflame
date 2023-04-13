@@ -327,6 +327,7 @@ int slals0_(integer *icompq, integer *nl, integer *nr, integer *sqre, integer *n
     --work;
     /* Function Body */
     *info = 0;
+    difrj = 0.f;
     n = *nl + *nr + 1;
     if (*icompq < 0 || *icompq > 1)
     {

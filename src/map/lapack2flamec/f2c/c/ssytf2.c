@@ -246,6 +246,7 @@ int ssytf2_(char *uplo, integer *n, real *a, integer *lda, integer *ipiv, intege
     /* Function Body */
     *info = 0;
     upper = lsame_(uplo, "U");
+    imax = 0;
     if (! upper && ! lsame_(uplo, "L"))
     {
         *info = -1;
