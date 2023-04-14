@@ -2,6 +2,41 @@
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
  #include "FLAME.h"
  #include "FLA_f2c.h" /* Table of constant values */
+#ifdef FLA_ENABLE_AMD_OPT
+extern int dgeqrf_fla(integer *m, integer *n,
+                      doublereal *a, integer * lda,
+                      doublereal *tau,
+                      doublereal *work, integer *lwork,
+                      integer *info);
+int fla_dgelqf_tran(integer *m, integer *n,
+                    doublereal *a, integer * lda,
+                    doublereal *tau,
+                    doublereal *work, integer *lwork,
+                    integer *info);
+/* Transpose copy from matrix 'a' to 'b'.
+ * Memory locations of a and b are assumed to be different
+ * without any overlapping memory
+ * */
+static void fla_dtranspose(integer *m, integer *n,
+                           doublereal *a, integer *lda,
+                           doublereal *b, integer *ldb)
+{
+    integer i, j;
+
+    /* Offset adjustments */
+    a -= (1 + *lda);
+    b -= (1 + *ldb);
+
+    /* Do the transpose copy */
+    for (i = 1; i <= *n; i++)
+    {
+        for (j = 1; j <= *m; j++)
+        {
+            b[i + j * *ldb] = a[i * *lda + j];
+        }
+    }
+}
+#endif
  static integer c__1 = 1;
  static integer c_n1 = -1;
  static integer c__3 = 3;
@@ -140,6 +175,39 @@
  /* ===================================================================== */
  /* Subroutine */
  int lapack_dgelqf(integer *m, integer *n, doublereal *a, integer * lda, doublereal *tau, doublereal *work, integer *lwork, integer *info) {
+#ifdef FLA_ENABLE_AMD_OPT
+/* LQ Factorization through QR using below equation:
+ *              LQ = (QR)**H
+ * */
+ if (*m <= FLA_DELQF_TRAN_THRESH && *n <= FLA_DELQF_TRAN_THRESH)
+ {
+   doublereal *at;
+
+   if (*lwork == -1)
+   {
+       /* Call QR to get appropriate work buffer size */
+       dgeqrf_fla(n, m, a, n, tau, work, lwork, info);
+   }
+   else
+   {
+       /* Allocate transpose matrix */
+       at = malloc(*n * *m * sizeof(doublereal));
+
+       /* Do transpose and store it in at */
+       fla_dtranspose(m, n, a, lda, at, n);
+
+       /* Call QR for the transposed n x m matrix at */
+       dgeqrf_fla(n, m, at, n, tau, work, lwork, info);
+
+       /* Transpose at and store back in a */
+       fla_dtranspose(n, m, at, n, a, lda);
+
+       /* Free the transpose matrix */
+       free(at);
+   }
+   return 0;
+ }
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
  /* Local variables */
@@ -268,4 +336,3 @@
  /* End of DGELQF */
  }
  /* lapack_dgelqf */
- 

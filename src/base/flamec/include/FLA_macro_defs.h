@@ -241,6 +241,8 @@
 // small matrices
 #define FLA_GEQRF_STHRESH (32)
 #define FLA_GEQRF_BLOCK_SIZE (32)
+// Matrix size thresholds for choosing transposed QR for LQ 
+#define FLA_DELQF_TRAN_THRESH (1280)
 
 //POTRF, threshold numbers to chose paths for performance
 #define FLA_POTRF_FLOAT_SMALL         (70)
