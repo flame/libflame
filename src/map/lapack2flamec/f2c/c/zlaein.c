@@ -163,7 +163,7 @@ int zlaein_(logical *rightv, logical *noinit, integer *n, doublecomplex *h__, in
     int zdscal_(integer *, doublereal *, doublecomplex *, integer *);
     extern integer izamax_(integer *, doublecomplex *, integer *);
     extern /* Double Complex */
-    VOID zladiv_(doublecomplex *, doublecomplex *, doublecomplex *);
+    void zladiv_f2c_(doublecomplex *, doublecomplex *, doublecomplex *);
     char normin[1];
     extern doublereal dzasum_(integer *, doublecomplex *, integer *);
     doublereal nrmsml;

@@ -361,6 +361,7 @@ int zgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, doub
     /* If SENSE = 'E', 'V' or 'B', then the amount of workspace needed */
     /* depends on SDIM, which is computed by the routine ZTRSEN later */
     /* in the code.) */
+    maxwrk = 0;
     if (*info == 0)
     {
         if (*n == 0)

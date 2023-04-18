@@ -216,6 +216,7 @@ int zgehrd_(integer *n, integer *ilo, integer *ihi, doublecomplex *a, integer *l
     /* Function Body */
     *info = 0;
     lquery = *lwork == -1;
+    nx = 0;
     if (*n < 0)
     {
         *info = -1;

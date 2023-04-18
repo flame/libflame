@@ -13,7 +13,6 @@ static doublecomplex c_b2 =
 ;
 static integer c__6 = 6;
 static integer c__0 = 0;
-static integer c__2 = 2;
 static integer c_n1 = -1;
 static integer c__1 = 1;
 /* > \brief <b> ZGESVD computes the singular value decomposition (SVD) for GE matrices</b> */
@@ -237,8 +236,7 @@ int zgesvd_(char *jobu, char *jobvt, integer *m, integer *n, doublecomplex *a, i
     AOCL_DTL_SNPRINTF("zgesvd inputs: jobu %c, jobvt %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS "",*jobu, *jobvt, *m, *n, *lda, *ldu, *ldvt);
 
     /* System generated locals */
-    address a__1[2];
-    integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1[2], i__2, i__3, i__4;
+    integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__2, i__3, i__4;
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */
@@ -330,6 +328,8 @@ int zgesvd_(char *jobu, char *jobvt, integer *m, integer *n, doublecomplex *a, i
     wntvo = lsame_(jobvt, "O");
     wntvn = lsame_(jobvt, "N");
     lquery = *lwork == -1;
+    mnthr = 0;
+    wrkbl = 0;
     if (! (wntua || wntus || wntuo || wntun))
     {
         *info = -1;

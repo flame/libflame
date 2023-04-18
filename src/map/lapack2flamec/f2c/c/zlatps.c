@@ -267,7 +267,7 @@ int zlatps_(char *uplo, char *trans, char *diag, char * normin, integer *n, doub
     doublereal bignum;
     extern integer izamax_(integer *, doublecomplex *, integer *);
     extern /* Double Complex */
-    VOID zladiv_(doublecomplex *, doublecomplex *, doublecomplex *);
+    void zladiv_f2c_(doublecomplex *, doublecomplex *, doublecomplex *);
     logical notran;
     integer jfirst;
     extern doublereal dzasum_(integer *, doublecomplex *, integer *);

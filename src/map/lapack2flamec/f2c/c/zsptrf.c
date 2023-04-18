@@ -220,6 +220,7 @@ int zsptrf_(char *uplo, integer *n, doublecomplex *ap, integer *ipiv, integer *i
     /* Function Body */
     *info = 0;
     upper = lsame_(uplo, "U");
+    imax = 0;
     if (! upper && ! lsame_(uplo, "L"))
     {
         *info = -1;

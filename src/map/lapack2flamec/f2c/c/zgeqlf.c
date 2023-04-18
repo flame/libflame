@@ -191,6 +191,7 @@ int zgeqlf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
     {
         *info = -4;
     }
+    nb = ilaenv_(&c__1, "ZGEQLF", " ", m, n, &c_n1, &c_n1);
     if (*info == 0)
     {
         k = fla_min(*m,*n);
@@ -200,7 +201,6 @@ int zgeqlf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
         }
         else
         {
-            nb = ilaenv_(&c__1, "ZGEQLF", " ", m, n, &c_n1, &c_n1);
             lwkopt = *n * nb;
         }
         work[1].r = (doublereal) lwkopt;

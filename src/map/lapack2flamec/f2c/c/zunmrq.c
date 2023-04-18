@@ -167,8 +167,7 @@ int zunmrq_(char *side, char *trans, integer *m, integer *n, integer *k, doublec
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("zunmrq inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS ", ldc %" FLA_IS ", lwork %" FLA_IS "", *side, *trans, *m, *n, *k, *lda, *ldc, *lwork);
     /* System generated locals */
-    address a__1[2];
-    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__3[2], i__4, i__5;
+    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__4, i__5;
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */
@@ -225,6 +224,7 @@ int zunmrq_(char *side, char *trans, integer *m, integer *n, integer *k, doublec
     left = lsame_(side, "L");
     notran = lsame_(trans, "N");
     lquery = *lwork == -1;
+    nb = 0;
     /* NQ is the order of Q and NW is the minimum dimension of WORK */
     if (left)
     {

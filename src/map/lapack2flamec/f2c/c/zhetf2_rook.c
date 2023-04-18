@@ -254,6 +254,8 @@ int zhetf2_rook_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer
     /* Function Body */
     *info = 0;
     upper = lsame_(uplo, "U");
+    imax = 0;
+    jmax = 0;
     if (! upper && ! lsame_(uplo, "L"))
     {
         *info = -1;

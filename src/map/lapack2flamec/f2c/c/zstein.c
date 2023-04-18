@@ -244,6 +244,11 @@ int zstein_(integer *n, doublereal *d__, doublereal *e, integer *m, doublereal *
     /* Function Body */
     *info = 0;
     i__1 = *m;
+    dtpcrt = 0.;
+    onenrm = 0.;
+    ortol = 0.;
+    gpind = 0;
+    xjm = 0.;
     for (i__ = 1;
             i__ <= i__1;
             ++i__)

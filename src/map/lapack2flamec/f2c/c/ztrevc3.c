@@ -13,7 +13,6 @@ static doublecomplex c_b2 =
 ;
 static integer c__1 = 1;
 static integer c_n1 = -1;
-static integer c__2 = 2;
 /* > \brief \b ZTREVC3 */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
@@ -260,8 +259,7 @@ int ztrevc3_(char *side, char *howmny, logical *select, integer *n, doublecomple
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("ztrevc3 inputs: side %c, howmny %c, n %" FLA_IS ", ldt %" FLA_IS ", ldvl %" FLA_IS ", ldvr %" FLA_IS ", mm %" FLA_IS ", m %" FLA_IS "",*side, *howmny, *n, *ldt, *ldvl, *ldvr, *mm, *m);
     /* System generated locals */
-    address a__1[2];
-    integer t_dim1, t_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1, i__2[2], i__3, i__4, i__5, i__6;
+    integer t_dim1, t_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1, i__3, i__4, i__5, i__6;
     doublereal d__1, d__2, d__3;
     doublecomplex z__1, z__2;
     char ch__1[2];

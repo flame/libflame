@@ -126,6 +126,7 @@ int zlassq_(integer *n, doublecomplex *x, integer *incx, doublereal *scl, double
     tbig = 1.9979190722022350E+146;
     ssml = 4.4989137945431964E+161;
     sbig = 1.1113793747425387E-162;
+    sbi = 0.;
     /* .. */
     /* Quick return if possible */
     if (disnan_(scl) || disnan_(sumsq)) {

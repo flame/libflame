@@ -190,6 +190,7 @@ int ztzrzf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
     /* Function Body */
     *info = 0;
     lquery = *lwork == -1;
+    nb = 0;
     if (*m < 0)
     {
         *info = -1;
