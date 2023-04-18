@@ -154,6 +154,7 @@ doublereal zlantp_(char *norm, char *uplo, char *diag, integer *n, doublecomplex
     --work;
     --ap;
     /* Function Body */
+    value = 0.;
     if (*n == 0)
     {
         value = 0.;

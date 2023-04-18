@@ -178,7 +178,6 @@ int zgemqr_(char *side, char *trans, integer *m, integer *n, integer *k, doublec
     logical left, tran;
     extern logical lsame_(char *, char *);
     logical right;
-    integer nblcks;
     extern /* Subroutine */
     int xerbla_(char *, integer *);
     logical notran, lquery;
@@ -230,21 +229,6 @@ int zgemqr_(char *side, char *trans, integer *m, integer *n, integer *k, doublec
     {
         lw = mb * nb;
         mn = *n;
-    }
-    if (mb > *k && mn > *k)
-    {
-        if ((mn - *k) % (mb - *k) == 0)
-        {
-            nblcks = (mn - *k) / (mb - *k);
-        }
-        else
-        {
-            nblcks = (mn - *k) / (mb - *k) + 1;
-        }
-    }
-    else
-    {
-        nblcks = 1;
     }
     *info = 0;
     if (! left && ! right)

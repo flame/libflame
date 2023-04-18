@@ -122,7 +122,7 @@ int zlarfg_(integer *n, doublecomplex *alpha, doublecomplex * x, integer *incx, 
     int zdscal_(integer *, doublereal *, doublecomplex *, integer *);
     doublereal rsafmn;
     extern /* Double Complex */
-    VOID zladiv_(doublecomplex *, doublecomplex *, doublecomplex *);
+    void zladiv_f2c_(doublecomplex *, doublecomplex *, doublecomplex *);
     extern int zscal_(integer *, doublecomplex *, doublecomplex *, integer *);
     extern int fla_zscal(integer *, doublecomplex *, doublecomplex *, integer *);
     /* -- LAPACK auxiliary routine (version 3.8.0) -- */

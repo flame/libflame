@@ -241,15 +241,15 @@ int zhetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     /* Builtin functions */
     double z_abs(doublecomplex *);
     /* Local variables */
-    integer abofdpos, nthreads, i__, k, m, stepercol, ed, ib, st, blklastind, lda, tid, ldv;
+    integer abofdpos, i__, k, m, stepercol, ed, ib, st, blklastind, lda, tid, ldv;
     doublecomplex tmp;
     integer stt, inda;
     extern integer ilaenv2stage_(integer *, char *, char *, integer *, integer *, integer *, integer *);
-    integer thed, myid, indw, apos, dpos, indv, edind, debug;
+    integer thed, myid, indw, apos, dpos, indv, edind;
     extern logical lsame_(char *, char *);
     integer lhmin, sizea, shift, stind, colpt, lwmin, awpos;
     logical wantq, upper;
-    integer grsiz, sizev, ttype, abdpos;
+    integer grsiz, ttype, abdpos;
     extern /* Subroutine */
     int xerbla_(char *, integer *);
     integer thgrid, thgrnb, indtau;
@@ -295,7 +295,6 @@ int zhetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     --hous;
     --work;
     /* Function Body */
-    debug = 0;
     *info = 0;
     afters1 = lsame_(stage1, "Y");
     wantq = lsame_(vect, "V");
@@ -369,14 +368,12 @@ int zhetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     /* Determine pointer position */
     ldv = *kd + ib;
     sizetau = *n << 1;
-    sizev = *n << 1;
     indtau = 1;
     indv = indtau + sizetau;
     lda = (*kd << 1) + 1;
     sizea = lda * *n;
     inda = 1;
     indw = inda + sizea;
-    nthreads = 1;
     tid = 0;
     if (upper)
     {

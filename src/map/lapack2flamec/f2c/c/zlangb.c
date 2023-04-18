@@ -153,6 +153,7 @@ doublereal zlangb_(char *norm, integer *n, integer *kl, integer *ku, doublecompl
     ab -= ab_offset;
     --work;
     /* Function Body */
+    value = 0.;
     if (*n == 0)
     {
         value = 0.;

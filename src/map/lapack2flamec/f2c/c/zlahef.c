@@ -234,6 +234,7 @@ int zlahef_(char *uplo, integer *n, integer *nb, integer *kb, doublecomplex *a, 
     w -= w_offset;
     /* Function Body */
     *info = 0;
+    imax = 0;
     /* Initialize ALPHA for use in choosing pivot block size. */
     alpha = (sqrt(17.) + 1.) / 8.;
     if (lsame_(uplo, "U"))

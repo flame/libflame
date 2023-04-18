@@ -377,6 +377,7 @@ int ztgsyl_(char *trans, integer *ijob, integer *m, integer * n, doublecomplex *
     *info = 0;
     notran = lsame_(trans, "N");
     lquery = *lwork == -1;
+    scale2 = 0.;
     if (! notran && ! lsame_(trans, "C"))
     {
         *info = -1;

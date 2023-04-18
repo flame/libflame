@@ -136,6 +136,7 @@ doublereal zlangt_(char *norm, integer *n, doublecomplex *dl, doublecomplex * d_
     --d__;
     --dl;
     /* Function Body */
+    anorm = 0.;
     if (*n <= 0)
     {
         anorm = 0.;
