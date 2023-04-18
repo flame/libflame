@@ -40,6 +40,7 @@ extern void DTL_Trace(
 		    const int8 *pi8FunctionName,
 		    uint32 ui32LineNumber,
 		    const int8 *pi8Message);
+extern integer FLA_LU_piv_z_var1_parallel( integer *m, integer *n, doublecomplex *a, integer *lda, integer *ipiv, integer *info);
 
 #define FLA_ENABLE_ALT_PATH 0
 
@@ -74,11 +75,11 @@ extern fla_context global_context;                                              
   }                                                                                    \
   else if( *m <= FLA_ZGETRF_SMALL_THRESH1 && *n <= FLA_ZGETRF_SMALL_THRESH1 )          \
   {                                                                                    \
-    FLA_LU_piv_z_var0( m, n, buff_A, ldim_A, buff_p, info);          \
+    FLA_LU_piv_z_var0( m, n, (dcomplex *) buff_A, ldim_A, buff_p, info);          \
   }                                                                                    \
   else                                                                                 \
   {                                                                                    \
-    FLA_LU_piv_z_var1_parallel( m, n, buff_A, ldim_A, buff_p, info);                   \
+    FLA_LU_piv_z_var1_parallel( m, n, (doublecomplex *) buff_A, ldim_A, buff_p, info);                   \
   }                                                                                    \
 
 #else
