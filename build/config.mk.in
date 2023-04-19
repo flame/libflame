@@ -131,11 +131,15 @@ endif
 # Add explicit C99 support.
 #CMISCFLAGS   += -std=c99
 
+# Add AVX and FMA flags for specific  files
+CAVXFLAGS := -mavx2 -mfma
+
 # Aggregate all of the flags into two groups: one for optimizable code, and
 # one for code that should not be optimized.
 CFLAGS       := $(strip $(CDBGFLAGS) $(COPTFLAGS) $(CVECFLAGS) $(CWARNFLAGS) $(CMISCFLAGS) $(CPPROCFLAGS))
 CFLAGS_NOOPT := $(strip $(CDBGFLAGS) $(CWARNFLAGS) $(CMISCFLAGS) $(CPPROCFLAGS))
 CXXFLAGS     := $(strip $(CDBGFLAGS) $(COPTFLAGS) $(CVECFLAGS) $(CWARNFLAGS) $(CXXMISCFLAGS) $(CPPROCFLAGS))
+CFLAGS_AVX   := $(strip $(CDBGFLAGS) $(COPTFLAGS) $(CVECFLAGS) $(CWARNFLAGS) $(CMISCFLAGS) $(CPPROCFLAGS) $(CAVXFLAGS))
 
 # If the user provided his own CFLAGS, allow them to override our own.
 # *** Notice that wo do not also modify the 'no optimization' set of flags.
