@@ -28,14 +28,12 @@ usage() {
 }
 
 clean() {
-
     rm -f $script_dir/../netlib/._*
     rm -f $script_dir/../netlib/*.{f,F,f90,F90}
     rm -f $script_dir/../netlib/*~
     rm -rf $script_dir/../netlib/lapack-*/
     rm -f $script_dir/../fortran/*.{f,F,f90,F90}
     rm -f $script_dir/../fortran/depen_mods/*.{f,F,f90,F90}
-
 }
 
 ## Pass an install type and a tar if needed
@@ -53,7 +51,6 @@ fi
 
 if [[ "$tar_file" == "" && "$install_type" != "cleanup" ]]
 then
-
     ## Try to auto select a tar if the user doesn't provide one
     num_of_tars=$(ls -1q $script_dir/../netlib/*.{tar,tgz,tar.gz} 2> /dev/null | wc -l)
 
@@ -68,17 +65,15 @@ then
         usage
         exit
     fi
-
 fi
 
 if [[ "$install_type" == build || "$install_type" == build_test || "$install_type" == other_installs ]]
 then
-
-    ## Make sure there are no old files
-    clean
-
     if [[ "$install_type" == build ]]
     then
+        ## Make sure there are no old files
+        clean
+
         ## Untar
         ## It was observed that the tars had only the src files
         ## While the tgz/tar.gz had the full netlibs. However, this
@@ -113,7 +108,6 @@ then
         ## Disable xblas-related code so shared libraries link properly.
         cd $script_dir
         ./disable_xblas.sh
-
     elif [[ "$install_type" == build_test ]]
     then
         ## This section lets a user update netlibs-test and  

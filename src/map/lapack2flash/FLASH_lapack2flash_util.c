@@ -20,10 +20,6 @@
 #define F77_fla_memory_leak_counter_set     F77_FUNC( fla_memory_leak_counter_set, FLA_MEMORY_LEAK_COUNTER_SET )
 #define F77_fla_obj_show                    F77_FUNC( fla_obj_show, FLA_OBJ_SHOW )
 
-static dim_t        flash_blocksize = 1024;
-static unsigned int flash_n_threads = 1;
-static dim_t        flash_depth = 1;
-
 void F77_fla_init()
 {
     FLA_Init();
@@ -245,53 +241,46 @@ int FLAME_QR_piv_preorder( FLA_Obj A, int *jpiv_lapack, int *jpiv_fla )
 }
 */
 
-/*---------------------Get/Set Helper---------------------*/
-
-FLA_Error FLASH_set_preferred_blocksize( dim_t blocksize )
+FLA_Bool FLASH_Check_offload_to_gpu( dim_t blocksize, int m, int n, unsigned int crossover )
 {
-    flash_blocksize = blocksize;
-
-    return FLA_SUCCESS;
-}
-
-dim_t FLASH_get_preferred_blocksize( void )
-{
-    return flash_blocksize;
-}
-
-FLA_Error FLASH_set_n_preferred_threads( unsigned int threads )
-{
-    flash_n_threads = threads;
-
     #ifdef FLA_ENABLE_HIP
-        int device_count = 1;
-        FLASH_Queue_available_devices_hip( &device_count );
+        // 'crossover' is the number of tiles where it crosses over from CPU to GPU offloading
+        // Checking to see if the area of m and n is less than X tiles and hip is enabled. If so, disable
+        if ( ( blocksize * blocksize * crossover > m * n ) && FLASH_Queue_get_enabled_hip() )
+        {
+            FLASH_Queue_disable_hip();
 
-        // Pass number of threads unless it's more than available devices
-        FLASH_Queue_set_num_threads( min( threads, device_count) );
-    #else
-        FLASH_Queue_set_num_threads( threads );
+            // Return 1 saying we need to flip this back after the FLASH_ call
+            return TRUE;
+        }
+        else
+        {
+            // Return 0 saying we do not need to flip this back after the FLASH_ call
+            return FALSE;
+        }
     #endif
 
-    return FLA_SUCCESS;
+    // Return 0 saying we do not need to flip this back because FLA_ENABLE_HIP is not configured
+    return FALSE;
 }
 
-unsigned int FLASH_get_n_preferred_threads( void )
+void FLASH_Toggle_gpu_offload( FLA_Bool toggle )
 {
-    // Returning the number of preferred threads, not actual number.
-    return flash_n_threads;
-}
-
-FLA_Error FLASH_set_depth( dim_t depth )
-{
-    flash_depth = depth;
-
-    return FLA_SUCCESS;
-}
-
-dim_t FLASH_get_depth( void )
-{
-    return flash_depth;
+    #ifdef FLA_ENABLE_HIP
+        if ( toggle )
+        {
+            if (FLASH_Queue_get_enabled_hip())
+            {
+                // If hip is enabled, disable it
+                FLASH_Queue_disable_hip();
+            }
+            else
+            {
+                // If hip is not enabled, enable it
+                FLASH_Queue_enable_hip();
+            }
+        }
+    #endif
 }
 
 #endif

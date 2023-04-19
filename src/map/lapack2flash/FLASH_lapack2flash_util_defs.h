@@ -85,11 +85,7 @@ extern int FLAME_invert_ztau( FLA_Obj t );
 
 extern int FLAME_QR_piv_preorder( FLA_Obj A, int *jpiv_lapack, int *jpiv_fla );
 
-FLA_Error      FLASH_set_preferred_blocksize( dim_t blocksize );
-dim_t          FLASH_get_preferred_blocksize( void );
-FLA_Error      FLASH_set_n_preferred_threads( unsigned int threads );
-unsigned int   FLASH_get_n_preferred_threads( void );
-FLA_Error      FLASH_set_depth( dim_t depth );
-dim_t          FLASH_get_depth( void );
+FLA_Bool FLASH_Check_offload_to_gpu( dim_t blocksize, int m, int n, unsigned int crossover );
+void FLASH_Toggle_gpu_offload( FLA_Bool toggle );
 
 #endif

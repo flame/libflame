@@ -95,6 +95,9 @@ extern "C" {
   // Include prototypes for LAPACK routines.
   //#include "FLA_lapack_f77_macro_defs.h"
 
+  // Include prototypes for FLASH get/sets.
+  #include "FLASH_get_set_controls.h"
+
 // End extern "C" construct block.
 #ifdef __cplusplus
 }

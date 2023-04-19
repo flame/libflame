@@ -42,6 +42,9 @@
   dim_t        blocksize = min( FLASH_get_preferred_blocksize(),\
                                 *ldim_A );                      \
                                                                 \
+  FLA_Bool toggle = FLASH_Check_offload_to_gpu( blocksize, *n,  \
+                          *n, FLASH_get_tile_offload() );       \
+                                                                \
   FLA_Init_safe( &init_result );                                \
                                                                 \
   FLA_Param_map_netlib_to_flame_uplo( uplo, &uplo_fla );        \
@@ -59,6 +62,8 @@
   FLASH_Obj_free_without_buffer( &A );                          \
                                                                 \
   FLA_Finalize_safe( init_result );                             \
+                                                                \
+  FLASH_Toggle_gpu_offload( toggle );                           \
                                                                 \
   *info = 0;                                                    \
                                                                 \
