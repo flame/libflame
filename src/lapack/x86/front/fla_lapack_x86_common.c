@@ -30,6 +30,15 @@ int fla_drot(integer *n,
     return 0;
 }
 
+int fla_zrot(integer *n,
+                doublecomplex *cx, integer *incx,
+                doublecomplex *cy, integer *incy,
+                doublereal *c__, doublecomplex *s)
+{
+   fla_zrot_avx2(n, cx, incx, cy, incy, c__, s);
+   return 0;
+}
+
 /* complex vector scaling when increment is 1 and specific threshold */
 int fla_zscal(integer *n, doublecomplex *alpha,
               doublecomplex *x, integer *incx)

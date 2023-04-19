@@ -7300,10 +7300,10 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} optimization flags.
 		else
 				case ${CC_VENDOR} in
 						gcc)
-				fla_c_opt_flags='-mtune=native -mavx2 -mfma -O3'
+				fla_c_opt_flags='-mtune=native -O3'
 			;;
 						clang)
-				fla_c_opt_flags='-mtune=native -mavx2 -mfma -O3'
+				fla_c_opt_flags='-mtune=native -O3'
 			;;
 						icc)
 				fla_c_opt_flags='-O3'

@@ -387,7 +387,7 @@ CFLAGS          := $(CFLAGS) $(INCLUDE_PATHS)
 CFLAGS_NOOPT    := $(CFLAGS_NOOPT) $(INCLUDE_PATHS)
 CPPFLAGS        := $(CPPFLAGS) $(INCLUDE_PATHS)
 FFLAGS          := $(FFLAGS) $(INCLUDE_PATHS)
-
+CFLAGS_AVX      := $(CFLAGS_AVX) $(INCLUDE_PATHS)
 
 #
 # --- Library object definitions -----------------------------------------------
@@ -558,6 +558,14 @@ endif
 # Consolidated FLA_f2c.h header creation
 
 # --- Special source code / object code rules ---
+FLA_AVXPATH=lapack/x86/avx2
+$(BASE_OBJ_PATH)/$(FLA_AVXPATH)/%.o: $(SRC_PATH)/$(FLA_AVXPATH)/%.c $(CONFIG_MK_FILE) $(HEADERS_TO_FLATTEN)
+ifeq ($(ENABLE_VERBOSE),yes)
+	$(CC) $(CFLAGS_AVX) -c $< -o $@
+else
+	@echo "Compiling $<"
+	@$(CC) $(CFLAGS_AVX) -c $< -o $@
+endif
 
 FLA_SLAMCH=base/flamec/util/lapack/mch/fla_slamch
 $(BASE_OBJ_PATH)/$(FLA_SLAMCH).o: $(SRC_PATH)/$(FLA_SLAMCH).c $(CONFIG_MK_FILE) $(HEADERS_TO_FLATTEN)

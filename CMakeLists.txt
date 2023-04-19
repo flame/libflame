@@ -40,20 +40,13 @@ set(CMAKE_VERBOSE_MAKEFILE OFF)
 set(LIBAOCLUTILS_GIT_URL "git@github.amd.com:AOCL/aocl-utils.git")
 set(LIBAOCLUTILS_GIT_TAG "amd-main")
 
-if(BUILD_SHARED_LIBS)
-	if(UNIX)
-		set(LIBAOCLUTILS_SHAREDLIB "libaoclutils.so")
-	else()
-		set(LIBAOCLUTILS_SHAREDLIB "libaoclutils.dll")
-	endif ()
+if(UNIX)
+	set(LIBAOCLUTILS_SHAREDLIB "libaoclutils.so")
+	set(LIBAOCLUTILS_STATICLIB "libaoclutils.a")
 else()
-	if(UNIX)
-		set(LIBAOCLUTILS_STATICLIB "libaoclutils.a")
-	else()
-		set(LIBAOCLUTILS_STATICLIB "libaoclutils_static.lib")
-	endif ()
-
-endif()
+	set(LIBAOCLUTILS_SHAREDLIB "libaoclutils.dll")
+	set(LIBAOCLUTILS_STATICLIB "libaoclutils_static.lib")
+endif ()
 
 #enabling the configuration options
 option (ENABLE_AMD_OPT "Enable AMD optimized path" OFF)
@@ -116,7 +109,7 @@ if(WIN32)
 	message(STATUS "ENABLE_WINDOWS_BUILD : ${ENABLE_WINDOWS_BUILD}")
 endif()
 
-SET(ENABLE_SIMD_FLAGS "AVX2" CACHE STRING "Set compiler SIMD flags")
+SET(ENABLE_SIMD_FLAGS "none" CACHE STRING "Set compiler SIMD flags")
 SET_PROPERTY(CACHE ENABLE_SIMD_FLAGS PROPERTY STRINGS none SSE2 AVX AVX2)
 
 message(STATUS "checking SIMD  ")
@@ -131,10 +124,12 @@ if(WIN32)
 	endif()
 elseif(UNIX)
 	message(STATUS "checking SIMD on linux : ${ENABLE_SIMD_FLAGS}")
+	set(COMPILER_OPTIMIZATION_FLAGS	"-mtune=native -O3")
+
 	if(${ENABLE_SIMD_FLAGS} MATCHES "AVX2")
-		set(COMPILER_OPTIMIZATION_FLAGS	"-mtune=native -mavx2 -mfma -O3")
-		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COMPILER_OPTIMIZATION_FLAGS}")
+		set(COMPILER_OPTIMIZATION_FLAGS	"${COMPILER_OPTIMIZATION_FLAGS} -mavx2 -mfma")
 	endif()
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COMPILER_OPTIMIZATION_FLAGS}")
 else()
 	message(STATUS "OS UNKNOWN CANNOT SET SIMD")
 endif()
@@ -151,6 +146,36 @@ endif()
 #and -Wno-error=incompatible-function-pointer-types
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-error=implicit-function-declaration -Wno-error=incompatible-function-pointer-types")
+endif ()
+
+if(WIN32)
+	set_source_files_properties(
+src/lapack/x86/avx2/fla_dgeqrf_small_avx2.c
+src/lapack/x86/avx2/fla_dgetrf_avx2.c
+src/lapack/x86/avx2/fla_dhrot3_avx2.c
+src/lapack/x86/avx2/fla_drot_avx2.c
+src/lapack/x86/avx2/fla_dscal_ix1_avx2.c
+src/lapack/x86/avx2/fla_sger_avx2.c
+src/lapack/x86/avx2/fla_sscal_ix1_avx2.c
+src/lapack/x86/avx2/fla_zscal_ix1_avx2.c
+src/lapack/x86/avx2/fla_zgetrf_avx2.c
+src/lapack/x86/avx2/fla_zrot_avx2.c
+    PROPERTIES COMPILE_OPTIONS "/arch:AVX2"
+	)
+else()
+	set_source_files_properties(
+src/lapack/x86/avx2/fla_dgeqrf_small_avx2.c
+src/lapack/x86/avx2/fla_dgetrf_avx2.c
+src/lapack/x86/avx2/fla_dhrot3_avx2.c
+src/lapack/x86/avx2/fla_drot_avx2.c
+src/lapack/x86/avx2/fla_dscal_ix1_avx2.c
+src/lapack/x86/avx2/fla_sger_avx2.c
+src/lapack/x86/avx2/fla_sscal_ix1_avx2.c
+src/lapack/x86/avx2/fla_zscal_ix1_avx2.c
+src/lapack/x86/avx2/fla_zgetrf_avx2.c
+src/lapack/x86/avx2/fla_zrot_avx2.c
+    PROPERTIES COMPILE_OPTIONS "-mtune=native;-O3;-mavx2;-mfma"
+	)
 endif ()
 
 # Adding missing Macros
@@ -941,11 +966,7 @@ else(LIBAOCLUTILS_LIBRARY_PATH AND LIBAOCLUTILS_INCLUDE_PATH)
 	message(STATUS "libaoclutils source directory ${LIBAOCLUTILS_SOURCE_DIR}")
 	message(STATUS "libaoclutils install directory ${LIBAOCLUTILS_INSTALL_DIR}")
 
-	if(BUILD_SHARED_LIBS)
-		set(LIBAOCLUTILS_LIBRARY_PATH ${LIBAOCLUTILS_INSTALL_DIR}/lib/${LIBAOCLUTILS_SHAREDLIB})
-	else ()
-		set(LIBAOCLUTILS_LIBRARY_PATH ${LIBAOCLUTILS_INSTALL_DIR}/lib/${LIBAOCLUTILS_STATICLIB})
-	endif()
+	set(LIBAOCLUTILS_LIBRARY_PATH ${LIBAOCLUTILS_INSTALL_DIR}/lib/${LIBAOCLUTILS_STATICLIB})
 
 	add_dependencies(${PROJECT_NAME} libaoclutils)
 	target_include_directories(${PROJECT_NAME} PUBLIC ${LIBAOCLUTILS_SOURCE_DIR}/include)	
@@ -968,9 +989,6 @@ else ()
 				COMMAND mv ${LIBFLAME_STATICLIB_NAME} ${LIBFLAME_STATICLIB_PATH}
 				COMMENT "Merging libflame and libaoclutils library object files into single binary"
 				)
-		
-		#Linking with libstdc++ library is needed for libaoclutils library dependency
-		target_link_libraries(${PROJECT_NAME} "libstdc++.so")
 	elseif(WIN32)
 		#Merge libaoclutils static library with libflame static library in post build step
 		add_custom_command(TARGET ${PROJECT_NAME}
@@ -980,6 +998,11 @@ else ()
 				)
 	endif ()
 endif()
+
+if(UNIX)
+	#Linking with libstdc++ library is needed for libaoclutils library dependency
+	target_link_libraries(${PROJECT_NAME} "libstdc++.so")
+endif ()
 
 # TODO : enable this flag to build source supplied blas library
 # link externally built blas library
