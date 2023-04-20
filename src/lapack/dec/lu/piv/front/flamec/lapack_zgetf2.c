@@ -66,7 +66,7 @@
     integer a_dim1, a_offset, i__1, i__2, i__3;
     dcomplex z__1;
     /* Builtin functions */
-    void z_div(doublecomplex *, doublecomplex *, doublecomplex *);
+    void z_div(dcomplex *, dcomplex *, dcomplex *);
     /* Local variables */
     static TLS_CLASS_SPEC integer j;
 

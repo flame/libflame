@@ -5,6 +5,8 @@
 #include "FLA_f2c.h"
 
 extern integer dspr_( char *, integer *, doublereal *, doublereal *, integer *, doublereal * );
+extern int dgemm_(char *transa, char *transb, integer *m, integer * n, integer *k, doublereal *alpha, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *beta, doublereal *c__, integer *ldc);
+
 #ifdef FLA_ENABLE_BLAS_EXT_GEMMT
 extern integer dgemmt_( char *, char *, char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer * );
 #endif
@@ -162,6 +164,9 @@ void dsffrk2_fla( doublereal *au, integer *m, integer *n, integer *lda, doublere
     integer k, kc, kcn;
     integer c__1 = 1;
     doublereal r1;
+    extern int dger_(integer *m, integer *n, doublereal *alpha, doublereal *x, integer *incx, doublereal *y, integer *incy, doublereal *a, integer *lda);
+    extern int dcopy_(integer *n, doublereal *dx, integer *incx, doublereal *dy, integer *incy);
+    extern int dscal_(integer *n, doublereal *da, doublereal *dx, integer *incx);
 
     --au;
     --bt;

@@ -12,13 +12,14 @@
 	integer *info)
 {
    int i__2;       
-   double AAT[4], ATA[4], tempu[4], tempvt[4], temp;    
+   double tempu[4], tempvt[4], temp;    
    *info = 0;
  #if LF_AOCL_DTL_LOG_ENABLE
    char buffer[256];
    sprintf(buffer, "dgesvd inputs: jobu %c, jobvt %c, m %d, n %d, lda %d, ldu %d, ldvt %d\n", *jobu, *jobvt, *m, *n, *lda, *ldu, *ldvt);
    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
  #endif
+    extern int xerbla_(char *srname, integer *info);
    // Error checking , here m, n sizes will always be valid because of specific size
    if (! (*jobu == 'A' || *jobu == 'S' || *jobu == 'O' || *jobu == 'N')) {
        *info = -1;

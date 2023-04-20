@@ -56,7 +56,7 @@ real slamch_(char *cmach)
     /*          rmax  = overflow threshold  - (base**emax)*(1-eps) */
 
     /* ===================================================================== */
-
+    rmach = 0.;
     /* Assume rounding, not chopping. Always. -- This is a comment from LAPACK.
      */
     if (first)

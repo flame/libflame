@@ -41,6 +41,9 @@ FLA_Error FLA_Tevdr_external( FLA_Evd_type jobz, FLA_Obj d, FLA_Obj e, FLA_Obj l
 
   FLA_Param_map_flame_to_netlib_evd_type( jobz, &blas_jobz );
 
+  vl = 0;
+  vu = 0;
+
   // Hard-code some parameters.
   blas_range = 'A';
   nzc        = n_A;
@@ -93,13 +96,15 @@ FLA_Error FLA_Tevdr_external( FLA_Evd_type jobz, FLA_Obj d, FLA_Obj e, FLA_Obj l
       integer*      buff_isuppz = ( integer*      ) FLA_INT_PTR( isuppz );
       float*    buff_work   = ( float*    ) FLA_FLOAT_PTR( work );
       integer*      buff_iwork  = ( integer*      ) FLA_INT_PTR( iwork );
- 
+      float vlf = (float) vl;
+      float vuf = (float) vu;
+
       F77_sstemr( &blas_jobz,
                   &blas_range,
                   &n_A,
                   buff_d,
                   buff_e,
-                  &vl, &vu,
+                  &vlf, &vuf,
                   &il, &iu,
                   &n_eig_found,
                   buff_l,
@@ -123,13 +128,15 @@ FLA_Error FLA_Tevdr_external( FLA_Evd_type jobz, FLA_Obj d, FLA_Obj e, FLA_Obj l
       integer*      buff_isuppz = ( integer*      ) FLA_INT_PTR( isuppz );
       double*   buff_work   = ( double*   ) FLA_DOUBLE_PTR( work );
       integer*      buff_iwork  = ( integer*      ) FLA_INT_PTR( iwork );
+      double vlf = (double) vl;
+      double vuf = (double) vu;
 
       F77_dstemr( &blas_jobz,
                   &blas_range,
                   &n_A,
                   buff_d,
                   buff_e,
-                  &vl, &vu,
+                  &vlf, &vuf,
                   &il, &iu,
                   &n_eig_found,
                   buff_l,
@@ -153,13 +160,15 @@ FLA_Error FLA_Tevdr_external( FLA_Evd_type jobz, FLA_Obj d, FLA_Obj e, FLA_Obj l
       integer*      buff_isuppz = ( integer*      ) FLA_INT_PTR( isuppz );
       float*    buff_work   = ( float*    ) FLA_FLOAT_PTR( work );
       integer*      buff_iwork  = ( integer*      ) FLA_INT_PTR( iwork );
+      float vlf = (float) vl;
+      float vuf = (float) vu;
 
       F77_cstemr( &blas_jobz,
                   &blas_range,
                   &n_A,
                   buff_d,
                   buff_e,
-                  &vl, &vu,
+                  &vlf, &vuf,
                   &il, &iu,
                   &n_eig_found,
                   buff_l,
@@ -183,13 +192,15 @@ FLA_Error FLA_Tevdr_external( FLA_Evd_type jobz, FLA_Obj d, FLA_Obj e, FLA_Obj l
       integer*      buff_isuppz = ( integer*      ) FLA_INT_PTR( isuppz );
       double*   buff_work   = ( double*   ) FLA_DOUBLE_PTR( work );
       integer*      buff_iwork  = ( integer*      ) FLA_INT_PTR( iwork );
+      double vlf = (double) vl;
+      double vuf = (double) vu;
 
       F77_zstemr( &blas_jobz,
                   &blas_range,
                   &n_A,
                   buff_d,
                   buff_e,
-                  &vl, &vu,
+                  &vlf, &vuf,
                   &il, &iu,
                   &n_eig_found,
                   buff_l,

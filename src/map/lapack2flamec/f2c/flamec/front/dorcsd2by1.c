@@ -300,6 +300,21 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
     wantu2 = lsame_(jobu2, "Y");
     wantv1t = lsame_(jobv1t, "Y");
     lquery = *lwork == -1;
+    iorgqr = 0;
+    iorglq = 0;
+    iorbdb = 0;
+    ibbcsd = 0;
+    itauq1 = 0;
+    itaup2 = 0;
+    itaup1 = 0;
+    ib22e = 0;
+    ib22d = 0;
+    ib21e = 0;
+    ib21d = 0;
+    ib12e = 0;
+    ib12d = 0;
+    ib11e = 0;
+    ib11d = 0;
     if (*m < 0)
     {
         *info = -4;

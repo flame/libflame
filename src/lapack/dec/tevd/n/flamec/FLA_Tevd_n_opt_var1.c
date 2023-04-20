@@ -174,16 +174,6 @@ FLA_Error FLA_Tevd_n_opz_var1( integer       m_A,
                                dcomplex* buff_G, integer rs_G, integer cs_G )
 {
 	dcomplex  one  = bl1_z1();
-	double    rone = bl1_d1();
-
-	double    eps;
-	double    eps2;
-	double    safmin;
-	double    ssfmin;
-	double    safmax;
-	double    ssfmax;
-
-	dcomplex* G;
 	double*   d1;
 	double*   e1;
 	integer       r_val;
@@ -197,14 +187,6 @@ FLA_Error FLA_Tevd_n_opz_var1( integer       m_A,
 	integer       n_deflations;
 	integer       n_iter_prev;
 	integer       n_iter_perf_sweep_max;
-
-	// Initialize some numerical constants.
-	eps    = FLA_Mach_params_opd( FLA_MACH_EPS );
-	eps2   = FLA_Mach_params_opd( FLA_MACH_EPS2 );
-	safmin = FLA_Mach_params_opd( FLA_MACH_SFMIN );
-	safmax = rone / safmin;
-	ssfmax = sqrt( safmax ) / 3.0;
-	ssfmin = sqrt( safmin ) / eps2;
 
 	// Initialize our completion flag.
 	done = FALSE;
@@ -303,7 +285,6 @@ printf( "FLA_Tevd_n_opz_var1: m_A11    = %d\n", m_A11 );
 			// Index to the submatrices upon which we will operate.
 			d1 = buff_d + ijTL * inc_d;
 			e1 = buff_e + ijTL * inc_e;
-			G  = buff_G + ijTL * rs_G;
 
 			// Compute the 1-norm (which equals the infinity norm since the
 			// matrix is tridiagonal and symmetric) and perform appropriate

@@ -244,7 +244,7 @@ integer f_open(olist *a)
 
 int fk_open(int seq, int fmt, ftnint n)
 {
-	char nbuf[10];
+	char nbuf[17];
 	olist a;
 	(void) sprintf(nbuf,"fort.%ld",(long)n);
 	a.oerr=1;

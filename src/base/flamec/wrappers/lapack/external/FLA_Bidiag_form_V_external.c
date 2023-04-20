@@ -17,7 +17,6 @@ FLA_Error FLA_Bidiag_form_V_external( FLA_Obj A, FLA_Obj t )
   FLA_Datatype datatype;
   integer          m_A, n_A, k_A;
   integer          cs_A;
-  integer          min_m_n;
   integer          lwork;
   FLA_Obj      work;
   char         blas_vect = 'P';
@@ -33,8 +32,6 @@ FLA_Error FLA_Bidiag_form_V_external( FLA_Obj A, FLA_Obj t )
   m_A      = FLA_Obj_length( A );
   n_A      = FLA_Obj_width( A );
   cs_A     = FLA_Obj_col_stride( A );
-
-  min_m_n  = FLA_Obj_min_dim( A );
 
   if ( blas_vect == 'Q' ) k_A = FLA_Obj_vector_dim( t );
   else                    k_A = FLA_Obj_vector_dim( t ) + 1;

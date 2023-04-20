@@ -16,11 +16,9 @@ FLA_Error FLA_Bsvdd_external( FLA_Uplo uplo, FLA_Obj d, FLA_Obj e, FLA_Obj U, FL
 #ifdef FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
   FLA_Datatype datatype;
   FLA_Datatype dt_real;
-  integer          m_U, cs_U;
-  integer          n_V, cs_V;
-  integer          n_C, cs_C;
+  integer          cs_U;
+  integer          cs_V;
   integer          min_m_n;
-  integer          inc_d, inc_e;
   integer          lwork, liwork;
   FLA_Obj      work, iwork;
   char         blas_uplo;
@@ -34,19 +32,11 @@ FLA_Error FLA_Bsvdd_external( FLA_Uplo uplo, FLA_Obj d, FLA_Obj e, FLA_Obj U, FL
   datatype = FLA_Obj_datatype( U );
   dt_real  = FLA_Obj_datatype_proj_to_real( U );
 
-  m_U      = FLA_Obj_length( U );
   cs_U     = FLA_Obj_col_stride( U );
 
-  n_V      = FLA_Obj_length( V );
   cs_V     = FLA_Obj_col_stride( V );
 
-  n_C      = 0;
-  cs_C     = 1;
-
   min_m_n  = FLA_Obj_vector_dim( d );
-
-  inc_d    = FLA_Obj_vector_inc( d );
-  inc_e    = FLA_Obj_vector_inc( e );
 
   lwork   = fla_max( 1, 3*min_m_n*min_m_n + 4*min_m_n );
   liwork  = 8*min_m_n;

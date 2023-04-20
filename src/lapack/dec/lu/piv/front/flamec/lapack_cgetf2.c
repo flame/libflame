@@ -4,7 +4,7 @@
 
 #include "FLAME.h"
 
-/* Subroutine */ integer lapack_cgetf2(integer *m, integer *n, complex *a, integer *lda,
+/* Subroutine */ integer lapack_cgetf2(integer *m, integer *n, scomplex *a, integer *lda,
 	 integer *ipiv, integer *info)
 {
 
@@ -65,9 +65,9 @@
 
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
-    complex q__1;
+    scomplex q__1;
     /* Builtin functions */
-    void c_div(complex *, complex *, complex *);
+    void c_div(scomplex *, complex *, scomplex *);
     /* Local variables */
     static TLS_CLASS_SPEC integer j;
     static TLS_CLASS_SPEC integer jp;
@@ -111,7 +111,7 @@
 	jp = j - 1 + icamax_(&i__2, &a_ref(j, j), &c__1);
 	ipiv[j] = jp;
 	i__2 = a_subscr(jp, j);
-	if (a[i__2].r != 0.f || a[i__2].i != 0.f) {
+	if (a[i__2].real != 0.f || a[i__2].imag != 0.f) {
 
 /*           Apply the interchange to columns 1:N. */
 
@@ -138,7 +138,7 @@
 
 	    i__2 = *m - j;
 	    i__3 = *n - j;
-	    q__1.r = -1.f, q__1.i = 0.f;
+	    q__1.real = -1.f, q__1.imag = 0.f;
 	    cgeru_(&i__2, &i__3, &q__1, &a_ref(j + 1, j), &c__1, &a_ref(j, j
 		    + 1), lda, &a_ref(j + 1, j + 1), lda);
 	}

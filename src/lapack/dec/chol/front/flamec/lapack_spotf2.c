@@ -19,6 +19,8 @@ static real c_b12 = 1.f;
 
     /* Builtin functions */
     double sqrt(doublereal);
+	int xerbla_(char *srname, integer *info);
+	logical lsame_(char *ca, char *cb);
 
     /* Local variables */
     integer j;

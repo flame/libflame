@@ -385,6 +385,7 @@ int stgevc_(char *side, char *howmny, logical *select, integer *n, real *s, inte
     vr -= vr_offset;
     --work;
     /* Function Body */
+    ilback = FALSE_;
     if (lsame_(howmny, "A"))
     {
         ihwmny = 1;

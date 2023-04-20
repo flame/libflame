@@ -60,13 +60,13 @@
 
        Parameter adjustments */
     /* Table of constant values */
-    static TLS_CLASS_SPEC complex c_b1 = {1.f,0.f};
+    static TLS_CLASS_SPEC scomplex c_b1 = {1.f,0.f};
     static TLS_CLASS_SPEC integer c__1 = 1;
     static TLS_CLASS_SPEC integer c_n1 = -1;
 
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;
-    complex q__1;
+    scomplex q__1;
     /* Local variables */
     static TLS_CLASS_SPEC integer i__, j;
     static TLS_CLASS_SPEC integer iinfo;
@@ -199,7 +199,7 @@
 
 		    i__3 = *m - j - jb + 1;
 		    i__4 = *n - j - jb + 1;
-		    q__1.r = -1.f, q__1.i = 0.f;
+		    q__1.real = -1.f, q__1.imag = 0.f;
 		    cgemm_("No transpose", "No transpose", &i__3, &i__4, &jb,
 			    &q__1, &a_ref(j + jb, j), lda, &a_ref(j, j + jb),
 			    lda, &c_b1, &a_ref(j + jb, j + jb), lda);
