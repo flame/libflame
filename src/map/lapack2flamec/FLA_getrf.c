@@ -65,17 +65,35 @@ extern fla_context global_context;                                              
     dgetrf2_( m, n, buff_A, ldim_A, buff_p, info);                                     \
   }
 
-#define LAPACK_getrf_body_z(prefix)                                                    \
-  extern fla_context global_context;	                                               \
-  aocl_fla_init();                                                                     \
-  if( global_context.is_avx2 && *m <= FLA_ZGETRF_SMALL_THRESH0 && *n <= FLA_ZGETRF_SMALL_THRESH0 )               \
+#ifdef FLA_OPENMP_MULTITHREADING
+
+  #define LAPACK_getrf_body_z(prefix)                                                  \
+  if( *m <= FLA_ZGETRF_SMALL_THRESH0 && *n <= FLA_ZGETRF_SMALL_THRESH0 )               \
   {                                                                                    \
     fla_zgetrf_small_avx2( m, n, (dcomplex *)buff_A, ldim_A, buff_p, info );           \
   }                                                                                    \
-  else                                                                                 \
+  else if( *m <= FLA_ZGETRF_SMALL_THRESH1 && *n <= FLA_ZGETRF_SMALL_THRESH1 )          \
   {                                                                                    \
     FLA_LU_piv_z_var0( m, n, buff_A, ldim_A, buff_p, info);                            \
   }                                                                                    \
+  else                                                                                 \
+  {                                                                                    \
+    FLA_LU_piv_z_var1_parallel( m, n, buff_A, ldim_A, buff_p, info);                   \
+  }                                                                                    \
+
+#else
+
+  #define LAPACK_getrf_body_z(prefix)                                                    \
+    if( *m <= FLA_ZGETRF_SMALL_THRESH0 && *n <= FLA_ZGETRF_SMALL_THRESH0 )               \
+    {                                                                                    \
+      fla_zgetrf_small_avx2( m, n, (dcomplex *)buff_A, ldim_A, buff_p, info );           \
+    }                                                                                    \
+    else                                                                                 \
+    {                                                                                    \
+      FLA_LU_piv_z_var0( m, n, buff_A, ldim_A, buff_p, info);                            \
+    }                                                                                    \
+
+#endif
 
 #define LAPACK_getrf_body_s(prefix)                                                    \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \

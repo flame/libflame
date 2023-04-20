@@ -5,7 +5,6 @@
 #include "FLAME.h"
 
 #ifdef FLA_ENABLE_AMD_OPT
-
 /*
  * LU with partial pivoting for tiny matrices
  *
@@ -16,9 +15,9 @@ int fla_zgetrf_small_avx2( integer *m, integer *n, doublecomplex *a, integer *ld
 {
     integer mi, ni;
     integer i, j, i_1, i_2, i_3, i_4, i_5, i_6, i_7;
-    doublereal max_val, t_val, z_val, x_val, y_val;
+    doublereal max_val, t_val, z_val;
     doublecomplex *acur, *apiv, *asrc;
-    doublecomplex z__1, y__1 = {1, 0};
+    doublecomplex z__1;
     integer p_idx;
     integer min_m_n = fla_min(*m, *n);
     __m256d alpha;
@@ -26,6 +25,8 @@ int fla_zgetrf_small_avx2( integer *m, integer *n, doublecomplex *a, integer *ld
     __m256d neg = _mm256_setr_pd(1.0, -1.0, 1.0, -1.0);
 #ifndef _WIN32
     double _Complex pinv;
+#else
+    doublecomplex y__1 = {1, 0};
 #endif
 
     *info = 0;

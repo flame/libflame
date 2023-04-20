@@ -21,19 +21,27 @@ void FLA_Thread_get_subrange
 {
     integer sub_region, remainder;
 
-    sub_region = range/num_threads;
-    remainder = range%num_threads;
-
-    /* divide row/column region equally among each thread*/
-    if(thread_ID < remainder)
+    if(range <= 0)
     {
-        *sub_range = sub_region + 1;
-        *index = thread_ID * (*sub_range);
+        *sub_range = 0;
+        *index = 0;
     }
     else
     {
-        *sub_range = sub_region;
-        *index = remainder + thread_ID * sub_region;
+        sub_region = range/num_threads;
+        remainder = range%num_threads;
+
+        /* divide row/column region equally among each thread*/
+        if(thread_ID < remainder)
+        {
+            *sub_range = sub_region + 1;
+            *index = thread_ID * (*sub_range);
+        }
+        else
+        {
+            *sub_range = sub_region;
+            *index = remainder + thread_ID * sub_region;
+        }
     }
 }
 
