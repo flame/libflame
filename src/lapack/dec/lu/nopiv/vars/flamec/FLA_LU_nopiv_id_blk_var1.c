@@ -7,6 +7,7 @@
 FLA_Error FLA_LU_nopiv_id_blk_var1( integer m_A, integer n_A, FLA_Obj A, double* buff_A, integer nfact, integer rs_A, integer cs_A )
 {
 
+  void* FLA_memset( void* str, integer c, uinteger len );
   double* copy_A = (double*)FLA_malloc(m_A*n_A*sizeof(double));
   FLA_memset(copy_A,0,sizeof(copy_A));
 

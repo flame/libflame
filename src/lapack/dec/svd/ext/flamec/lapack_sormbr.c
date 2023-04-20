@@ -5,7 +5,6 @@
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
 static integer c_n1 = -1;
-static integer c__2 = 2;
 /* > \brief \b SORMBR */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
@@ -197,8 +196,7 @@ the routine */
 int lapack_sormbr(char *vect, char *side, char *trans, integer *m, integer *n, integer *k, real *a, integer *lda, real *tau, real *c__, integer *ldc, real *work, integer *lwork, integer *info)
 {
     /* System generated locals */
-    address a__1[2];
-    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__3[2];
+    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2;
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */

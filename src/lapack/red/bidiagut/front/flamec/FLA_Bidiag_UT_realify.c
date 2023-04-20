@@ -159,7 +159,7 @@ FLA_Error FLA_Bidiag_UT_l_realify_unb( FLA_Obj A, FLA_Obj d, FLA_Obj e )
 FLA_Error FLA_Bidiag_UT_l_realify_opt( FLA_Obj A, FLA_Obj d, FLA_Obj e )
 {
   FLA_Datatype datatype;
-  integer          m_A, n_A;
+  integer          m_A;
   integer          min_m_n;
   integer          rs_A, cs_A;
   integer          inc_d;
@@ -169,7 +169,6 @@ FLA_Error FLA_Bidiag_UT_l_realify_opt( FLA_Obj A, FLA_Obj d, FLA_Obj e )
   datatype = FLA_Obj_datatype( A );
 
   m_A      = FLA_Obj_length( A );
-  n_A      = FLA_Obj_width( A );
   min_m_n  = FLA_Obj_min_dim( A );
 
   rs_A     = FLA_Obj_row_stride( A );
@@ -482,7 +481,7 @@ FLA_Error FLA_Bidiag_UT_u_realify_unb( FLA_Obj A, FLA_Obj d, FLA_Obj e )
 FLA_Error FLA_Bidiag_UT_u_realify_opt( FLA_Obj A, FLA_Obj d, FLA_Obj e )
 {
   FLA_Datatype datatype;
-  integer          m_A, n_A;
+  integer          n_A;
   integer          min_m_n;
   integer          rs_A, cs_A;
   integer          inc_d;
@@ -490,8 +489,6 @@ FLA_Error FLA_Bidiag_UT_u_realify_opt( FLA_Obj A, FLA_Obj d, FLA_Obj e )
   integer          i;
 
   datatype = FLA_Obj_datatype( A );
-
-  m_A      = FLA_Obj_length( A );
   n_A      = FLA_Obj_width( A );
   min_m_n  = FLA_Obj_min_dim( A );
 

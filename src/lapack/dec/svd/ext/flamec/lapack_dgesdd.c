@@ -243,10 +243,10 @@ int lapack_dgesdd(char *jobz, integer *m, integer *n, doublereal * a, integer *l
     logical wntqa;
     integer nwork;
     logical wntqn, wntqo, wntqs;
-    integer ie, lwork_dorgbr_p_mm__;
+    integer ie;
     extern /* Subroutine */
     int dbdsdc_(char *, char *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *);
-    integer il, lwork_dorgbr_q_nn__;
+    integer il;
     extern /* Subroutine */
     int lapack_dgebrd(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, integer *);
     extern doublereal dlamch_(char *);
@@ -369,7 +369,6 @@ int lapack_dgesdd(char *jobz, integer *m, integer *n, doublereal * a, integer *l
             dgeqrf_(m, n, dum, m, dum, dum, &c_n1, &ierr);
             lwork_dgeqrf_mn__ = (integer) dum[0];
             dorgbr_("Q", n, n, n, dum, n, dum, dum, &c_n1, &ierr);
-            lwork_dorgbr_q_nn__ = (integer) dum[0];
             dorgqr_(m, m, n, dum, m, dum, dum, &c_n1, &ierr);
             lwork_dorgqr_mm__ = (integer) dum[0];
             dorgqr_(m, n, n, dum, m, dum, dum, &c_n1, &ierr);
@@ -578,7 +577,6 @@ int lapack_dgesdd(char *jobz, integer *m, integer *n, doublereal * a, integer *l
             dorglq_(m, n, m, &a[a_offset], m, dum, dum, &c_n1, &ierr);
             lwork_dorglq_mn__ = (integer) dum[0];
             dorgbr_("P", m, m, m, &a[a_offset], n, dum, dum, &c_n1, &ierr);
-            lwork_dorgbr_p_mm__ = (integer) dum[0];
             lapack_dormbr("P", "R", "T", m, m, m, dum, m, dum, dum, m, dum, &c_n1, & ierr);
             lwork_dormbr_prt_mm__ = (integer) dum[0];
             lapack_dormbr("P", "R", "T", m, n, m, dum, m, dum, dum, m, dum, &c_n1, & ierr);

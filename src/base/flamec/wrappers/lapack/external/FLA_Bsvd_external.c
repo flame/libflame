@@ -20,7 +20,6 @@ FLA_Error FLA_Bsvd_external( FLA_Uplo uplo, FLA_Obj d, FLA_Obj e, FLA_Obj U, FLA
   integer          n_V, cs_V;
   integer          n_C, cs_C;
   integer          min_m_n;
-  integer          inc_d, inc_e;
   integer          lrwork;
   FLA_Obj      rwork;
   char         blas_uplo;
@@ -43,9 +42,6 @@ FLA_Error FLA_Bsvd_external( FLA_Uplo uplo, FLA_Obj d, FLA_Obj e, FLA_Obj U, FLA
   cs_C     = 1;
 
   min_m_n  = FLA_Obj_vector_dim( d );
-
-  inc_d    = FLA_Obj_vector_inc( d );
-  inc_e    = FLA_Obj_vector_inc( e );
 
   lrwork   = fla_max( 1, 4 * min_m_n - 4 );
   FLA_Obj_create( dt_real, lrwork, 1, 0, 0, &rwork );

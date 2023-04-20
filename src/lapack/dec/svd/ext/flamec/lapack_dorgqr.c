@@ -158,6 +158,7 @@
  --work;
  /* Function Body */
  *info = 0;
+ nb = 0;
 #ifdef FLA_ENABLE_AMD_OPT
     /* precomputed workspace size */
     if(*n == 1){
