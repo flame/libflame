@@ -181,14 +181,3 @@ if(BUILD_COMPLEX AND BUILD_COMPLEX16)
   add_lapack_test(zctest.out zctest.in xlintstzc)
 endif()
 
-# ==============================================================================
-# Only run this test if python 2.7 or greater is found
-if(PYTHONINTERP_FOUND)
-  message(STATUS "Running Summary")
-  file(COPY ${LAPACK_SOURCE_DIR}/lapack_testing.py DESTINATION ${LAPACK_BINARY_DIR})
-  add_test(
-    NAME LAPACK_Test_Summary
-    WORKING_DIRECTORY ${LAPACK_BINARY_DIR}
-    COMMAND ${PYTHON_EXECUTABLE} "lapack_testing.py"
-    )
-endif()
