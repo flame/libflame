@@ -309,6 +309,7 @@ integer FLA_LU_piv_z_var0(integer *m, integer *n, dcomplex *a, integer *lda, int
     return 0;
 }
 
+#ifdef FLA_OPENMP_MULTITHREADING
 
 /* LU factorization blocked varaiant */
 integer FLA_LU_piv_z_var1_parallel( integer *m, integer *n, doublecomplex *a, integer *lda, integer *ipiv, integer *info)
@@ -519,3 +520,5 @@ integer FLA_LU_piv_z_var1_parallel( integer *m, integer *n, doublecomplex *a, in
 
     return *info;
 }
+
+#endif
