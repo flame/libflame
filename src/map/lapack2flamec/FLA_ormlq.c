@@ -16,6 +16,8 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_lapack2flame_prototypes.h"
 
+extern int sormlq_fla(char* side, char* trans, integer* m, integer* n, integer* k, real* a, integer* lda, real* tau, real* c__, integer* ldc, real* work, integer* lwork, integer* info);
+extern int dormlq_fla(char* side, char* trans, integer* m, integer* n, integer* k, doublereal* a, integer* lda, doublereal* tau, doublereal* c__, integer* ldc, doublereal* work, integer* lwork, integer* info);
 /*
   DORMLQ overwrites the general real M-by-N matrix C with
   SIDE = 'L' SIDE = 'R'
@@ -95,9 +97,10 @@
 
 LAPACK_ormlq(s, orm)
 {
-    int fla_error = LAPACK_SUCCESS;
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("sormlq inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS ", ldc %" FLA_IS "", *side, *trans, *m, *n, *k, *ldim_A, *ldim_B);
+#if !FLA_AMD_OPT
+    int fla_error = LAPACK_SUCCESS;
     {
         LAPACK_RETURN_CHECK_VAR1( sormlq_check( side, trans,
                                            m, n, k,
@@ -115,12 +118,26 @@ LAPACK_ormlq(s, orm)
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;
+#else
+    {
+        sormlq_fla(side, trans,
+            m, n, k,
+            buff_A, ldim_A,
+            buff_t,
+            buff_B, ldim_B,
+            buff_w, lwork,
+            info);
+        AOCL_DTL_TRACE_LOG_EXIT
+        return 0;
+    }
+#endif
 }
 LAPACK_ormlq(d, orm)
 {
-    int fla_error = LAPACK_SUCCESS;
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("dormlq inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS ", ldc %" FLA_IS "", *side, *trans, *m, *n, *k, *ldim_A, *ldim_B);
+#if !FLA_AMD_OPT
+    int fla_error = LAPACK_SUCCESS;
     {
         LAPACK_RETURN_CHECK_VAR1(dormlq_check(side, trans,
                                               m, n, k,
@@ -139,6 +156,19 @@ LAPACK_ormlq(d, orm)
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;
+#else
+    {
+        dormlq_fla(side, trans,
+            m, n, k,
+            buff_A, ldim_A,
+            buff_t,
+            buff_B, ldim_B,
+            buff_w, lwork,
+            info);
+        AOCL_DTL_TRACE_LOG_EXIT
+            return 0;
+    }
+#endif
 }
 
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX
