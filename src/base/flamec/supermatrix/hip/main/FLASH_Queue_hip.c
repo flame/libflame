@@ -250,17 +250,23 @@ FLA_Error FLASH_Queue_bind_hip( int thread )
 {
 
    // Bind a HIP device to this thread.
-   hipSetDevice( thread );
+   if ( hipSetDevice( thread ) != hipSuccess ) return FLA_FAILURE;
 
    // initialize its rocBLAS handle
    if ( handles[thread] == NULL )
-      rocblas_create_handle( &(handles[thread]) );
+   {
+      //hipStream_t stream;
+      //if ( hipStreamCreate(&stream) != hipSuccess ) return FLA_FAILURE;
+      if ( rocblas_create_handle( &(handles[thread]) ) != rocblas_status_success ) return FLA_FAILURE;
+      //if ( rocblas_set_stream( handles[thread], stream ) != rocblas_status_success ) return FLA_FAILURE;
+   }
 
    return FLA_SUCCESS;
 }
 
 
-FLA_Error FLASH_Queue_alloc_hip( dim_t size,
+FLA_Error FLASH_Queue_alloc_async_hip( int thread,
+                                 dim_t size,
                                  FLA_Datatype datatype,
                                  void** buffer_hip )
 /*----------------------------------------------------------------------------
@@ -269,11 +275,14 @@ FLA_Error FLASH_Queue_alloc_hip( dim_t size,
 
 ----------------------------------------------------------------------------*/
 {
-   hipError_t status;
 
    // Allocate memory for a block on HIP.
-   status = hipMalloc( buffer_hip,
-		       size * FLA_Obj_datatype_size( datatype ) );
+   hipStream_t stream;
+   rocblas_get_stream( handles[thread], &stream );
+   //fprintf(stdout, "Trying to allocate %ld bytes on device %d\n", size, thread);
+   hipError_t status = hipMallocAsync( buffer_hip,
+                                       size * FLA_Obj_datatype_size( datatype ),
+                                       stream );
 
    // Check to see if the allocation was successful.
    if ( status != hipSuccess )
@@ -284,11 +293,13 @@ FLA_Error FLASH_Queue_alloc_hip( dim_t size,
       FLA_Check_error_code( FLA_MALLOC_GPU_RETURNED_NULL_POINTER );
    }
 
+   //fprintf( stdout, "allocating on thread %d for pointer %p\n", thread, *buffer_hip );
+
    return FLA_SUCCESS;
 }
 
 
-FLA_Error FLASH_Queue_free_async_hip( void* buffer_hip )
+FLA_Error FLASH_Queue_free_async_hip( int thread, void* buffer_hip )
 /*----------------------------------------------------------------------------
 
    FLASH_Queue_free_async_hip
@@ -296,16 +307,20 @@ FLA_Error FLASH_Queue_free_async_hip( void* buffer_hip )
 ----------------------------------------------------------------------------*/
 {
    // Free memory for a block on HIP.
-   hipFreeAsync( (hipStream_t) 0, buffer_hip );
+   hipStream_t stream;
+   rocblas_get_stream( handles[thread], &stream );
+   hipFreeAsync( stream, buffer_hip );
 
    return FLA_SUCCESS;
 }
 
 
-FLA_Error FLASH_Queue_write_hip( FLA_Obj obj, void* buffer_hip )
+FLA_Error FLASH_Queue_write_async_hip( int thread,
+                                       FLA_Obj obj,
+                                       void* buffer_hip )
 /*----------------------------------------------------------------------------
 
-   FLASH_Queue_write_hip
+   FLASH_Queue_write_async_hip
 
 ----------------------------------------------------------------------------*/
 {
@@ -317,11 +332,13 @@ FLA_Error FLASH_Queue_write_hip( FLA_Obj obj, void* buffer_hip )
    const size_t count = FLA_Obj_elem_size( obj )
                           * FLA_Obj_col_stride( obj )
                           * FLA_Obj_width( obj );
+   hipStream_t stream;
+   rocblas_get_stream( handles[thread], &stream );
    const hipError_t err = hipMemcpyAsync( buffer_hip,
                                           FLA_Obj_buffer_at_view( obj ),
                                           count,
                                           hipMemcpyHostToDevice,
-					  (hipStream_t) 0 );
+                                          stream );
 
    if ( err != hipSuccess )
    {
@@ -342,39 +359,11 @@ FLA_Error FLASH_Queue_read_hip( int thread, FLA_Obj obj, void* buffer_hip )
 
 ----------------------------------------------------------------------------*/
 {
-   if ( flash_malloc_managed_hip )
-   {
-     // inject a stream sync on the rocBLAS stream to ensure completion
-     hipError_t err = hipStreamSynchronize( (hipStream_t) 0 );
-     if ( err != hipSuccess )
-     {
-       fprintf( stderr,
-                "Failure to synchronize on HIP stream. err=%d\n",
-                err );
-       return FLA_FAILURE;
-     }
-     return FLA_SUCCESS;
-   }
 
-   // Read the memory of a block on HIP to main memory.
-   hipSetDevice( thread );
-   const size_t count = FLA_Obj_elem_size( obj )
-                          * FLA_Obj_col_stride( obj )
-                          * FLA_Obj_width( obj );
-   const hipError_t err = hipMemcpy( FLA_Obj_buffer_at_view( obj ),
-                                     buffer_hip,
-                                     count,
-                                     hipMemcpyDeviceToHost );
+   FLA_Error err1 = FLASH_Queue_read_async_hip( thread, obj, buffer_hip );
+   if ( err1 != FLA_SUCCESS ) return err1;
 
-   if ( err != hipSuccess )
-   {
-     fprintf( stderr,
-              "Failure to read block from HIP device. Size=%ld, err=%d\n",
-              count, err );
-     return FLA_FAILURE;
-   }
-
-   return FLA_SUCCESS;
+   return FLASH_Queue_sync_stream_hip( thread );
 }
 
 FLA_Error FLASH_Queue_read_async_hip( int thread, FLA_Obj obj, void* buffer_hip )
@@ -394,11 +383,13 @@ FLA_Error FLASH_Queue_read_async_hip( int thread, FLA_Obj obj, void* buffer_hip 
    const size_t count = FLA_Obj_elem_size( obj )
                           * FLA_Obj_col_stride( obj )
                           * FLA_Obj_width( obj );
+   hipStream_t stream;
+   rocblas_get_stream( handles[thread], &stream );
    const hipError_t err = hipMemcpyAsync( FLA_Obj_buffer_at_view( obj ),
                                           buffer_hip,
                                           count,
                                           hipMemcpyDeviceToHost,
-                                          (hipStream_t) 0 );
+                                          stream );
 
    if ( err != hipSuccess )
    {
@@ -425,6 +416,27 @@ FLA_Error FLASH_Queue_sync_device_hip( int device )
      fprintf( stderr,
               "Failure to sync HIP device. Device=%d, err=%d\n",
               device, err );
+     return FLA_FAILURE;
+   }
+
+   return FLA_SUCCESS;
+}
+
+FLA_Error FLASH_Queue_sync_stream_hip( int thread )
+/*----------------------------------------------------------------------------
+
+   FLASH_Queue_sync_stream_hip
+
+----------------------------------------------------------------------------*/
+{
+   hipStream_t stream;
+   rocblas_get_stream( handles[thread], &stream );
+   const hipError_t err = hipStreamSynchronize( stream );
+   if ( err != hipSuccess )
+   {
+     fprintf( stderr,
+              "Failure to sync HIP stream. Thread=%d, err=%d\n",
+              thread, err );
      return FLA_FAILURE;
    }
 

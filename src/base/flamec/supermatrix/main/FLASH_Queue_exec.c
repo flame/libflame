@@ -2243,7 +2243,16 @@ void FLASH_Queue_create_hip( int thread, void *arg )
    {
       // Allocate the memory on the HIP device for all the blocks a priori.
       for ( i = 0; i < hip_n_blocks; i++ )
-         FLASH_Queue_alloc_hip( block_size, datatype, &(args->hip[thread * hip_n_blocks + i].buffer_hip) );
+         FLASH_Queue_alloc_async_hip( thread,
+                                block_size,
+                                datatype,
+                                &(args->hip[thread * hip_n_blocks + i].buffer_hip) );
+   }
+   else
+   {
+      // write something into the buffer_hip pointer to make it unique for tracking
+      for ( i = 0; i < hip_n_blocks; i++ )
+         args->hip[thread * hip_n_blocks + i].buffer_hip = (void*) (thread * hip_n_blocks + i);
    }
 
    return;
@@ -2279,7 +2288,7 @@ void FLASH_Queue_destroy_hip( int thread, void *arg )
       if ( hip_obj.obj.base != NULL && !hip_obj.clean )
          FLASH_Queue_read_async_hip( thread, hip_obj.obj, hip_obj.buffer_hip );
       // Free the memory on the HIP for all the blocks.
-      FLASH_Queue_free_async_hip( hip_obj.buffer_hip );
+      FLASH_Queue_free_async_hip( thread, hip_obj.buffer_hip );
    }
 
    return;
@@ -2786,7 +2795,7 @@ void FLASH_Queue_update_block_hip( FLA_Obj obj,
 
    // Move the block to the HIP device.
    if ( transfer )
-      FLASH_Queue_write_hip( hip_obj.obj, hip_obj.buffer_hip );
+      FLASH_Queue_write_async_hip( thread, hip_obj.obj, hip_obj.buffer_hip );
 
    return;
 }
