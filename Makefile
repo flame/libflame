@@ -862,9 +862,11 @@ cleanobj:
 ifeq ($(IS_CONFIGURED),yes)
 ifeq ($(ENABLE_VERBOSE),yes)
 	- $(FIND) $(BASE_OBJ_PATH) -name "*.o" | $(XARGS) $(RM_F)
+	- $(FIND) $(BASE_OBJ_PATH) -name "*.mod" | $(XARGS) $(RM_F)
 else
 	@echo "Removing object files from $(BASE_OBJ_PATH)"
 	@$(FIND) $(BASE_OBJ_PATH) -name "*.o" | $(XARGS) $(RM_F)
+	@$(FIND) $(BASE_OBJ_PATH) -name "*.mod" | $(XARGS) $(RM_F)
 endif
 endif
 
@@ -873,10 +875,16 @@ ifeq ($(IS_CONFIGURED),yes)
 ifeq ($(ENABLE_VERBOSE),yes)
 	- $(RM_F) $(LIBFLAME_A_PATH)
 	- $(RM_F) $(LIBFLAME_SO_PATH)
+	- $(RM_F) $(AR_OBJ_LIST_FILE)
+	- $(RM_F) $(AR_OBJ_LIST_FILE).atmp
+	- $(RM_F) $(AR_OBJ_LIST_FILE).sotmp
 else
 	@echo "Removing libraries from $(BASE_LIB_PATH)"
 	@$(RM_F) $(LIBFLAME_A_PATH)
 	@$(RM_F) $(LIBFLAME_SO_PATH)
+	@$(RM_F) $(AR_OBJ_LIST_FILE)
+	@$(RM_F) $(AR_OBJ_LIST_FILE).atmp
+	@$(RM_F) $(AR_OBJ_LIST_FILE).sotmp
 endif
 endif
 
@@ -898,9 +906,6 @@ endif
 distclean: cleanmk cleanh cleanobj cleanlib cleanhack
 ifeq ($(IS_CONFIGURED),yes)
 ifeq ($(ENABLE_VERBOSE),yes)
-	- $(RM_F) $(AR_OBJ_LIST_FILE)
-	- $(RM_F) $(AR_OBJ_LIST_FILE).atmp
-	- $(RM_F) $(AR_OBJ_LIST_FILE).sotmp
 	- $(RM_RF) $(CONFIG_DIR)
 	- $(RM_RF) $(OBJ_DIR)
 	- $(RM_RF) $(LIB_DIR)
@@ -912,8 +917,6 @@ ifeq ($(ENABLE_VERBOSE),yes)
 	- $(RM_RF) config.sys_type
 	- $(RM_RF) config.dist_path
 else
-	@echo "Removing $(AR_OBJ_LIST_FILE)"
-	@$(RM_F) $(AR_OBJ_LIST_FILE)
 	@echo "Removing $(CONFIG_DIR)"
 	@$(RM_RF) $(CONFIG_DIR)
 	@echo "Removing $(OBJ_DIR)"
