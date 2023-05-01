@@ -37,6 +37,8 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 
 #set AOCL Utilities library path values
+set(LIBAOCLUTILS_PROJECT "libaoclutils")
+set(LIBAOCLUTILS_INSTALL_DIR_NAME "install-aoclutils")
 set(LIBAOCLUTILS_GIT_URL "git@github.amd.com:AOCL/aocl-utils.git")
 set(LIBAOCLUTILS_GIT_TAG "amd-main")
 
@@ -942,33 +944,40 @@ if(LIBAOCLUTILS_LIBRARY_PATH AND LIBAOCLUTILS_INCLUDE_PATH)
 
 else(LIBAOCLUTILS_LIBRARY_PATH AND LIBAOCLUTILS_INCLUDE_PATH)
 	#Else build from source
-
 	message(STATUS "LIBAOCLUTILS_LIBRARY_PATH and LIBAOCLUTILS_INCLUDE_PATH flags not provded")
-	message(STATUS "AOCLUtils library not provided by user. Downloading from GitHub repository")
-	#Download AOCLUtils library from Github
-	include(ExternalProject)
-	ExternalProject_Add(
-        	libaoclutils
-		GIT_REPOSITORY ${LIBAOCLUTILS_GIT_URL}
-		GIT_TAG ${LIBAOCLUTILS_GIT_TAG}
-		CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=install_aoclutils
-		LOG_DOWNLOAD TRUE
-		LOG_CONFIGURE TRUE
-		LOG_BUILD TRUE
-	)
 
-	ExternalProject_Get_Property(libaoclutils source_dir)
-	ExternalProject_Get_Property(libaoclutils binary_dir)
+	set(LIBAOCLUTILS_SOURCE_DIR "${CMAKE_CURRENT_BINARY_DIR}/${LIBAOCLUTILS_PROJECT}-prefix/src/${LIBAOCLUTILS_PROJECT}")
+	message(STATUS "Check AOCL Utils path ${LIBAOCLUTILS_SOURCE_DIR} exists..")
+	if (EXISTS ${LIBAOCLUTILS_SOURCE_DIR})
+		message(STATUS "Found AOCL Utils source directory. Won't rebuild it")
+		set(LIBAOCLUTILS_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/${LIBAOCLUTILS_PROJECT}-prefix/src/${LIBAOCLUTILS_PROJECT}-build/${LIBAOCLUTILS_INSTALL_DIR_NAME}")
+	else()
+		message(STATUS "AOCLUtils library neither provided by user nor earlier build exists. Downloading from GitHub repository")
+		#Download AOCLUtils library from Github
+		include(ExternalProject)
+		ExternalProject_Add(
+			${LIBAOCLUTILS_PROJECT}
+			GIT_REPOSITORY ${LIBAOCLUTILS_GIT_URL}
+			GIT_TAG ${LIBAOCLUTILS_GIT_TAG}
+			CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${LIBAOCLUTILS_INSTALL_DIR_NAME}
+			LOG_DOWNLOAD TRUE
+			LOG_CONFIGURE TRUE
+			LOG_BUILD TRUE
+		)
+
+		ExternalProject_Get_Property(${LIBAOCLUTILS_PROJECT} source_dir)
+		ExternalProject_Get_Property(${LIBAOCLUTILS_PROJECT} binary_dir)
 	
-	set(LIBAOCLUTILS_SOURCE_DIR ${source_dir})
-	set(LIBAOCLUTILS_INSTALL_DIR ${binary_dir}/install_aoclutils)
+		set(LIBAOCLUTILS_SOURCE_DIR ${source_dir})
+		set(LIBAOCLUTILS_INSTALL_DIR ${binary_dir}/${LIBAOCLUTILS_INSTALL_DIR_NAME})
 	
-	message(STATUS "libaoclutils source directory ${LIBAOCLUTILS_SOURCE_DIR}")
-	message(STATUS "libaoclutils install directory ${LIBAOCLUTILS_INSTALL_DIR}")
+		message(STATUS "libaoclutils source directory ${LIBAOCLUTILS_SOURCE_DIR}")
+		message(STATUS "libaoclutils install directory ${LIBAOCLUTILS_INSTALL_DIR}")
+
+		add_dependencies(${PROJECT_NAME} ${LIBAOCLUTILS_PROJECT})
+	endif()
 
 	set(LIBAOCLUTILS_LIBRARY_PATH ${LIBAOCLUTILS_INSTALL_DIR}/lib/${LIBAOCLUTILS_STATICLIB})
-
-	add_dependencies(${PROJECT_NAME} libaoclutils)
 	target_include_directories(${PROJECT_NAME} PUBLIC ${LIBAOCLUTILS_SOURCE_DIR}/include)	
 
 endif()
