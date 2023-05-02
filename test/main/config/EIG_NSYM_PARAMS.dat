@@ -9,7 +9,7 @@ lda 20 87
 ldb 20 87
 ldvl 20 87
 ldvr 20 87
-Repeats 1 1 1 1
+Repeats 5 4 3 2
 DataTypes s d c z
 Matrix_Layout 101 102 101 102
 howmny A B S B

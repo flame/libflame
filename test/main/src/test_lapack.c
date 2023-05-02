@@ -8,12 +8,6 @@
 
 // Global variables.
 int n_threads = 1;
-
-char *LINEAR_PARAMETERS_FILENAME = NULL;
-char *SYM_EIG_PARAMETERS_FILENAME = NULL;
-char *SVD_PARAMETERS_FILENAME = NULL;
-char *NON_SYM_EIG_PARAMETERS_FILENAME = NULL;
-
 char fla_test_binary_name[ MAX_BINARY_NAME_LENGTH + 1 ];
 char fla_test_pass_string[ MAX_PASS_STRING_LENGTH + 1 ];
 char fla_test_warn_string[ MAX_PASS_STRING_LENGTH + 1 ];
@@ -85,15 +79,12 @@ int  main( int argc, char** argv )
         }
     }
 
-    /* Checking for the cmd option or config file option */
-    int cmd_option = fla_check_cmd_config_dir(argc,argv);
-
     /* Check for Command line requests */
-    if ( cmd_option == 1)
+    if ( argc > 1 )
     {
         fla_test_execute_cli_api(argc, argv, &params);
     }
-    else if(cmd_option == 0)
+    else
     {
         printf(" LAPACK version: %"FT_IS".%"FT_IS".%"FT_IS" \n", vers_major, vers_minor, vers_patch);
         /* Copy the binary name to a global string so we can use it later. */
@@ -115,150 +106,11 @@ int  main( int argc, char** argv )
 
         /* Test the LAPACK-level operations. */
         fla_test_lapack_suite( OPERATIONS_FILENAME, &params );
-
-        if( LINEAR_PARAMETERS_FILENAME )
-            free( LINEAR_PARAMETERS_FILENAME );
-        if( SYM_EIG_PARAMETERS_FILENAME )
-            free( SYM_EIG_PARAMETERS_FILENAME );
-        if( SVD_PARAMETERS_FILENAME )
-            free( SVD_PARAMETERS_FILENAME );
-        if( NON_SYM_EIG_PARAMETERS_FILENAME )
-            free( NON_SYM_EIG_PARAMETERS_FILENAME );
-    }
-    else
-    {
-        return 0;
     }
 
     return 0;
 }
 
-/* Function for checking cmd option or config file directory */
-int fla_check_cmd_config_dir( int argc, char** argv )
-{
-    integer i, j, len_lin_file, len_eig_file, len_svd_file, len_eig_nsy_file;
-    int cmd_test_option = 0;
-    char *config_dir = NULL;
-    char *lin_file;
-    char *eig_file;
-    char *svd_file;
-    char *eig_nsy_file;
-    char *config_opt = "--config-dir=";
-    integer len_config_opt = strlen(config_opt);
-
-    struct stat info;
-    bool dir = 0;
-
-    /*for default config*/
-    if(argc == 1)
-    {
-        lin_file     =  "config/LIN_SLVR.dat";
-        eig_file     =  "config/EIG_PARAMS.dat";
-        svd_file     =  "config/SVD.dat";
-        eig_nsy_file =  "config/EIG_NSYM_PARAMS.dat";
-
-        len_lin_file = strlen(  lin_file);
-        len_eig_file = strlen(  eig_file);
-        len_svd_file = strlen(  svd_file);
-        len_eig_nsy_file = strlen(  eig_nsy_file);
-
-        LINEAR_PARAMETERS_FILENAME      =  (char *) malloc(len_lin_file + 1 );
-        SYM_EIG_PARAMETERS_FILENAME     =  (char *) malloc(len_eig_file + 1);
-        SVD_PARAMETERS_FILENAME         =  (char *) malloc(len_svd_file + 1 );
-        NON_SYM_EIG_PARAMETERS_FILENAME =  (char *) malloc(len_eig_nsy_file + 1); 
-
-        memcpy( LINEAR_PARAMETERS_FILENAME, lin_file, len_lin_file + 1 );
- 
-        memcpy( SYM_EIG_PARAMETERS_FILENAME, eig_file, len_eig_file + 1 );
-
-        memcpy( SVD_PARAMETERS_FILENAME, svd_file, len_svd_file + 1);
-
-        memcpy( NON_SYM_EIG_PARAMETERS_FILENAME, eig_nsy_file, len_eig_nsy_file + 1 );
-
-        return 0;
-    }
-    else if(argc == 2 && strlen(argv[1]) > len_config_opt)
-    {
-        /*checking config dir option or cmd*/
-        if(!(strncmp(argv[1], config_opt, len_config_opt )))
-        {
-            config_dir = (char *) malloc( strlen( argv[1] + len_config_opt ) + 1);
-            memcpy( config_dir, argv[1] + len_config_opt, strlen( argv[1] + len_config_opt) + 1 );
-
-            char *c_str  = "config/";
-            lin_file     = "/LIN_SLVR.dat";
-            svd_file     = "/SVD.dat";
-            eig_file     = "/EIG_PARAMS.dat";
-            eig_nsy_file = "/EIG_NSYM_PARAMS.dat";
-
-            integer len_cstr = strlen( c_str);
-            integer len_dir  = strlen( config_dir);
-            len_lin_file     = strlen( lin_file);
-            len_eig_file     = strlen( eig_file);
-            len_svd_file     = strlen( svd_file);
-            len_eig_nsy_file = strlen( eig_nsy_file);
-
-            char *dir_path = (char *) malloc(len_cstr + len_dir + 1);
-
-            /*checking given Directory exist or not*/
-            memcpy(dir_path, c_str, len_cstr);
-            memcpy(dir_path + len_cstr, config_dir, len_dir + 1);
-
-            if( stat( dir_path, &info ) != 0 )
-            {
-                printf("Error: '%s' directory not found under 'config' directory.  Exiting... \n", config_dir);
-                cmd_test_option = -1;
-            }
-            else if( info.st_mode & S_IFDIR )  // S_ISDIR() doesn't exist on my windows
-                    dir = 1;
-            else
-            {
-                printf("Error: '%s' directory not found under 'config' directory.  Exiting... \n", config_dir);
-                cmd_test_option = -1;
-            }
-            
-            /*Reading the config directory*/
-            if(dir)
-            {
-                LINEAR_PARAMETERS_FILENAME       = (char *) malloc(len_cstr + len_dir + len_lin_file + 1);
-                SYM_EIG_PARAMETERS_FILENAME      = (char *) malloc(len_cstr + len_dir + len_eig_file + 1);
-                SVD_PARAMETERS_FILENAME          = (char *) malloc(len_cstr + len_dir + len_svd_file + 1);
-                NON_SYM_EIG_PARAMETERS_FILENAME  = (char *) malloc(len_cstr + len_dir + len_eig_nsy_file + 1);
-
-                memcpy(LINEAR_PARAMETERS_FILENAME, c_str, len_cstr);
-                memcpy(LINEAR_PARAMETERS_FILENAME + len_cstr, config_dir, len_dir);
-                memcpy(LINEAR_PARAMETERS_FILENAME + len_cstr + len_dir, lin_file, len_lin_file + 1);
-
-                memcpy(SYM_EIG_PARAMETERS_FILENAME, c_str, len_cstr);
-                memcpy(SYM_EIG_PARAMETERS_FILENAME + len_cstr, config_dir, len_dir);
-                memcpy(SYM_EIG_PARAMETERS_FILENAME + len_cstr + len_dir, eig_file, len_eig_file + 1);
-
-                memcpy(SVD_PARAMETERS_FILENAME, c_str, len_cstr);
-                memcpy(SVD_PARAMETERS_FILENAME + len_cstr, config_dir, len_dir);
-                memcpy(SVD_PARAMETERS_FILENAME + len_cstr + len_dir, svd_file, len_svd_file + 1);
-
-                memcpy(NON_SYM_EIG_PARAMETERS_FILENAME, c_str, len_cstr);
-                memcpy(NON_SYM_EIG_PARAMETERS_FILENAME + len_cstr, config_dir, len_dir);
-                memcpy(NON_SYM_EIG_PARAMETERS_FILENAME + len_cstr + len_dir, eig_nsy_file, len_eig_nsy_file + 1);
-
-                cmd_test_option = 0;
-            }
-            if(dir_path)
-                free(dir_path);
-        }
-        else
-        {
-            cmd_test_option = 1;
-        }
-    }
-    else
-    {
-        /*cmd option*/
-        cmd_test_option = 1;
-    }
-
-    return cmd_test_option;
-}
 
 /* This function reads the operation file to execute selected LAPACK APIs*/
 void fla_test_lapack_suite( char* input_filename, test_params_t *params )

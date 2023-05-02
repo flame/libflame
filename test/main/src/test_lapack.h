@@ -8,7 +8,6 @@
 #include <string.h>
 #include <time.h>
 #include <float.h>
-#include <sys/stat.h>
 #ifdef _WIN32
 #include <Windows.h>
 #endif
@@ -23,6 +22,10 @@
 #include "test_common.h"
 
 #define OPERATIONS_FILENAME                "input.global.operations"
+#define LINEAR_PARAMETERS_FILENAME         "config/LIN_SLVR.dat"
+#define SYM_EIG_PARAMETERS_FILENAME        "config/EIG_PARAMS.dat"
+#define SVD_PARAMETERS_FILENAME            "config/SVD.dat"
+#define NON_SYM_EIG_PARAMETERS_FILENAME    "config/EIG_NSYM_PARAMS.dat"
 
 #define COMMENT_CHAR             '#'
 #define MAX_BINARY_NAME_LENGTH   256
