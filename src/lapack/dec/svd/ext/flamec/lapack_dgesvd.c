@@ -303,10 +303,6 @@
  wntvo = lsame_(jobvt, "O");
  wntvn = lsame_(jobvt, "N");
  lquery = *lwork == -1;
- ie = 0;
- bdspac = 0;
- mnthr = 0;
- wrkbl = 0;
  if (! (wntua || wntus || wntuo || wntun)) {
  *info = -1;
  }

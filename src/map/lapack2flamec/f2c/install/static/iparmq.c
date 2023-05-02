@@ -234,8 +234,6 @@
  /* .. Intrinsic Functions .. */
  /* .. */
  /* .. Executable Statements .. */
- ns = 0;
- nh = 0;
  if (*ispec == 15 || *ispec == 13 || *ispec == 16) {
  /* ==== Set the number simultaneous shifts ==== */
  nh = *ihi - *ilo + 1;

@@ -18,9 +18,11 @@ FLA_Error FLA_LU_nopiv_ic_unblk_var1( integer m_A, integer n_A, scomplex* A , in
   scomplex *Minusone = &rminusone;
   scomplex rone = bl1_c1();
   scomplex *One = &rone;
+  scomplex rzero = bl1_c0();
   integer inc_x, inc_y, i, diff, tr_m, tr_n, tr_nfe, tr_ne;
   scomplex alpha_inv;
   scomplex *alpha;
+  scomplex cscalinv;
   tr_m = m_A - nfact;
   tr_n = n_A - nfact;
   FLA_Error e_val = FLA_SUCCESS;

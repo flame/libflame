@@ -18,6 +18,7 @@ FLA_Error FLA_LU_nopiv_id_unblk_var1( integer m_A, integer n_A, double* A , inte
   double *Minusone = &rminusone;
   double rone = bl1_d1();
   double *One = &rone;
+  double rzero = bl1_d0();
   integer inc_x, inc_y, i, diff, tr_m, tr_n, tr_nfe, tr_ne;
   double alpha_inv;
   double *alpha;
