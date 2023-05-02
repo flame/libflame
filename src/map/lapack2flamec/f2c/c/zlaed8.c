@@ -277,7 +277,6 @@ int zlaed8_(integer *k, integer *n, integer *qsiz, doublecomplex *q, integer *ld
     givnum -= 3;
     /* Function Body */
     *info = 0;
-    jlam = 0;
     if (*n < 0)
     {
         *info = -2;

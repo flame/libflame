@@ -724,10 +724,6 @@ int zgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
     defr = lsame_(jobr, "N");
     l2pert = lsame_(jobp, "P");
     lquery = *lwork == -1 || *lrwork == -1;
-    iwoff = 0;
-    lwrk_zgeqrf__ = 0;
-    lwrk_zgelqf__ = 0;
-    lwrk_zgeqp3__ = 0;
     if (! (rowpiv || l2rank || l2aber || errest || lsame_(joba, "C")))
     {
         *info = -1;

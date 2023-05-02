@@ -245,8 +245,6 @@ int zlahef_rook_(char *uplo, integer *n, integer *nb, integer *kb, doublecomplex
     w -= w_offset;
     /* Function Body */
     *info = 0;
-    jmax = 0;
-    imax = 0;
     /* Initialize ALPHA for use in choosing pivot block size. */
     alpha = (sqrt(17.) + 1.) / 8.;
     /* Compute machine safe minimum */

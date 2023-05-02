@@ -374,8 +374,6 @@ int zlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     --work;
     --rwork;
     /* Function Body */
-    eshift.r = 0.;
-    eshift.i = 0.;
     if (lsame_(wants, "E"))
     {
         ilschur = FALSE_;

@@ -173,6 +173,7 @@ int zhb2st_kernels_(char *uplo, logical *wantz, integer * ttype, integer *st, in
     integer dpos, vpos;
     extern logical lsame_(char *, char *);
     logical upper;
+    integer ajeter;
     extern /* Subroutine */
     int zlarfg_(integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *);
     integer ofdpos;
@@ -207,6 +208,7 @@ int zhb2st_kernels_(char *uplo, logical *wantz, integer * ttype, integer *st, in
     --tau;
     --work;
     /* Function Body */
+    ajeter = *ib + *ldvt;
     upper = lsame_(uplo, "U");
     if (upper)
     {

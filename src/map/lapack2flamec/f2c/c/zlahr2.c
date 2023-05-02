@@ -224,8 +224,6 @@ int zlahr2_(integer *n, integer *k, integer *nb, doublecomplex *a, integer *lda,
     y_offset = 1 + y_dim1;
     y -= y_offset;
     /* Function Body */
-    ei.r = 0.;
-    ei.i = 0.;
     if (*n <= 1)
     {
     AOCL_DTL_TRACE_LOG_EXIT

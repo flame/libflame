@@ -425,8 +425,6 @@ int zgesvx_(char *fact, char *trans, integer *n, integer * nrhs, doublecomplex *
     nofact = lsame_(fact, "N");
     equil = lsame_(fact, "E");
     notran = lsame_(trans, "N");
-    smlnum = 0.;
-    bignum = 0.;
     if (nofact || equil)
     {
         *(unsigned char *)equed = 'N';

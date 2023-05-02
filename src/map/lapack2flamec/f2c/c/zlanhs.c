@@ -139,7 +139,6 @@ doublereal zlanhs_(char *norm, integer *n, doublecomplex *a, integer *lda, doubl
     a -= a_offset;
     --work;
     /* Function Body */
-    value = 0.;
     if (*n == 0)
     {
         value = 0.;
