@@ -159,7 +159,6 @@ doublereal zlansb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
     ab -= ab_offset;
     --work;
     /* Function Body */
-    value = 0.;
     if (*n == 0)
     {
         value = 0.;

@@ -250,7 +250,6 @@ int zhetf2_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *ipi
     /* Function Body */
     *info = 0;
     upper = lsame_(uplo, "U");
-    imax = 0;
     if (! upper && ! lsame_(uplo, "L"))
     {
         *info = -1;

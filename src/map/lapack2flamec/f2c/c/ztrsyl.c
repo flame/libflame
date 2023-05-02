@@ -181,7 +181,7 @@ int ztrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dou
     extern /* Subroutine */
     int zdscal_(integer *, doublereal *, doublecomplex *, integer *);
     extern /* Double Complex */
-    void zladiv_f2c_(doublecomplex *, doublecomplex *, doublecomplex *);
+    VOID zladiv_(doublecomplex *, doublecomplex *, doublecomplex *);
     logical notrna, notrnb;
     doublereal smlnum;
     /* -- LAPACK computational routine (version 3.4.0) -- */

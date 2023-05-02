@@ -327,7 +327,6 @@ int ztrsen_(char *job, char *compq, logical *select, integer *n, doublecomplex *
     wants = lsame_(job, "E") || wantbh;
     wantsp = lsame_(job, "V") || wantbh;
     wantq = lsame_(compq, "V");
-    lwmin = 0;
     /* Set M to the number of selected eigenvalues. */
     *m = 0;
     i__1 = *n;

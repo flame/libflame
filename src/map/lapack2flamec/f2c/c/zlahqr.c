@@ -234,7 +234,7 @@ int zlahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
     extern /* Subroutine */
     int zlarfg_(integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *);
     extern /* Double Complex */
-    void zladiv_f2c_(doublecomplex *, doublecomplex *, doublecomplex *);
+    VOID zladiv_f2c_(doublecomplex *, doublecomplex *, doublecomplex *);
     doublereal smlnum;
     /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -271,7 +271,6 @@ int zlahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
     z__ -= z_offset;
     /* Function Body */
     *info = 0;
-    i2 = 0;
     /* Quick return if possible */
     if (*n == 0)
     {

@@ -163,7 +163,6 @@ int zsyr_(char *uplo, integer *n, doublecomplex *alpha, doublecomplex *x, intege
     a -= a_offset;
     /* Function Body */
     info = 0;
-    kx = 0;
     if (! lsame_(uplo, "U") && ! lsame_(uplo, "L"))
     {
         info = 1;

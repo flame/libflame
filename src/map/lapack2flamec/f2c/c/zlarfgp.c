@@ -120,7 +120,7 @@ int zlarfgp_(integer *n, doublecomplex *alpha, doublecomplex *x, integer *incx, 
     int zdscal_(integer *, doublereal *, doublecomplex *, integer *);
     doublereal bignum;
     extern /* Double Complex */
-    void zladiv_f2c_(doublecomplex *, doublecomplex *, doublecomplex *);
+    VOID zladiv_(doublecomplex *, doublecomplex *, doublecomplex *);
     doublereal smlnum;
     /* -- LAPACK auxiliary routine (version 3.8.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */

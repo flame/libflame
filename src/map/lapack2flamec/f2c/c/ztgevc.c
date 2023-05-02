@@ -272,7 +272,7 @@ int ztgevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex
     doublereal bignum;
     logical ilcomp;
     extern /* Double Complex */
-    void zladiv_f2c_(doublecomplex *, doublecomplex *, doublecomplex *);
+    VOID zladiv_(doublecomplex *, doublecomplex *, doublecomplex *);
     integer ihwmny;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
