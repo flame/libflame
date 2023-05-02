@@ -97,16 +97,6 @@ below.
    config files. Config files support providing input parameters for four tests. For each
    of the four tests, a range of input dimensions can be specified.
 
-   ## Running test with different config directory.
-
-   This method can be used to test APIs with config files from any directory.
-   Name of the directory can be specified through command-line option --config_dir as given below.
-      $ ./test_lapack.x --config-dir=weekly
-      Folder chosen for this option will be 'config/weekly' relative to the test-suite folder.
-
-   The default directory chosen when --config-dir option is not specified is 'config'.
-
-   Note:Directory must be inside 'config' directory.
 
 2. Command line tests
 

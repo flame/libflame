@@ -5,7 +5,7 @@ MRange_step_size 10 100 200 1000
 NRange_start 5 120 140 250
 NRange_end   100 500 200 500
 NRange_step_size 15 130 250 160
-Repeats 1 1 1 1
+Repeats 5 4 3 2
 DataTypes s d c z
 Matrix_Layout 101 102 101 102
 Trans N T C T
