@@ -168,7 +168,8 @@ the routine */
 /* Subroutine */
 int lapack_dormlq(char *side, char *trans, integer *m, integer *n, integer *k, doublereal *a, integer *lda, doublereal *tau, doublereal * c__, integer *ldc, doublereal *work, integer *lwork, integer *info) {
     /* System generated locals */
-    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__4, i__5;
+    address a__1[2];
+    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__3[2], i__4, i__5;
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */

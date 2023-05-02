@@ -316,8 +316,6 @@ int ztgevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex
     --work;
     --rwork;
     /* Function Body */
-    ilall = FALSE_;
-    ilback = FALSE_;
     if (lsame_(howmny, "A"))
     {
         ihwmny = 1;

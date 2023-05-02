@@ -6,8 +6,6 @@
 
 extern void z_div(doublecomplex *, doublecomplex *, doublecomplex *);
 extern int zspr_(char *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *);
-extern int zgemm_(char *transa, char *transb, integer *m, integer * n, integer *k, doublecomplex *alpha, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *beta, doublecomplex * c__, integer *ldc);
-
 #ifdef FLA_ENABLE_BLAS_EXT_GEMMT
 extern integer zgemmt_( char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer * );
 #endif
@@ -165,9 +163,6 @@ void zsffrk2_fla( doublecomplex *au, integer *m, integer *n, integer *lda, doubl
     integer c__1 = 1;
     doublecomplex r1;
     doublecomplex c_b1 = { 1., 0. };
-    extern int zgeru_(integer *m, integer *n, doublecomplex *alpha, doublecomplex *x, integer *incx, doublecomplex *y, integer *incy, doublecomplex *a, integer *lda);
-    extern int zcopy_(integer *n, doublecomplex *zx, integer *incx, doublecomplex *zy, integer *incy);
-    extern int zscal_(integer *n, doublecomplex *za, doublecomplex *zx, integer *incx);
 
     --au;
     --bt;
@@ -382,7 +377,6 @@ int lzspr_( char *uplo, integer *n, doublecomplex *alpha, doublecomplex *x, inte
 {
     integer incw = 1;
     integer k, kn, nz;
-    extern int zaxpy_(integer *n, doublecomplex *za, doublecomplex *zx, integer *incx, doublecomplex *zy, integer *incy);
 
     ap--;
     work--;

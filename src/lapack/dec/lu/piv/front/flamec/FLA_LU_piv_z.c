@@ -7,8 +7,7 @@
 
 #define FLA_LU_SMALL_BLOCK_SIZE 16
 
-static dcomplex z__1 = { -1, 0};
-static dcomplex c_b1 = {1.,0.};
+static doublecomplex z__1 = { -1, 0}, c_b1 = {1.,0.};
 static integer c__1 = 1;
 
 void FLA_get_optimum_params_zgetrf(integer m, integer n, integer *nb, int *n_threads)
@@ -73,10 +72,7 @@ void FLA_get_optimum_params_zgetrf(integer m, integer n, integer *nb, int *n_thr
  * All the computations are done inline without using
  * corresponding BLAS APIs to reduce function overheads.
  */
-integer FLA_LU_piv_small_z_var0( integer *m, integer *n,
-                                   doublecomplex *a, integer *lda,
-                                   integer *ipiv,
-                                   integer *info)
+integer FLA_LU_piv_small_z_var0( integer *m, integer *n, dcomplex *a, integer *lda, integer *ipiv, integer *info)
 {
     integer mi, ni;
     integer i, j, i_1, i_2, i_3;
@@ -200,7 +196,7 @@ integer FLA_LU_piv_small_z_var0( integer *m, integer *n,
 
 
 /* LU factorization recursive variant*/
-integer FLA_LU_piv_z_var0(integer *m, integer *n, dcomplex *a, integer *lda, integer *ipiv, integer *info)
+integer FLA_LU_piv_z_var0(integer *m, integer *n, doublecomplex *a, integer *lda, integer *ipiv, integer *info)
 {
     integer a_dim1, i__1, i__2, i__, n1, n2;
     integer iinfo;
@@ -236,7 +232,7 @@ integer FLA_LU_piv_z_var0(integer *m, integer *n, dcomplex *a, integer *lda, int
 
     if (*m <= FLA_LU_SMALL_BLOCK_SIZE && *n <= FLA_LU_SMALL_BLOCK_SIZE)
     {
-       fla_zgetrf_small_avx2(m, n, (doublecomplex *) a, lda, ipiv, &iinfo);
+       fla_zgetrf_small_avx2(m, n, a, lda, ipiv, &iinfo);
 
        if (*info == 0 && iinfo > 0)
        {

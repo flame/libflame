@@ -18,6 +18,7 @@ FLA_Error FLA_LU_nopiv_is_unblk_var1( integer m_A, integer n_A, float* A , integ
   float *Minusone = &rminusone;
   float rone = bl1_s1();
   float *One = &rone;
+  float rzero = bl1_s0();
   integer inc_x, inc_y, i, diff, tr_m, tr_n, tr_nfe, tr_ne;
   float alpha_inv;
   float *alpha;

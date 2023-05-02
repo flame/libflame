@@ -301,7 +301,7 @@ int sorcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
     logical defaultsigns;
     extern logical lsame_(char *, char *);
     real dummy[1];
-    integer lbbcsdworkmin, itaup1, itaup2, itauq1, itauq2, lbbcsdworkopt;
+    integer lbbcsdworkmin, itaup1, itaup2, itauq1, itauq2, lorbdbworkmin, lbbcsdworkopt;
     logical wantu1, wantu2;
     integer ibbcsd, lorbdbworkopt;
     extern /* Subroutine */
@@ -383,23 +383,6 @@ int sorcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
     colmajor = ! lsame_(trans, "T");
     defaultsigns = ! lsame_(signs, "O");
     lquery = *lwork == -1;
-    iorgqr = 0;
-    iorglq = 0;
-    iorbdb = 0;
-    ibbcsd = 0;
-    ibbcsd = 0;
-    itauq2 = 0;
-    itauq1 = 0;
-    itaup2 = 0;
-    itaup1 = 0;
-    ib22e = 0;
-    ib22d = 0;
-    ib21e = 0;
-    ib21d = 0;
-    ib12e = 0;
-    ib12d = 0;
-    ib11e = 0;
-    ib11d = 0;
     if (*m < 0)
     {
         *info = -7;
@@ -585,6 +568,7 @@ int sorcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
         iorbdb = itauq2 + fla_max(i__1,i__2);
         sorbdb_(trans, signs, m, p, q, &x11[x11_offset], ldx11, &x12[ x12_offset], ldx12, &x21[x21_offset], ldx21, &x22[x22_offset], ldx22, dummy, dummy, dummy, dummy, dummy, dummy, &work[1], & c_n1, &childinfo);
         lorbdbworkopt = (integer) work[1];
+        lorbdbworkmin = lorbdbworkopt;
         /* Computing MAX */
         i__1 = 1;
         i__2 = *m - *q; // , expr subst

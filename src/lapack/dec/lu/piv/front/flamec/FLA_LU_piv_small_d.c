@@ -187,16 +187,19 @@ integer FLA_LU_piv_small_d_var2( integer *m, integer *n,
                                    integer *info)
 {
     integer c__1 = 1;
+    integer c_n1 = -1;
     doublereal c_b16 = 1.;
     doublereal c_b19 = -1.;
 
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;
+    doublereal d__1;
 
     /* Local variables */
-    integer i__, j, jb, nb;
+    integer i__, j, jp, jb, nb;
     extern doublereal dlamch_(char *);
     extern integer idamax_(integer *, doublereal *, integer *);
     extern /* Subroutine */ int xerbla_(char *, integer *);
+    doublereal sfmin;
     integer iinfo;
 
 #define a_ref(a_1,a_2) a[(a_2)*a_dim1 + a_1]

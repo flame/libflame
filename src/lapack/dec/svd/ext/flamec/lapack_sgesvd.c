@@ -2,6 +2,7 @@
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__6 = 6;
 static integer c__0 = 0;
+static integer c__2 = 2;
 static integer c_n1 = -1;
 static real c_b57 = 0.f;
 static integer c__1 = 1;
@@ -221,7 +222,8 @@ the routine */
 int lapack_sgesvd(char *jobu, char *jobvt, integer *m, integer *n, real *a, integer *lda, real *s, real *u, integer *ldu, real *vt, integer *ldvt, real *work, integer *lwork, integer *info)
 {
     /* System generated locals */
-    integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__2, i__3, i__4;
+    address a__1[2];
+    integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1[2], i__2, i__3, i__4;
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */
@@ -305,10 +307,6 @@ int lapack_sgesvd(char *jobu, char *jobvt, integer *m, integer *n, real *a, inte
     wntvo = lsame_(jobvt, "O");
     wntvn = lsame_(jobvt, "N");
     lquery = *lwork == -1;
-    ie = 0;
-    bdspac = 0;
-    mnthr = 0;
-    wrkbl = 0;
     if (! (wntua || wntus || wntuo || wntun))
     {
         *info = -1;

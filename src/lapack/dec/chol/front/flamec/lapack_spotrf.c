@@ -20,9 +20,6 @@ static real c_b14 = 1.f;
     integer j, jb, nb;
     logical upper;
 
-	int xerbla_(char *srname, integer *info);
-	logical lsame_(char *ca, char *cb);
-	int lapack_spotf2(char *uplo, integer *n, real *a, integer *lda, integer *info);
 
 /*  SPOTRF computes the Cholesky factorization of a real symmetric */
 /*  positive definite matrix A. */

@@ -70,11 +70,11 @@ extern fla_context global_context;                                              
   #define LAPACK_getrf_body_z(prefix)                                                  \
   if( *m <= FLA_ZGETRF_SMALL_THRESH0 && *n <= FLA_ZGETRF_SMALL_THRESH0 )               \
   {                                                                                    \
-    fla_zgetrf_small_avx2( m, n, (doublecomplex *)buff_A, ldim_A, buff_p, info );      \
+    fla_zgetrf_small_avx2( m, n, (dcomplex *)buff_A, ldim_A, buff_p, info );           \
   }                                                                                    \
   else if( *m <= FLA_ZGETRF_SMALL_THRESH1 && *n <= FLA_ZGETRF_SMALL_THRESH1 )          \
   {                                                                                    \
-    FLA_LU_piv_z_var0( m, n, buff_A, ldim_A, buff_p, info);          \
+    FLA_LU_piv_z_var0( m, n, buff_A, ldim_A, buff_p, info);                            \
   }                                                                                    \
   else                                                                                 \
   {                                                                                    \

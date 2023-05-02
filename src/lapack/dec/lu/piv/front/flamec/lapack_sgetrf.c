@@ -21,7 +21,6 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *,integer *, integer *);
     extern /* Subroutine */ int slaswp_(integer *, real *, integer *, integer
 	    *, integer *, integer *, integer *);
-	extern int xerbla_(char *srname, integer *info);
 
 
 /*  ======= */

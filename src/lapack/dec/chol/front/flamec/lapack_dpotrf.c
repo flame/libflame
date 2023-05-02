@@ -21,10 +21,6 @@ static doublereal c_b14 = 1.;
     integer j, jb, nb;
     logical upper;
 
-	logical lsame_(char *ca, char *cb);
-	int xerbla_(char *srname, integer *info);
-	int lapack_dpotf2(char *uplo, integer *n, doublereal *a, integer *lda, integer *info);
-
 /*  DPOTRF computes the Cholesky factorization of a real symmetric */
 /*  positive definite matrix A. */
 

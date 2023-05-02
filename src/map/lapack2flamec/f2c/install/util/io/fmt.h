@@ -97,7 +97,7 @@ extern int f__scale;
 #ifdef __cplusplus
 	}
 #endif
-#define GET(x) if((x=(*f__getn)())<0) { return(x); }
+#define GET(x) if((x=(*f__getn)())<0) return(x)
 #define VAL(x) (x!='\n'?x:' ')
 #define PUT(x) (*f__putn)(x)
 
