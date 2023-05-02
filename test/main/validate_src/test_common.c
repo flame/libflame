@@ -2552,3 +2552,88 @@ void get_triangular_matrix(char *uplo, integer datatype, integer m, integer n, v
         }
     }
 }
+
+/*Test to Check order of Singular values of SVD (positive and non-decreasing)*/
+double svd_check_order(integer datatype, void *s, integer m, integer n, double residual)
+{
+    integer min_m_n, i;
+    min_m_n = fla_min(m, n);
+    double resid = 0.;
+
+    switch (datatype)
+    {
+        case INTEGER :
+        {
+            for( i = 0; i < (min_m_n - 1 ); i++ )
+            {
+                if((((int *) s) [i] < 0 ) || (((int *) s)[i] < ((int *) s)[i + 1]))
+                {
+                    resid = residual * 2;
+                    break;
+                }
+            }
+            if(((int *) s) [min_m_n -1] < 0 )
+                resid = residual * 2;
+            break;
+        }
+        case FLOAT :
+        {
+            for( i = 0; i < (min_m_n - 1 ); i++ )
+            {
+                if((((float *) s) [i] < 0.f ) || (((float *) s)[i] < ((float *) s)[i + 1]))
+                {
+                    resid = residual * 2;
+                    break;
+                }
+            }
+            if(((float *) s) [min_m_n -1] < 0.f )
+                resid = residual * 2;
+            break;
+        }
+        case DOUBLE :
+        {
+            for( i = 0; i < (min_m_n - 1 ); i++ )
+            {
+                if((((double *) s)[i] < 0. ) || (((double *) s)[i] < ((double *) s)[i + 1]))
+                {
+                    resid = residual * 2;
+                    break;
+                }
+            }
+            if(((double *) s) [min_m_n -1] < 0. )
+                resid = residual * 2;
+            break;
+        }
+        case COMPLEX:
+        {
+            for( i = 0; i < (min_m_n - 1 ); i++ )
+            {
+                if( (((float *) s) [i] < 0.f ) || ( ((float *) s)[i] < ((float *) s)[i + 1]))
+                {
+                    resid = residual * 2;
+                    break;
+                }
+            }
+            if(((float *) s) [min_m_n - 1] < 0.f )
+                resid = residual * 2;
+            break;
+        }
+        case DOUBLE_COMPLEX:
+        {
+            for( i = 0; i < (min_m_n - 1 ); i++ )
+            {
+                if( (((double *) s)[i] < 0. ) || (((double *) s)[i] < ((double *) s)[i + 1]) )
+                {
+                    resid = residual * 2;
+                    break;
+                }
+            }
+            if(((double *) s) [min_m_n - 1] < 0. )
+                resid = residual * 2;
+            break;
+        }
+        default:
+        break;
+    }
+    return resid;
+}

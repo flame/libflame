@@ -255,6 +255,8 @@ int fla_check_cmd_config_dir( int argc, char** argv )
         /*cmd option*/
         cmd_test_option = 1;
     }
+    if(config_dir)
+        free(config_dir);
 
     return cmd_test_option;
 }

@@ -26,7 +26,7 @@ void validate_gesdd(char *jobz, integer m, integer n, void* A, void* A_test, int
     {
         case FLOAT:
         {
-            float norm, norm_A, eps, resid1, resid2, resid3;
+            float norm, norm_A, eps, resid1, resid2, resid3, resid4;
             eps = fla_lapack_slamch("P");
 
             /* Test 1
@@ -45,13 +45,17 @@ void validate_gesdd(char *jobz, integer m, integer n, void* A, void* A_test, int
                compute norm(I - V*V') / (N * EPS)*/
             resid3 = (float)check_orthogonality(datatype, V, n, n, ldvt);
 
-            *residual = (double)fla_max(resid1, fla_max(resid2, resid3));
+            /* Test 4
+               Test to Check order of Singular values of SVD (positive and non-decreasing) */
+            resid4 = (float)svd_check_order( datatype, s, m, n, *residual );
+
+            *residual = (double)fla_max(fla_max(resid1, fla_max(resid2, resid3)), resid4);
             break;
         }
 
         case DOUBLE:
         {
-            double norm, norm_A, eps, resid1, resid2, resid3;
+            double norm, norm_A, eps, resid1, resid2, resid3, resid4;
             eps = fla_lapack_dlamch("P");
 
             /* Test 1
@@ -69,14 +73,18 @@ void validate_gesdd(char *jobz, integer m, integer n, void* A, void* A_test, int
             /* Test 3
                compute norm(I - V*V') / (N * EPS)*/
             resid3 = check_orthogonality(datatype, V, n, n, ldvt);
+            
+            /* Test 4
+               Test to Check order of Singular values of SVD (positive and non-decreasing) */
+            resid4 = svd_check_order( datatype, s, m, n, *residual );
 
-            *residual = (double)fla_max(resid1, fla_max(resid2, resid3));
+            *residual = (double)fla_max(fla_max(resid1, fla_max(resid2, resid3)), resid4);
              break;
         }
 
         case COMPLEX:
         {
-            float norm, norm_A, eps, resid1, resid2, resid3;
+            float norm, norm_A, eps, resid1, resid2, resid3, resid4;
             eps = fla_lapack_slamch("P");
 
             /* Test 1
@@ -95,13 +103,17 @@ void validate_gesdd(char *jobz, integer m, integer n, void* A, void* A_test, int
                compute norm(I - V*V') / (N * EPS)*/
             resid3 = (float)check_orthogonality(datatype, V, n, n, ldvt);
 
-            *residual = (double)fla_max(resid1, fla_max(resid2, resid3));
+            /* Test 4
+               Test to Check order of Singular values of SVD (positive and non-decreasing) */
+            resid4 = (float)svd_check_order( datatype, s, m, n, *residual );
+
+            *residual = (double)fla_max(fla_max(resid1, fla_max(resid2, resid3)), resid4);
             break;
         }
 
         case DOUBLE_COMPLEX:
         {
-            double norm, norm_A, eps, resid1, resid2, resid3;
+            double norm, norm_A, eps, resid1, resid2, resid3, resid4;
             eps = fla_lapack_dlamch("P");
 
             /* Test 1
@@ -120,7 +132,11 @@ void validate_gesdd(char *jobz, integer m, integer n, void* A, void* A_test, int
                compute norm(I - V*V') / (N * EPS)*/
             resid3 = check_orthogonality(datatype, V, n, n, ldvt);
 
-            *residual = (double)fla_max(resid1, fla_max(resid2, resid3));
+           /* Test 4
+              Test to Check order of Singular values of SVD  (positive and non-decreasing) */
+            resid4 = svd_check_order( datatype, s, m, n, *residual );
+
+            *residual = (double)fla_max(fla_max(resid1, fla_max(resid2, resid3)), resid4);
             break;
         }
     }

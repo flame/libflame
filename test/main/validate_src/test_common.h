@@ -114,4 +114,6 @@ void get_orthogonal_matrix_from_QR(integer datatype, integer n, void *A, integer
 void print_matrix(char* desc, integer datatype, integer M, integer N, void* A, integer lda);
 /* Get upper triangular matrix or lower triangular matrix based on UPLO */
 void get_triangular_matrix(char *uplo, integer datatype, integer m, integer n, void *a, integer lda);
+/*To Check order of Singular values of SVD (positive and non-decreasing)*/
+double svd_check_order(integer datatype, void *s, integer m, integer n, double residual);
 #endif // TEST_COMMON_H
