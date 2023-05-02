@@ -368,7 +368,6 @@ int dtgsyl_(char *trans, integer *ijob, integer *m, integer * n, doublereal *a, 
     *info = 0;
     notran = lsame_(trans, "N");
     lquery = *lwork == -1;
-    scale2 = 0.;
     if (! notran && ! lsame_(trans, "T"))
     {
         *info = -1;

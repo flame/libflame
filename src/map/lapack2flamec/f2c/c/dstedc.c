@@ -254,8 +254,6 @@ int dstedc_(char *compz, integer *n, doublereal *d__, doublereal *e, doublereal 
     --iwork;
     /* Function Body */
     *info = 0;
-    lwmin = 0;
-    liwmin = 0;
     lquery = *lwork == -1 || *liwork == -1;
     if (lsame_(compz, "N"))
     {

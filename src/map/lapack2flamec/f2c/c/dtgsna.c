@@ -472,7 +472,6 @@ int dtgsna_(char *job, char *howmny, logical *select, integer *n, doublereal *a,
     somcon = lsame_(howmny, "S");
     *info = 0;
     lquery = *lwork == -1;
-    cond = 0.;
     if (! wants && ! wantdf)
     {
         *info = -1;

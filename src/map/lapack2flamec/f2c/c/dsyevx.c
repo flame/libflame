@@ -333,7 +333,6 @@ int dsyevx_(char *jobz, char *range, char *uplo, integer *n, doublereal *a, inte
     indeig = lsame_(range, "I");
     lquery = *lwork == -1;
     *info = 0;
-    lwkopt = 0;
     if (! (wantz || lsame_(jobz, "N")))
     {
         *info = -1;

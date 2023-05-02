@@ -26,7 +26,7 @@ int dsteqr_helper_(char *jobz, char *uplo, integer *n, doublereal * a, integer *
     doublereal sigma;
     extern logical lsame_(char *, char *);
     integer iinfo, lwmin, liopt;
-    logical wantz;
+    logical lower, wantz;
     integer indwk2, llwrk2;
     extern doublereal dlamch_(char *);
     integer iscale;
@@ -44,8 +44,6 @@ int dsteqr_helper_(char *jobz, char *uplo, integer *n, doublereal * a, integer *
     integer indwrk, liwmin;
     extern /* Subroutine */
     int dormtr_(char *, char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *);
-    extern /* Subroutine */
-    int dsytrd_(char *uplo, integer *n, doublereal *a, integer * lda, doublereal *d__, doublereal *e, doublereal *tau, doublereal * work, integer *lwork, integer *info);
     integer llwork;
     doublereal smlnum;
     logical lquery;
@@ -79,6 +77,7 @@ int dsteqr_helper_(char *jobz, char *uplo, integer *n, doublereal * a, integer *
     --iwork;
     /* Function Body */
     wantz = lsame_(jobz, "V");
+    lower = lsame_(uplo, "L");
     lquery = *lwork == -1 || *liwork == -1;
     *info = 0;
 

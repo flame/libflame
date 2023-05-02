@@ -291,7 +291,6 @@ int dlaed8_(integer *icompq, integer *k, integer *n, integer *qsiz, doublereal *
     --indx;
     /* Function Body */
     *info = 0;
-    jlam = 0;
     if (*icompq < 0 || *icompq > 1)
     {
         *info = -1;

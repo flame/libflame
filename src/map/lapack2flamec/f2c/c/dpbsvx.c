@@ -405,8 +405,6 @@ int dpbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, doub
     nofact = lsame_(fact, "N");
     equil = lsame_(fact, "E");
     upper = lsame_(uplo, "U");
-    smlnum = 0.;
-    bignum = 0.;
     if (nofact || equil)
     {
         *(unsigned char *)equed = 'N';

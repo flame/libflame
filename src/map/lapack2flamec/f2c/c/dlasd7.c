@@ -333,7 +333,6 @@ int dlasd7_(integer *icompq, integer *nl, integer *nr, integer *sqre, integer *k
     givnum -= givnum_offset;
     /* Function Body */
     *info = 0;
-    jprev = 0;
     n = *nl + *nr + 1;
     m = n + *sqre;
     if (*icompq < 0 || *icompq > 1)

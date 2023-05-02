@@ -169,7 +169,6 @@ doublereal dlantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, d
     ab -= ab_offset;
     --work;
     /* Function Body */
-    value = 0.;
     if (*n == 0)
     {
         value = 0.;

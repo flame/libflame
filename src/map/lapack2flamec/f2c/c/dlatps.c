@@ -287,7 +287,6 @@ int dlatps_(char *uplo, char *trans, char *diag, char * normin, integer *n, doub
     upper = lsame_(uplo, "U");
     notran = lsame_(trans, "N");
     nounit = lsame_(diag, "N");
-    tjjs = 0.;
     /* Test the input parameters. */
     if (! upper && ! lsame_(uplo, "L"))
     {

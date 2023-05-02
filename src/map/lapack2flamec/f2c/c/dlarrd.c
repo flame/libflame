@@ -391,8 +391,6 @@ int dlarrd_(char *range, char *order, integer *n, doublereal *vl, doublereal *vu
     --gers;
     /* Function Body */
     *info = 0;
-    wul = 0.;
-    wlu = 0.;
     /* Quick return if possible */
     if (*n <= 0)
     {

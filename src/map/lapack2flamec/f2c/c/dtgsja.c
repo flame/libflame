@@ -450,7 +450,7 @@ int dtgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
     q -= q_offset;
     --work;
     /* Function Body */
-    hugenum = 1.7976931348623157e308;
+    hugenum = 1.7976931348623157e308f;
     initu = lsame_(jobu, "I");
     wantu = initu || lsame_(jobu, "U");
     initv = lsame_(jobv, "I");

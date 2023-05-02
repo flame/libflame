@@ -188,7 +188,6 @@ int dtzrzf_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *ta
     /* Function Body */
     *info = 0;
     lquery = *lwork == -1;
-    nb = 0;
     if (*m < 0)
     {
         *info = -1;
