@@ -3,6 +3,7 @@
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__6 = 6;
 static integer c__0 = 0;
+static integer c__2 = 2;
 static integer c__1 = 1;
 static integer c_n1 = -1;
 static real c_b109 = 0.f;
@@ -267,7 +268,8 @@ the routine */
 int sgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, real *a, integer *lda, real *vl, real *vu, integer *il, integer *iu, integer *ns, real *s, real *u, integer *ldu, real *vt, integer *ldvt, real *work, integer *lwork, integer *iwork, integer * info)
 {
     /* System generated locals */
-    integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__2, i__3;
+    address a__1[2];
+    integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1[2], i__2, i__3;
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */
@@ -297,6 +299,7 @@ int sgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, real
     real bignum;
     extern /* Subroutine */
     int sgelqf_(integer *, integer *, real *, integer *, real *, real *, integer *, integer *), slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *);
+    real abstol;
     extern /* Subroutine */
     int sgeqrf_(integer *, integer *, real *, integer *, real *, real *, integer *, integer *), slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *);
     char rngtgk[1];
@@ -348,11 +351,11 @@ int sgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, real
     /* Function Body */
     *ns = 0;
     *info = 0;
+    abstol = slamch_("S") * 2;
     lquery = *lwork == -1;
     minmn = fla_min(*m,*n);
     wantu = lsame_(jobu, "V");
     wantvt = lsame_(jobvt, "V");
-    mnthr = 0;
     if (wantu || wantvt)
     {
         *(unsigned char *)jobz = 'V';

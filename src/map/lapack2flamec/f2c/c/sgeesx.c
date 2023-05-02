@@ -371,7 +371,6 @@ int sgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, real
     wantsv = lsame_(sense, "V");
     wantsb = lsame_(sense, "B");
     lquery = *lwork == -1 || *liwork == -1;
-    maxwrk = 0;
     if (! wantvs && ! lsame_(jobvs, "N"))
     {
         *info = -1;

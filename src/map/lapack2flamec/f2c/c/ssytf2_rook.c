@@ -247,8 +247,6 @@ int ssytf2_rook_(char *uplo, integer *n, real *a, integer * lda, integer *ipiv, 
     /* Function Body */
     *info = 0;
     upper = lsame_(uplo, "U");
-    jmax = 0;
-    imax = 0;
     if (! upper && ! lsame_(uplo, "L"))
     {
         *info = -1;

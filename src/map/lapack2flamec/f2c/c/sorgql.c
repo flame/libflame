@@ -185,7 +185,6 @@ int sorgql_(integer *m, integer *n, integer *k, real *a, integer *lda, real *tau
     {
         *info = -5;
     }
-    nb = ilaenv_(&c__1, "SORGQL", " ", m, n, k, &c_n1);
     if (*info == 0)
     {
         if (*n == 0)
@@ -194,6 +193,7 @@ int sorgql_(integer *m, integer *n, integer *k, real *a, integer *lda, real *tau
         }
         else
         {
+            nb = ilaenv_(&c__1, "SORGQL", " ", m, n, k, &c_n1);
             lwkopt = *n * nb;
         }
         work[1] = (real) lwkopt;

@@ -94,7 +94,7 @@ int slassq_(integer *n, real *x, integer *incx, real *scl, real *sumsq)
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("slassq inputs: n %" FLA_IS ", incx %" FLA_IS "",*n, *incx);
     /* System generated locals */
-    integer i__1;
+    integer i__1, i__2;
     real r__1, r__2;
     /* Builtin functions */
     double pow_ri(real *, real *), sqrt(doublereal);

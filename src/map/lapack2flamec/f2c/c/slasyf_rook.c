@@ -235,7 +235,6 @@ int slasyf_rook_(char *uplo, integer *n, integer *nb, integer *kb, real *a, inte
     alpha = (sqrt(17.f) + 1.f) / 8.f;
     /* Compute machine safe minimum */
     sfmin = slamch_("S");
-    jmax = 0;
     if (lsame_(uplo, "U"))
     {
         /* Factorize the trailing columns of A using the upper triangle */

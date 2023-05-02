@@ -389,8 +389,6 @@ int slarrd_(char *range, char *order, integer *n, real *vl, real *vu, integer *i
     --gers;
     /* Function Body */
     *info = 0;
-    wul = 0.f;
-    wlu = 0.f;
     /* Quick return if possible */
     if (*n <= 0)
     {

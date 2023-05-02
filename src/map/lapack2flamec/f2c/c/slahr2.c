@@ -215,7 +215,6 @@ int slahr2_(integer *n, integer *k, integer *nb, real *a, integer *lda, real *ta
     y_offset = 1 + y_dim1;
     y -= y_offset;
     /* Function Body */
-    ei = 0;
     if (*n <= 1)
     {
         return 0;

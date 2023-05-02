@@ -240,11 +240,6 @@ int sstein_(integer *n, real *d__, real *e, integer *m, real *w, integer *iblock
     /* Function Body */
     *info = 0;
     i__1 = *m;
-    stpcrt = 0.f;
-    onenrm = 0.f;
-    ortol = 0.f;
-    xjm = 0.f;
-    gpind = 0;
     for (i__ = 1;
             i__ <= i__1;
             ++i__)

@@ -399,9 +399,6 @@ int shgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     z__ -= z_offset;
     --work;
     /* Function Body */
-    ilz = 0;
-    ilq = 0;
-    ilschr = 0;
     if (lsame_(job, "E"))
     {
         ilschr = FALSE_;

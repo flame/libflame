@@ -238,19 +238,21 @@ int ssytrd_sb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     /* System generated locals */
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4, i__5;
     /* Local variables */
-    integer abofdpos, i__, k, m, stepercol, ed, ib, st, blklastind, lda, tid, ldv, stt, inda;
+    integer abofdpos, nthreads, i__, k, m, stepercol, ed, ib, st, blklastind, lda, tid, ldv, stt, inda;
     extern integer ilaenv2stage_(integer *, char *, char *, integer *, integer *, integer *, integer *);
-    integer thed, indv, myid, indw, apos, dpos, edind;
+    integer thed, indv, myid, indw, apos, dpos, edind, debug;
     extern logical lsame_(char *, char *);
     integer lhmin, sizea, shift, stind, colpt, lwmin, awpos;
     logical wantq, upper;
-    integer grsiz, ttype, abdpos;
+    integer sisev, grsiz, ttype, abdpos;
     extern /* Subroutine */
     int xerbla_(char *, integer *);
     integer thgrid, thgrnb, indtau, ofdpos;
     extern /* Subroutine */
     int slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *), ssb2st_kernels_(char *, logical *, integer *, integer *, integer *, integer *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *);
     logical lquery, afters1;
+    extern /* Subroutine */
+    int f90_exit_(void);
     integer ceiltmp, sweepid, nbtiles, sizetau, thgrsiz;
     /* #if defined(_OPENMP) */
     /* use omp_lib */
@@ -286,6 +288,7 @@ int ssytrd_sb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     --hous;
     --work;
     /* Function Body */
+    debug = 0;
     *info = 0;
     afters1 = lsame_(stage1, "Y");
     wantq = lsame_(vect, "V");
@@ -355,12 +358,14 @@ int ssytrd_sb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     /* Determine pointer position */
     ldv = *kd + ib;
     sizetau = *n << 1;
+    sisev = *n << 1;
     indtau = 1;
     indv = indtau + sizetau;
     lda = (*kd << 1) + 1;
     sizea = lda * *n;
     inda = 1;
     indw = inda + sizea;
+    nthreads = 1;
     tid = 0;
     if (upper)
     {

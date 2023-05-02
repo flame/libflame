@@ -169,7 +169,6 @@ real slantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, real *a
     ab -= ab_offset;
     --work;
     /* Function Body */
-    value = 0.f;
     if (*n == 0)
     {
         value = 0.f;

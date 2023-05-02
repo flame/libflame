@@ -142,7 +142,6 @@ real slange_(char *norm, integer *m, integer *n, real *a, integer *lda, real * w
     a -= a_offset;
     --work;
     /* Function Body */
-    value = 0.f;
     if (fla_min(*m,*n) == 0)
     {
         value = 0.f;

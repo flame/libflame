@@ -173,7 +173,8 @@ int sormql_(char *side, char *trans, integer *m, integer *n, integer *k, real *a
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */
-    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__4, i__5;
+    address a__1[2];
+    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__3[2], i__4, i__5;
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */
@@ -269,9 +270,6 @@ int sormql_(char *side, char *trans, integer *m, integer *n, integer *k, real *a
     {
         *info = -12;
     }
-    i__1 = 64;
-    i__2 = ilaenv_(&c__1, "SORMQL", ch__1, m, n, k, &c_n1); // , expr subst
-    nb = fla_min(i__1,i__2);
     if (*info == 0)
     {
         /* Compute the workspace requirements */
@@ -282,6 +280,9 @@ int sormql_(char *side, char *trans, integer *m, integer *n, integer *k, real *a
         else
         {
             /* Computing MIN */
+            i__1 = 64;
+            i__2 = ilaenv_(&c__1, "SORMQL", ch__1, m, n, k, &c_n1); // , expr subst
+            nb = fla_min(i__1,i__2);
             lwkopt = nw * nb + 4160;
         }
         work[1] = (real) lwkopt;
