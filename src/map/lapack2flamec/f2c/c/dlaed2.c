@@ -267,7 +267,6 @@ int dlaed2_(integer *k, integer *n, integer *n1, doublereal * d__, doublereal *q
     --coltyp;
     /* Function Body */
     *info = 0;
-    pj = 0;
     if (*n < 0)
     {
         *info = -2;

@@ -371,8 +371,6 @@ int dppsvx_(char *fact, char *uplo, integer *n, integer * nrhs, doublereal *ap, 
     *info = 0;
     nofact = lsame_(fact, "N");
     equil = lsame_(fact, "E");
-    smlnum = 0.;
-    bignum = 0.;
     if (nofact || equil)
     {
         *(unsigned char *)equed = 'N';

@@ -172,7 +172,6 @@ int dgerqf_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *ta
     --work;
     /* Function Body */
     *info = 0;
-    nb = 0;
     lquery = *lwork == -1;
     if (*m < 0)
     {

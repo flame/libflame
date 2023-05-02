@@ -390,8 +390,6 @@ int dtrsen_(char *job, char *compq, logical *select, integer *n, doublereal *t, 
     wantq = lsame_(compq, "V");
     *info = 0;
     lquery = *lwork == -1;
-    liwmin = 0;
-    lwmin = 0;
     if (! lsame_(job, "N") && ! wants && ! wantsp)
     {
         *info = -1;

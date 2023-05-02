@@ -128,7 +128,6 @@ doublereal dlanst_(char *norm, integer *n, doublereal *d__, doublereal *e)
     --e;
     --d__;
     /* Function Body */
-    anorm = 0.;
     if (*n <= 0)
     {
         anorm = 0.;

@@ -430,9 +430,6 @@ int fla_dhgeqz_opt(char *job, char *compq, char *compz, integer *n, integer *ilo
     z__ -= z_offset;
     --work;
     /* Function Body */
-    ilz = FALSE_;
-    ilq = FALSE_;
-    ilschr = FALSE_;
     if (lsame_(job, "E"))
     {
         ilschr = FALSE_;
@@ -1684,9 +1681,6 @@ int fla_dhgeqz_native(char *job, char *compq, char *compz, integer *n, integer *
     z__ -= z_offset;
     --work;
     /* Function Body */
-    ilz = FALSE_;
-    ilq = FALSE_;
-    ilschr = FALSE_;
     if (lsame_(job, "E"))
     {
         ilschr = FALSE_;

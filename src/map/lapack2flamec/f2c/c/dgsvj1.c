@@ -245,7 +245,7 @@ int dgsvj1_(char *jobv, integer *m, integer *n, integer *n1, doublereal *a, inte
     integer nblr, ierr;
     doublereal aapp0;
     extern doublereal dnrm2_(integer *, doublereal *, integer *);
-    doublereal temp1, apoaq, aqoap;
+    doublereal temp1, large, apoaq, aqoap;
     extern logical lsame_(char *, char *);
     doublereal theta, small_val;
     extern /* Subroutine */
@@ -373,6 +373,7 @@ int dgsvj1_(char *jobv, integer *m, integer *n, integer *n1, doublereal *a, inte
     small_val = *sfmin / *eps;
     big = 1. / *sfmin;
     rootbig = 1. / rootsfmin;
+    large = big / sqrt((doublereal) (*m * *n));
     bigtheta = 1. / rooteps;
     roottol = sqrt(*tol);
     /* .. Initialize the right singular vector matrix .. */

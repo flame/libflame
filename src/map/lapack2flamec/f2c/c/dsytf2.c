@@ -240,7 +240,6 @@ int dsytf2_(char *uplo, integer *n, doublereal *a, integer * lda, integer *ipiv,
     /* Function Body */
     *info = 0;
     upper = lsame_(uplo, "U");
-    imax = 0;
     if (! upper && ! lsame_(uplo, "L"))
     {
         *info = -1;

@@ -138,7 +138,6 @@ doublereal dlanhs_(char *norm, integer *n, doublereal *a, integer *lda, doublere
     a -= a_offset;
     --work;
     /* Function Body */
-    value = 0.;
     if (*n == 0)
     {
         value = 0.;
