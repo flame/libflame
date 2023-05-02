@@ -245,7 +245,6 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
     minmn = fla_min(*m,*n);
     maxmn = fla_max(*m,*n);
     lquery = *lwork == -1;
-    mnthr = 0;
     if (*m < 0)
     {
         *info = -1;

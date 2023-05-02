@@ -152,6 +152,7 @@ real sla_syrcond_(char *uplo, integer *n, real *a, integer *lda, real *af, integ
     int xerbla_(char *, integer *);
     real ainvnm;
     char normin[1];
+    real smlnum;
     extern /* Subroutine */
     int ssytrs_(char *, integer *, integer *, real *, integer *, integer *, real *, integer *, integer *);
     /* -- LAPACK computational routine (version 3.7.0) -- */
@@ -343,6 +344,7 @@ real sla_syrcond_(char *uplo, integer *n, real *a, integer *lda, real *af, integ
         }
     }
     /* Estimate the norm of inv(op(A)). */
+    smlnum = slamch_("Safe minimum");
     ainvnm = 0.f;
     *(unsigned char *)normin = 'N';
     kase = 0;

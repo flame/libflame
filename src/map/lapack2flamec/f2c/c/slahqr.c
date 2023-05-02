@@ -263,7 +263,6 @@ int slahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
     z__ -= z_offset;
     /* Function Body */
     *info = 0;
-    i2 = 0;
     /* Quick return if possible */
     if (*n == 0)
     {

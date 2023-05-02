@@ -208,7 +208,6 @@ int stzrzf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
     {
         *info = -4;
     }
-    nb = ilaenv_(&c__1, "SGERQF", " ", m, n, &c_n1, &c_n1);
     if (*info == 0)
     {
         if (*m == 0 || *m == *n)
@@ -219,6 +218,7 @@ int stzrzf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
         else
         {
             /* Determine the block size. */
+            nb = ilaenv_(&c__1, "SGERQF", " ", m, n, &c_n1, &c_n1);
             lwkopt = *m * nb;
             lwkmin = fla_max(1,*m);
         }

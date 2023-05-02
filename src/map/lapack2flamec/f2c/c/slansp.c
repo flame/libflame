@@ -141,7 +141,6 @@ real slansp_(char *norm, char *uplo, integer *n, real *ap, real *work)
     --work;
     --ap;
     /* Function Body */
-    value = 0.f;
     if (*n == 0)
     {
         value = 0.f;

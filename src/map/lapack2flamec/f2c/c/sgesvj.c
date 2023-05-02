@@ -347,7 +347,7 @@ int sgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, real *a,
     extern real sdot_(integer *, real *, integer *, real *, integer *);
     real aapp0, temp1;
     extern real snrm2_(integer *, real *, integer *);
-    real apoaq, aqoap;
+    real large, apoaq, aqoap;
     extern logical lsame_(char *, char *);
     real theta;
     extern /* Subroutine */
@@ -520,6 +520,7 @@ int sgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, real *a,
     big = slamch_("Overflow");
     /* BIG = ONE / SFMIN */
     rootbig = 1.f / rootsfmin;
+    large = big / sqrt((real) (*m * *n));
     bigtheta = 1.f / rooteps;
     tol = ctol * epsln;
     roottol = sqrt(tol);

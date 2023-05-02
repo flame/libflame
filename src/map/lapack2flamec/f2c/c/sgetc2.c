@@ -146,9 +146,6 @@ int sgetc2_(integer *n, real *a, integer *lda, integer *ipiv, integer *jpiv, int
     --jpiv;
     /* Function Body */
     *info = 0;
-    smin = 0.f;
-    ipv = 0;
-    jpv = 0;
     /* Quick return if possible */
     if (*n == 0)
     {
