@@ -78,8 +78,8 @@ extern fla_context global_context;                                              
   }                                                                                    \
   else                                                                                 \
   {                                                                                    \
-    FLA_LU_piv_z_var1_parallel( m, n, buff_A, ldim_A, buff_p, info);                   \
-  }                                                                                    \
+    FLA_LU_piv_z_var1_parallel( m, n, (doublecomplex *) buff_A, ldim_A, buff_p, info);  \
+  }                                                                                    
 
 #else
 
@@ -91,7 +91,7 @@ extern fla_context global_context;                                              
     else                                                                                 \
     {                                                                                    \
       FLA_LU_piv_z_var0( m, n, buff_A, ldim_A, buff_p, info);                            \
-    }                                                                                    \
+    }                                                                                    
 
 #endif
 
@@ -101,12 +101,13 @@ extern fla_context global_context;                                              
   integer      min_m_n    = fla_min( *m, *n );                      \
   FLA_Error    e_val = FLA_SUCCESS;                             \
   FLA_Error    init_result;                                     \
+  extern fla_context global_context;                                                     \
                                                                                         \
   if( *m <= FLA_SGETRF_SMALL_THRESH0 && *n <= FLA_SGETRF_SMALL_THRESH0 )               \
   {                                                                                    \
     FLA_LU_piv_small_s_var0( m, n, buff_A, ldim_A, buff_p, info );                     \
   }                                                                                    \
-  else if( *m <= FLA_SGETRF_SMALL_THRESH1 && *n <= FLA_SGETRF_SMALL_THRESH1 )           \
+  else if( global_context.is_avx2 && *m <= FLA_SGETRF_SMALL_THRESH1 && *n <= FLA_SGETRF_SMALL_THRESH1 )           \
   {                                                                                    \
     FLA_LU_piv_small_s_var1( m, n, buff_A, ldim_A, buff_p, info );                     \
   }                                                                                   \
@@ -293,6 +294,8 @@ LAPACK_getrf(s)
     }
     if (fla_error == LAPACK_SUCCESS)
     {
+        /* Initialize global context data */
+        aocl_fla_init();
         LAPACK_getrf_body_s(s)
          /** fla_error set to 0 on LAPACK_SUCCESS */
         fla_error = 0;
@@ -356,7 +359,17 @@ LAPACK_getrf(z)
     }
     if (fla_error == LAPACK_SUCCESS)
     {
-        LAPACK_getrf_body_z(z)
+	extern fla_context global_context;
+	aocl_fla_init();
+	if (global_context.is_avx2)
+	{
+        	LAPACK_getrf_body_z(z)
+	}
+	else
+	{
+		LAPACK_getrf_body(z)
+	}
+
         /** fla_error set to 0 on LAPACK_SUCCESS */
         fla_error = 0;
     }
