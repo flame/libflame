@@ -11,21 +11,22 @@ RM_RF          := rm -rf
 OMP_LIB        := -fopenmp
 CPPFLAGS       :=
 CFLAGS         := -O2 -Wall -Wno-comment ${OMP_LIB}
-LDFLAGS        := -lm -lpthread $(OMP_LIB)
+LDFLAGS        := -lstdc++ -lm -lpthread $(OMP_LIB)
+
+#
+# --- LIBFLAME \ LAPACK library ------------------------------------------------
+#
+LIB_PATH          := ../../lib/x86_64-unknown-linux-gnu/
+LIBFLAME          := $(LIB_PATH)/libflame.a
+LAPACK_INC_PATH   := ../../include/x86_64-unknown-linux-gnu/
 
 #
 # --- BLAS library -------------------------------------------------------------
 #
 # A BLAS library must be given in order to run the libflame test suite.
-LIBBLAS        :=
+LIBBLAS           :=
 BLAS_HEADER_PATH  :=
 
-#
-# --- LIBFLAME library ---------------------------------------------------------
-#
-LIB_PATH          := ../../lib/x86_64-unknown-linux-gnu/
-LIBFLAME          := $(LIB_PATH)/libflame.a
-LAPACK_INC_PATH   := ../../include/x86_64-unknown-linux-gnu/
 #
 # --- Uncomment the four lines below and set MKLROOT & LDFLAGS -----------------
 #     appropriately to link to MKL libs
@@ -36,7 +37,7 @@ LAPACK_INC_PATH   := ../../include/x86_64-unknown-linux-gnu/
 #LDFLAGS        := -Wl,--start-group ${MKLROOT}/intel64/libmkl_intel_lp64.a \
                    ${MKLROOT}/intel64/libmkl_sequential.a \
                    ${MKLROOT}/intel64/libmkl_core.a -Wl,--end-group \
-                   -lpthread -lm -fopenmp -ldl
+                   -lpthread -lm -fopenmp -ldl -lstdc++
 
 #
 # --- ILP64 --- Set to 1 to enable ILP64 ---------------------------------------

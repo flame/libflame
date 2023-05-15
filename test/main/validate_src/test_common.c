@@ -12,7 +12,7 @@ scomplex c_zero = {0,0}, c_one = {1,0}, c_n_one = {-1,0};
 dcomplex z_zero = {0,0}, z_one = {1,0}, z_n_one = {-1,0};
 
 /* Allocate dynamic memory. If FLA_MEM_UNALIGNED is set, unaligned memory is allocated */
-char* fla_mem_alloc(integer size)
+char* fla_mem_alloc(size_t size)
 {
     char* buff = NULL;
 #ifdef FLA_MEM_UNALIGNED
@@ -566,7 +566,7 @@ void reset_matrix(integer datatype, integer M, integer N, void *A, integer LDA)
 
         case COMPLEX:
         {
-            fla_lapack_dlaset("A", &M, &N, &c_zero, &c_zero, A, &LDA);
+            fla_lapack_claset("A", &M, &N, &c_zero, &c_zero, A, &LDA);
             break;
         }
 

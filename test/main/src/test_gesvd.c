@@ -101,7 +101,7 @@ void fla_test_gesvd(integer argc, char ** argv, test_params_t *params)
     if(tests_not_run)
     {
         printf("\nIllegal arguments for gesdd\n");
-        printf("./<EXE> gesvd<precisions - sdcz> <JOBU> <JOBVT> <M> <N> <LDA> <LDU> <LDVT> <LWORK> <repeats>\n");
+        printf("./<EXE> gesvd <precisions - sdcz> <JOBU> <JOBVT> <M> <N> <LDA> <LDU> <LDVT> <LWORK> <repeats>\n");
     }
     if(invalid_dtype)
     {

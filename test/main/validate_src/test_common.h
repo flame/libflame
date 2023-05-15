@@ -97,7 +97,7 @@ void init_matrix_from_file(integer datatype, void* A,integer m, integer n, integ
 /* Reading vector input data from a file */
 void init_vector_from_file(integer datatype, void* A, integer m, integer inc, FILE* fptr);
 /* Allocate dynamic memory. If FLA_MEM_UNALIGNED is set, unaligned memory is allocated */
-char* fla_mem_alloc(integer size);
+char* fla_mem_alloc(size_t size);
 /* Generate Hessenberg matrix */
 void get_hessenberg_matrix(integer datatype, integer n, void* A, integer lda, void *Z, integer ldz, integer *ilo, integer *ihi, void* scale, integer *info);
 /* Convert matrix to upper hessenberg form */
