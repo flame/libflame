@@ -151,10 +151,10 @@ int fla_check_cmd_config_dir( int argc, char** argv )
     /*for default config*/
     if(argc == 1)
     {
-        lin_file     =  "config/LIN_SLVR.dat";
-        eig_file     =  "config/EIG_PARAMS.dat";
-        svd_file     =  "config/SVD.dat";
-        eig_nsy_file =  "config/EIG_NSYM_PARAMS.dat";
+        lin_file     =  "config/short/LIN_SLVR.dat";
+        eig_file     =  "config/short/EIG_PARAMS.dat";
+        svd_file     =  "config/short/SVD.dat";
+        eig_nsy_file =  "config/short/EIG_NSYM_PARAMS.dat";
 
         len_lin_file = strlen(  lin_file);
         len_eig_file = strlen(  eig_file);

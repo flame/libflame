@@ -10,7 +10,7 @@ ldb   20 87 400
 ldz   20 87 400
 ldq   20 87 400
 ldab  20 30 400 200
-Repeats 1 1 1 1
+Repeats 5 4 3 2
 DataTypes s d c z
 Matrix_Layout 101 102 101 102
 trans N T N T
