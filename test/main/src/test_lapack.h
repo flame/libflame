@@ -94,6 +94,17 @@ int test_progress(const char* const api,const integer lenapi,const integer* cons
         }                                                 \
         einfo = atoi(info_value[1]);                      \
     }                                                     \
+    else if(strstr(argv,"--imatrix") != NULL)             \
+    {                                                     \
+        info = strtok(argv,"=");                          \
+        while( info != NULL && i < 2 )                    \
+        {                                                 \
+            strcpy( info_value[i], info);                 \
+            i++;                                          \
+            info = strtok(NULL, "=");                     \
+        }                                                 \
+        params->imatrix_char  = info_value[1][0];         \
+    }                                                     \
     else                                                  \
     {                                                     \ 
         g_ext_fptr = fopen(argv, "r");                    \
@@ -348,6 +359,7 @@ typedef struct
     integer       p_max;
     integer       p_inc;
     integer       p_nfact;
+    char          imatrix_char;
 
     struct SVD_paramlist_t svd_paramslist[NUM_SUB_TESTS];
     struct EIG_Non_symmetric_paramlist_t eig_non_sym_paramslist[NUM_SUB_TESTS];

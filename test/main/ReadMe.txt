@@ -203,3 +203,15 @@ NOTE:
 
    All parameter related testing commands are compiled in test/main/scripts run_negative_test_cases.py which
    can be used for this purpose.
+
+7. Tests with special inputs using --imatrix option:
+
+   Test the API's by intializing matrix with special input values such as NAN or INFINITY using --imatrix.
+   This option is available only through command line execution.
+
+   Example:
+    ./test_lapack.x GETRF 10 10 10 1 --imatrix=N
+    ./test_lapack.x GETRF 10 10 10 1 --imatrix=I
+   
+   In the above example passing the value of --imatrix as 'N' will intialize the matrix with NAN values
+   and if the value is 'I' then matrix will be intialized with the INFINITY.

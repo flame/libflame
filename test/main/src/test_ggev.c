@@ -168,18 +168,8 @@ void fla_test_ggev_experiment(test_params_t *params,
     }
     create_vector(datatype, &beta, m);
 
-    if (g_ext_fptr != NULL)
-    {
-        /* Initialize input matrix with custom data */
-        init_matrix_from_file(datatype, A, m, m, lda, g_ext_fptr);
-        init_matrix_from_file(datatype, B, m, m, lda, g_ext_fptr);
-    }
-    else
-    {
-        /* Initialize input matrix with random numbers */
-        rand_matrix(datatype, A, m, m, lda);
-        rand_matrix(datatype, B, m, m, lda);
-    }
+    init_matrix(datatype, A, m, m, lda, g_ext_fptr, params->imatrix_char);
+    init_matrix(datatype, B, m, m, lda, g_ext_fptr, params->imatrix_char);
 
     /* Make a copy of input matrix A. This is required to validate the API functionality */
     create_matrix(datatype, &A_test, lda, m);

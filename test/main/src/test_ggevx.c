@@ -187,18 +187,9 @@ void fla_test_ggevx_experiment(test_params_t *params,
     create_realtype_vector(datatype, &bbnrm, 1);
 
 
-    if(g_ext_fptr != NULL)
-    {
-        /* Initialize input matrix with custom data */
-        init_matrix_from_file(datatype, A, n, n, lda, g_ext_fptr);
-        init_matrix_from_file(datatype, B, n, n, ldb, g_ext_fptr);
-    }
-    else
-    {
-        /* Initialize input matrix with random numbers */
-        rand_matrix(datatype, A, n, n, lda);
-        rand_matrix(datatype, B, n, n, ldb);
-    }
+    init_matrix(datatype, A, n, n, lda, g_ext_fptr, params->imatrix_char);
+    init_matrix(datatype, B, n, n, ldb, g_ext_fptr, params->imatrix_char);
+
     /* Make a copy of input matrix A. This is required to validate the API functionality */
     create_matrix(datatype, &A_test, lda, n);
     create_matrix(datatype, &B_test, ldb, n);

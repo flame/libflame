@@ -2637,3 +2637,92 @@ double svd_check_order(integer datatype, void *s, integer m, integer n, double r
     }
     return resid;
 }
+
+/* Intialize matrix with special values*/
+void init_matrix_spec_in(integer datatype, void *A, integer M, integer N, integer LDA, char type)
+{
+    integer i, j, realdatatype;
+
+    switch( datatype )
+    {
+        case FLOAT:
+        {
+            float value;
+            if(type == 'I')
+                value = INFINITY;
+            else if(type == 'N')
+                value = NAN;
+            for( i = 0; i < N; i++ )
+            {
+                for( j = 0; j < M; j++ )
+                {
+                    ((float *)A)[i * LDA + j] = value;
+                }
+            }
+            break;
+        }
+        case DOUBLE:
+        {
+            double value;
+            if(type == 'I')
+                value = INFINITY;
+            else if(type == 'N')
+                value = NAN;
+            for( i = 0; i < N; i++ )
+            {
+                for( j = 0; j < M; j++ )
+                {
+                    ((double *)A)[i * LDA + j] = value;
+                }
+            }
+            break;
+        }
+        case COMPLEX:
+        {
+            float value;
+            if(type == 'I')
+                value = INFINITY;
+            else if(type == 'N')
+                value = NAN;
+            for( i = 0; i < N; i++ )
+            {
+                for( j = 0; j < M; j++ )
+                {
+                    ((scomplex *)A)[i * LDA + j].real = value;
+                    ((scomplex *)A)[i * LDA + j].imag = value;
+                }
+            }
+            break;
+        }
+        case DOUBLE_COMPLEX:
+        {
+            double value;
+            if(type == 'I')
+                value = INFINITY;
+            else if(type == 'N')
+                value = NAN;
+            for( i = 0; i < N; i++ )
+            {
+                for( j = 0; j < M; j++ )
+                {
+                    ((dcomplex *)A)[i * LDA + j].real = value;
+                    ((dcomplex *)A)[i * LDA + j].imag = value;
+                }
+            }
+            break;
+        }
+    }
+
+    return;
+}
+
+/*Intialize matrix according to given input*/
+void init_matrix(integer datatype, void *A, integer M, integer N, integer LDA, FILE* g_ext_fptr, char imatrix_char)
+{
+    if(g_ext_fptr != NULL)
+        init_matrix_from_file(datatype, A, M, N, LDA, g_ext_fptr);
+    else if(imatrix_char == 'I' || imatrix_char == 'N')
+        init_matrix_spec_in(datatype, A, M, N, LDA, imatrix_char);
+    else
+        rand_matrix(datatype, A, M, N, LDA);
+}

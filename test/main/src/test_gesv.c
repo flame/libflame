@@ -140,18 +140,8 @@ void fla_test_gesv_experiment(test_params_t *params,
     create_matrix(datatype, &B, ldb, NRHS);
     create_matrix(datatype, &B_save, ldb, NRHS);
     /* Initialize the test matrices*/
-    if (g_ext_fptr != NULL)
-    {
-        /* Initialize input matrix with custom data */
-        init_matrix_from_file(datatype, A, n, n, lda, g_ext_fptr);
-        init_matrix_from_file(datatype, B, n, NRHS, ldb, g_ext_fptr);
-    }
-    else
-    {
-        /* Initialize input matrix with random numbers */
-        rand_matrix(datatype, A, n, n, lda);
-        rand_matrix(datatype, B, n, NRHS, ldb);
-    }
+    init_matrix(datatype, A, n, n, lda, g_ext_fptr, params->imatrix_char);
+    init_matrix(datatype, B, n, NRHS, ldb, g_ext_fptr, params->imatrix_char);
     /* Save the original matrix*/
     copy_matrix(datatype, "full", n, n, A, lda, A_save, lda);
     copy_matrix(datatype, "full", n, NRHS, B, ldb, B_save, ldb);

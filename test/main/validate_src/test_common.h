@@ -116,4 +116,8 @@ void print_matrix(char* desc, integer datatype, integer M, integer N, void* A, i
 void get_triangular_matrix(char *uplo, integer datatype, integer m, integer n, void *a, integer lda);
 /*To Check order of Singular values of SVD (positive and non-decreasing)*/
 double svd_check_order(integer datatype, void *s, integer m, integer n, double residual);
+/* Intialize matrix with special values*/
+void init_matrix_spec_in(integer datatype, void *A, integer M, integer N, integer LDA, char type);
+/*Intialize matrix according to given input*/
+void init_matrix(integer datatype, void *A, integer M, integer N, integer LDA, FILE* g_ext_fptr, char imatrix_char);
 #endif // TEST_COMMON_H

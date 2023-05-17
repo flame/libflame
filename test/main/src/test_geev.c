@@ -162,16 +162,7 @@ void fla_test_geev_experiment(test_params_t *params,
         create_vector(datatype, &wi, n);
     }
 
-    if (g_ext_fptr != NULL)
-    {
-        /* Initialize input matrix with custom data */
-        init_matrix_from_file(datatype, A, n, n, lda, g_ext_fptr);
-    }
-    else
-    {
-        /* Initialize input matrix with random numbers */
-        rand_matrix(datatype, A, n, n, lda);
-    }
+    init_matrix(datatype, A, n, n, lda, g_ext_fptr, params->imatrix_char);
 
     /* Make a copy of input matrix A. This is required to validate the API functionality. */
     create_matrix(datatype, &A_test, lda, n);

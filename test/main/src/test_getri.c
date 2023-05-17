@@ -141,16 +141,7 @@ void fla_test_getri_experiment(test_params_t *params,
     create_matrix(datatype, &A, lda, n);
     create_vector(INTEGER, &IPIV, n);
     /* Initialize the test matrices*/
-    if (g_ext_fptr != NULL)
-    {
-        /* Initialize input matrix with custom data */
-        init_matrix_from_file(datatype, A, n, n, lda, g_ext_fptr);
-    }
-    else
-    {
-        /* Initialize input matrix with random numbers */
-        rand_matrix(datatype, A, n, n, lda);
-    }
+    init_matrix(datatype, A, n, n, lda, g_ext_fptr, params->imatrix_char);
 
     /* Save the original matrix*/
     create_matrix(datatype, &A_test, lda, n);
