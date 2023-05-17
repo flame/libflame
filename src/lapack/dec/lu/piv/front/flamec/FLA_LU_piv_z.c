@@ -14,6 +14,7 @@ static integer c__1 = 1;
 void FLA_get_optimum_params_zgetrf(integer m, integer n, integer *nb, int *n_threads)
 {
     int available_n_threads;
+    extern int fla_thread_get_num_threads(void);
 
     /* Get maximum thread available*/
     available_n_threads = fla_thread_get_num_threads();
@@ -319,7 +320,6 @@ integer FLA_LU_piv_z_var1_parallel( integer *m, integer *n, doublecomplex *a, in
     integer i__, j, s, iinfo;
     integer jb, jb_prev, jb_offset, nb;
     integer c__1 = 1;
-    integer c_n1 = -1;
     #define a_subscr(a_1,a_2) (a_2)*a_dim1 + a_1
     #define a_ref(a_1,a_2) a[a_subscr(a_1,a_2)]
     int threads_id, n_threads;
@@ -354,7 +354,7 @@ integer FLA_LU_piv_z_var1_parallel( integer *m, integer *n, doublecomplex *a, in
     /* call sequencial algorithm for single thread*/
     if(n_threads == 1)
     {
-        FLA_LU_piv_z_var0( m, n, a, lda, ipiv, info);
+        FLA_LU_piv_z_var0( m, n, (dcomplex *) a, lda, ipiv, info);
         return *info;
     }
 
@@ -394,7 +394,7 @@ integer FLA_LU_piv_z_var1_parallel( integer *m, integer *n, doublecomplex *a, in
 
     // Compute L00 and U00 of diagonal blocks
     i__3 = *m - j + 1;
-    FLA_LU_piv_z_var0(&i__3, &jb, &a_ref(j, j), lda, &ipiv[j], &iinfo);
+    FLA_LU_piv_z_var0(&i__3, &jb, (dcomplex *) &a_ref(j, j), lda, &ipiv[j], &iinfo);
 
     if (*info == 0 && iinfo > 0)
         *info = iinfo + j - 1;
@@ -425,12 +425,12 @@ integer FLA_LU_piv_z_var1_parallel( integer *m, integer *n, doublecomplex *a, in
                 i__3 = *n - j - jb_prev + 1;
                 i__4 = j + jb_prev - 1;
                 i__3 = fla_min(i__3, jb_prev);
-                zlaswp_(&i__3, &a_ref(1, j + jb_prev), lda, &j, &i__4, &ipiv[1], &c__1);
+                zlaswp_(&i__3, (dcomplex*) &a_ref(1, j + jb_prev), lda, &j, &i__4, &ipiv[1], &c__1);
 
                 // compute U10
                 i__3 = *n - j - jb_prev + 1;
                 i__3 = fla_min(i__3, jb_prev);
-                ztrsm_("Left", "Lower", "No transpose", "Unit", &jb_prev, &i__3, &c_b1, &a_ref(j, j), lda, &a_ref(j, j + jb_prev), lda);
+                ztrsm_("Left", "Lower", "No transpose", "Unit", &jb_prev, &i__3, &c_b1, (dcomplex*) &a_ref(j, j), lda, (dcomplex*) &a_ref(j, j + jb_prev), lda);
 
                 // compute L11 * U11
                 if (j + jb_prev <= *m)
@@ -439,7 +439,7 @@ integer FLA_LU_piv_z_var1_parallel( integer *m, integer *n, doublecomplex *a, in
                     i__3 = *m - j - jb_prev + 1;
                     i__4 = *n - j - jb_prev + 1;
                     i__4 = fla_min(i__4, jb_prev);
-                    zgemm_("No transpose", "No transpose", &i__3, &i__4, &jb_prev, &z__1, &a_ref(j + jb_prev, j), lda, &a_ref(j, j + jb_prev), lda, &c_b1, &a_ref(j + jb_prev, j + jb_prev), lda);
+                    zgemm_("No transpose", "No transpose", &i__3, &i__4, &jb_prev, &z__1,(dcomplex*)  &a_ref(j + jb_prev, j), lda,(dcomplex*) &a_ref(j, j + jb_prev), lda, &c_b1,(dcomplex*) &a_ref(j + jb_prev, j + jb_prev), lda);
                 }
 
                 if(s <= i__1)
@@ -451,7 +451,7 @@ integer FLA_LU_piv_z_var1_parallel( integer *m, integer *n, doublecomplex *a, in
 
                     // Compute L00 and U00 of diagonal blocks
                     i__3 = *m - s + 1;
-                    FLA_LU_piv_z_var0(&i__3, &jb, &a_ref(s, s), lda, &ipiv[s], &iinfo);
+                    FLA_LU_piv_z_var0(&i__3, &jb,(dcomplex*) &a_ref(s, s), lda, &ipiv[s], &iinfo);
 
                     if (*info == 0 && iinfo > 0)
                         *info = iinfo + s - 1;
@@ -478,12 +478,12 @@ integer FLA_LU_piv_z_var1_parallel( integer *m, integer *n, doublecomplex *a, in
                     i__3 = *n - j - jb_prev + 1 - jb_prev;
                     i__4 = j + jb_prev - 1;
                     FLA_Thread_get_subrange(threads_id - 1, n_threads - 1, i__3, &i__5, &i__6);
-                    zlaswp_(&i__5, &a_ref(1, j + jb_offset + i__6), lda, &j, &i__4, &ipiv[1], &c__1);
+                    zlaswp_(&i__5,(dcomplex*) &a_ref(1, j + jb_offset + i__6), lda, &j, &i__4, &ipiv[1], &c__1);
 
                     // compute U10
                     i__3 = *n - j - jb_prev + 1 - jb_prev;
                     FLA_Thread_get_subrange(threads_id - 1, n_threads - 1, i__3, &i__5, &i__6);
-                    ztrsm_("Left", "Lower", "No transpose", "Unit", &jb_prev, &i__5, &c_b1, &a_ref(j, j), lda, &a_ref(j, j + jb_offset + i__6), lda);
+                    ztrsm_("Left", "Lower", "No transpose", "Unit", &jb_prev, &i__5, &c_b1,(dcomplex*) &a_ref(j, j), lda,(dcomplex*) &a_ref(j, j + jb_offset + i__6), lda);
 
                     // compute L11 * U11
                     if (j + jb_prev <= *m)
@@ -492,7 +492,7 @@ integer FLA_LU_piv_z_var1_parallel( integer *m, integer *n, doublecomplex *a, in
                         i__3 = *m - j - jb_prev + 1;
                         i__4 = *n - j - jb_prev + 1 - jb_prev;
                         FLA_Thread_get_subrange(threads_id - 1, n_threads - 1, i__4, &i__7, &i__8);
-                        zgemm_("No transpose", "No transpose", &i__3, &i__7, &jb_prev, &z__1, &a_ref(j + jb_prev, j), lda, &a_ref(j, j + jb_offset + i__8), lda, &c_b1, &a_ref(j + jb_prev, j + jb_offset + i__8), lda);
+                        zgemm_("No transpose", "No transpose", &i__3, &i__7, &jb_prev, &z__1,(dcomplex*) &a_ref(j + jb_prev, j), lda,(dcomplex*) &a_ref(j, j + jb_offset + i__8), lda, &c_b1,(dcomplex*) &a_ref(j + jb_prev, j + jb_offset + i__8), lda);
                     }
                 }
             }
@@ -513,7 +513,7 @@ integer FLA_LU_piv_z_var1_parallel( integer *m, integer *n, doublecomplex *a, in
             i__3 = j - 1;
             i__4 = j + jb - 1;
             FLA_Thread_get_subrange(threads_id, n_threads, i__3, &i__5, &i__6);
-            zlaswp_(&i__5, &a[a_offset + (i__6 * a_dim1)], lda, &j, &i__4, &ipiv[1], &c__1);
+            zlaswp_(&i__5,(dcomplex*) &a[a_offset + (i__6 * a_dim1)], lda, &j, &i__4, &ipiv[1], &c__1);
             #pragma omp barrier
         }
     }

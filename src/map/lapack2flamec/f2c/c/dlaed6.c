@@ -172,6 +172,7 @@ int dlaed6_(integer *kniter, logical *orgati, doublereal * rho, doublereal *d__,
     --d__;
     /* Function Body */
     *info = 0;
+    sclinv = 0.;
     if (*orgati)
     {
         lbd = d__[2];

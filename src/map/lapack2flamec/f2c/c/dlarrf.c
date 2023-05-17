@@ -237,6 +237,7 @@ int dlarrf_(integer *n, doublereal *d__, doublereal *l, doublereal *ld, integer 
     --d__;
     /* Function Body */
     *info = 0;
+    indx = 0;
     /* Quick return if possible */
     if (*n <= 0)
     {

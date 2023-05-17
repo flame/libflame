@@ -3,7 +3,6 @@
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
 static integer c_n1 = -1;
-static integer c__2 = 2;
 /* > \brief \b CUNMTR */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
@@ -170,8 +169,7 @@ the routine */
 int cunmtr_(char *side, char *uplo, char *trans, integer *m, integer *n, complex *a, integer *lda, complex *tau, complex *c__, integer *ldc, complex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    address a__1[2];
-    integer a_dim1, a_offset, c_dim1, c_offset, i__1[2], i__2, i__3;
+    integer a_dim1, a_offset, c_dim1, c_offset, i__2, i__3;
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */

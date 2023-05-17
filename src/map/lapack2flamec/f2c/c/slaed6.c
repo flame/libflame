@@ -176,6 +176,7 @@ int slaed6_(integer *kniter, logical *orgati, real *rho, real *d__, real *z__, r
     --d__;
     /* Function Body */
     *info = 0;
+    sclinv = 0.f;
     if (*orgati)
     {
         lbd = d__[2];

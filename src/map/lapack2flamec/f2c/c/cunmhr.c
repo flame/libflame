@@ -3,7 +3,6 @@
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
 static integer c_n1 = -1;
-static integer c__2 = 2;
 /* > \brief \b CUNMHR */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
@@ -177,8 +176,7 @@ int cunmhr_(char *side, char *trans, integer *m, integer *n, integer *ilo, integ
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("cunmhr inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS ", ldc %" FLA_IS "",*side, *trans, *m, *n, *ilo, *ihi, *lda, *ldc);
     /* System generated locals */
-    address a__1[2];
-    integer a_dim1, a_offset, c_dim1, c_offset, i__1[2], i__2;
+    integer a_dim1, a_offset, c_dim1, c_offset, i__2;
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */

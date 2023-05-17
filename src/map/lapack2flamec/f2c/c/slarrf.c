@@ -235,6 +235,7 @@ int slarrf_(integer *n, real *d__, real *l, real *ld, integer *clstrt, integer *
     --d__;
     /* Function Body */
     *info = 0;
+    indx = 0;
     /* Quick return if possible */
     if (*n <= 0)
     {
