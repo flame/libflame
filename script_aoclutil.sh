@@ -4,9 +4,21 @@
 LIBAOCLUTILS_DIR=libaoclutils
 LIBAOCLUTILS_OBJ_DIR=libaoclutils_objdir
 LIBAOCLUTILS_STATICLIB=libaoclutils.a
-LIBAOCLUTILS_GIT_URL=git@github.amd.com:AOCL/aocl-utils.git
-LIBAOCLUTILS_GIT_TAG=amd-main
+LIBAOCLUTILS_GIT_URL=https://github.com/amd/aocl-utils.git
+LIBAOCLUTILS_GIT_TAG="4.1"
 LIBAOCLUTILS_GIT_REPO=aocl-utils
+
+for ARG in "$@"
+do
+   VAR=$(echo $ARG | cut -f1 -d=)
+   DATA=$(echo $ARG | cut -f2 -d=)
+
+   case "$VAR" in
+         LIBAOCLUTILS_GIT_TAG)           LIBAOCLUTILS_GIT_TAG=${DATA} ;;
+         LIBAOCLUTILS_GIT_URL)           LIBAOCLUTILS_GIT_URL=${DATA} ;;
+         *)
+   esac
+done
 
 #Check of libaoclutils object directory already exists and has object files
 if [[ -d $LIBAOCLUTILS_OBJ_DIR  &&  ! -z `ls $LIBAOCLUTILS_OBJ_DIR/*.o` ]];
@@ -20,18 +32,26 @@ else
 	mkdir -p $LIBAOCLUTILS_OBJ_DIR
 
 	cd $LIBAOCLUTILS_DIR
+	echo "Cloning libaoclutils from URL $LIBAOCLUTILS_GIT_URL and tag $LIBAOCLUTILS_GIT_TAG"
 	git clone $LIBAOCLUTILS_GIT_URL -b $LIBAOCLUTILS_GIT_TAG
-	
-	cd $LIBAOCLUTILS_GIT_REPO
-	mkdir build_temp
-	cd build_temp
-	cmake ..
-	make -j
-	
-	cp $LIBAOCLUTILS_STATICLIB ../../../$LIBAOCLUTILS_OBJ_DIR
-	cd ../../../$LIBAOCLUTILS_OBJ_DIR
 
-	#Extract the object files
-	ar -x $LIBAOCLUTILS_STATICLIB
-	cd ..
+	#Check if clone succeeded
+	if [ $? -eq 0 ]; 
+	then	
+		cd $LIBAOCLUTILS_GIT_REPO
+		mkdir build_temp
+		cd build_temp
+		cmake ..
+		make -j
+	
+		cp $LIBAOCLUTILS_STATICLIB ../../../$LIBAOCLUTILS_OBJ_DIR
+		cd ../../../$LIBAOCLUTILS_OBJ_DIR
+
+		#Extract the object files
+		ar -x $LIBAOCLUTILS_STATICLIB
+		cd ..
+	else
+		echo "Cloning libaoclutils failed! Please check if clone path is correct."
+		echo "Else provide path to prebuilt libaoclutils library using LIBAOCLUTILS_LIBRARY_PATH and LIBAOCLUTILS_INCLUDE_PATH."
+	fi
 fi
