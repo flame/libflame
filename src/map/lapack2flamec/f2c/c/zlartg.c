@@ -426,7 +426,7 @@ int zlartg_(doublecomplex *f, doublecomplex *g, doublereal * c__, doublecomplex 
             r__->r = z__1.r, r__->i = z__1.i;
         }
     }
-    AOCL_DTL_TRACE_LOG_EXIT
+    AOCL_DTL_TRACE_EXIT_INDENT
     return 0;
 }
 /* zlartg_ */
