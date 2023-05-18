@@ -39,8 +39,8 @@ set(CMAKE_VERBOSE_MAKEFILE OFF)
 #set AOCL Utilities library path values
 set(LIBAOCLUTILS_PROJECT "libaoclutils")
 set(LIBAOCLUTILS_INSTALL_DIR_NAME "install-aoclutils")
-set(LIBAOCLUTILS_GIT_URL "git@github.amd.com:AOCL/aocl-utils.git")
-set(LIBAOCLUTILS_GIT_TAG "amd-main")
+set(LIBAOCLUTILS_GIT_URL "https://github.com/amd/aocl-utils.git" CACHE STRING "libaoclutils repository URL to be used")
+set(LIBAOCLUTILS_GIT_TAG "4.1" CACHE STRING "libaoclutils repository tag to be used")
 
 if(UNIX)
 	set(LIBAOCLUTILS_SHAREDLIB "libaoclutils.so")
@@ -953,6 +953,7 @@ else(LIBAOCLUTILS_LIBRARY_PATH AND LIBAOCLUTILS_INCLUDE_PATH)
 		set(LIBAOCLUTILS_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/${LIBAOCLUTILS_PROJECT}-prefix/src/${LIBAOCLUTILS_PROJECT}-build/${LIBAOCLUTILS_INSTALL_DIR_NAME}")
 	else()
 		message(STATUS "AOCLUtils library neither provided by user nor earlier build exists. Downloading from GitHub repository")
+		message(STATUS "libaoclutils  will be cloned from URL ${LIBAOCLUTILS_GIT_URL} and tag ${LIBAOCLUTILS_GIT_TAG}")
 		#Download AOCLUtils library from Github
 		include(ExternalProject)
 		ExternalProject_Add(
