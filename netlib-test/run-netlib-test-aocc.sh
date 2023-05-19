@@ -2,7 +2,7 @@
 
 echo
 echo "Argument Values"
-LAPACK_TEST_DIR=lapack-3.10.0
+LAPACK_TEST_DIR=lapack-3.11
 BLAS_LIB=libblis-mt.a
 BLAS_LIB_PATH= 
 LAPACK_LIB=libflame.a
