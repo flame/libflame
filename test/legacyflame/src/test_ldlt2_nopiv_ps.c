@@ -496,7 +496,7 @@ void test_ldlt2_nopiv_ps_d( test_params_t *params )
 
       free(od);
       free(ad);
-
+      free(work);
       free(fod);
    }
    return;
