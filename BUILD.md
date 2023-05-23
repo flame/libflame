@@ -79,6 +79,25 @@ $ cmake ../ -DENABLE_AMD_FLAGS=ON -DCMAKE_INSTALL_PREFIX=<path> -DLIBAOCLUTILS_L
         -DEXT_OPENMP_PATH=<openmp lib path> -DEXT_OPENMP_LIB=<openmp lib name>
     Note: In order to use openmp from the system -DEXT_OPENMP_PATH is to be left blank
 
-    
+## 7. Using ctest
+    Ctest is enabled when -DBUILD_TEST=ON OR -DBUILD_LEGACY_TEST=ON.
+    To run ALL ctests together following command can be given 
+        ctest 
+    To run a specific ctest following command can be given 
+        ctest -R [TEST_NAME] 
+        TEST_NAME
+        1. main_test
+        2. aocl_fla_progress_test
+        3. legacy_test
+    To run build from any location 
+        ctest --test-dir [BUILD_DIR]
+    Additionally --verbose can be added to print the output from the executable
+    Example:
+        Following command can be used to run tests with regular expression neg_test
+            ctest --test-dir <build_dir> -R neg_test --verbose
+        on windows additional "-C Release"  is needed to run the test
+            ctest --test-dir <build_dir> -R neg_test -C Release --verbose
+
+
 
 

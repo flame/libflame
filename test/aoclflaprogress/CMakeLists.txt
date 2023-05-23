@@ -21,3 +21,18 @@ endif()
 target_include_directories(test_libFLAME_aocl PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 add_subdirectory(src)
+
+if(WIN32)
+    set(FLA_PROGRESS_EXE_LOCATION "${CMAKE_SOURCE_DIR}/bin")
+else()
+    set(FLA_PROGRESS_EXE_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}")
+endif()
+# Added aocl_fla_progress to ctest
+if(WIN32)
+    set(FLA_PROGRESS_EXE_LOCATION ${CMAKE_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE})
+else()
+    set(FLA_PROGRESS_EXE_LOCATION ${CMAKE_CURRENT_SOURCE_DIR})
+endif()
+add_test(NAME aocl_fla_progress_test
+        COMMAND $<TARGET_FILE:test_libFLAME_aocl>
+        WORKING_DIRECTORY ${FLA_PROGRESS_EXE_LOCATION})

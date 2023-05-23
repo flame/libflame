@@ -1042,7 +1042,9 @@ add_definitions(-DEXPMODULE)
 add_subdirectory(src)
 
 if (BUILD_TEST OR BUILD_LEGACY_TEST)
-
+# enable ctest
+enable_testing()
+message(STATUS "CTEST ENABLED")
 # CHECKS if blas library exists 
 	if(NOT EXISTS ${CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH}/${EXT_BLAS_LIBNAME})
 		message(FATAL_ERROR "\n Invalid path to blas Library \n \

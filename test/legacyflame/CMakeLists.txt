@@ -19,3 +19,14 @@ if(UNIX)
 endif()
 
 add_subdirectory(src)
+
+# Added Legacy Test to ctest
+if(WIN32)
+    set(LEGACY_FLAME_EXE_LOCATION ${CMAKE_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE})
+else()
+    set(LEGACY_FLAME_EXE_LOCATION ${CMAKE_CURRENT_SOURCE_DIR})
+endif()
+
+add_test(NAME legacy_flame_test
+        COMMAND $<TARGET_FILE:test_libFLAME>
+        WORKING_DIRECTORY ${LEGACY_FLAME_EXE_LOCATION})

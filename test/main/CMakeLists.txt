@@ -97,3 +97,6 @@ target_include_directories("${PROJECT_NAME}" PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
 
 add_subdirectory(src)
 add_subdirectory(validate_src)
+
+include(main_ctest.cmake)
+include(negative_test.cmake)
