@@ -9,13 +9,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "FLAME.h"
 
-typedef int integer;
 /* Generate Random Value */
 #define DRAND()  ( ( double ) rand() / ( ( double ) RAND_MAX / 2.0F ) ) - 1.0F;
-
-/* External calls to LAPACK API's */
-extern int dgetrf_(integer* m, integer* n, void* a, integer* lda, integer* ipiv, integer* info);
 
 /* Local Function Declaration */
 void rand_matrix(void *A, integer M, integer N, integer LDA);
@@ -26,7 +23,7 @@ int main( int argc, char** argv )
     integer M = 10, N = 10, LDA = 10;
     double *A;
     integer *ipiv;
-    integer i, info;
+    integer info;
 
     /* Allocation of memory to matrix*/
     A = (double  *) malloc(LDA * N * sizeof(double));
