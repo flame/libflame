@@ -156,6 +156,7 @@ int zgetrf2_(integer *m, integer *n, doublecomplex *a, integer *lda, integer *ip
     /* Parameter adjustments */
     #if AOCL_FLA_PROGRESS_H
        AOCL_FLA_PROGRESS_VAR;
+       static TLS_CLASS_SPEC integer progress_size = 0;
     #endif
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;
@@ -266,24 +267,22 @@ int zgetrf2_(integer *m, integer *n, doublecomplex *a, integer *lda, integer *ip
 	    #endif
                 if(aocl_fla_progress_ptr)
                 {
-                        if(step_count == 0 || step_count==size ){
-                                        size=fla_min(*m,*n);
-                                        step_count =1;
+                        if(progress_step_count == 0 || progress_step_count == progress_size ){
+                                        progress_size = fla_min(*m,*n);
+                                        progress_step_count =1;
                          }
 
-                        if(!(step_count == 1 &&(*m < FLA_GETRF_SMALL &&  *n < FLA_GETRF_SMALL)))
+                        if(!(progress_step_count == 1 &&(*m < FLA_GETRF_SMALL &&  *n < FLA_GETRF_SMALL)))
                         {
-
-
-                                ++step_count;
-                                if((step_count%8)==0 || step_count==size)
+                                ++progress_step_count;
+                                if((progress_step_count%8)==0 || progress_step_count == progress_size)
                                 {
-                                        AOCL_FLA_PROGRESS_FUNC_PTR("ZGETRF2",7,&step_count,&thread_id,&total_threads);
+                                        AOCL_FLA_PROGRESS_FUNC_PTR("ZGETRF2",7,&progress_step_count,&progress_thread_id,&progress_total_threads);
                                 }
                         }
                 }
 
-        #endif
+    #endif
 
         zgetrf2_(m, &n1, &a[a_offset], lda, &ipiv[1], &iinfo);
         if (*info == 0 && iinfo > 0)

@@ -226,3 +226,32 @@ NOTE:
 
             If lda = -1 is passed through command line, then -1 will be taken as the given lda 
             without any change.
+ 
+9. AOCL_FLA_PROGRESS feature test.
+
+   Enable a macro 'AOCL_FLA_SET_PROGRESS_ENABLE' for aocl progress and build libflame main test suite for sequential/multithread and run the
+   executable.
+
+   For testing sequential mode : ./test_lapack.x
+
+   output:
+   In AOCL Progress thread  0, at API  DGETRF, progress 8 total threads= 1
+   In AOCL Progress thread  0, at API  DGETRF, progress 16 total threads= 1
+   In AOCL Progress thread  0, at API  DGETRF, progress 24 total threads= 1
+   In AOCL Progress thread  0, at API  DGETRF, progress 32 total threads= 1
+   In AOCL Progress thread  0, at API  DGETRF, progress 40 total threads= 1
+   In AOCL Progress thread  0, at API  DGETRF, progress 48 total threads= 1
+   In AOCL Progress thread  0, at API  DGETRF, progress 56 total threads= 1
+   
+   For testing multithread mode: FLA_TEST_NUM_THREADS=4 ./test_lapack.x
+   
+   output:
+   In AOCL Progress thread  1, at API  DGETRF, progress 8 total threads= 4
+   In AOCL Progress thread  1, at API  DGETRF, progress 16 total threads= 4
+   In AOCL Progress thread  2, at API  DGETRF, progress 8 total threads= 4
+   In AOCL Progress thread  1, at API  DGETRF, progress 24 total threads= 4
+   In AOCL Progress thread  2, at API  DGETRF, progress 16 total threads= 4
+   In AOCL Progress thread  1, at API  DGETRF, progress 32 total threads= 4
+   In AOCL Progress thread  3, at API  DGETRF, progress 8 total threads= 4
+   In AOCL Progress thread  2, at API  DGETRF, progress 24 total threads= 4
+   In AOCL Progress thread  0, at API  DGETRF, progress 8 total threads= 4

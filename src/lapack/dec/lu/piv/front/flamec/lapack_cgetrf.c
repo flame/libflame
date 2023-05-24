@@ -120,8 +120,8 @@
                         	aocl_fla_progress_ptr=aocl_fla_progress;
                     #endif
                     	if(aocl_fla_progress_ptr){
-                        	step_count= fla_min(*m,*n);
-                        	AOCL_FLA_PROGRESS_FUNC_PTR("CGETRF",6,&step_count,&thread_id,&total_threads);
+                        	progress_step_count= fla_min(*m,*n);
+                        	AOCL_FLA_PROGRESS_FUNC_PTR("CGETRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
                     	}
          	#endif
 
@@ -130,7 +130,7 @@
 
 /*        Use blocked code. */
 	#if AOCL_FLA_PROGRESS_H
-                step_count =0;
+                progress_step_count =0;
         #endif
 
 
@@ -148,8 +148,8 @@
                         aocl_fla_progress_ptr=aocl_fla_progress;
                 #endif
                     if(aocl_fla_progress_ptr){
-                        step_count+=jb;
-                        AOCL_FLA_PROGRESS_FUNC_PTR("CGETRF",6,&step_count,&thread_id,&total_threads);
+                        progress_step_count+=jb;
+                        AOCL_FLA_PROGRESS_FUNC_PTR("CGETRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
                     }
             #endif
 

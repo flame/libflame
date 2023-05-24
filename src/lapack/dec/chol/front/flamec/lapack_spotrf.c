@@ -73,7 +73,7 @@ static real c_b14 = 1.f;
     a -= a_offset;
     #if AOCL_FLA_PROGRESS_H
         AOCL_FLA_PROGRESS_VAR;
-	step_count=0;
+	progress_step_count=0;
       #ifndef FLA_ENABLE_WINDOWS_BUILD
 	if(!aocl_fla_progress_ptr)
             aocl_fla_progress_ptr=aocl_fla_progress;
@@ -130,8 +130,8 @@ static real c_b14 = 1.f;
 		i__3 = j - 1;
 		#if AOCL_FLA_PROGRESS_H
 		    if(aocl_fla_progress_ptr){
-                	step_count+=jb;
-                	AOCL_FLA_PROGRESS_FUNC_PTR("SPOTRF",6,&step_count,&thread_id,&total_threads);
+                	progress_step_count+=jb;
+                	AOCL_FLA_PROGRESS_FUNC_PTR("SPOTRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
             	    }
         	#endif 
 		ssyrk_("Upper", "Transpose", &jb, &i__3, &c_b13, &a[j *
@@ -175,8 +175,8 @@ static real c_b14 = 1.f;
 		i__3 = j - 1;
 		#if AOCL_FLA_PROGRESS_H
 		    if(aocl_fla_progress_ptr){
-                	step_count+=jb;
-                	AOCL_FLA_PROGRESS_FUNC_PTR("SPOTRF",6,&step_count,&thread_id,&total_threads);
+                	progress_step_count+=jb;
+                	AOCL_FLA_PROGRESS_FUNC_PTR("SPOTRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
                     }
                 #endif
 		ssyrk_("Lower", "No transpose", &jb, &i__3, &c_b13, &a[j +

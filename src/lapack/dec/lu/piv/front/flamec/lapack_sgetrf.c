@@ -126,8 +126,8 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
                         aocl_fla_progress_ptr=aocl_fla_progress;
             #endif
                     if(aocl_fla_progress_ptr){
-                        step_count= fla_min(*m,*n);
-                        AOCL_FLA_PROGRESS_FUNC_PTR("SGETRF",6,&step_count,&thread_id,&total_threads);
+                        progress_step_count= fla_min(*m,*n);
+                        AOCL_FLA_PROGRESS_FUNC_PTR("SGETRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
                     }
          #endif
 
@@ -136,8 +136,8 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
 
 /*        Use blocked code. */
 	#if AOCL_FLA_PROGRESS_H
-                    step_count =0;
-        #endif
+            progress_step_count = 0;
+    #endif
 
 
 	i__1 = fla_min(*m,*n);
@@ -155,8 +155,8 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
                         aocl_fla_progress_ptr=aocl_fla_progress;
               #endif
                     if(aocl_fla_progress_ptr){
-                	step_count+=jb;
-                	AOCL_FLA_PROGRESS_FUNC_PTR("SGETRF",6,&step_count,&thread_id,&total_threads);
+                	progress_step_count+=jb;
+                	AOCL_FLA_PROGRESS_FUNC_PTR("SGETRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
                     }
   	    #endif
 

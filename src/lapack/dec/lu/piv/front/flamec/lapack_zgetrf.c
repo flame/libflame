@@ -114,13 +114,12 @@
                 #if AOCL_FLA_PROGRESS_H
 
                     #ifndef FLA_ENABLE_WINDOWS_BUILD
-	    		if(!aocl_fla_progress_ptr)
+	    		        if(!aocl_fla_progress_ptr)
                                 aocl_fla_progress_ptr=aocl_fla_progress;
-		    #endif
-
+		            #endif
                         if(aocl_fla_progress_ptr){
-                                step_count= fla_min(*m,*n);
-                                AOCL_FLA_PROGRESS_FUNC_PTR("ZGETRF",6,&step_count,&thread_id,&total_threads);
+                                progress_step_count= fla_min(*m,*n);
+                                AOCL_FLA_PROGRESS_FUNC_PTR("ZGETRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
                         }
                 #endif
 
@@ -130,8 +129,8 @@
 /*        Use blocked code. */
 
 	#if AOCL_FLA_PROGRESS_H
-                step_count =0;
-        #endif
+                progress_step_count =0;
+    #endif
     
 	i__1 = fla_min(*m,*n);
 	i__2 = nb;
@@ -141,17 +140,16 @@
 	    jb = fla_min(i__3,nb);
 
 
-            #if AOCL_FLA_PROGRESS_H
+    #if AOCL_FLA_PROGRESS_H
 		#ifndef FLA_ENABLE_WINDOWS_BUILD
-	    	    if(!aocl_fla_progress_ptr)
-                        aocl_fla_progress_ptr=aocl_fla_progress;
+	    	if(!aocl_fla_progress_ptr)
+                    aocl_fla_progress_ptr=aocl_fla_progress;
 		#endif
-
-                    if(aocl_fla_progress_ptr){
-                        step_count+=jb;
-                        AOCL_FLA_PROGRESS_FUNC_PTR("ZGETRF",6,&step_count,&thread_id,&total_threads);
-                    }
-            #endif
+            if(aocl_fla_progress_ptr){
+                progress_step_count+=jb;
+                AOCL_FLA_PROGRESS_FUNC_PTR("ZGETRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
+            }
+    #endif
 
 
 /*           Factor diagonal and subdiagonal blocks and test for exact
