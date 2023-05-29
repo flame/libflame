@@ -1,11 +1,12 @@
 /* ../netlib/v3.9.0/zhetrd_hb2st.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
+#ifdef FLA_OPENMP_MULTITHREADING
+#include <omp.h>
+#endif
 static doublecomplex c_b1 =
-{
-    0.,0.
-}
-;
+    {
+        0., 0.};
 static integer c__2 = 2;
 static integer c_n1 = -1;
 static integer c__3 = 3;
@@ -68,7 +69,7 @@ static integer c__4 = 4;
 /* > VECT is CHARACTER*1 */
 /* > = 'N': No need for the Housholder representation, */
 /* > and thus LHOUS is of size fla_max(1, 4*N);
-*/
+ */
 /* > = 'V': the Householder representation is needed to */
 /* > either generate or to apply Q later on, */
 /* > then LHOUS is to be queried and computed. */
@@ -79,7 +80,7 @@ static integer c__4 = 4;
 /* > \verbatim */
 /* > UPLO is CHARACTER*1 */
 /* > = 'U': Upper triangle of A is stored;
-*/
+ */
 /* > = 'L': Lower triangle of A is stored. */
 /* > \endverbatim */
 /* > */
@@ -104,7 +105,7 @@ static integer c__4 = 4;
 /* > j-th column of A is stored in the j-th column of the array AB */
 /* > as follows: */
 /* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j;
-*/
+ */
 /* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=fla_min(n,j+kd). */
 /* > On exit, the diagonal elements of AB are overwritten by the */
 /* > diagonal elements of the tridiagonal matrix T;
@@ -251,19 +252,17 @@ int zhetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     logical wantq, upper;
     integer grsiz, ttype, abdpos;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+        int
+        xerbla_(char *, integer *);
     integer thgrid, thgrnb, indtau;
     doublereal abstmp;
     integer ofdpos;
     extern /* Subroutine */
-    int zhb2st_kernels_(char *, logical *, integer *, integer *, integer *, integer *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *), zlacpy_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), zlaset_(char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *);
+        int
+        zhb2st_kernels_(char *, logical *, integer *, integer *, integer *, integer *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *),
+        zlacpy_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), zlaset_(char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *);
     logical lquery, afters1;
-    extern /* Subroutine */
-    int f90_exit_(void);
     integer ceiltmp, sweepid, nbtiles, sizetau, thgrsiz;
-    /* #if defined(_OPENMP) */
-    /* use omp_lib */
-    /* #endif */
     /* -- LAPACK computational routine (version 3.8.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -304,15 +303,15 @@ int zhetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     ib = ilaenv2stage_(&c__2, "ZHETRD_HB2ST", vect, n, kd, &c_n1, &c_n1);
     lhmin = ilaenv2stage_(&c__3, "ZHETRD_HB2ST", vect, n, kd, &ib, &c_n1);
     lwmin = ilaenv2stage_(&c__4, "ZHETRD_HB2ST", vect, n, kd, &ib, &c_n1);
-    if (! afters1 && ! lsame_(stage1, "N"))
+    if (!afters1 && !lsame_(stage1, "N"))
     {
         *info = -1;
     }
-    else if (! lsame_(vect, "N"))
+    else if (!lsame_(vect, "N"))
     {
         *info = -2;
     }
-    else if (! upper && ! lsame_(uplo, "L"))
+    else if (!upper && !lsame_(uplo, "L"))
     {
         *info = -3;
     }
@@ -328,31 +327,31 @@ int zhetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     {
         *info = -7;
     }
-    else if (*lhous < lhmin && ! lquery)
+    else if (*lhous < lhmin && !lquery)
     {
         *info = -11;
     }
-    else if (*lwork < lwmin && ! lquery)
+    else if (*lwork < lwmin && !lquery)
     {
         *info = -13;
     }
     if (*info == 0)
     {
-        hous[1].r = (doublereal) lhmin;
+        hous[1].r = (doublereal)lhmin;
         hous[1].i = 0.; // , expr subst
-        work[1].r = (doublereal) lwmin;
+        work[1].r = (doublereal)lwmin;
         work[1].i = 0.; // , expr subst
     }
     if (*info != 0)
     {
         i__1 = -(*info);
         xerbla_("ZHETRD_HB2ST", &i__1);
-    AOCL_DTL_TRACE_LOG_EXIT
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-    AOCL_DTL_TRACE_LOG_EXIT
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -362,7 +361,7 @@ int zhetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
         hous[1].i = 0.; // , expr subst
         work[1].r = 1.;
         work[1].i = 0.; // , expr subst
-    AOCL_DTL_TRACE_LOG_EXIT
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Determine pointer position */
@@ -402,8 +401,8 @@ int zhetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     {
         i__1 = *n;
         for (i__ = 1;
-                i__ <= i__1;
-                ++i__)
+             i__ <= i__1;
+             ++i__)
         {
             i__2 = abdpos + i__ * ab_dim1;
             d__[i__] = ab[i__2].r;
@@ -411,8 +410,8 @@ int zhetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
         }
         i__1 = *n - 1;
         for (i__ = 1;
-                i__ <= i__1;
-                ++i__)
+             i__ <= i__1;
+             ++i__)
         {
             e[i__] = 0.;
             /* L40: */
@@ -421,7 +420,7 @@ int zhetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
         hous[1].i = 0.; // , expr subst
         work[1].r = 1.;
         work[1].i = 0.; // , expr subst
-    AOCL_DTL_TRACE_LOG_EXIT
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Case KD=1: */
@@ -437,8 +436,8 @@ int zhetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     {
         i__1 = *n;
         for (i__ = 1;
-                i__ <= i__1;
-                ++i__)
+             i__ <= i__1;
+             ++i__)
         {
             i__2 = abdpos + i__ * ab_dim1;
             d__[i__] = ab[i__2].r;
@@ -449,8 +448,8 @@ int zhetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
         {
             i__1 = *n - 1;
             for (i__ = 1;
-                    i__ <= i__1;
-                    ++i__)
+                 i__ <= i__1;
+                 ++i__)
             {
                 i__2 = abofdpos + (i__ + 1) * ab_dim1;
                 tmp.r = ab[i__2].r;
@@ -491,8 +490,8 @@ int zhetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
         {
             i__1 = *n - 1;
             for (i__ = 1;
-                    i__ <= i__1;
-                    ++i__)
+                 i__ <= i__1;
+                 ++i__)
             {
                 i__2 = abofdpos + i__ * ab_dim1;
                 tmp.r = ab[i__2].r;
@@ -533,7 +532,7 @@ int zhetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
         hous[1].i = 0.; // , expr subst
         work[1].r = 1.;
         work[1].i = 0.; // , expr subst
-    AOCL_DTL_TRACE_LOG_EXIT
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Main code start here. */
@@ -563,137 +562,135 @@ int zhetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
         ++thgrnb;
     }
     i__1 = *kd + 1;
-    zlacpy_("A", &i__1, n, &ab[ab_offset], ldab, &work[apos], &lda) ;
+    zlacpy_("A", &i__1, n, &ab[ab_offset], ldab, &work[apos], &lda);
     zlaset_("A", kd, n, &c_b1, &c_b1, &work[awpos], &lda);
     /* openMP parallelisation start here */
-    /* #if defined(_OPENMP) */
-    /* !$OMP PARALLEL PRIVATE( TID, THGRID, BLKLASTIND ) */
-    /* !$OMP$ PRIVATE( THED, I, M, K, ST, ED, STT, SWEEPID ) */
-    /* !$OMP$ PRIVATE( MYID, TTYPE, COLPT, STIND, EDIND ) */
-    /* !$OMP$ SHARED ( UPLO, WANTQ, INDV, INDTAU, HOUS, WORK) */
-    /* !$OMP$ SHARED ( N, KD, IB, NBTILES, LDA, LDV, INDA ) */
-    /* !$OMP$ SHARED ( STEPERCOL, THGRNB, THGRSIZ, GRSIZ, SHIFT ) */
-    /* !$OMP MASTER */
-    /* #endif */
-    /* main bulge chasing loop */
-    i__1 = thgrnb;
-    for (thgrid = 1;
-            thgrid <= i__1;
-            ++thgrid)
+#ifdef FLA_OPENMP_MULTITHREADING
+#pragma omp parallel private(tid, thgrid, blklastind) private(thed, i__, m, k, st, ed, stt, sweepid, myid, ttype, colpt, stind, edind) \
+    shared(uplo, wantq, indv, indtau, hous, work,                                                                                      \
+               n, kd, ib, nbtiles, lda, ldv, inda, stepercol, thgrnb, thgrsiz, grsiz, shift)
     {
-        stt = (thgrid - 1) * thgrsiz + 1;
-        /* Computing MIN */
-        i__2 = stt + thgrsiz - 1;
-        i__3 = *n - 1; // , expr subst
-        thed = fla_min(i__2,i__3);
-        i__2 = *n - 1;
-        for (i__ = stt;
-                i__ <= i__2;
-                ++i__)
+#pragma omp master
         {
-            ed = fla_min(i__,thed);
-            if (stt > ed)
+#endif
+            /* main bulge chasing loop */
+            i__1 = thgrnb;
+            for (thgrid = 1;
+                 thgrid <= i__1;
+                 ++thgrid)
             {
-                break;
-            }
-            i__3 = stepercol;
-            for (m = 1;
-                    m <= i__3;
-                    ++m)
-            {
-                st = stt;
-                i__4 = ed;
-                for (sweepid = st;
-                        sweepid <= i__4;
-                        ++sweepid)
+                stt = (thgrid - 1) * thgrsiz + 1;
+                /* Computing MIN */
+                i__2 = stt + thgrsiz - 1;
+                i__3 = *n - 1; // , expr subst
+                thed = fla_min(i__2, i__3);
+                i__2 = *n - 1;
+                for (i__ = stt;
+                     i__ <= i__2;
+                     ++i__)
                 {
-                    i__5 = grsiz;
-                    for (k = 1;
-                            k <= i__5;
-                            ++k)
+                    ed = fla_min(i__, thed);
+                    if (stt > ed)
                     {
-                        myid = (i__ - sweepid) * (stepercol * grsiz) + (m - 1) * grsiz + k;
-                        if (myid == 1)
-                        {
-                            ttype = 1;
-                        }
-                        else
-                        {
-                            ttype = myid % 2 + 2;
-                        }
-                        if (ttype == 2)
-                        {
-                            colpt = myid / 2 * *kd + sweepid;
-                            stind = colpt - *kd + 1;
-                            edind = fla_min(colpt,*n);
-                            blklastind = colpt;
-                        }
-                        else
-                        {
-                            colpt = (myid + 1) / 2 * *kd + sweepid;
-                            stind = colpt - *kd + 1;
-                            edind = fla_min(colpt,*n);
-                            if (stind >= edind - 1 && edind == *n)
-                            {
-                                blklastind = *n;
-                            }
-                            else
-                            {
-                                blklastind = 0;
-                            }
-                        }
-                        /* Call the kernel */
-                        /* #if defined(_OPENMP) */
-                        /* IF( TTYPE.NE.1 ) THEN */
-                        /* !$OMP TASK DEPEND(in:WORK(MYID+SHIFT-1)) */
-                        /* !$OMP$ DEPEND(in:WORK(MYID-1)) */
-                        /* !$OMP$ DEPEND(out:WORK(MYID)) */
-                        /* TID = OMP_GET_THREAD_NUM() */
-                        /* CALL ZHB2ST_KERNELS( UPLO, WANTQ, TTYPE, */
-                        /* $ STIND, EDIND, SWEEPID, N, KD, IB, */
-                        /* $ WORK ( INDA ), LDA, */
-                        /* $ HOUS( INDV ), HOUS( INDTAU ), LDV, */
-                        /* $ WORK( INDW + TID*KD ) ) */
-                        /* !$OMP END TASK */
-                        /* ELSE */
-                        /* !$OMP TASK DEPEND(in:WORK(MYID+SHIFT-1)) */
-                        /* !$OMP$ DEPEND(out:WORK(MYID)) */
-                        /* TID = OMP_GET_THREAD_NUM() */
-                        /* CALL ZHB2ST_KERNELS( UPLO, WANTQ, TTYPE, */
-                        /* $ STIND, EDIND, SWEEPID, N, KD, IB, */
-                        /* $ WORK ( INDA ), LDA, */
-                        /* $ HOUS( INDV ), HOUS( INDTAU ), LDV, */
-                        /* $ WORK( INDW + TID*KD ) ) */
-                        /* !$OMP END TASK */
-                        /* ENDIF */
-                        /* #else */
-                        zhb2st_kernels_(uplo, &wantq, &ttype, &stind, &edind, &sweepid, n, kd, &ib, &work[inda], &lda, & hous[indv], &hous[indtau], &ldv, &work[indw + tid * *kd]);
-                        /* #endif */
-                        if (blklastind >= *n - 1)
-                        {
-                            ++stt;
-                            break;
-                        }
-                        /* L140: */
+                        break;
                     }
-                    /* L130: */
+                    i__3 = stepercol;
+                    for (m = 1;
+                         m <= i__3;
+                         ++m)
+                    {
+                        st = stt;
+                        i__4 = ed;
+                        for (sweepid = st;
+                             sweepid <= i__4;
+                             ++sweepid)
+                        {
+                            i__5 = grsiz;
+                            for (k = 1;
+                                 k <= i__5;
+                                 ++k)
+                            {
+                                myid = (i__ - sweepid) * (stepercol * grsiz) + (m - 1) * grsiz + k;
+                                if (myid == 1)
+                                {
+                                    ttype = 1;
+                                }
+                                else
+                                {
+                                    ttype = myid % 2 + 2;
+                                }
+                                if (ttype == 2)
+                                {
+                                    colpt = myid / 2 * *kd + sweepid;
+                                    stind = colpt - *kd + 1;
+                                    edind = fla_min(colpt, *n);
+                                    blklastind = colpt;
+                                }
+                                else
+                                {
+                                    colpt = (myid + 1) / 2 * *kd + sweepid;
+                                    stind = colpt - *kd + 1;
+                                    edind = fla_min(colpt, *n);
+                                    if (stind >= edind - 1 && edind == *n)
+                                    {
+                                        blklastind = *n;
+                                    }
+                                    else
+                                    {
+                                        blklastind = 0;
+                                    }
+                                }
+                                /* Call the kernel */
+#ifdef FLA_OPENMP_MULTITHREADING
+                                if (ttype != 1)
+                                {
+#pragma omp task depend(in : work[myid + shift - 1]) \
+    depend(in : work[myid - 1])                      \
+    depend(out : work[myid])
+                                    {
+                                        tid = omp_get_thread_num();
+                                        zhb2st_kernels_(uplo, &wantq, &ttype, &stind, &edind, &sweepid, n, kd, &ib, &work[inda], &lda, &hous[indv], &hous[indtau], &ldv, &work[indw + tid * *kd]);
+                                    }
+#pragma omp taskwait
+                                }
+                                else
+                                {
+#pragma omp task depend(in : work[myid + shift - 1]) \
+    depend(out : work[myid])
+                                    {
+                                        tid = omp_get_thread_num();
+                                        zhb2st_kernels_(uplo, &wantq, &ttype, &stind, &edind, &sweepid, n, kd, &ib, &work[inda], &lda, &hous[indv], &hous[indtau], &ldv, &work[indw + tid * *kd]);
+                                    }
+#pragma omp taskwait
+                                }
+#else
+                        zhb2st_kernels_(uplo, &wantq, &ttype, &stind, &edind, &sweepid, n, kd, &ib, &work[inda], &lda, &hous[indv], &hous[indtau], &ldv, &work[indw + tid * *kd]);
+#endif
+                                if (blklastind >= *n - 1)
+                                {
+                                    ++stt;
+                                    break;
+                                }
+                                /* L140: */
+                            }
+                            /* L130: */
+                        }
+                        /* L120: */
+                    }
+                    /* L110: */
                 }
-                /* L120: */
+                /* L100: */
             }
-            /* L110: */
-        }
-        /* L100: */
-    }
-    /* #if defined(_OPENMP) */
-    /* !$OMP END MASTER */
-    /* !$OMP END PARALLEL */
-    /* #endif */
+#ifdef FLA_OPENMP_MULTITHREADING
+        } /* End OMP Master */
+    } /* End OMP Parallel */
+#endif
     /* Copy the diagonal from A to D. Note that D is REAL thus only */
     /* the Real part is needed, the imaginary part should be zero. */
     i__1 = *n;
     for (i__ = 1;
-            i__ <= i__1;
-            ++i__)
+         i__ <= i__1;
+         ++i__)
     {
         i__2 = dpos + (i__ - 1) * lda;
         d__[i__] = work[i__2].r;
@@ -705,8 +702,8 @@ int zhetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     {
         i__1 = *n - 1;
         for (i__ = 1;
-                i__ <= i__1;
-                ++i__)
+             i__ <= i__1;
+             ++i__)
         {
             i__2 = ofdpos + i__ * lda;
             e[i__] = work[i__2].r;
@@ -717,17 +714,17 @@ int zhetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     {
         i__1 = *n - 1;
         for (i__ = 1;
-                i__ <= i__1;
-                ++i__)
+             i__ <= i__1;
+             ++i__)
         {
             i__2 = ofdpos + (i__ - 1) * lda;
             e[i__] = work[i__2].r;
             /* L170: */
         }
     }
-    hous[1].r = (doublereal) lhmin;
+    hous[1].r = (doublereal)lhmin;
     hous[1].i = 0.; // , expr subst
-    work[1].r = (doublereal) lwmin;
+    work[1].r = (doublereal)lwmin;
     work[1].i = 0.; // , expr subst
     AOCL_DTL_TRACE_LOG_EXIT
     return 0;
