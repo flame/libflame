@@ -165,12 +165,12 @@ AR_OBJ_LIST_FILE := ar_obj_list
 # --- Determine the linker and related flags ---
 LINKER       := $(CC)
 ifeq (@fla_multithreading_model@, pthreads)
-LDFLAGS      := @fla_c_prof_flags@ @LDFLAGS@ @FLIBS@ -lpthread
+LDFLAGS      := @fla_c_prof_flags@ @LDFLAGS@ @FLIBS@ -lpthread -lstdc++
 else
 ifeq (@fla_multithreading_model@, openmp)
-LDFLAGS      := @fla_c_prof_flags@ @LDFLAGS@ @FLIBS@ @fla_c_openmp_flags@
+LDFLAGS      := @fla_c_prof_flags@ @LDFLAGS@ @FLIBS@ @fla_c_openmp_flags@ -lstdc++
 else
-LDFLAGS      := @fla_c_prof_flags@ @LDFLAGS@ @FLIBS@
+LDFLAGS      := @fla_c_prof_flags@ @LDFLAGS@ @FLIBS@ -lstdc++
 endif
 endif
 
