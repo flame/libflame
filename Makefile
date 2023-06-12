@@ -388,6 +388,7 @@ CFLAGS_NOOPT    := $(CFLAGS_NOOPT) $(INCLUDE_PATHS)
 CPPFLAGS        := $(CPPFLAGS) $(INCLUDE_PATHS)
 FFLAGS          := $(FFLAGS) $(INCLUDE_PATHS)
 CFLAGS_AVX      := $(CFLAGS_AVX) $(INCLUDE_PATHS)
+CFLAGS_AVX512   := $(CFLAGS_AVX512) $(INCLUDE_PATHS)
 
 #
 # --- Library object definitions -----------------------------------------------
@@ -567,6 +568,14 @@ else
 	@$(CC) $(CFLAGS_AVX) -c $< -o $@
 endif
 
+FLA_AVX512PATH=lapack/x86/avx512
+$(BASE_OBJ_PATH)/$(FLA_AVX512PATH)/%.o: $(SRC_PATH)/$(FLA_AVX512PATH)/%.c $(CONFIG_MK_FILE) $(HEADERS_TO_FLATTEN)
+ifeq ($(ENABLE_VERBOSE),yes)
+	$(CC) $(CFLAGS_AVX512) -c $< -o $@
+else
+	@echo "Compiling $<"
+	@$(CC) $(CFLAGS_AVX512) -c $< -o $@
+endif
 FLA_SLAMCH=base/flamec/util/lapack/mch/fla_slamch
 $(BASE_OBJ_PATH)/$(FLA_SLAMCH).o: $(SRC_PATH)/$(FLA_SLAMCH).c $(CONFIG_MK_FILE) $(HEADERS_TO_FLATTEN)
 ifeq ($(ENABLE_VERBOSE),yes)

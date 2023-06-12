@@ -57,9 +57,15 @@ extern integer FLA_LU_piv_z_var1_parallel( integer *m, integer *n, doublecomplex
 /* FLA_AMD_OPT enables the code which selects algorithm variants based on size */
 #define LAPACK_getrf_body_d(prefix)                                                    \
 extern fla_context global_context;                                                     \
-  if(global_context.is_avx2 && *m < FLA_DGETRF_SMALL_THRESH0 && *n < FLA_DGETRF_SMALL_THRESH0 )            \
+  if(*m <= FLA_DGETRF_SMALL_THRESH0 && *n <= FLA_DGETRF_SMALL_THRESH0)                 \
   {                                                                                    \
-    fla_lu_piv_small_d_avx2( m, n, buff_A, ldim_A, buff_p, info );                     \
+    FLA_LU_piv_small_d_var0( m, n, buff_A, ldim_A, buff_p, info);                      \  
+  }                                                                                    \
+  else if((global_context.is_avx512 && *m < FLA_DGETRF_SMALL_AVX512_THRESH0 && *n < FLA_DGETRF_SMALL_AVX512_THRESH0) || \
+     (global_context.is_avx2 && *m < FLA_DGETRF_SMALL_AVX2_THRESH0 && *n < FLA_DGETRF_SMALL_AVX2_THRESH0 )) \
+  {                                                                                    \
+    /* Calling vectorized code when avx2/avx512 supported architecture detected */     \
+    fla_dgetrf_small_simd( m, n, buff_A, ldim_A, buff_p, info );                       \
   }                                                                                    \
   else                                                                                 \
   {                                                                                    \

@@ -179,6 +179,10 @@ void fla_isa_init(fla_context *context)
     {
         context->is_avx2 = TRUE;
     }
+    if (alcpu_flag_is_available(ALC_E_FLAG_AVX512F))
+    {
+        context->is_avx512 = TRUE;
+    }
 }
 
 // -----------------------------------------------------------------------------

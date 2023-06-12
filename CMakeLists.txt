@@ -20,6 +20,7 @@ endif()
 
 message(STATUS "External blas library Path : ${CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH}")
 message(STATUS "External blas library name : ${EXT_BLAS_LIBNAME}")
+SET(LF_ISA_CONFIG "none" CACHE STRING "LibFlame Instruction set architecture Configuration")
 
 #gccopenmp
 if(WIN32)
@@ -36,6 +37,34 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 # Added for debugging purpose
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 
+if(WIN32)
+	set (PYTHON_EXE "python")
+else()
+	set (PYTHON_EXE "python3")
+endif()
+
+if ("${LF_ISA_CONFIG}" STREQUAL "")
+  message(FATAL_ERROR "Machine ISA configuration default set to 'none', valid values are AVX, AVX2, AVX512 and auto")
+endif()
+
+if (${LF_ISA_CONFIG} STREQUAL "auto")
+    set(AUTO_CONFIG_PY "${CMAKE_SOURCE_DIR}/build/auto_config.py")
+    # Run python script to find the architecture family name
+    execute_process(
+          COMMAND ${PYTHON_EXE} ${AUTO_CONFIG_PY}
+          RESULT_VARIABLE CMD_RESULT
+          OUTPUT_VARIABLE CMD_OUTPUT
+          OUTPUT_STRIP_TRAILING_WHITESPACE)
+    message( STATUS "Auto configuring the family :" ${CMD_OUTPUT})
+    if(${CMD_OUTPUT} STREQUAL "zen" OR ${CMD_OUTPUT} STREQUAL "zen2" OR ${CMD_OUTPUT} STREQUAL "zen3")
+      set(LF_ISA_CONFIG "AVX2") 
+    elseif(${CMD_OUTPUT} STREQUAL "zen4")
+      set(LF_ISA_CONFIG "AVX512")
+    else()
+      set(LF_ISA_CONFIG "none")
+    endif()
+endif ()
+message("LF_ISA_CONFIG selected:${LF_ISA_CONFIG}")
 #set AOCL Utilities library path values
 set(LIBAOCLUTILS_PROJECT "libaoclutils")
 set(LIBAOCLUTILS_INSTALL_DIR_NAME "install-aoclutils")
@@ -107,33 +136,14 @@ set_property(CACHE ENABLE_AOCL_DTL PROPERTY STRINGS TRACE_AND_LOG TRACE LOG OFF 
 
 message(STATUS "CMAKE_BUILD_TYPE : ${CMAKE_BUILD_TYPE}")
 if(WIN32)
-	set (ENABLE_WINDOWS_BUILD "Enables windows build " ON)
-	message(STATUS "ENABLE_WINDOWS_BUILD : ${ENABLE_WINDOWS_BUILD}")
-endif()
-
-SET(ENABLE_SIMD_FLAGS "AVX2" CACHE STRING "Set compiler SIMD flags")
-SET_PROPERTY(CACHE ENABLE_SIMD_FLAGS PROPERTY STRINGS none SSE2 AVX AVX2)
-
-message(STATUS "checking SIMD  ")
-if(WIN32)
-	message(STATUS "checking SIMD Windows : ${ENABLE_SIMD_FLAGS}")
-	if(${ENABLE_SIMD_FLAGS} MATCHES "AVX2")
-	add_definitions(/arch:AVX2)
-	elseif(${ENABLE_SIMD_FLAGS} MATCHES "AVX")
-	add_definitions(/arch:AVX)
-	elseif(${ENABLE_SIMD_FLAGS} MATCHES "SSE2")
-	add_definitions(/arch:SSE2)
-	endif()
-elseif(UNIX)
-	message(STATUS "checking SIMD on linux : ${ENABLE_SIMD_FLAGS}")
-	set(COMPILER_OPTIMIZATION_FLAGS	"-mtune=native -O3")
-
-	if(${ENABLE_SIMD_FLAGS} MATCHES "AVX2")
-		set(COMPILER_OPTIMIZATION_FLAGS	"${COMPILER_OPTIMIZATION_FLAGS} -mavx2 -mfma")
-	endif()
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COMPILER_OPTIMIZATION_FLAGS}")
-else()
-	message(STATUS "OS UNKNOWN CANNOT SET SIMD")
+    set (ENABLE_WINDOWS_BUILD "Enables windows build " ON)
+    message(STATUS "ENABLE_WINDOWS_BUILD : ${ENABLE_WINDOWS_BUILD}")
+    cmake_policy(SET CMP0091 NEW)
+    if(BUILD_SHARED_LIBS)
+       set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
+    else()
+       set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+    endif()
 endif()
 
 #Adding PIC flag and other flags
@@ -144,40 +154,32 @@ if(UNIX)
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COMPILER_DEBUG_FLAG} ${GCC_WARNING_FLAGS} ${COMPILER_LANGUAGE_FLAGS}")
 endif()
 
+message(STATUS "checking SIMD  ")
+if(WIN32)
+	if(${LF_ISA_CONFIG} MATCHES "AVX512")
+	add_definitions(/arch:AVX512)
+	elseif(${LF_ISA_CONFIG} MATCHES "AVX2" OR ${LF_ISA_CONFIG} MATCHES "AVX")
+	add_definitions(/arch:AVX2)
+	else()
+	message(STATUS "No ISA flag set")
+	endif()
+elseif(UNIX)
+	set(COMPILER_OPTIMIZATION_FLAGS	"-mtune=native -O3")
+	if(${LF_ISA_CONFIG} MATCHES "AVX512")
+		set(COMPILER_OPTIMIZATION_FLAGS	"${COMPILER_OPTIMIZATION_FLAGS} -mavx512f -mfma")
+	elseif(${LF_ISA_CONFIG} MATCHES "AVX2" OR ${LF_ISA_CONFIG} MATCHES "AVX")
+		set(COMPILER_OPTIMIZATION_FLAGS	"${COMPILER_OPTIMIZATION_FLAGS} -mavx2 -mfma")
+	else()
+		message(STATUS "No ISA flag set")
+	endif()
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COMPILER_OPTIMIZATION_FLAGS}")
+else()
+	message(STATUS "OS UNKNOWN CANNOT SET SIMD")
+endif()
 #Temporary hack for Clang. Enable -Wno-error=implicit-function-declaration
 #and -Wno-error=incompatible-function-pointer-types
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-error=implicit-function-declaration -Wno-error=incompatible-function-pointer-types")
-endif ()
-
-if(WIN32)
-	set_source_files_properties(
-src/lapack/x86/avx2/fla_dgeqrf_small_avx2.c
-src/lapack/x86/avx2/fla_dgetrf_avx2.c
-src/lapack/x86/avx2/fla_dhrot3_avx2.c
-src/lapack/x86/avx2/fla_drot_avx2.c
-src/lapack/x86/avx2/fla_dscal_ix1_avx2.c
-src/lapack/x86/avx2/fla_sger_avx2.c
-src/lapack/x86/avx2/fla_sscal_ix1_avx2.c
-src/lapack/x86/avx2/fla_zscal_ix1_avx2.c
-src/lapack/x86/avx2/fla_zgetrf_avx2.c
-src/lapack/x86/avx2/fla_zrot_avx2.c
-    PROPERTIES COMPILE_OPTIONS "/arch:AVX2"
-	)
-else()
-	set_source_files_properties(
-src/lapack/x86/avx2/fla_dgeqrf_small_avx2.c
-src/lapack/x86/avx2/fla_dgetrf_avx2.c
-src/lapack/x86/avx2/fla_dhrot3_avx2.c
-src/lapack/x86/avx2/fla_drot_avx2.c
-src/lapack/x86/avx2/fla_dscal_ix1_avx2.c
-src/lapack/x86/avx2/fla_sger_avx2.c
-src/lapack/x86/avx2/fla_sscal_ix1_avx2.c
-src/lapack/x86/avx2/fla_zscal_ix1_avx2.c
-src/lapack/x86/avx2/fla_zgetrf_avx2.c
-src/lapack/x86/avx2/fla_zrot_avx2.c
-    PROPERTIES COMPILE_OPTIONS "-mtune=native;-O3;-mavx2;-mfma"
-	)
 endif ()
 
 # Adding missing Macros
@@ -770,6 +772,7 @@ string (APPEND MK_HEADER_DIR_PATHS
 	" ${CMAKE_SOURCE_DIR}/src/lapack/util/app/qutinc/lnfc/flamec/"
 	" ${CMAKE_SOURCE_DIR}/src/lapack/x86/"
 	" ${CMAKE_SOURCE_DIR}/src/lapack/x86/avx2"
+	" ${CMAKE_SOURCE_DIR}/src/lapack/x86/avx512"
 	" ${CMAKE_SOURCE_DIR}/src/lapack/x86/front"
 	" ${CMAKE_SOURCE_DIR}/src/lapacke/LAPACKE/example/"
 	" ${CMAKE_SOURCE_DIR}/src/lapacke/LAPACKE/include/"
@@ -793,12 +796,6 @@ file(MAKE_DIRECTORY ${BASE_INC_PATH})
 set (BLIS1_TARGET_PATH "${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/blis1.h")
 set (BLIS1__H_SRC_PATH "${CMAKE_SOURCE_DIR}/src/base/flamec/blis/include/blis1.h" )
 set (BLIS_FLATTEN_HEADER "${CMAKE_SOURCE_DIR}/build/flatten-headers.py")
-
-if(WIN32)
-	set (PYTHON_EXE "python")
-else()
-	set (PYTHON_EXE "python3")
-endif()
 
 execute_process(
     COMMAND ${PYTHON_EXE} ${BLIS_FLATTEN_HEADER} "${C_COMMENT}" "${VERBOSE}"
@@ -861,6 +858,7 @@ include_directories(${CMAKE_SOURCE_DIR}/src/lapacke/LAPACKE/src)
 include_directories(${CMAKE_SOURCE_DIR}/src/lapacke/LAPACKE/utils)
 include_directories(${CMAKE_SOURCE_DIR}/src/lapack/x86/front)
 include_directories(${CMAKE_SOURCE_DIR}/src/lapack/x86/avx2)
+include_directories(${CMAKE_SOURCE_DIR}/src/lapack/x86/avx512)
 include_directories(${CMAKE_SOURCE_DIR}/src/lapack/fblas/front)
 include_directories(${CMAKE_SOURCE_DIR}/src/lapack/fblas/src)
 file(GLOB headers ${CMAKE_SOURCE_DIR}/*.h)
@@ -874,6 +872,11 @@ if(WIN32)
 	endif()
 endif()
 
+set(OBJECT_LIBRARIES 
+    $<TARGET_OBJECTS:AVX512_LU>
+    $<TARGET_OBJECTS:AVX2_LU>
+)
+
 if (BUILD_SHARED_LIBS)
 	if(WIN32)
 		set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
@@ -881,6 +884,7 @@ if (BUILD_SHARED_LIBS)
 	add_library("${PROJECT_NAME}" SHARED ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/blis1.h
                  ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLA_f2c.h
                  ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLAME.h
+                 ${OBJECT_LIBRARIES}
                  )
 	message(STATUS "Shared library PROJECT_NAME: ${PROJECT_NAME}")
 	target_compile_definitions("${PROJECT_NAME}" PUBLIC -DLIBFLAME_IS_BUILDING_LIBRARY)
@@ -890,6 +894,7 @@ else ()
 	add_library("${PROJECT_NAME}" STATIC ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/blis1.h
                  ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLA_f2c.h
                	 ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLAME.h
+                 ${OBJECT_LIBRARIES}
 		)
 
 	message(STATUS "Static library PROJECT_NAME: ${PROJECT_NAME}")

@@ -25,4 +25,7 @@ int fla_sscal(integer *n, real *alpha,
 int fla_sger(integer *m, integer *n, real *alpha,
              real *x, integer *incx, real *y, 
              integer *incy, real *a, integer *lda);
+int fla_dgetrf_small_simd(integer *m, integer *n,
+                     doublereal *a, integer *lda,
+                     integer *ipiv, integer *info);
 #endif

@@ -36,5 +36,7 @@ int fla_zrot_avx2(integer *n,
 int fla_zscal_avx2(integer *n, doublecomplex *alpha, doublecomplex *x, integer *incx);
 int fla_zscal_ix1_avx2(integer *n, doublecomplex *alpha,
                        doublecomplex *x);
+integer fla_dgetrf_small_avx2( integer *m, integer *n, doublereal *a, integer *lda, integer *ipiv, integer *info);
+void fla_lu_piv_small_d_update_tr_matrix_avx2(integer i_1, integer mi, integer ni, doublereal* acur, integer lda_t);
 #endif
 
