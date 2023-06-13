@@ -1,5 +1,5 @@
 /* ************************************************************************
- * Copyright (c) 2022 Advanced Micro Devices, Inc.
+ * Copyright (c) 2022-2023 Advanced Micro Devices, Inc. All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -101,9 +101,34 @@ typedef struct _fla_context
     FLA_Bool    is_fma;
     FLA_Bool    is_avx2;
     FLA_Bool    is_avx512;
+    FLA_Bool    libflame_mt; // num_threads is set using libFLAME environment variable or using OpenMP.
 } fla_context;
 
+#define FLA_CONTEXT_INITIALIZER \
+    { \
+      .num_threads = -1, \
+      .is_fma      = FALSE, \
+      .is_avx2     = FALSE, \
+      .is_avx512   = FALSE, \
+      .libflame_mt = FALSE, \
+    }
+
 extern fla_context global_context;
+
+typedef struct _fla_tl_context
+{
+    // num of threads
+    int num_threads;
+    FLA_Bool    libflame_mt; // num_threads is set using libFLAME environment variable or using OpenMP.
+} fla_tl_context;
+
+#define FLA_TL_CONTEXT_INITIALIZER \
+    { \
+      .num_threads = -1, \
+      .libflame_mt = FALSE, \
+    }
+
+extern TLS_CLASS_SPEC fla_tl_context tl_context;
 
 /*! \ingroup aux_module
  *  \brief Initialise various framework variables including

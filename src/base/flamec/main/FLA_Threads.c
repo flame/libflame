@@ -66,7 +66,7 @@ void FLA_Thread_optimum( API_ID  family, int *actual_num_threads)
             break;
     }
 
-    *actual_num_threads = global_context.num_threads;
+    *actual_num_threads = tl_context.num_threads;
 
     if(optimal_num_threads && (*actual_num_threads > optimal_num_threads))
         *actual_num_threads = optimal_num_threads;
