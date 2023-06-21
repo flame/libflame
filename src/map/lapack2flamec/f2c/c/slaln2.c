@@ -203,6 +203,12 @@
 /* > \ingroup realOTHERauxiliary */
 /* ===================================================================== */
 /* Subroutine */
+
+/* Set FP_contract to off as floating point contraction instructions */
+/* like fma is seen to lead precision issues in this function and */
+/* causing few netlib tests to fail */
+#pragma STDC FP_CONTRACT OFF
+
 int slaln2_(logical *ltrans, integer *na, integer *nw, real * smin, real *ca, real *a, integer *lda, real *d1, real *d2, real *b, integer *ldb, real *wr, real *wi, real *x, integer *ldx, real *scale, real *xnorm, integer *info)
 {
     /* Initialized data */
