@@ -14,6 +14,8 @@
 
 #ifdef FLA_ENABLE_HIP
 
+#include <hsa/hsa.h>
+#include <hsa/hsa_ext_amd.h>
 #include "hip/hip_runtime.h"
 #include "rocblas/rocblas.h"
 
@@ -22,6 +24,34 @@ static FLA_Bool flash_queue_enabled_hip  = FALSE;
 static FLA_Bool flash_malloc_managed_hip = FALSE;
 static dim_t    flash_queue_hip_n_blocks = 128;
 static rocblas_handle* handles;
+
+
+hsa_status_t family_query_hip( hsa_agent_t agent, void* data )
+/*----------------------------------------------------------------------------
+
+   family_query_hip
+
+----------------------------------------------------------------------------*/
+{
+   hsa_status_t s;
+   uint32_t family = 0;
+   s = hsa_agent_get_info( agent,
+                           ( hsa_agent_info_t ) HSA_AMD_AGENT_INFO_CHIP_ID,
+                           &family );
+   if ( s != HSA_STATUS_SUCCESS )
+   {
+      return s;
+   }
+
+   uint32_t* max = ( uint32_t* ) data;
+   if ( family > *max )
+   {
+      *max = family;
+   }
+
+   return s;
+}
+
 
 void FLASH_Queue_init_hip( void )
 /*----------------------------------------------------------------------------
@@ -51,6 +81,29 @@ void FLASH_Queue_init_hip( void )
    {
       handles[i] = NULL;
    }
+
+   // Figure out the maximum family of HSA agents (which includes CPU,
+   // hence use maximum)
+   // if the family identifies an APU, unconditionally enable the managed
+   // memory backend (since the backing memory is unified)
+   hsa_status_t s;
+   uint32_t max_family = 0;
+   s = hsa_iterate_agents ( &family_query_hip, &max_family );
+   if ( s != HSA_STATUS_SUCCESS )
+   {
+      return;
+   }
+   if ( max_family == 29856 )
+   {
+      FLASH_Queue_enable_hip( );
+      FLASH_Queue_enable_malloc_managed_hip( );
+   }
+   if ( max_family == 0 )
+   {
+      // error if only CPU devices found
+      fprintf( stderr, "Only CPU HSA agents found for HIP FLASH backend.\n" );
+   }
+
 
    return;
 }
