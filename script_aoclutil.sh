@@ -14,8 +14,16 @@ do
    DATA=$(echo $ARG | cut -f2 -d=)
 
    case "$VAR" in
-         LIBAOCLUTILS_GIT_TAG)           LIBAOCLUTILS_GIT_TAG=${DATA} ;;
-         LIBAOCLUTILS_GIT_URL)           LIBAOCLUTILS_GIT_URL=${DATA} ;;
+         LIBAOCLUTILS_GIT_TAG)          if [[ ! -z "${DATA}" ]]
+					then
+       						LIBAOCLUTILS_GIT_TAG=${DATA}
+					fi
+					;;
+         LIBAOCLUTILS_GIT_URL)          if [[ ! -z "${DATA}" ]]
+					then
+       						LIBAOCLUTILS_GIT_URL=${DATA}
+					fi
+					;;
          *)
    esac
 done

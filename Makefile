@@ -515,7 +515,7 @@ ifeq ($(MAKEFILE_FRAGMENTS_PRESENT),no)
 endif
 
 aoclutillib:
-	bash script_aoclutil.sh
+	bash script_aoclutil.sh LIBAOCLUTILS_GIT_URL=$(LIBAOCLUTILS_GIT_URL) LIBAOCLUTILS_GIT_TAG=$(LIBAOCLUTILS_GIT_TAG)
 	
 # --- Cosolidated header creation ---
 
