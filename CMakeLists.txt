@@ -1,6 +1,6 @@
 ##Copyright (C) 2023, Advanced Micro Devices, Inc.##
 
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.15.0)
 
 if(WIN32)
 	project(AOCL-LibFLAME-Win)
@@ -271,7 +271,6 @@ message(STATUS "Enabled ENABLE_F2C_DOTC : ${ENABLE_F2C_DOTC} ")
 message(STATUS "Enabled ENABLE_VOID_RETURN_COMPLEX_FUNCTION	: ${ENABLE_VOID_RETURN_COMPLEX_FUNCTION} ")
 message(STATUS "Enabled ENABLE_MULTITHREADING : ${ENABLE_MULTITHREADING} ")
 message(STATUS "Enabled MULTITHREADING_MODEL : ${MULTITHREADING_MODEL} ")
-message(STATUS "CMAKE_INSTALL_PREFIX : ${CMAKE_INSTALL_PREFIX}")
 
 if(ENABLE_MULTITHREADING)
     set (ENABLE_OPENMP TRUE)
@@ -866,8 +865,13 @@ include_directories(${CMAKE_SOURCE_DIR}/src/lapack/fblas/front)
 include_directories(${CMAKE_SOURCE_DIR}/src/lapack/fblas/src)
 file(GLOB headers ${CMAKE_SOURCE_DIR}/*.h)
 
-if(MSVC)
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MT ")
+if(WIN32)
+	cmake_policy(SET CMP0091 NEW)
+	if(BUILD_SHARED_LIBS)
+		set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
+	else()
+		set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+	endif()
 endif()
 
 if (BUILD_SHARED_LIBS)
@@ -891,6 +895,11 @@ else ()
 	message(STATUS "Static library PROJECT_NAME: ${PROJECT_NAME}")
 endif ()
 
+if(WIN32)
+	set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/libflame_install" CACHE STRING " " FORCE)
+endif()
+message(STATUS "CMAKE_INSTALL_PREFIX : ${CMAKE_INSTALL_PREFIX}")
+
 set(LIBFLAME_PUBLIC_HEADERS	"include/FLAME.h"
 				"src/lapacke/LAPACKE/include/lapacke_mangling.h"
 				"src/lapacke/LAPACKE/include/lapacke.h"
@@ -902,6 +911,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${LIBFLAME_PUBLI
 
 install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
 								ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+								RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
 								PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
 
 #Logic to create AOCL-libFLAME library name according to the linking AOCL-BLIS library name.
