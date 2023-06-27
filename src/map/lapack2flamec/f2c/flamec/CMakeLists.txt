@@ -2,5 +2,6 @@
 add_subdirectory(front)
 add_subdirectory(gelq)
 add_subdirectory(geqr)
+add_subdirectory(hegs)
 add_subdirectory(hetd)
 add_subdirectory(spffrt)
