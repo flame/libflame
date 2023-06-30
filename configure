@@ -6158,7 +6158,7 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} language flags... "
 			fla_c_lang_flags='-std=c99 -Wall -Wno-unused-function -Wno-error=implicit-function-declaration -Wno-parentheses -Wfatal-errors'
 		;;
 				clang)
-			fla_c_lang_flags='-Wall -Wno-unused-function -Wno-error=implicit-function-declaration -Wno-parentheses -Wfatal-errors'
+			fla_c_lang_flags='-Wall -Wno-unused-function -Wno-error=implicit-function-declaration -Wno-error=incompatible-function-pointer-types -Wno-parentheses -Wfatal-errors'
 		;;
 				icc)
 			fla_c_lang_flags='-std=c99'
