@@ -7430,7 +7430,7 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} warning flags... " 
 				fla_c_warning_flags='-Wall -Wno-comment -Wno-unused-function -Wno-error=implicit-function-declaration -Wno-parentheses -Wfatal-errors'
 			;;
 						clang)
-				fla_c_warning_flags='-Wall -Wno-comment -Wno-unused-function -Wno-error=implicit-function-declaration -Wno-parentheses -Wfatal-errors'
+				fla_c_warning_flags='-Wall -Wno-comment -Wno-unused-function -Wno-error=implicit-function-declaration -Wno-error=incompatible-function-pointer-types -Wno-parentheses -Wfatal-errors'
 			;;
 						icc)
 				fla_c_warning_flags='-Wall -wd869,981,1418,1419,1572'
