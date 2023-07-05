@@ -971,6 +971,16 @@ if(NOT BUILD_SHARED_LIBS)
 	endif ()
 endif()
 
+if (ENABLE_AOCL_BLAS)
+	message(STATUS "AOCL-BLAS library linking option selected")
+  	include(cmake/find_aocl-blas.cmake)
+  	add_definitions(-DFLA_ENABLE_AOCL_BLAS)
+  	set(FLA_ENABLE_AOCL_BLAS 1)
+	message(STATUS "Enabled FLA_ENABLE_AOCL_BLAS flag")
+  	target_link_libraries(${PROJECT_NAME} ${BLAS_LIBRARY})
+  	target_include_directories(${PROJECT_NAME} PUBLIC ${BLAS_INCLUDE_DIR}) 
+endif ()
+
 #AOCLUtils library path handling
 #If user has provided the library path, use it. 
 if(LIBAOCLUTILS_LIBRARY_PATH AND LIBAOCLUTILS_INCLUDE_PATH)

@@ -34,9 +34,24 @@
     compile library using following command. This will generate libflame.a/libflame.so library in the lib directory
         cmake --build . -j OR make -j
 
+Linking with AOCL-BLAS
+------------------------------------
+AOCL-LAPACK can be linked with any Netlib BLAS compliant library when compiled with standard cmake options above. However, AOCL-LAPACK provides an option to explicitly to link with AOCL-BLAS library at compile time. This option helps achieve better performance for certain APIs on AMD "Zen" CPUs by invoking lower level AOCL-BLAS APIs directly. To force AOCL-LAPACK to use AOCL-BLAS library, provide option ENABLE_AOCL_BLAS in cmake configuration
+
+$ cmake -DENABLE_AMD_AOCC_FLAGS=ON -DENABLE_AOCL_BLAS=ON ...
+
+The path of AOCL-BLAS library can be provided in one of the following methods
+1. Set "AOCL_ROOT" environment variable to the root path where AOCL-BLAS library is located. 
+$ export AOCL_ROOT=<path to AOCL-BLAS>
+
+2. Specify root path of AOCL-BLAS library through cmake option "AOCL_ROOT"
+$ cmake -DENABLE_AMD_AOCC_FLAGS=ON -DENABLE_AOCL_BLAS=ON -DAOCL_ROOT=<path to AOCL-BLAS> ...
+
+The path specified in AOCL_ROOT must have "include" directory and a "lib" directory that contains the necesaary header files and AOCL-BLAS binary respectively.
+
 Linking with AOCL Utilities library
 ------------------------------------
-libflame requires AOCL Utilities library "libaoclutils" for certain functions including CPU architecture detection at runtime. The libflame CMake build system, by default, automatically links with libaoclutils library by downloading the source of libaoclutils from AMD GitHub, compiling it and linking/merging with libflame library. However, user can provide an external path for libaoclutils binary and header files via separate flags, 'LIBAOCLUTILS_LIBRARY_PATH' and 'LIBAOCLUTILS_INCLUDE_PATH' respectively. In this scenario, CMake will use the user provided library and does not download libaoclutils source. Following is a sample command for the same
+AOCL-LAPACK requires AOCL Utilities library "libaoclutils" for certain functions including CPU architecture detection at runtime. The libflame CMake build system, by default, automatically links with libaoclutils library by downloading the source of libaoclutils from AMD GitHub, compiling it and linking/merging with libflame library. However, user can provide an external path for libaoclutils binary and header files via separate flags, 'LIBAOCLUTILS_LIBRARY_PATH' and 'LIBAOCLUTILS_INCLUDE_PATH' respectively. In this scenario, CMake will use the user provided library and does not download libaoclutils source. Following is a sample command for the same
  
 $ cmake ../ -DENABLE_AMD_FLAGS=ON -DCMAKE_INSTALL_PREFIX=<path> -DLIBAOCLUTILS_LIBRARY_PATH=<path/to/libaoclutils/library> -DLIBAOCLUTILS_INCLUDE_PATH=<path/to/libaoclutils/header/files>
 

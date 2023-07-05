@@ -1,6 +1,10 @@
 /* ../netlib/dgetrs.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
+
 static integer c__1 = 1;
 static doublereal c_b12 = 1.;
 static integer c_n1 = -1;
@@ -119,9 +123,11 @@ int dgetrs_(char *trans, integer *n, integer *nrhs, doublereal *a, integer *lda,
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1;
     /* Local variables */
+#ifndef FLA_ENABLE_AOCL_BLAS
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
     int dtrsm_(char *, char *, char *, char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *), xerbla_( char *, integer *), dlaswp_(integer *, doublereal *, integer *, integer *, integer *, integer *, integer *);
+#endif
     logical notran;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -154,8 +160,16 @@ int dgetrs_(char *trans, integer *n, integer *nrhs, doublereal *a, integer *lda,
     b -= b_offset;
     /* Function Body */
     *info = 0;
+
+#if FLA_ENABLE_AOCL_BLAS
+    notran = lsame_(trans, "N", 1, 1);
+
+    if (! notran && ! lsame_(trans, "T", 1, 1) && ! lsame_( trans, "C", 1, 1))
+#else
     notran = lsame_(trans, "N");
+
     if (! notran && ! lsame_(trans, "T") && ! lsame_( trans, "C"))
+#endif
     {
         *info = -1;
     }
@@ -178,7 +192,11 @@ int dgetrs_(char *trans, integer *n, integer *nrhs, doublereal *a, integer *lda,
     if (*info != 0)
     {
         i__1 = -(*info);
+#if FLA_ENABLE_AOCL_BLAS
+        xerbla_("DGETRS", &i__1, 6);
+#else
         xerbla_("DGETRS", &i__1);
+#endif
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -188,6 +206,7 @@ int dgetrs_(char *trans, integer *n, integer *nrhs, doublereal *a, integer *lda,
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
+
     if (notran)
     {
         /* Solve A * X = B. */

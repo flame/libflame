@@ -163,7 +163,7 @@ typedef unsigned __int64 uint64_t;
 typedef int64_t integer;
 typedef uint64_t uinteger;
 #else
-typedef int integer;
+typedef int32_t integer;
 typedef unsigned long int uinteger;
 #endif
 
@@ -203,11 +203,7 @@ typedef short ftnlen;
 typedef short ftnint;
 #else
 typedef long int flag;
- #ifndef BLIS1_FROM_LIBFLAME
-   #define ftnlen integer
- #else
-   typedef long int ftnlen;
- #endif
+typedef integer ftnlen;
 typedef long int ftnint;
 #endif
 
