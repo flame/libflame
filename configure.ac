@@ -508,6 +508,9 @@ FLA_CHECK_ENABLE_DEBUG
 dnl Set the appropriate compiler profiling flags, if requested.
 FLA_CHECK_ENABLE_PROFILING
 
+dnl Set the appropriate compiler flags for LTO, if requested.
+FLA_CHECK_ENABLE_LTO
+
 dnl Observe whether we're going to perform internal error checking.
 FLA_CHECK_ENABLE_INTERNAL_ERROR_CHECKING
 

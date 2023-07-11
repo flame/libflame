@@ -648,6 +648,7 @@ fla_enable_blis_use_of_fla_malloc
 fla_enable_memory_leak_counter
 fla_internal_error_checking_level
 fla_enable_internal_error_checking
+fla_enable_lto
 fla_enable_compiler_profiling
 fla_c_prof_flags
 fla_enable_compiler_debug
@@ -794,6 +795,7 @@ enable_optimizations
 enable_warnings
 enable_debug
 enable_profiling
+enable_lto
 enable_internal_error_checking
 enable_memory_leak_counter
 enable_blis_use_of_fla_malloc
@@ -1588,6 +1590,7 @@ Optional Features:
                           default.)
   --enable-profiling      Use the appropriate profiling flag (usually -pg)
                           when compiling C source code. (Disabled by default.)
+  --enable-lto            Enable LTO for compilation. (Disabled by default.)
   --enable-internal-error-checking=level
                           Enable various internal runtime checks of function
                           parameters and object properties to prevent
@@ -7867,6 +7870,57 @@ $as_echo "$fla_c_prof_flags" >&6; }
 
 
 
+
+
+
+
+
+
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested to enable LTO" >&5
+$as_echo_n "checking whether user requested to enable LTO... " >&6; }
+
+				# Check whether --enable-lto was given.
+if test "${enable_lto+set}" = set; then :
+  enableval=$enable_lto;
+				if test "$enableval" = "no" ; then
+
+						fla_enable_lto=no
+
+		elif test "$enableval" = "yes" ; then
+
+						fla_enable_lto=yes
+		else
+
+												as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_LTO!" "$LINENO" 5
+		fi
+
+else
+
+						fla_enable_lto=no
+
+
+fi
+
+
+		if   test "$fla_enable_lto" = "yes" ; then
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+
+$as_echo "#define FLA_ENABLE_LTO 1" >>confdefs.h
+
+
+	elif test "$fla_enable_lto" = "no" ; then
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+	else
+
+				as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_LTO!" "$LINENO" 5
+
+	fi
 
 
 

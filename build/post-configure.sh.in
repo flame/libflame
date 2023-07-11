@@ -108,6 +108,8 @@ echo "   C compiler debug flags....................... : @fla_c_debug_flags@"
 echo "Enable compiler profiling symbols............... : @fla_enable_compiler_profiling@"
 echo "   C compiler profiling flags................... : @fla_c_prof_flags@"
 
+echo "Enable LTO...................................... : @fla_enable_lto@"
+
 echo ""
 echo "User-specified CFLAGS (prepended)............... : @fla_userdef_cflags@"
 
