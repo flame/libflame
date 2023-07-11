@@ -2914,18 +2914,16 @@ void FLASH_Queue_flush_block_hip( FLA_Obj obj, int thread, void *arg )
    // Locate the position of the block on the HIP device.
    for ( k = 0; k < hip_n_blocks; k++ )
       if ( obj.base == args->hip[thread * hip_n_blocks + k].obj.base )
+      {
+         // The block is owned by the HIP device.
+	 // Save the block that will be flushed.
+         hip_obj = args->hip[thread * hip_n_blocks + k];
+
+         // If the block is dirty, then flush it.
+         if ( hip_obj.obj.base != NULL && !hip_obj.clean )
+            transfer = TRUE;
          break;
-
-   // The block is owned by the HIP device.
-   if ( k < hip_n_blocks )
-   {
-      // Save the block that will be flushed.
-      hip_obj = args->hip[thread * hip_n_blocks + k];
-
-      // If the block is dirty, then flush it.
-      if ( hip_obj.obj.base != NULL && !hip_obj.clean )
-         transfer = TRUE;
-   }
+      }
 
 #ifdef FLA_ENABLE_MULTITHREADING
    FLA_RWLock_release( &(args->hip_lock[thread]) ); // G ***
@@ -2945,14 +2943,12 @@ void FLASH_Queue_flush_block_hip( FLA_Obj obj, int thread, void *arg )
    // Locate the position of the block on the HIP device.
    for ( k = 0; k < hip_n_blocks; k++ )
       if ( obj.base == args->hip[thread * hip_n_blocks + k].obj.base )
+      {
+         // Update the bits for the flushed block.
+         args->hip[thread * hip_n_blocks + k].clean   = TRUE;
+         args->hip[thread * hip_n_blocks + k].request = FALSE;
          break;
-
-   if ( k < hip_n_blocks )
-   {
-      // Update the bits for the flushed block.
-      args->hip[thread * hip_n_blocks + k].clean   = TRUE;
-      args->hip[thread * hip_n_blocks + k].request = FALSE;
-   }
+      }
 
 #ifdef FLA_ENABLE_MULTITHREADING
    FLA_RWLock_release( &(args->hip_lock[thread]) ); // G ***
