@@ -74,6 +74,9 @@
    of lapack with lapack2flame or lapack2flash. */
 #undef FLA_ENABLE_LEGACY_LAPACK
 
+/* Determines whether LTO-specific blocks of code should be compiled. */
+#undef FLA_ENABLE_LTO
+
 /* Determines whether memory is aligned to user-requested boundaries. */
 #undef FLA_ENABLE_MEMORY_ALIGNMENT
 

@@ -177,5 +177,11 @@ LDFLAGS      := -L/opt/rocm/lib -lrocsolver -lrocblas -lamdhip64 -lhsa-runtime64
 endif
 
 
+# --- Enable LTO if requested ---
+ifeq (@fla_enable_lto@, yes)
+CFLAGS       := -flto -fno-semantic-interposition $(CFLAGS)
+LDFLAGS      := -flto -fno-semantic-interposition $(LDFLAGS)
+endif
+
 # end of ifndef CONFIG_MK_INCLUDED conditional block
 endif
