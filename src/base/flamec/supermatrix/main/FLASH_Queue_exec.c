@@ -73,7 +73,7 @@ typedef struct FLASH_Queue_variables
 {
    // A lock on the global task counter.  
    // Needed only when multithreading is enabled.
-   FLA_Lock     all_lock;
+   FLA_Lock*    all_lock;
 
    // A lock that protects the thread's waiting queue.
    // Needed only when multithreading is enabled.
@@ -174,10 +174,10 @@ void FLASH_Queue_exec( void )
    dim_t        block_size = FLASH_Queue_get_block_size();
    double       dtime;
 
-   FLA_Lock*    run_lock;
-   FLA_Lock*    dep_lock;
-   FLA_Lock*    war_lock;
-   FLA_Lock*    cac_lock;
+   FLA_Lock*    run_lock = NULL;
+   FLA_Lock*    dep_lock = NULL;
+   FLA_Lock*    war_lock = NULL;
+   FLA_Lock*    cac_lock = NULL;
 
    FLA_Obj*     cache;
    FLA_Obj*     prefetch;
@@ -195,7 +195,7 @@ void FLASH_Queue_exec( void )
 
 #ifdef FLA_ENABLE_HIP
 #ifdef FLA_ENABLE_MULTITHREADING
-   FLA_RWLock*    hip_lock;
+   FLA_RWLock*    hip_lock = NULL;
 #endif
    FLA_Obj_hip* hip;
    FLA_Obj_hip* victim;
@@ -272,37 +272,40 @@ void FLASH_Queue_exec( void )
    args.n_caches = n_caches;
 
 #ifdef FLA_ENABLE_MULTITHREADING
-   // Allocate memory for array of locks.
-   run_lock = ( FLA_Lock* ) FLA_malloc( n_queues  * sizeof( FLA_Lock ) );
-   dep_lock = ( FLA_Lock* ) FLA_malloc( n_threads * sizeof( FLA_Lock ) );
-   war_lock = ( FLA_Lock* ) FLA_malloc( n_threads * sizeof( FLA_Lock ) );
-   cac_lock = ( FLA_Lock* ) FLA_malloc( n_caches  * sizeof( FLA_Lock ) );
-
-   args.run_lock = run_lock;
-   args.dep_lock = dep_lock;
-   args.war_lock = war_lock;
-   args.cac_lock = cac_lock;
-
-   // Initialize the all lock.
-   FLA_Lock_init( &(args.all_lock) );
-   
-   // Initialize the run lock for thread i.
-   for ( i = 0; i < n_queues; i++ )
+   // If needed: allocate memory for locks and initialize.
+   if ( n_threads > 1 || n_queues > 1 || n_caches > 1 )
    {
-      FLA_Lock_init( &(args.run_lock[i]) );
+      args.all_lock = ( FLA_Lock* ) FLA_malloc( sizeof( FLA_Lock ) );
+      FLA_Lock_init( args.all_lock );
+      run_lock = ( FLA_Lock* ) FLA_malloc( n_queues  * sizeof( FLA_Lock ) );
+      args.run_lock = run_lock;
+      for ( i = 0; i < n_queues; i++ )
+      {
+         FLA_Lock_init( &(args.run_lock[i]) );
+      }
+      dep_lock = ( FLA_Lock* ) FLA_malloc( n_threads * sizeof( FLA_Lock ) );
+      war_lock = ( FLA_Lock* ) FLA_malloc( n_threads * sizeof( FLA_Lock ) );
+      args.dep_lock = dep_lock;
+      args.war_lock = war_lock;
+      for ( i = 0; i < n_threads; i++ )
+      {
+         FLA_Lock_init( &(args.dep_lock[i]) );
+         FLA_Lock_init( &(args.war_lock[i]) );
+      }
+      cac_lock = ( FLA_Lock* ) FLA_malloc( n_caches  * sizeof( FLA_Lock ) );
+      args.cac_lock = cac_lock;
+      for ( i = 0; i < n_caches; i++ )
+      {
+         FLA_Lock_init( &(args.cac_lock[i]) );
+      }
    }
-
-   // Initialize the dep and war locks for thread i.
-   for ( i = 0; i < n_threads; i++ )
+   else
    {
-      FLA_Lock_init( &(args.dep_lock[i]) );
-      FLA_Lock_init( &(args.war_lock[i]) );
-   }
-
-   // Initialize the cac locks for each cache.
-   for ( i = 0; i < n_caches; i++ )
-   {
-      FLA_Lock_init( &(args.cac_lock[i]) );
+      args.all_lock = NULL;
+      args.run_lock = NULL;
+      args.dep_lock = NULL;
+      args.war_lock = NULL;
+      args.cac_lock = NULL;
    }
 #endif
 
@@ -372,12 +375,16 @@ void FLASH_Queue_exec( void )
 
 #ifdef FLA_ENABLE_HIP
 #ifdef FLA_ENABLE_MULTITHREADING
-   // Allocate and initialize the hip locks.
-   hip_lock = ( FLA_RWLock* ) FLA_malloc( n_threads * sizeof( FLA_RWLock ) );
-   args.hip_lock = hip_lock;
-
-   for ( i = 0; i < n_threads; i++ )
-      FLA_RWLock_init( &(args.hip_lock[i]) );
+   if ( n_threads > 1 )
+   {
+      // Allocate and initialize the hip locks.
+      hip_lock = ( FLA_RWLock* ) FLA_malloc( n_threads * sizeof( FLA_RWLock ) );
+      args.hip_lock = hip_lock;
+      for ( i = 0; i < n_threads; i++ )
+         FLA_RWLock_init( &(args.hip_lock[i]) );
+   }
+   else
+      args.hip_lock = NULL;
 #endif
    // Allocate and initialize HIP software cache.
    hip = ( FLA_Obj_hip* ) FLA_malloc( hip_n_blocks * n_threads * sizeof( FLA_Obj_hip ) );
@@ -425,7 +432,7 @@ void FLASH_Queue_exec( void )
 
 #ifdef FLA_ENABLE_MULTITHREADING   
    // Destroy the locks.
-   FLA_Lock_destroy( &(args.all_lock) );
+   FLA_Lock_destroy( args.all_lock );
 
    for ( i = 0; i < n_queues; i++ )
    {
@@ -444,10 +451,11 @@ void FLASH_Queue_exec( void )
    }
 
    // Deallocate memory.
-   FLA_free( run_lock );
-   FLA_free( dep_lock );
-   FLA_free( war_lock );
-   FLA_free( cac_lock );
+   if ( args.all_lock != NULL ) FLA_free( args.all_lock );
+   if ( run_lock != NULL ) FLA_free( run_lock );
+   if ( dep_lock != NULL ) FLA_free( dep_lock );
+   if ( war_lock != NULL ) FLA_free( war_lock );
+   if ( cac_lock != NULL ) FLA_free( cac_lock );
 #endif
 
    FLA_free( cache );
@@ -469,7 +477,7 @@ void FLASH_Queue_exec( void )
 #ifdef FLA_ENABLE_MULTITHREADING
    for ( i = 0; i < n_threads; i++ )
       FLA_RWLock_destroy( &(args.hip_lock[i]) );
-   FLA_free( hip_lock );
+   if ( hip_lock != NULL ) FLA_free( hip_lock );
 #endif
    FLA_free( hip );
    FLA_free( victim );
@@ -3334,7 +3342,7 @@ void* FLASH_Queue_exec_parallel_function( void* arg )
          }
       }
 
-      FLA_Lock_acquire( &(args->all_lock) ); // A ***
+      FLA_Lock_acquire( args->all_lock ); // A ***
 
       // Increment program counter.
       if ( available && committed )
@@ -3344,7 +3352,7 @@ void* FLASH_Queue_exec_parallel_function( void* arg )
       if ( args->pc >= n_tasks )
          condition = FALSE;
       
-      FLA_Lock_release( &(args->all_lock) ); // A ***
+      FLA_Lock_release( args->all_lock ); // A ***
    }
 
 #ifdef FLA_ENABLE_GPU

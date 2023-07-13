@@ -32,6 +32,11 @@ void FLA_Lock_init( FLA_Lock* fla_lock_ptr )
 
 ----------------------------------------------------------------------------*/
 {
+  if ( fla_lock_ptr == NULL )
+  {
+     fprintf( stderr, "Lock pointer NULL in init.\n" );
+     return;
+  }
 #if   FLA_MULTITHREADING_MODEL == FLA_OPENMP
   omp_init_lock( &(fla_lock_ptr->lock) );
 #elif FLA_MULTITHREADING_MODEL == FLA_PTHREADS
@@ -47,6 +52,7 @@ void FLA_Lock_acquire( FLA_Lock* fla_lock_ptr )
 
 ----------------------------------------------------------------------------*/
 {
+  if ( fla_lock_ptr == NULL ) return;
 #if   FLA_MULTITHREADING_MODEL == FLA_OPENMP
   omp_set_lock( &(fla_lock_ptr->lock) );
 #elif FLA_MULTITHREADING_MODEL == FLA_PTHREADS
@@ -62,6 +68,7 @@ void FLA_Lock_release( FLA_Lock* fla_lock_ptr )
 
 ----------------------------------------------------------------------------*/
 {
+  if ( fla_lock_ptr == NULL ) return;
 #if   FLA_MULTITHREADING_MODEL == FLA_OPENMP
   omp_unset_lock( &(fla_lock_ptr->lock) );
 #elif FLA_MULTITHREADING_MODEL == FLA_PTHREADS
@@ -77,6 +84,7 @@ void FLA_Lock_destroy( FLA_Lock* fla_lock_ptr )
 
 ----------------------------------------------------------------------------*/
 {
+  if ( fla_lock_ptr == NULL ) return;
 #if   FLA_MULTITHREADING_MODEL == FLA_OPENMP
   omp_destroy_lock( &(fla_lock_ptr->lock) );
 #elif FLA_MULTITHREADING_MODEL == FLA_PTHREADS
@@ -92,6 +100,11 @@ void FLA_RWLock_init( FLA_RWLock* fla_lock_ptr )
 
 ----------------------------------------------------------------------------*/
 {
+  if ( fla_lock_ptr == NULL )
+  {
+     fprintf( stderr, "RWLock pointer NULL in init.\n" );
+     return;
+  }
 #if   FLA_MULTITHREADING_MODEL == FLA_OPENMP
   omp_init_lock( &(fla_lock_ptr->lock) );
 #elif FLA_MULTITHREADING_MODEL == FLA_PTHREADS
@@ -107,6 +120,7 @@ void FLA_RWLock_write_acquire( FLA_RWLock* fla_lock_ptr )
 
 ----------------------------------------------------------------------------*/
 {
+  if ( fla_lock_ptr == NULL ) return;
 #if   FLA_MULTITHREADING_MODEL == FLA_OPENMP
   omp_set_lock( &(fla_lock_ptr->lock) );
 #elif FLA_MULTITHREADING_MODEL == FLA_PTHREADS
@@ -122,6 +136,7 @@ void FLA_RWLock_read_acquire( FLA_RWLock* fla_lock_ptr )
 
 ----------------------------------------------------------------------------*/
 {
+  if ( fla_lock_ptr == NULL ) return;
 #if   FLA_MULTITHREADING_MODEL == FLA_OPENMP
   omp_set_lock( &(fla_lock_ptr->lock) );
 #elif FLA_MULTITHREADING_MODEL == FLA_PTHREADS
@@ -137,6 +152,7 @@ void FLA_RWLock_release( FLA_RWLock* fla_lock_ptr )
 
 ----------------------------------------------------------------------------*/
 {
+  if ( fla_lock_ptr == NULL ) return;
 #if   FLA_MULTITHREADING_MODEL == FLA_OPENMP
   omp_unset_lock( &(fla_lock_ptr->lock) );
 #elif FLA_MULTITHREADING_MODEL == FLA_PTHREADS
@@ -152,6 +168,7 @@ void FLA_RWLock_destroy( FLA_RWLock* fla_lock_ptr )
 
 ----------------------------------------------------------------------------*/
 {
+  if ( fla_lock_ptr == NULL ) return;
 #if   FLA_MULTITHREADING_MODEL == FLA_OPENMP
   omp_destroy_lock( &(fla_lock_ptr->lock) );
 #elif FLA_MULTITHREADING_MODEL == FLA_PTHREADS
