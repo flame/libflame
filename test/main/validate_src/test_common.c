@@ -2436,7 +2436,7 @@ void print_matrix(char* desc, integer datatype, integer M, integer N, void* A, i
             {
                 for( j = 0; j < N; j++ )
                 {
-                    printf(" %f", ((float *)A)[i + j * lda]);
+                    printf(" %e", ((float *)A)[i + j * lda]);
                 }
                 printf( "\n" );
             }
@@ -2448,7 +2448,7 @@ void print_matrix(char* desc, integer datatype, integer M, integer N, void* A, i
             {
                 for( j = 0; j < N; j++ )
                 {
-                    printf(" %f", ((double *)A)[i + j * lda]);
+                    printf(" %e", ((double *)A)[i + j * lda]);
                 }
                 printf( "\n" );
             }
@@ -2460,7 +2460,7 @@ void print_matrix(char* desc, integer datatype, integer M, integer N, void* A, i
             {
                 for( j = 0; j < N; j++ )
                 {
-                    printf(" (%f + j %f)", ((scomplex *)A)[i + j * lda].real, ((scomplex *)A)[i + j * lda].imag);
+                    printf(" (%e + j %e)", ((scomplex *)A)[i + j * lda].real, ((scomplex *)A)[i + j * lda].imag);
                 }
                 printf( "\n" );
             }
@@ -2472,7 +2472,7 @@ void print_matrix(char* desc, integer datatype, integer M, integer N, void* A, i
             {
                 for( j = 0; j < N; j++ )
                 {
-                    printf(" (%f + j %f)", ((dcomplex *)A)[i + j * lda].real, ((scomplex *)A)[i + j * lda].imag);
+                    printf(" (%e + j %e)", ((dcomplex *)A)[i + j * lda].real, ((scomplex *)A)[i + j * lda].imag);
                 }
                 printf( "\n" );
             }

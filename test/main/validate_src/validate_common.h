@@ -351,4 +351,24 @@ void validate_gehrd(integer n,
     double* residual,
     integer *info);
 
+void validate_rot(integer datatype,
+    integer n,
+    void *cx,
+    void *cx_test,
+    integer incx,
+    void *cy,
+    void *cy_test,
+    integer incy,
+    void *c,
+    void *s,
+    double* residual);
+
+void validate_lartg(integer datatype,
+    void *f,
+    void *g,
+    void *r,
+    void *c,
+    void *s,
+    double* residual);
+
 #endif // VALIDATE_COMMON_H

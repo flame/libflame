@@ -68,6 +68,8 @@
 #define EIG_SYM        (2)
 #define EIG_NSYM       (3)
 #define SVD            (4)
+#define AUX            (5)
+
 
 //pass 1 to test  standard AOCL_FLA_PROGRESS fucntion,
 //pass 2 to test  register callback function
@@ -363,6 +365,30 @@ typedef struct SVD_paramlist_t
 
 }SVD_paramlist;
 
+/* struct to hold AUX parameters */
+typedef struct AUX_paramlist_t
+{
+    integer num_ranges; // number of ranges to run
+    integer m_range_start;
+    integer m_range_end;
+    integer m_range_step_size;
+    integer n_range_start;
+    integer n_range_end;
+    integer n_range_step_size;
+    integer lda; // Leading dimension of Array A. LDA >= fla_max(1, n)
+    integer incx; // The increment between successive values of CX
+    integer incy; // The increment between successive values of CY
+    integer num_repeats;
+    integer num_tests;
+    integer num_data_types;
+    integer data_types[MAX_NUM_DATATYPES];
+    char data_types_char[MAX_NUM_DATATYPES];
+    integer matrix_layout; //  storage layout LAPACK_ROW_MAJOR or LAPACK_COL_MAJOR
+    /* Thresholds for the APIs  */
+    float aux_threshold; // threshold for the aux API
+
+}AUX_paramlist;
+
 
 typedef struct
 {
@@ -380,6 +406,7 @@ typedef struct
     struct EIG_Non_symmetric_paramlist_t eig_non_sym_paramslist[NUM_SUB_TESTS];
     struct EIG_paramlist_t eig_sym_paramslist[NUM_SUB_TESTS];
     struct Lin_solver_paramlist_t lin_solver_paramslist[NUM_SUB_TESTS];
+    struct AUX_paramlist_t aux_paramslist[NUM_SUB_TESTS];
 
 } test_params_t;
 
@@ -397,7 +424,7 @@ typedef struct
 
 typedef struct
 {
-    integer type;/* 0 for LIN, 1 for EIG, 2 for SVD */
+    integer type;/* 0 for LIN, 1 for EIG, 2 for SVD, 3 for AUX */
     char *ops;
     void (*fp)(integer argc, char** argv, test_params_t *);
 }OPERATIONS;
@@ -426,6 +453,9 @@ void fla_test_read_non_sym_eig_params( const char* input_filename, test_params_t
 
 /*Function to read SVD parametes from config file */
 void fla_test_read_svd_params ( const char* input_filename, test_params_t* params );
+
+/*Function to read AUX parametes from config file */
+void fla_test_read_aux_params ( const char* input_filename, test_params_t* params );
 
 void fla_test_lapack_suite( char* input_filename, test_params_t *params );
 

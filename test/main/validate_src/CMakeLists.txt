@@ -31,5 +31,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/validate_spffrtx.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_gehrd.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_hgeqz.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_gghrd.c
+${CMAKE_CURRENT_SOURCE_DIR}/validate_rot.c
+${CMAKE_CURRENT_SOURCE_DIR}/validate_lartg.c
 )
 

@@ -13,6 +13,7 @@ char *LINEAR_PARAMETERS_FILENAME = NULL;
 char *SYM_EIG_PARAMETERS_FILENAME = NULL;
 char *SVD_PARAMETERS_FILENAME = NULL;
 char *NON_SYM_EIG_PARAMETERS_FILENAME = NULL;
+char *AUX_PARAMETERS_FILENAME = NULL;
 
 char fla_test_binary_name[ MAX_BINARY_NAME_LENGTH + 1 ];
 char fla_test_pass_string[ MAX_PASS_STRING_LENGTH + 1 ];
@@ -125,6 +126,9 @@ int  main( int argc, char** argv )
         /* Read SVD parameters from config file */
         fla_test_read_svd_params ( SVD_PARAMETERS_FILENAME, &params  );
 
+        /* Read AUX parameters from config file */
+        fla_test_read_aux_params ( AUX_PARAMETERS_FILENAME, &params  );
+
         #if AOCL_FLA_SET_PROGRESS_ENABLE == 2
             aocl_fla_set_progress(test_progress);
         #endif
@@ -140,6 +144,8 @@ int  main( int argc, char** argv )
             free( SVD_PARAMETERS_FILENAME );
         if( NON_SYM_EIG_PARAMETERS_FILENAME )
             free( NON_SYM_EIG_PARAMETERS_FILENAME );
+        if( AUX_PARAMETERS_FILENAME )
+            free( AUX_PARAMETERS_FILENAME );
     }
     else
     {
@@ -152,13 +158,14 @@ int  main( int argc, char** argv )
 /* Function for checking cmd option or config file directory */
 int fla_check_cmd_config_dir( int argc, char** argv )
 {
-    integer i, j, len_lin_file, len_eig_file, len_svd_file, len_eig_nsy_file;
+    integer i, j, len_lin_file, len_eig_file, len_svd_file, len_eig_nsy_file, len_aux_file;
     int cmd_test_option = 0;
     char *config_dir = NULL;
     char *lin_file;
     char *eig_file;
     char *svd_file;
     char *eig_nsy_file;
+    char *aux_file;
     char *config_opt = "--config-dir=";
     integer len_config_opt = strlen(config_opt);
 
@@ -172,16 +179,19 @@ int fla_check_cmd_config_dir( int argc, char** argv )
         eig_file     =  "config/short/EIG_PARAMS.dat";
         svd_file     =  "config/short/SVD.dat";
         eig_nsy_file =  "config/short/EIG_NSYM_PARAMS.dat";
+        aux_file     =  "config/short/AUX_PARAMS.dat";
 
         len_lin_file = strlen(  lin_file);
         len_eig_file = strlen(  eig_file);
         len_svd_file = strlen(  svd_file);
         len_eig_nsy_file = strlen(  eig_nsy_file);
+        len_aux_file = strlen(  aux_file);
 
         LINEAR_PARAMETERS_FILENAME      =  (char *) malloc(len_lin_file + 1 );
         SYM_EIG_PARAMETERS_FILENAME     =  (char *) malloc(len_eig_file + 1);
         SVD_PARAMETERS_FILENAME         =  (char *) malloc(len_svd_file + 1 );
-        NON_SYM_EIG_PARAMETERS_FILENAME =  (char *) malloc(len_eig_nsy_file + 1); 
+        NON_SYM_EIG_PARAMETERS_FILENAME =  (char *) malloc(len_eig_nsy_file + 1);
+        AUX_PARAMETERS_FILENAME         =  (char *) malloc(len_aux_file + 1 );
 
         memcpy( LINEAR_PARAMETERS_FILENAME, lin_file, len_lin_file + 1 );
  
@@ -190,6 +200,8 @@ int fla_check_cmd_config_dir( int argc, char** argv )
         memcpy( SVD_PARAMETERS_FILENAME, svd_file, len_svd_file + 1);
 
         memcpy( NON_SYM_EIG_PARAMETERS_FILENAME, eig_nsy_file, len_eig_nsy_file + 1 );
+
+        memcpy( AUX_PARAMETERS_FILENAME, aux_file, len_aux_file + 1);
 
         return 0;
     }
@@ -206,6 +218,7 @@ int fla_check_cmd_config_dir( int argc, char** argv )
             svd_file     = "/SVD.dat";
             eig_file     = "/EIG_PARAMS.dat";
             eig_nsy_file = "/EIG_NSYM_PARAMS.dat";
+            aux_file     = "/AUX_PARAMS.dat";
 
             integer len_cstr = strlen( c_str);
             integer len_dir  = strlen( config_dir);
@@ -213,6 +226,7 @@ int fla_check_cmd_config_dir( int argc, char** argv )
             len_eig_file     = strlen( eig_file);
             len_svd_file     = strlen( svd_file);
             len_eig_nsy_file = strlen( eig_nsy_file);
+            len_aux_file     = strlen( aux_file);
 
             char *dir_path = (char *) malloc(len_cstr + len_dir + 1);
 
@@ -240,6 +254,7 @@ int fla_check_cmd_config_dir( int argc, char** argv )
                 SYM_EIG_PARAMETERS_FILENAME      = (char *) malloc(len_cstr + len_dir + len_eig_file + 1);
                 SVD_PARAMETERS_FILENAME          = (char *) malloc(len_cstr + len_dir + len_svd_file + 1);
                 NON_SYM_EIG_PARAMETERS_FILENAME  = (char *) malloc(len_cstr + len_dir + len_eig_nsy_file + 1);
+                AUX_PARAMETERS_FILENAME          = (char *) malloc(len_cstr + len_dir + len_aux_file + 1);
 
                 memcpy(LINEAR_PARAMETERS_FILENAME, c_str, len_cstr);
                 memcpy(LINEAR_PARAMETERS_FILENAME + len_cstr, config_dir, len_dir);
@@ -256,6 +271,10 @@ int fla_check_cmd_config_dir( int argc, char** argv )
                 memcpy(NON_SYM_EIG_PARAMETERS_FILENAME, c_str, len_cstr);
                 memcpy(NON_SYM_EIG_PARAMETERS_FILENAME + len_cstr, config_dir, len_dir);
                 memcpy(NON_SYM_EIG_PARAMETERS_FILENAME + len_cstr + len_dir, eig_nsy_file, len_eig_nsy_file + 1);
+
+                memcpy(AUX_PARAMETERS_FILENAME, c_str, len_cstr);
+                memcpy(AUX_PARAMETERS_FILENAME + len_cstr, config_dir, len_dir);
+                memcpy(AUX_PARAMETERS_FILENAME + len_cstr + len_dir, aux_file, len_aux_file + 1);
 
                 cmd_test_option = 0;
             }
@@ -1760,6 +1779,133 @@ void fla_test_read_svd_params ( const char *file_name, test_params_t* params )
     fclose(fp);
 }
 
+/* This function reads parameters needed for aux APIs
+   from the config settings file 'AUX_PARAMS.dat' and saves in the
+   'params->aux_paramslist' structure array   */
+void fla_test_read_aux_params ( const char *file_name, test_params_t* params )
+{
+    FILE *fp;
+    integer i, j;
+    char line[25];
+    char *str;
+    char eol;
+    integer num_tests;
+    integer ndata_types;
+    integer num_ranges;
+
+    str = &line[0];
+    fp = fopen( file_name, "r");
+    if (fp == NULL){
+    printf("Error: aux config file missing. Exiting.. \n");
+    exit(-1);
+    }
+
+    fscanf(fp, "%s", &line[0]);
+    fscanf(fp, "%"FT_IS"", &num_tests);
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        params->aux_paramslist[i].num_tests = num_tests;
+    }
+
+    num_ranges = num_tests;
+    fscanf(fp, "%s", &line[0]); // Range_start
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->aux_paramslist[i].m_range_start) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // Range_end
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->aux_paramslist[i].m_range_end) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // Range_step_size
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->aux_paramslist[i].m_range_step_size) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // Range_start
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->aux_paramslist[i].n_range_start) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // Range_end
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->aux_paramslist[i].n_range_end) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // Range_step_size
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->aux_paramslist[i].n_range_step_size) );
+        CHECK_LINE_SKIP ();
+    }
+
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        params->aux_paramslist[i].num_ranges = num_ranges;
+    }
+
+    fscanf(fp, "%s", &line[0]); // leading dimension of input
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->aux_paramslist[i].lda) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // The increment between successive values of CX
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->aux_paramslist[i].incx) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // The increment between successive values of CY
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->aux_paramslist[i].incy) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // number of repeats
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->aux_paramslist[i].num_repeats) );
+        CHECK_LINE_SKIP ();
+    }
+
+    ndata_types = NUM_SUB_TESTS;
+    fscanf(fp, "%s", &line[0]);// num data types
+    for( i = 0; i < NUM_SUB_TESTS; i++ )
+    {
+        fscanf(fp, "%s", str); // num data types
+        for( j = 0; j < NUM_SUB_TESTS; j++ )
+        {
+            params->aux_paramslist[j].data_types_char[i] = *str;
+            params->aux_paramslist[j].data_types[i] = get_datatype(*str);
+        }
+        eol = fgetc(fp);
+        if((eol == '\r') || (eol == '\n')){
+            ndata_types = ( (i+1) < ndata_types)? (i+1):ndata_types;
+            break;
+        }
+    }
+
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        params->aux_paramslist[i].num_data_types = ndata_types;
+    }
+
+    fscanf(fp, "%s", &line[0]);
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->aux_paramslist[i].matrix_layout) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]);
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%f", &(params->aux_paramslist[i].aux_threshold) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fclose(fp);
+}
 
 void fla_test_output_info( char* message, ... )
 {
@@ -1948,7 +2094,7 @@ void fla_test_init_strings( void )
     sprintf( fla_test_pass_string, "PASS" );
     sprintf( fla_test_warn_string, "MARGINAL" );
     sprintf( fla_test_fail_string, "FAIL" );
-    sprintf( fla_test_invalid_string, "INVALID_LDA" );
+    sprintf( fla_test_invalid_string, "INVALID_PARAM" );
     sprintf( fla_test_storage_format_string, "Row(r) and General(g) storage format is not supported by External LAPACK interface" );
     sprintf( fla_test_stor_chars, STORAGE_SCHEME_CHARS );
 }
@@ -2001,6 +2147,10 @@ void fla_test_op_driver( char*         func_str,
 
         case SVD:
             num_ranges          = params->svd_paramslist[0].num_ranges;
+            break;
+        
+        case AUX:
+            num_ranges          = params->aux_paramslist[0].num_ranges;
             break;
 
         default:
@@ -2068,6 +2218,21 @@ void fla_test_op_driver( char*         func_str,
                 n_repeats             = params->svd_paramslist[range_loop_counter].num_repeats;
                 n_datatypes           = params->svd_paramslist[range_loop_counter].num_data_types;
                 break;
+
+            case AUX:
+                p_first               = params->aux_paramslist[range_loop_counter].m_range_start;
+                p_max                 = params->aux_paramslist[range_loop_counter].m_range_end;
+                p_inc                 = params->aux_paramslist[range_loop_counter].m_range_step_size;
+                q_first               = params->aux_paramslist[range_loop_counter].n_range_start;
+                q_max                 = params->aux_paramslist[range_loop_counter].n_range_end;
+                q_inc                 = params->aux_paramslist[range_loop_counter].n_range_step_size;
+                thresh                = params->aux_paramslist[range_loop_counter].aux_threshold;
+                params->datatype      = params->aux_paramslist[range_loop_counter].data_types;
+                params->datatype_char = params->aux_paramslist[range_loop_counter].data_types_char;
+                n_repeats             = params->aux_paramslist[range_loop_counter].num_repeats;
+                n_datatypes           = params->aux_paramslist[range_loop_counter].num_data_types;
+                break;
+                
             default:
                 return;
         }
