@@ -350,7 +350,6 @@ static int nmL_getc(void)
 
 static int nmL_ungetc(int x, FILE *f)
 {
-	f = f;	/* banish non-use warning */
 	return *--nmL_next = x;
 }
 

@@ -54,7 +54,7 @@ void FLA_Memory_leak_counter_finalize( void )
   // Output the memory leak counter, but only if it's currently enabled.
   if ( FLA_Memory_leak_counter_status() == TRUE )
   {
-    fprintf( stderr, "libflame: memory leak counter: %d\n", fla_mem_leak_counter );
+    fprintf( stderr, "libflame: memory leak counter: %d\n", (int) fla_mem_leak_counter );
     fflush( stderr );
   }
 

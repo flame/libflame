@@ -162,27 +162,14 @@ FLA_Error FLA_Fused_UZhu_ZUhu_ops_var1( integer m_U,
               z1, rs_Z,
               u,  inc_u,
               &alpha );
-/*
-    alpha = F77_sdot( &m_U,
-                      z1, &rs_Z,
-                      u,  &inc_u );
-*/
 
     bl1_sdot( BLIS1_CONJUGATE,
               m_U,
               u1, rs_U,
               u,  inc_u,
               &beta );
-/*
-    beta = F77_sdot( &m_U,
-                     u1, &rs_U,
-                     u,  &inc_u );
-*/
 
     *tau1 = beta;
-
-    // bl1_sscals( delta, &alpha );
-    // bl1_sscals( delta, &beta );
     alpha *= *delta;
     beta  *= *delta;
 
@@ -191,26 +178,12 @@ FLA_Error FLA_Fused_UZhu_ZUhu_ops_var1( integer m_U,
                 &alpha,
                 u1, rs_U,
                 w,  inc_w );
-/*
-    F77_saxpy( &m_U,
-               &alpha,
-               u1, &rs_U,
-               w,  &inc_w );
-*/
 
     bl1_saxpyv( BLIS1_NO_CONJUGATE,
                 m_U,
                 &beta,
                 z1, rs_U,
                 w,  inc_w );
-/*
-    F77_saxpy( &m_U,
-               &beta,
-               z1, &rs_Z,
-               w,  &inc_w );
-*/
-
-    /*------------------------------------------------------------*/
 
   }
 
@@ -239,86 +212,27 @@ FLA_Error FLA_Fused_UZhu_ZUhu_opd_var1( integer m_U,
 
   double*   u     = buff_u;
   double*   w     = buff_w;
-  //double*   delta = buff_delta;
-
   double*   u1;
   double*   u2;
-  double*   u3;
   double*   z1;
   double*   z2;
-  double*   z3;
   double*   tau1;
   double*   tau2;
-  double*   tau3;
-
+  
   u1   = buff_U;
   u2   = buff_U +   cs_U;
-  u3   = buff_U + 2*cs_U;
   z1   = buff_Z;
   z2   = buff_Z +   cs_Z;
-  z3   = buff_Z + 2*cs_Z;
   tau1 = buff_t;
   tau2 = buff_t +   inc_t;
-  tau3 = buff_t + 2*inc_t;
 
   for ( i = 0; i < n_run; ++i )
   {
     double    rho_z1u;
     double    rho_z2u;
-    //double    rho_z3u;
     double    rho_u1u;
     double    rho_u2u;
-    //double    rho_u3u;
 
-    /*------------------------------------------------------------*/
-/*
-    bl1_ddotsv3( BLIS1_CONJUGATE,
-                 m_U,
-                 z1, rs_Z,
-                 z2, rs_Z,
-                 z3, rs_Z,
-                 u,  inc_u,
-                 &zero,
-                 &rho_z1u,
-                 &rho_z2u,
-                 &rho_z3u );
-    bl1_dneg1( &rho_z1u );
-    bl1_dneg1( &rho_z2u );
-    bl1_dneg1( &rho_z3u );
-
-    bl1_ddotv2axpyv2b( m_U,
-                       u1, rs_U,
-                       u2, rs_U,
-                       u,  inc_u,
-                       &rho_z1u,
-                       &rho_z2u,
-                       &rho_u1u,
-                       &rho_u2u,
-                       w,  inc_w );
-    bl1_ddotaxpy( m_U,
-                  u3, rs_U,
-                  u,  inc_u,
-                  &rho_z3u,
-                  &rho_u3u,
-                  w,  inc_w );
-
-    *tau1 = rho_u1u;
-    *tau2 = rho_u2u;
-    *tau3 = rho_u3u;
-
-    bl1_dneg1( &rho_u1u );
-    bl1_dneg1( &rho_u2u );
-    bl1_dneg1( &rho_u3u );
-
-    bl1_daxpyv3b( m_U,
-                  &rho_u1u,
-                  &rho_u2u,
-                  &rho_u3u,
-                  z1, rs_Z,
-                  z2, rs_Z,
-                  z3, rs_Z,
-                  w,  inc_w );
-*/
     bl1_ddotsv2( BLIS1_CONJUGATE,
                  m_U,
                  z1, rs_Z,
@@ -353,18 +267,12 @@ FLA_Error FLA_Fused_UZhu_ZUhu_opd_var1( integer m_U,
                   z2, rs_Z,
                   w,  inc_w );
 
-
-    /*------------------------------------------------------------*/
-
     u1   += step_u;
     u2   += step_u;
-    u3   += step_u;
     z1   += step_z;
     z2   += step_z;
-    z3   += step_z;
     tau1 += step_tau;
     tau2 += step_tau;
-    tau3 += step_tau;
   }
 
   if ( n_left > 0 )
@@ -430,8 +338,6 @@ FLA_Error FLA_Fused_UZhu_ZUhu_opc_var1( integer m_U,
     scomplex  alpha;
     scomplex  beta;
 
-    /*------------------------------------------------------------*/
-
     bl1_cdot( BLIS1_CONJUGATE,
               m_U,
               z1, rs_Z,
@@ -454,26 +360,12 @@ FLA_Error FLA_Fused_UZhu_ZUhu_opc_var1( integer m_U,
                 &alpha,
                 u1, rs_U,
                 w,  inc_w );
-/*
-    F77_caxpy( &m_U,
-               &alpha,
-               u1, &rs_U,
-               w,  &inc_w );
-*/
 
     bl1_caxpyv( BLIS1_NO_CONJUGATE,
                 m_U,
                 &beta,
                 z1, rs_U,
                 w,  inc_w );
-/*
-    F77_caxpy( &m_U,
-               &beta,
-               z1, &rs_Z,
-               w,  &inc_w );
-*/
-
-    /*------------------------------------------------------------*/
 
   }
 
@@ -491,8 +383,6 @@ FLA_Error FLA_Fused_UZhu_ZUhu_opz_var1( integer m_U,
                                         dcomplex* buff_u, integer inc_u, 
                                         dcomplex* buff_w, integer inc_w ) 
 {
-  //dcomplex  zero  = bl1_z0();
-
   integer       n_run    = n_U / 1;
   integer       n_left   = n_U % 1;
   integer       step_u   = 1*cs_U;
@@ -502,95 +392,24 @@ FLA_Error FLA_Fused_UZhu_ZUhu_opz_var1( integer m_U,
 
   dcomplex* u     = buff_u;
   dcomplex* w     = buff_w;
-  //dcomplex* delta = buff_delta;
-
   dcomplex* u1;
-  dcomplex* u2;
   dcomplex* z1;
-  dcomplex* z2;
   dcomplex* tau1;
-  dcomplex* tau2;
 
   u1   = buff_U;
-  u2   = buff_U + cs_U;
   z1   = buff_Z;
-  z2   = buff_Z + cs_Z;
   tau1 = buff_t;
-  tau2 = buff_t + inc_t;
 
   for ( i = 0; i < n_run; ++i )
   {
     dcomplex  rho_z1u;
-    //dcomplex  rho_z2u;
     dcomplex  rho_u1u;
-    //dcomplex  rho_u2u;
-
-    /*------------------------------------------------------------*/
 
 /*
    Effective computation:
    w = w + delta * ( U ( Z' u  ) + Z ( U' u  ) );
 */
 
-/*
-    bl1_zdotsv2( BLIS1_CONJUGATE,
-                 m_U,
-                 z1, rs_Z,
-                 u1, rs_U,
-                 u,  inc_u,
-                 &zero,
-                 &rho_z1u,
-                 &rho_u1u );
-
-    *tau1 = rho_u1u;
-
-    //bl1_zscals( delta, &rho_z1u );
-    //bl1_zscals( delta, &rho_u1u );
-    bl1_zneg1( &rho_z1u );
-    bl1_zneg1( &rho_u1u );
-
-    bl1_zaxpyv2b( m_U,
-                  &rho_z1u,
-                  &rho_u1u,
-                  u1, rs_U,
-                  z1, rs_Z,
-                  w,  inc_w );
-*/
-/*
-    bl1_zdotsv2( BLIS1_CONJUGATE,
-                 m_U,
-                 z1, rs_Z,
-                 z2, rs_Z,
-                 u,  inc_u,
-                 &zero,
-                 &rho_z1u,
-                 &rho_z2u );
-    bl1_zneg1( &rho_z1u );
-    bl1_zneg1( &rho_z2u );
-
-    bl1_zdotv2axpyv2b( m_U,
-                       u1, rs_U,
-                       u2, rs_U,
-                       u,  inc_u,
-                       &rho_z1u,
-                       &rho_z2u,
-                       &rho_u1u,
-                       &rho_u2u,
-                       w,  inc_w );
-
-    *tau1 = rho_u1u;
-    *tau2 = rho_u2u;
-
-    bl1_zneg1( &rho_u1u );
-    bl1_zneg1( &rho_u2u );
-
-    bl1_zaxpyv2b( m_U,
-                  &rho_u1u,
-                  &rho_u2u,
-                  z1, rs_Z,
-                  z2, rs_Z,
-                  w,  inc_w );
-*/
     bl1_zdot( BLIS1_CONJUGATE,
               m_U,
               z1, rs_Z,
@@ -615,14 +434,9 @@ FLA_Error FLA_Fused_UZhu_ZUhu_opz_var1( integer m_U,
                 z1, rs_Z,
                 w,  inc_w );
 
-    /*------------------------------------------------------------*/
-
     u1   += step_u;
-    u2   += step_u;
     z1   += step_z;
-    z2   += step_z;
     tau1 += step_tau;
-    tau2 += step_tau;
   }
 
   if ( n_left == 1 )

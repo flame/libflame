@@ -278,6 +278,7 @@ doublereal zlanhf_(char *norm, char *transr, char *uplo, integer *n, doublecompl
     /* .. Intrinsic Functions .. */
     /* .. */
     /* .. Executable Statements .. */
+    value = 0.;
     if (*n == 0)
     {
         ret_val = 0.;

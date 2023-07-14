@@ -31,6 +31,8 @@
 #include "FLAME.h"
 #include "libflame_api_wrapper.h"
 
+extern int xerbla_array_(char *srname_array__, integer *srname_len__, integer *info);
+
 double DLAMCH( char   *cmach)
 {
 	return dlamch_( cmach);

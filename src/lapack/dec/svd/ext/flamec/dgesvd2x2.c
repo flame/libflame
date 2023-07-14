@@ -11,7 +11,7 @@
 	ldu, doublereal *vt, integer *ldvt, doublereal *work, integer *lwork, 
 	integer *info)
 {
-   int i__2;       
+   integer i__2;       
    double tempu[4], tempvt[4], temp;    
    *info = 0;
  #if LF_AOCL_DTL_LOG_ENABLE

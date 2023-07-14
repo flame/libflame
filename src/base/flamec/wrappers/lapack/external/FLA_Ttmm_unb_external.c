@@ -12,7 +12,7 @@
 
 FLA_Error FLA_Ttmm_unb_external( FLA_Uplo uplo, FLA_Obj A )
 {
-  int          info = 0;
+  integer      info = 0;
 #ifdef FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
   FLA_Datatype datatype;
   integer          m_A, cs_A;

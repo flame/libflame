@@ -12,7 +12,7 @@
 
 FLA_Error FLA_Sylv_unb_external( FLA_Trans transa, FLA_Trans transb, FLA_Obj isgn, FLA_Obj A, FLA_Obj B, FLA_Obj C, FLA_Obj scale )
 {
-  int          info = 0;
+  integer      info = 0;
 #ifdef FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
   FLA_Datatype datatype;
   integer          cs_A;

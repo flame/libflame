@@ -266,8 +266,6 @@ FLA_Error FLA_Bsvd_ext_ops_var1( integer       m_d,
     integer       m_A11;
     integer       n_iter_perf;
     integer       n_UV_apply;
-    integer       total_deflations;
-    integer       n_deflations;
     integer       n_iter_prev;
     integer       n_iter_perf_sweep_max;
 
@@ -293,7 +291,7 @@ FLA_Error FLA_Bsvd_ext_ops_var1( integer       m_d,
     n_iter_prev = 0;
 
     // Iterate until the matrix has completely deflated.
-    for ( total_deflations = 0; done != TRUE; )
+    for ( ; done != TRUE; )
     {
 
         // Initialize G and H to contain only identity rotations.
@@ -378,7 +376,7 @@ FLA_Error FLA_Bsvd_ext_ops_var1( integer       m_d,
             //       less than n_G.
             // If/when either of the two above conditions fails to hold,
             // the function returns.
-            n_deflations = FLA_Bsvd_iteracc_v_ops_var1( m_A11,
+            FLA_Bsvd_iteracc_v_ops_var1( m_A11,
                                                         n_GH,
                                                         ijTL,
                                                         tol,
@@ -389,9 +387,6 @@ FLA_Error FLA_Bsvd_ext_ops_var1( integer       m_d,
                                                         H,  rs_H, cs_H,
                                                         &n_iter_perf );
             
-            // Record the number of deflations that were observed.
-            total_deflations += n_deflations;
-
             // Update the maximum number of iterations performed in the
             // current sweep.
             n_iter_perf_sweep_max = fla_max( n_iter_perf_sweep_max, n_iter_perf );
@@ -521,8 +516,6 @@ FLA_Error FLA_Bsvd_ext_opd_var1( integer       m_d,
     integer       m_A11;
     integer       n_iter_perf;
     integer       n_UV_apply;
-    integer       total_deflations;
-    integer       n_deflations;
     integer       n_iter_prev;
     integer       n_iter_perf_sweep_max;
 
@@ -548,7 +541,7 @@ FLA_Error FLA_Bsvd_ext_opd_var1( integer       m_d,
     n_iter_prev = 0;
 
     // Iterate until the matrix has completely deflated.
-    for ( total_deflations = 0; done != TRUE; )
+    for ( ; done != TRUE; )
     {
 
         // Initialize G and H to contain only identity rotations.
@@ -632,7 +625,7 @@ FLA_Error FLA_Bsvd_ext_opd_var1( integer       m_d,
             //       less than n_G.
             // If/when either of the two above conditions fails to hold,
             // the function returns.
-            n_deflations = FLA_Bsvd_iteracc_v_opd_var1( m_A11,
+            FLA_Bsvd_iteracc_v_opd_var1( m_A11,
                                                         n_GH,
                                                         ijTL,
                                                         tol,
@@ -642,9 +635,6 @@ FLA_Error FLA_Bsvd_ext_opd_var1( integer       m_d,
                                                         G,  rs_G, cs_G,
                                                         H,  rs_H, cs_H,
                                                         &n_iter_perf );
-
-            // Record the number of deflations that were observed.
-            total_deflations += n_deflations;
 
             // Update the maximum number of iterations performed in the
             // current sweep.
@@ -773,8 +763,6 @@ FLA_Error FLA_Bsvd_ext_opc_var1( integer       m_d,
     integer       m_A11;
     integer       n_iter_perf;
     integer       n_UV_apply;
-    integer       total_deflations;
-    integer       n_deflations;
     integer       n_iter_prev;
     integer       n_iter_perf_sweep_max;
 
@@ -800,7 +788,7 @@ FLA_Error FLA_Bsvd_ext_opc_var1( integer       m_d,
     n_iter_prev = 0;
 
     // Iterate until the matrix has completely deflated.
-    for ( total_deflations = 0; done != TRUE; )
+    for ( ; done != TRUE; )
     {
 
         // Initialize G and H to contain only identity rotations.
@@ -884,7 +872,7 @@ FLA_Error FLA_Bsvd_ext_opc_var1( integer       m_d,
             //       less than n_G.
             // If/when either of the two above conditions fails to hold,
             // the function returns.
-            n_deflations = FLA_Bsvd_iteracc_v_ops_var1( m_A11,
+            FLA_Bsvd_iteracc_v_ops_var1( m_A11,
                                                         n_GH,
                                                         ijTL,
                                                         tol,
@@ -895,9 +883,6 @@ FLA_Error FLA_Bsvd_ext_opc_var1( integer       m_d,
                                                         H,  rs_H, cs_H,
                                                         &n_iter_perf );
             
-            // Record the number of deflations that were observed.
-            total_deflations += n_deflations;
-
             // Update the maximum number of iterations performed in the
             // current sweep.
             n_iter_perf_sweep_max = fla_max( n_iter_perf_sweep_max, n_iter_perf );
@@ -1024,8 +1009,6 @@ FLA_Error FLA_Bsvd_ext_opz_var1( integer       m_d,
     integer       m_A11;
     integer       n_iter_perf;
     integer       n_UV_apply;
-    integer       total_deflations;
-    integer       n_deflations;
     integer       n_iter_prev;
     integer       n_iter_perf_sweep_max;
 
@@ -1051,7 +1034,7 @@ FLA_Error FLA_Bsvd_ext_opz_var1( integer       m_d,
     n_iter_prev = 0;
 
     // Iterate until the matrix has completely deflated.
-    for ( total_deflations = 0; done != TRUE; )
+    for ( ; done != TRUE; )
     {
 
         // Initialize G and H to contain only identity rotations.
@@ -1135,7 +1118,7 @@ FLA_Error FLA_Bsvd_ext_opz_var1( integer       m_d,
             //       less than n_G.
             // If/when either of the two above conditions fails to hold,
             // the function returns.
-            n_deflations = FLA_Bsvd_iteracc_v_opd_var1( m_A11,
+            FLA_Bsvd_iteracc_v_opd_var1( m_A11,
                                                         n_GH,
                                                         ijTL,
                                                         tol,
@@ -1145,9 +1128,6 @@ FLA_Error FLA_Bsvd_ext_opz_var1( integer       m_d,
                                                         G,  rs_G, cs_G,
                                                         H,  rs_H, cs_H,
                                                         &n_iter_perf );
-
-            // Record the number of deflations that were observed.
-            total_deflations += n_deflations;
 
             // Update the maximum number of iterations performed in the
             // current sweep.
@@ -1164,7 +1144,6 @@ FLA_Error FLA_Bsvd_ext_opz_var1( integer       m_d,
             if ( n_iter_prev >= n_iter_max * m_d )
             {
                 FLA_Abort();
-                //return FLA_FAILURE;
             }
         }
 

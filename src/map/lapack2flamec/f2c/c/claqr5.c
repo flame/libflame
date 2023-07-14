@@ -1092,11 +1092,11 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                     {
                         /* Computing MAX */
                         r__5 = (r__1 = u1r, f2c_abs(r__1)) + (r__2 = u1i, f2c_abs(r__2));
-                        r__6 = (r__3 = u2r, f2c_abs(r__3)) + ( r__4 = u2i, abs(r__4)); // , expr subst
+                        r__6 = (r__3 = u2r, f2c_abs(r__3)) + ( r__4 = u2i, f2c_abs(r__4)); // , expr subst
                         h12 = fla_max(r__5,r__6);
                         /* Computing MIN */
                         r__5 = (r__1 = u1r, f2c_abs(r__1)) + (r__2 = u1i, f2c_abs(r__2));
-                        r__6 = (r__3 = u2r, f2c_abs(r__3)) + ( r__4 = u2i, abs(r__4)); // , expr subst
+                        r__6 = (r__3 = u2r, f2c_abs(r__3)) + ( r__4 = u2i, f2c_abs(r__4)); // , expr subst
                         h21 = fla_min(r__5,r__6);
                         i__4 = k + k * h_dim1;
                         i__5 = k + 1 + (k + 1) * h_dim1;

@@ -290,6 +290,9 @@ int cstedc_(char *compz, integer *n, real *d__, real *e, complex *z__, integer *
     --iwork;
     /* Function Body */
     *info = 0;
+    lwmin = 0;
+    lrwmin = 0;
+    liwmin = 0;
     lquery = *lwork == -1 || *lrwork == -1 || *liwork == -1;
     if (lsame_(compz, "N"))
     {

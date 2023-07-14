@@ -12,7 +12,7 @@
 
 FLA_Error FLA_Bidiag_unb_external( FLA_Obj A, FLA_Obj tu, FLA_Obj tv )
 {
-  int          info = 0;
+  integer          info = 0;
 #ifdef FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
   FLA_Datatype datatype;
   integer          m_A, n_A, cs_A;

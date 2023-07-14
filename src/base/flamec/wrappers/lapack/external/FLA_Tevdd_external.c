@@ -12,7 +12,7 @@
 
 FLA_Error FLA_Tevdd_external( FLA_Evd_type jobz, FLA_Obj d, FLA_Obj e, FLA_Obj A )
 {
-  int          info = 0;
+  integer      info = 0;
 #ifdef FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
   FLA_Datatype datatype;
   integer          n_A, cs_A;

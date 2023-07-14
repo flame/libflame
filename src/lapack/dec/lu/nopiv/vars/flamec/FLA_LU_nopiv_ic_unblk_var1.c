@@ -72,13 +72,13 @@ FLA_Error FLA_LU_nopiv_ic_unblk_var1( integer m_A, integer n_A, scomplex* A , in
     // U2 or new ATR = L1^-1 * ATR                    // ATR size to be updated is e_val x (m_A - nfact)
     if( tr_m != 0 )                             // if size of ATR is 0 then trsm is invalid
     {
-      ctrsm_( "L", "L", "N", "U", &e_val, &tr_m, One, A, &cs_A, (A + cs_A * nfact), &cs_A );
+      ctrsm_( "L", "L", "N", "U", (integer *) &e_val, &tr_m, One, A, &cs_A, (A + cs_A * nfact), &cs_A );
     }
 
     // L2 valid ABL calculation = U1^-1 * valid ABL   // ABL size to be updated is (n_A - nfact) * e_val
     if( tr_n != 0 )                             // base invalid cases when size of  ABL is 0, nfact=1 case handled seperately
     {
-       ctrsm_( "R", "U", "N", "N", &tr_n, &e_val, One, A, &cs_A, (A + nfact), &cs_A );
+       ctrsm_( "R", "U", "N", "N", &tr_n, (integer *) &e_val, One, A, &cs_A, (A + nfact), &cs_A );
     }
 
     // new ABR1 = ABR1 - valid ABL * valid updated nfact  block
@@ -87,14 +87,14 @@ FLA_Error FLA_LU_nopiv_ic_unblk_var1( integer m_A, integer n_A, scomplex* A , in
     if( ( tr_n != 0 ) )                         // base invalid cases check
     {
      tr_nfe = nfact - e_val;
-     cgemm_( "N", "N", &tr_n, &(tr_nfe),  &e_val, Minusone, (A + nfact), &cs_A, (A + e_val * cs_A), &cs_A, One, (A + nfact + e_val * cs_A), &cs_A );
+     cgemm_( "N", "N", &tr_n, &(tr_nfe), (integer *) &e_val, Minusone, (A + nfact), &cs_A, (A + e_val * cs_A), &cs_A, One, (A + nfact + e_val * cs_A), &cs_A );
     }
 
     // new ABR2 = ABR2 - valid ATR * (valid updated ATL's ABL part + new ABL)
     if( ( tr_m != 0 ) )
     {
        tr_ne = n_A - e_val;
-       cgemm_( "N", "N", &(tr_ne), &tr_m,  &e_val, Minusone, (A + e_val), &cs_A, (A + nfact * cs_A), &cs_A, One, (A + e_val + nfact * cs_A), &cs_A );
+       cgemm_( "N", "N", &(tr_ne), &tr_m, (integer *)  &e_val, Minusone, (A + e_val), &cs_A, (A + nfact * cs_A), &cs_A, One, (A + e_val + nfact * cs_A), &cs_A );
     }
 
   }
