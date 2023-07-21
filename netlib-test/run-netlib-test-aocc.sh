@@ -103,7 +103,7 @@ ulimit -s unlimited
 FORTRAN_FLAGS="flang -fopenmp"
 TESTLAPACKLIB="$PWD/liblapack.a"
 
-if [[ $ILP64 = "1" ]]
+if [[ $ILP64 =~ ("1"|"ON") ]]
 then
 	FORTRAN_FLAGS="flang -fopenmp -fdefault-integer-8"
 fi

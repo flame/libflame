@@ -50,11 +50,13 @@ $ cmake ../ -DENABLE_AMD_FLAGS=ON -DCMAKE_INSTALL_PREFIX=<path> -DLIBAOCLUTILS_L
     Note: Building tests require path to an external blas library. Refer to Readme in respective test suite directory for more details
     Recomended to use blis sharedlib with libflame sharedlib
 
-## 3 Building Legacy test 
-    To build Legacy test suite use 
+## 3 Building Legacy test and Netlib test
+    # 1. To build Legacy test suite use 
      -DBUILD_LEGACY_TEST=ON -DCMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH=/path/to/blas/library -DEXT_BLAS_LIBNAME=blas_lib_name
     -DBLAS_HEADER_PATH="<path to BLIS header file blis.h>" 
     Note: On Windows, to build and run legacy test suite, a separate macro flag is enabled during libflame library build because of certain constraints in legacy test suite.
+    # 2. To Build Netlib-test on windows add -DBUILD_NETLIB_TEST=ON along with cmake commands.
+
 
 ## 4. ENABLE TRACE and LOGS
     User may also enable trace and logs by passing
@@ -80,24 +82,29 @@ $ cmake ../ -DENABLE_AMD_FLAGS=ON -DCMAKE_INSTALL_PREFIX=<path> -DLIBAOCLUTILS_L
     Note: In order to use openmp from the system -DEXT_OPENMP_PATH is to be left blank
 
 ## 7. Using ctest
-    Ctest is enabled when -DBUILD_TEST=ON OR -DBUILD_LEGACY_TEST=ON.
-    To run ALL ctests together following command can be given 
-        ctest 
-    To run a specific ctest following command can be given 
+    Ctest is enabled when -DBUILD_TEST=ON OR -DBUILD_LEGACY_TEST=ON OR -DBUILD_NETLIB_TEST=ON
+    To run ALL ctests together following command can be given.
+        ctest --test-dir [BUILD_DIR]
+    To run a specific ctest following command can be given.
         ctest -R [TEST_NAME] 
         TEST_NAME
         1. main_test
         2. aocl_fla_progress_test
         3. legacy_test
+        4. netlib-test
     To run build from any location 
         ctest --test-dir [BUILD_DIR]
-    Additionally --verbose can be added to print the output from the executable
+    Additionally --verbose can be added to print the output from the executable.
     Example:
         Following command can be used to run tests with regular expression neg_test
             ctest --test-dir <build_dir> -R neg_test --verbose
         on windows additional "-C Release"  is needed to run the test
             ctest --test-dir <build_dir> -R neg_test -C Release --verbose
+    To list all the tests ctest --test-dir [BUILD_DIR] -N can be given
 
-
-
+## 8. ENABLE GCOV
+    In order to enable code coverage -DENABLE_GCOV can be passed during configuration.
+    After running the executable in the root directory run 
+        bash generate_code_coverage_html.sh. 
+    It will give you a prompt to view the code coverage of that particular application.
 

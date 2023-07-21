@@ -11,6 +11,7 @@ DTL_LIB=libaocldtl.a
 DTL_LIB_PATH=
 ILP64=0
 DTL=0
+GCOV=0
 
 for ARG in "$@"
 do
@@ -26,7 +27,8 @@ do
          DTL_LIB)            DTL_LIB=${DATA} ;;
          LAPACK_TEST_DIR)    LAPACK_TEST_DIR=${DATA} ;;     
          ILP64)              ILP64=${DATA} ;;   
-         DTL)                DTL=${DATA} ;;  
+         DTL)                DTL=${DATA} ;; 
+		 GCOV)               GCOV=${DATA} ;;  
          *)   
    esac    
 done
@@ -51,7 +53,7 @@ then
 	echo "$ sh run-netlib-test.sh BLAS_LIB_PATH=<blas library path> LAPACK_LIB_PATH=<lapack library path> "
 	echo "     [BLAS_LIB=<blas library] [LAPACK_LIB=<lapack library>] [ILP64=<0/1>] "
 	echo "     [LAPACK_TEST_DIR=<netlib lapack test directory name>]"
-	echo
+	echo "     [GCOV=<0/1>]"
 	echo "[] indicates optional argument"
 	echo 
 	echo "Example: $ sh run-netlib-test.sh BLAS_LIB_PATH=\"/home/user/blis/lib\" LAPACK_LIB_PATH=\"/home/user/libflame/lib\" BLAS_LIB=\"libblis.a\" LAPACK_LIB=\"libflame.a\""
@@ -65,6 +67,7 @@ then
 	echo "LAPACK_LIB_PATH : path to lapack library chosen in LAPACK_LIB"
   	echo "DTL_LIB_PATH : path to DTL library chosen in DTL_LIB (if DTL is enabled)"
 	echo "LAPACK_TEST_DIR : netlib lapack test directory name. Default=lapack-3.10.0"
+	echo "GCOV : Enable(1) or disable(0) Code Coverage. Only Enable if Code Coverage is enabled on the library. Default=0"
 	echo
 	exit 1
 fi
@@ -103,7 +106,7 @@ ulimit -s unlimited
 FORTRAN_FLAGS="gfortran -fopenmp"
 TESTLAPACKLIB="$PWD/liblapack.a"
 
-if [[ $ILP64 = "1" ]]
+if [[ $ILP64 =~ ("1"|"ON") ]]
 then
 	FORTRAN_FLAGS="gfortran -fopenmp -fdefault-integer-8"
 fi
@@ -113,5 +116,11 @@ then
 	TESTLAPACKLIB="$PWD/liblapack.a $PWD/libaocldtl.a -lpthread"
 fi
 
-OMP_NUM_THREADS=1 make FC="$FORTRAN_FLAGS" LDFLAGS="-lstdc++ -lpthread -fopenmp" LAPACKLIB="$TESTLAPACKLIB" -j
+if [[ $GCOV =~ ("1"|"ON") ]]
+then
+	# echo "======>COVERAGE=1"
+	GCOV_FLAGS="-lgcov --coverage"
+fi
+
+OMP_NUM_THREADS=1 make FC="$FORTRAN_FLAGS" LDFLAGS+="-lstdc++ -lpthread -fopenmp $GCOV_FLAGS" LAPACKLIB="$TESTLAPACKLIB" -j
 
