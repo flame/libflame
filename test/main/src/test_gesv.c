@@ -9,7 +9,6 @@ void fla_test_gesv_experiment(test_params_t *params, integer  datatype, integer 
                                     integer n_repeats, integer einfo, double* perf, double* t, double* residual);
 void prepare_gesv_run(integer n_A, integer nrhs, void *A, integer lda, void *B, integer ldb, integer* ipiv, integer datatype, integer n_repeats, double* time_min_, integer* info);
 void invoke_gesv(integer datatype, integer *nrhs, integer *n, void *a, integer *lda, integer *ipiv, void *b, integer *ldb, integer *info);
-static FILE* g_ext_fptr = NULL;
 
 void fla_test_gesv(integer argc, char ** argv, test_params_t *params)
 {
@@ -19,6 +18,7 @@ void fla_test_gesv(integer argc, char ** argv, test_params_t *params)
 
     if(argc == 1)
     {
+        config_data = 1;
         fla_test_output_info("--- %s ---\n", op_str);
         fla_test_output_info("\n");
         fla_test_op_driver(front_str, SQUARE_INPUT, params, LIN, fla_test_gesv_experiment);
@@ -98,6 +98,7 @@ void fla_test_gesv(integer argc, char ** argv, test_params_t *params)
     if (g_ext_fptr != NULL)
     {
         fclose(g_ext_fptr);
+        g_ext_fptr = NULL;
     }
 
     return;
@@ -126,11 +127,19 @@ void fla_test_gesv_experiment(test_params_t *params,
     n = p_cur;
     lda = params->lin_solver_paramslist[pci].lda;
     ldb = params->lin_solver_paramslist[pci].ldb;
-    
-    if(lda < n || ldb < n)
+
+    /* If leading dimensions = -1, set them to default value
+       when inputs are from config files */
+    if (config_data)
     {
-        *residual = DBL_MIN;
-        return;
+        if (lda == -1)
+        {
+            lda = fla_max(1,n);
+        }
+        if (ldb == -1)
+        {
+            ldb = fla_max(1,n);
+        }
     }
     
     /* Create the matrices for the current operation*/
@@ -159,7 +168,7 @@ void fla_test_gesv_experiment(test_params_t *params,
     /* output validation */
     if(info == 0)
         validate_gesv(n, NRHS, A, lda, B, ldb, B_save, datatype, residual, &vinfo);
-    
+
     FLA_TEST_CHECK_EINFO(residual, info, einfo);
 
     /* Free up the buffers */
@@ -190,7 +199,6 @@ void prepare_gesv_run(integer n_A,
     /* Save the original matrix */
     create_matrix(datatype, &A_test, lda, n_A);
     create_matrix(datatype, &B_test, ldb, nrhs);
-
 
     *info = 0;
     for (i = 0; i < n_repeats && *info == 0; ++i)

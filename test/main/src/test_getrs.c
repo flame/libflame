@@ -10,8 +10,6 @@ void fla_test_getrs_experiment(test_params_t *params, integer  datatype, integer
 void prepare_getrs_run(char *trans, integer m_A, integer n_A, void *A, integer lda, void *B, integer ldb, integer* ipiv, integer datatype, integer n_repeats, double* time_min_, integer *info);
 void invoke_getrs(integer datatype, char *trans, integer *nrhs, integer *n, void *a, integer *lda, integer *ipiv, void *b, integer *ldb, integer *info);
 
-static FILE* g_ext_fptr = NULL;
-
 void fla_test_getrs(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "LU factorization";
@@ -20,6 +18,7 @@ void fla_test_getrs(integer argc, char ** argv, test_params_t *params)
 
     if(argc == 1)
     {
+        config_data = 1;
         fla_test_output_info("--- %s ---\n", op_str);
         fla_test_output_info("\n");
         fla_test_op_driver(front_str, SQUARE_INPUT, params, LIN, fla_test_getrs_experiment);
@@ -100,6 +99,7 @@ void fla_test_getrs(integer argc, char ** argv, test_params_t *params)
     if (g_ext_fptr != NULL)
     {
         fclose(g_ext_fptr);
+        g_ext_fptr = NULL;
     }
     return;
 
@@ -131,10 +131,18 @@ void fla_test_getrs_experiment(test_params_t *params,
     lda = params->lin_solver_paramslist[pci].lda;
     ldb = params->lin_solver_paramslist[pci].ldb;
 
-    if(lda < n || ldb < n)
+    /* If leading dimensions = -1, set them to default value
+       when inputs are from config files */
+    if (config_data)
     {
-        *residual = DBL_MIN;
-        return;
+        if (lda == -1)
+        {
+            lda = fla_max(1,n);
+        }
+        if (ldb == -1)
+        {
+            ldb = fla_max(1,n);
+        }
     }
 
     /* Create the matrices for the current operation*/
@@ -171,9 +179,9 @@ void fla_test_getrs_experiment(test_params_t *params,
     /* output validation */
     if(info == 0)
         validate_getrs(&TRANS, n, NRHS, A, lda, B_save, ldb, X, datatype, residual, &vinfo);
-    
+
     FLA_TEST_CHECK_EINFO(residual, info, einfo);
-        
+
     /* Free up the buffers */
     free_matrix(A);
     free_matrix(A_test);

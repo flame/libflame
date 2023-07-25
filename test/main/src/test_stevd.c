@@ -12,14 +12,6 @@ integer n_repeats, integer einfo, double* perf, double* t, double* residual);
 void prepare_stevd_run(char* jobz, integer n, void* Z, integer ldz, void* D, void* E, integer datatype, integer n_repeats, double* time_min_, integer* info);
 void invoke_stevd(integer datatype, char* jobz, integer* n, void* z, integer* ldz, void* d, void* e, void* work, integer* lwork, void* iwork, integer* liwork, integer* info);
 
-/* Flag to indicate lwork availability status
- * <= 0 - To be calculated
- * > 0  - Use the value
- * */
-static integer g_lwork;
-static integer g_liwork;
-static FILE* g_ext_fptr = NULL;
-
 void fla_test_stevd(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Eigen Decomposition of symmetrix tridiagonal matrix";
@@ -30,6 +22,7 @@ void fla_test_stevd(integer argc, char ** argv, test_params_t *params)
     {
         g_lwork = -1;
         g_liwork = -1;
+        config_data = 1;
         fla_test_output_info("--- %s ---\n", op_str);
         fla_test_output_info("\n");
         fla_test_op_driver(front_str, SQUARE_INPUT, params, EIG_SYM, fla_test_stevd_experiment);
@@ -110,6 +103,7 @@ void fla_test_stevd(integer argc, char ** argv, test_params_t *params)
     if(g_ext_fptr != NULL)
     {
         fclose(g_ext_fptr);
+        g_ext_fptr = NULL;
     }
     return;
 }
@@ -140,10 +134,14 @@ void fla_test_stevd_experiment(test_params_t *params,
     if(datatype == FLOAT || datatype == DOUBLE)
     {
         n = p_cur;
-        if(ldz < n)
+        /* If leading dimensions = -1, set them to default value
+           when inputs are from config files */
+        if (config_data)
         {
-            *residual = DBL_MIN;
-            return;
+            if (ldz == -1)
+            {
+                ldz = fla_max(1,n);
+            }
         }
 
         /* Create input matrix parameters */
@@ -187,9 +185,9 @@ void fla_test_stevd_experiment(test_params_t *params,
         /* output validation */
         if (info == 0)
             validate_syevd(&jobz, n, Z, Z_test, ldz, D_test, datatype, residual, &vinfo);
-        
+
         FLA_TEST_CHECK_EINFO(residual, info, einfo);
-        
+
         /* Free up the buffers */
         free_matrix(Z);
         free_vector(D);

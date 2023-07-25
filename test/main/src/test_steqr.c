@@ -11,7 +11,6 @@ void fla_test_steqr_experiment(test_params_t *params, integer datatype, integer 
 integer n_repeats, integer einfo, double* perf, double* t, double* residual);
 void prepare_steqr_run(char* compz, integer n, void* Z, integer ldz, void* D, void* E, integer datatype, integer n_repeats, double* time_min_, integer* info);
 void invoke_steqr(integer datatype, char* compz, integer* n, void* z, integer* ldz, void* d, void* e, void* work, integer* info);
-static FILE* g_ext_fptr = NULL;
 
 void fla_test_steqr(integer argc, char ** argv, test_params_t *params)
 {
@@ -21,6 +20,7 @@ void fla_test_steqr(integer argc, char ** argv, test_params_t *params)
 
     if(argc == 1)
     {
+        config_data = 1;
         /* Test with parameters from config */
         fla_test_output_info("--- %s ---\n", op_str);
         fla_test_output_info("\n");
@@ -100,6 +100,7 @@ void fla_test_steqr(integer argc, char ** argv, test_params_t *params)
     if (g_ext_fptr != NULL)
     {
         fclose(g_ext_fptr);
+        g_ext_fptr = NULL;
     }
     return;
 }
@@ -127,13 +128,17 @@ void fla_test_steqr_experiment(test_params_t *params,
 
     n = p_cur;
     ldz = params->eig_sym_paramslist[pci].ldz;
-    lda = ldz;
 
-    if(ldz < n || lda < n)
+    /* If leading dimensions = -1, set them to default value
+       when inputs are from config files */
+    if (config_data)
     {
-        *residual = DBL_MIN;
-        return;
+        if (ldz == -1)
+        {
+            ldz = fla_max(1,n);
+        }
     }
+    lda = ldz;
 
     /* Create input matrix parameters */
     create_matrix(datatype, &Z, ldz, n);
@@ -204,7 +209,7 @@ void fla_test_steqr_experiment(test_params_t *params,
     /* output validation */
     if (info == 0)
         validate_syevd(&compz, n, Z, Z_test, ldz, D_test, datatype, residual, &vinfo);
-    
+
     FLA_TEST_CHECK_EINFO(residual, info, einfo);
 
     /* Free up the buffers */

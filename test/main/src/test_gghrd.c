@@ -15,7 +15,6 @@ void prepare_gghrd_run(char* compq, char* compz, integer n, integer* ilo, intege
 void invoke_gghrd(integer datatype, char* compq, char* compz, integer* n, integer* ilo, integer* ihi, void* a,
                             integer* lda, void* b, integer* ldb, void* q, integer* ldq,
                             void* z, integer* ldz, integer* info);
-static FILE* g_ext_fptr = NULL;
 
 void fla_test_gghrd(integer argc, char ** argv, test_params_t *params)
 {
@@ -24,6 +23,7 @@ void fla_test_gghrd(integer argc, char ** argv, test_params_t *params)
     integer tests_not_run = 1, invalid_dtype = 0, einfo = 0;
     if(argc == 1)
     {
+        config_data = 1;
         fla_test_output_info("--- %s ---\n", op_str);
         fla_test_output_info("\n");
         fla_test_op_driver(front_str, SQUARE_INPUT, params, LIN, fla_test_gghrd_experiment);
@@ -106,6 +106,7 @@ void fla_test_gghrd(integer argc, char ** argv, test_params_t *params)
     if (g_ext_fptr != NULL)
     {
         fclose(g_ext_fptr);
+        g_ext_fptr = NULL;
     }
     return;
 }
@@ -133,18 +134,50 @@ void fla_test_gghrd_experiment(test_params_t *params,
     ldq = params->lin_solver_paramslist[pci].ldq;
     ldz = params->lin_solver_paramslist[pci].ldz;
 
-    if(lda < n || ldq < n || ldz < n || ldb < n)
-    {
-        *residual = DBL_MIN;
-        return;
-    }
-
     /* Initialize parameter */
     compz = params->lin_solver_paramslist[pci].compz_gghrd;
     compq = params->lin_solver_paramslist[pci].compq_gghrd;
     *residual = params->lin_solver_paramslist[pci].solver_threshold;
     ilo = params->lin_solver_paramslist[pci].ilo;
     ihi = params->lin_solver_paramslist[pci].ihi;
+
+    /* If leading dimensions = -1, set them to default value
+       when inputs are from config files */
+    if (config_data)
+    {
+        if (lda == -1)
+        {
+            lda = fla_max(1,n);
+        }
+        if (ldb == -1)
+        {
+            ldb = fla_max(1,n);
+        }
+        /* LDQ >= N if COMPQ='V' or 'I'; LDQ >= 1 otherwise */
+        if (ldq == -1)
+        {
+            if ((compq == 'V') || (compq == 'I'))
+            {
+                ldq = n;
+            }
+            else
+            {
+                ldq = 1;
+            }
+        }
+        /* LDZ >= N if COMPZ='V' or 'I'; LDZ >= 1 otherwise */
+        if (ldz == -1)
+        {
+            if ((compz == 'V') || (compz == 'I'))
+            {
+                ldz = n;
+            }
+            else
+            {
+                ldz = 1;
+            }
+        }
+    }
 
     /* Create input matrix parameters*/
     create_matrix(datatype, &A, lda, n);

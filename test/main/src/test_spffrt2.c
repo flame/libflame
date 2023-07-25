@@ -9,7 +9,6 @@ void fla_test_spffrt2_experiment(test_params_t *params, integer  datatype, integ
                                     integer n_repeats, integer einfo, double* perf, double* t, double* residual);
 void prepare_spffrt2_run(integer n_A, integer ncolm, integer pn, void *A, integer datatype, integer n_repeats, double* time_min_);
 void invoke_spffrt2(integer datatype, void *a, integer* n, integer * ncolm, void *work, void *work2);
-static FILE* g_ext_fptr = NULL;
 
 void fla_test_spffrt2(integer argc, char ** argv, test_params_t *params)
 {
@@ -96,6 +95,7 @@ void fla_test_spffrt2(integer argc, char ** argv, test_params_t *params)
     if (g_ext_fptr != NULL)
     {
         fclose(g_ext_fptr);
+        g_ext_fptr = NULL;
     }
 
     return;

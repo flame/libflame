@@ -5,10 +5,10 @@ MRange_step_size 10 20 100
 NRange_start 15  89 85
 NRange_end   35  240 385
 NRange_step_size 10 100 100
-lda   20 87 400
-ldb   20 87 400
-ldz   20 87 400
-ldq   20 87 400
+lda   -1 87 400
+ldb   -1 87 400
+ldz   -1 87 400
+ldq   -1 87 400
 ldab  20 30 400 200
 Repeats 5 4 3 2
 DataTypes s d c z

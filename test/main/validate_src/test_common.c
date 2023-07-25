@@ -358,7 +358,8 @@ void free_matrix(void *A)
 void rand_matrix(integer datatype, void *A, integer M, integer N, integer LDA)
 {
     integer i, j;
-
+    if (LDA < M)
+        return;
     switch( datatype )
     {
         case FLOAT:
@@ -416,7 +417,8 @@ void rand_matrix(integer datatype, void *A, integer M, integer N, integer LDA)
 void rand_sym_matrix(integer datatype, void *A, integer M, integer N, integer LDA)
 {
     integer i, j;
-
+    if(LDA < M)
+        return;
     switch( datatype )
     {
         case FLOAT:
@@ -480,6 +482,9 @@ void rand_sym_matrix(integer datatype, void *A, integer M, integer N, integer LD
 /* Copy a matrix */
 void copy_matrix(integer datatype, char *uplo, integer M, integer N, void *A, integer LDA, void *B, integer LDB)
 {
+    if ((LDA < M) || (LDB < M))
+        return;
+
     switch( datatype )
     {
         case INTEGER:
@@ -537,7 +542,8 @@ void copy_realtype_matrix(integer datatype, char *uplo, integer M, integer N, vo
 void reset_matrix(integer datatype, integer M, integer N, void *A, integer LDA)
 {
     integer i, j;
-
+    if(LDA < M)
+        return;
     switch( datatype )
     {
         case INTEGER:
@@ -584,6 +590,8 @@ void reset_matrix(integer datatype, integer M, integer N, void *A, integer LDA)
 /* Set a matrix to identity */
 void set_identity_matrix(integer datatype, integer M, integer N, void *A, integer LDA)
 {
+    if (LDA < M)
+        return;
 
     switch( datatype )
     {
@@ -844,6 +852,8 @@ void rand_spd_matrix(integer datatype, char *uplo, void **A, integer m,integer l
     void *buff_A = NULL, *buff_B = NULL;
     void *a_temp = NULL;
     char trans_A, trans_B;
+    if (lda < m)
+        return;
 
     create_matrix(datatype, &sample, lda, m);
     create_matrix(datatype, &buff_A, lda, m);
@@ -956,6 +966,8 @@ void diagonalize_vector(integer datatype, void* s, void* sigma, integer m, integ
 void rand_hermitian_matrix(integer datatype, integer n, void** A, integer lda)
 {
     void *B = NULL;
+    if (lda < n)
+        return;
 
     create_matrix(datatype, &B, n, n);
     reset_matrix(datatype, n, n, B, n);
@@ -1265,7 +1277,8 @@ integer get_realtype(integer datatype)
 void rand_sym_tridiag_matrix(integer datatype, void *A, integer M, integer N, integer LDA)
 {
     integer i, j;
-
+    if(LDA < M)
+        return;
     reset_matrix(datatype, M, N, A, LDA);
 
     switch( datatype )
@@ -1426,7 +1439,8 @@ void get_subdiagonal(integer datatype, void *A, integer m, integer n, integer ld
 void copy_sym_tridiag_matrix(integer datatype, void *D, void *E, integer M, integer N, void *B, integer LDA)
 {
     integer i, j;
-
+    if (LDA < M)
+        return;
     reset_matrix(datatype, M, N, B, LDA);
 
     switch( datatype )
@@ -1743,7 +1757,8 @@ void get_min(integer datatype, void *arr, void *min_val, integer n)
 void init_matrix_from_file(integer datatype, void* A, integer m, integer n, integer lda, FILE* fptr)
 {
     int i, j;
-
+    if (lda < m)
+        return;
     switch (datatype)
     {
         case FLOAT:
@@ -1876,6 +1891,8 @@ void init_vector_from_file(integer datatype, void* A, integer m, integer inc, FI
 /* Convert matrix according to ILO and IHI values */
 void get_generic_triangular_matrix(integer datatype, integer N, void *A, integer LDA, integer ilo, integer ihi)
 {
+    if(LDA < N)
+        return;
     /* Intialize matrix with random values */
     rand_matrix(datatype, A, N, N, LDA);
     integer i;
@@ -1956,6 +1973,8 @@ void get_hessenberg_matrix(integer datatype, integer n, void* A, integer lda, vo
     void *A_save = NULL;
     void *tau = NULL, *work = NULL;
     integer lwork;
+    if((lda < n) || (ldz < n))
+        return;
     create_matrix(datatype, &A_save, lda, n);
     create_vector(datatype, &tau, n-1);
 
@@ -2282,7 +2301,8 @@ void get_orthogonal_matrix_from_QR(integer datatype, integer n, void *A, integer
 {
     void *tau = NULL, *work = NULL;
     integer lwork = -1;
-
+    if ((lda < n) || (ldq < n))
+        return;
     /* Intializing matrix for the call to GGHRD */
     create_vector(datatype, &work, 1);
     create_vector(datatype, &tau, n);
@@ -2642,7 +2662,8 @@ double svd_check_order(integer datatype, void *s, integer m, integer n, double r
 void init_matrix_spec_in(integer datatype, void *A, integer M, integer N, integer LDA, char type)
 {
     integer i, j, realdatatype;
-
+    if (LDA < M)
+        return;
     switch( datatype )
     {
         case FLOAT:

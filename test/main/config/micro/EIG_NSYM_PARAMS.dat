@@ -5,10 +5,10 @@ MRange_step_size 10 20
 NRange_start 15  89
 NRange_end   35  240
 NRange_step_size 10 100
-lda 20 87
-ldb 20 87
-ldvl 20 87
-ldvr 20 87
+lda -1 87
+ldb -1 87
+ldvl -1 87
+ldvr -1 87
 Repeats 1 1 1 1
 DataTypes s d c z
 Matrix_Layout 101 102 101 102

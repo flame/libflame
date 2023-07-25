@@ -13,13 +13,6 @@ void prepare_ggev_run(char *jobvl, char *jobvr, integer n, void *a, integer lda,
 void invoke_ggev(integer datatype, char* jobvl, char* jobvr, integer* n, void* a, integer* lda, void* b, integer* ldb, integer* alpha, integer* alphar,
     integer* alphai, integer* beta, void* vl, integer* ldvl, void* vr, integer* ldvr, void* work, integer* lwork, void* rwork, integer* info);
 
-/* Flag to indicate lwork availability status
- * <= 0 - To be calculated
- * > 0  - Use the value
- * */
-static integer g_lwork; 
-static FILE* g_ext_fptr = NULL;
-
 void fla_test_ggev(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Computing Eigen value and Eigen vectors";
@@ -28,6 +21,7 @@ void fla_test_ggev(integer argc, char ** argv, test_params_t *params)
 
     if(argc == 1)
     {
+        config_data = 1;
         fla_test_output_info("--- %s ---\n", op_str);
         fla_test_output_info("\n");
         fla_test_op_driver(front_str, SQUARE_INPUT, params, EIG_NSYM, fla_test_ggev_experiment);
@@ -111,6 +105,7 @@ void fla_test_ggev(integer argc, char ** argv, test_params_t *params)
     if (g_ext_fptr != NULL)
     {
         fclose(g_ext_fptr);
+        g_ext_fptr = NULL;
     }
     return;
 }
@@ -146,10 +141,44 @@ void fla_test_ggev_experiment(test_params_t *params,
     ldvl = params->eig_non_sym_paramslist[pci].ldvl;
     ldvr = params->eig_non_sym_paramslist[pci].ldvr;
 
-    if(lda < m || ldb < m || ldvl < m || ldvr < m)
+   /* If leading dimensions = -1, set them to default value
+       when inputs are from config files */
+    if (config_data)
     {
-        *residual = DBL_MIN;
-        return;
+        if (lda == -1)
+        {
+            lda = fla_max(1,m);
+        }
+        if (ldb == -1)
+        {
+            ldb = fla_max(1,m);
+        }
+        /* LDVL >= 1, and
+           if JOBVL = 'V', LDVL >= M */
+        if (ldvl == -1)
+        {
+            if (JOBVL == 'V')
+            {
+                ldvl = m;
+            }
+            else
+            {
+                ldvl = 1;
+            }
+        }
+        /* LDVR >= 1, and
+           if JOBVR = 'V', LDVR >= M */
+        if (ldvr == -1)
+        {
+            if (JOBVR == 'V')
+            {
+                ldvr = m;
+            }
+            else
+            {
+                ldvr = 1;
+            }
+        }
     }
 
     /* Create input matrix parameters */
@@ -191,7 +220,7 @@ void fla_test_ggev_experiment(test_params_t *params,
     /* output validation */
     if ((JOBVL == 'V' && JOBVR == 'V') && info == 0)
         validate_ggev(&JOBVL, &JOBVR, m, A, lda, B, ldb, alpha, alphar, alphai, beta, VL, ldvl, VR, ldvr, datatype, residual, &vinfo);
-    
+
     FLA_TEST_CHECK_EINFO(residual, info, einfo);
 
     /* Free up the buffers */

@@ -77,6 +77,24 @@
 int test_progress(const char* const api,const integer lenapi,const integer* const progress,const integer* const current_thread,const integer* const total_threads);
 #endif
 
+/* Flag to indicate lwork/liwork/lrwork availability status
+ * <= 0 - To be calculated
+ * > 0  - Use the value
+ * */
+extern integer g_lwork;
+extern integer g_liwork;
+extern integer g_lrwork;
+/* Variable to indicate the source of inputs
+ * = 0 - Inputs are from command line
+ * = 1 - Inputs are from config file
+ * */
+extern integer config_data;
+/* File pointer for external file which is used
+ * to pass the input matrix values
+ * */
+extern FILE* g_ext_fptr;
+
+
 #define FLA_TEST_PARSE_LAST_ARG(argv)                     \
     integer i;                                            \
     char *info;                                           \
@@ -116,11 +134,8 @@ int test_progress(const char* const api,const integer lenapi,const integer* cons
     }                                                     \
 
 #define FLA_TEST_CHECK_EINFO(residual, info, einfo)       \
-    if(einfo != 0)                                        \
-    {                                                     \
-        if(info != einfo)                                 \
-            *residual = DBL_MAX;                          \
-    }                                                     \
+    if(info != einfo)                                     \
+        *residual = DBL_MAX;                              \
 
 typedef struct Lin_solver_paramlist_t
 {

@@ -18,13 +18,6 @@ void invoke_geevx(integer datatype, char *balanc, char *jobvl, char *jobvr, char
                   void *scale, void *abnrm, void *rconde, void *rcondv, void* work, integer* lwork, void* rwork, integer* iwork,
 		  integer* info);
 
-/* Flag to indicate lwork availability status
- * <= 0 - To be calculated
- * > 0  - Use the value
- * */
-static integer g_lwork;
-static FILE* g_ext_fptr = NULL;
-
 void fla_test_geevx(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Eigen Decomposition of non symmetric matrix";
@@ -34,6 +27,7 @@ void fla_test_geevx(integer argc, char ** argv, test_params_t *params)
     if(argc == 1)
     {
         g_lwork = -1;
+        config_data = 1;
         fla_test_output_info("--- %s ---\n", op_str);
         fla_test_output_info("\n");
         fla_test_op_driver(front_str, SQUARE_INPUT,  params, EIG_NSYM, fla_test_geevx_experiment);
@@ -117,6 +111,7 @@ void fla_test_geevx(integer argc, char ** argv, test_params_t *params)
     if (g_ext_fptr != NULL)
     {
         fclose(g_ext_fptr);
+        g_ext_fptr = NULL;
     }
     return;
 }
@@ -146,12 +141,6 @@ void fla_test_geevx_experiment(test_params_t *params,
     ldvl = params->eig_non_sym_paramslist[pci].ldvl;
     ldvr = params->eig_non_sym_paramslist[pci].ldvr;
 
-    if(lda < m || ldvl < m || ldvr < m)
-    {
-        *residual = DBL_MIN;
-        return;
-    }
-
     *residual =  params->eig_non_sym_paramslist[pci].GenNonSymEigProblem_threshold;
     balanc = params->eig_non_sym_paramslist[pci].balance_ggevx;
     jobvl = params->eig_non_sym_paramslist[pci].jobvsl;
@@ -162,6 +151,40 @@ void fla_test_geevx_experiment(test_params_t *params,
         jobvl = 'V';
 	    jobvr = 'V';
     }
+    /* If leading dimensions = -1, set them to default value
+       when inputs are from config files */
+    if (config_data)
+    {
+        if (lda == -1)
+        {
+            lda = fla_max(1,m);
+        }
+        /* LDVL >= 1; if JOBVL = 'V', LDVL >= M */
+        if (ldvl == -1)
+        {
+            if (jobvl == 'V')
+            {
+                ldvl = m;
+            }
+            else
+            {
+                ldvl = 1;
+            }
+        }
+        /* LDVR >= 1; if JOBVR = 'V', LDVR >= M */
+        if (ldvr == -1)
+        {
+            if (jobvr == 'V')
+            {
+                ldvr = m;
+            }
+            else
+            {
+                ldvr = 1;
+            }
+        }
+    }
+
     /* Create input matrix parameters */
     create_matrix(datatype, &A, lda, m);
 
@@ -205,7 +228,7 @@ void fla_test_geevx_experiment(test_params_t *params,
     if (info == 0)
         validate_geevx(&jobvl, &jobvr, &sense, &balanc, m, A, A_test, lda, VL, ldvl, VR, ldvr, w, wr, wi, scale,
                    abnrm, rconde, rcondv, datatype, residual, &vinfo);
-    
+
     FLA_TEST_CHECK_EINFO(residual, info, einfo);
 
     /* Free up the buffers */

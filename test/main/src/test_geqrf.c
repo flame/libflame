@@ -9,13 +9,6 @@ void fla_test_geqrf_experiment(test_params_t *params, integer datatype, integer 
                                     integer einfo, double* perf, double* t,double* residual);
 void prepare_geqrf_run(integer m_A, integer n_A, void *A, integer lda, void *T, integer datatype, integer n_repeats, double* time_min_, integer *info);
 
-/* Flag to indicate lwork availability status
- * <= 0 - To be calculated
- * > 0  - Use the value
- * */
-static integer g_lwork;
-static FILE* g_ext_fptr = NULL;
-
 void fla_test_geqrf(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "RQ factorization";
@@ -25,6 +18,7 @@ void fla_test_geqrf(integer argc, char ** argv, test_params_t *params)
     if(argc == 1)
     {
         g_lwork = -1;
+        config_data = 1;
         fla_test_output_info("--- %s ---\n", op_str);
         fla_test_output_info("\n");
         fla_test_op_driver(front_str, RECT_INPUT, params, LIN, fla_test_geqrf_experiment);
@@ -103,6 +97,7 @@ void fla_test_geqrf(integer argc, char ** argv, test_params_t *params)
     if (g_ext_fptr != NULL)
     {
         fclose(g_ext_fptr);
+        g_ext_fptr = NULL;
     }
 
     return;
@@ -130,10 +125,14 @@ void fla_test_geqrf_experiment(test_params_t *params,
     lda = params->lin_solver_paramslist[pci].lda;
     *residual = params->lin_solver_paramslist[pci].solver_threshold;
 
-    if(lda < m)
+    /* If leading dimensions = -1, set them to default value
+       when inputs are from config files */
+    if (config_data)
     {
-        *residual = DBL_MIN;
-        return;
+        if (lda == -1)
+        {
+             lda = fla_max(1,m);
+        }
     }
 
     // Create input matrix parameters
@@ -163,9 +162,9 @@ void fla_test_geqrf_experiment(test_params_t *params,
     // output validation
     if (info == 0) 
         validate_geqrf(m, n, A, A_test, lda, T, datatype, residual, &vinfo);
-    
+
     FLA_TEST_CHECK_EINFO(residual, info, einfo);
-        
+
     // Free up the buffers
     free_matrix(A);
     free_matrix(A_test);

@@ -14,13 +14,6 @@ void prepare_syev_run(char* jobz, char* uplo, integer n, void* A, integer lda, v
 void invoke_syev(integer datatype, char* jobz, char* uplo, integer* n, void* a, integer* lda, void* w, void* work, integer* lwork,
                      void *rwork, integer* info);
 
-/* Flag to indicate lwork availability status
- * <= 0 - To be calculated
- * > 0  - Use the value
- * */
-static integer g_lwork;
-static FILE* g_ext_fptr = NULL;
-
 void fla_test_syev(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Eigen Values and Vectors";
@@ -30,6 +23,7 @@ void fla_test_syev(integer argc, char ** argv, test_params_t *params)
     if(argc == 1)
     {
         g_lwork = -1;
+        config_data = 1;
         fla_test_output_info("--- %s ---\n", op_str);
         fla_test_output_info("\n");
         fla_test_op_driver(front_str, SQUARE_INPUT, params, EIG_SYM, fla_test_syev_experiment);
@@ -108,6 +102,7 @@ void fla_test_syev(integer argc, char ** argv, test_params_t *params)
     if (g_ext_fptr != NULL)
     {
         fclose(g_ext_fptr);
+        g_ext_fptr = NULL;
     }
 }
 
@@ -134,10 +129,14 @@ void fla_test_syev_experiment(test_params_t *params,
     n = p_cur;
     lda = params->eig_sym_paramslist[pci].lda;
 
-    if(lda < n)
+    /* If leading dimensions = -1, set them to default value
+       when inputs are from config files */
+    if (config_data)
     {
-        *residual = DBL_MIN;
-        return;
+        if (lda == -1)
+        {
+            lda = fla_max(1,n);
+        }
     }
 
     /* Create input matrix parameters */
@@ -175,9 +174,9 @@ void fla_test_syev_experiment(test_params_t *params,
     /* output validation */
     if (info == 0)
         validate_syevd(&jobz, n, A, A_test, lda, w, datatype, residual, &vinfo);
-    
+
     FLA_TEST_CHECK_EINFO(residual, info, einfo);
-        
+
     /* Free up the buffers */
     free_matrix(A);
     free_matrix(A_test);

@@ -8,7 +8,6 @@
 void fla_test_potrs_experiment(test_params_t *params, integer datatype, integer  p_cur, integer  q_cur, integer  pci, integer  n_repeats, integer einfo, double* perf, double* time_min,double* residual);
 void prepare_potrs_run(char* uplo, integer m, integer nrhs, void *A, integer lda, integer datatype, void *b, integer ldb, integer n_repeats, double* time_min_, integer *info);
 void invoke_potrs(char* uplo, integer datatype, integer* m, void* A, integer* lda, integer *nrhs, void* b, integer* ldb, integer* info);
-static FILE* g_ext_fptr = NULL;
 
 void fla_test_potrs(integer argc, char ** argv, test_params_t *params)
 {
@@ -18,6 +17,7 @@ void fla_test_potrs(integer argc, char ** argv, test_params_t *params)
 
     if(argc == 1)
     {
+        config_data = 1;
         fla_test_output_info("--- %s ---\n", op_str);
         fla_test_output_info("\n");
         fla_test_op_driver(front_str, SQUARE_INPUT, params, LIN, fla_test_potrs_experiment);
@@ -98,6 +98,7 @@ void fla_test_potrs(integer argc, char ** argv, test_params_t *params)
     if (g_ext_fptr != NULL)
     {
         fclose(g_ext_fptr);
+        g_ext_fptr = NULL;
     }
     return;
 
@@ -127,10 +128,18 @@ void fla_test_potrs_experiment(test_params_t *params,
     lda = params->lin_solver_paramslist[pci].lda;
     ldb = params->lin_solver_paramslist[pci].ldb;
 
-    if(lda < n || ldb < n)
+    /* If leading dimensions = -1, set them to default value
+       when inputs are from config files */
+    if (config_data)
     {
-        *residual = DBL_MIN;
-        return;
+        if (lda == -1)
+        {
+            lda = fla_max(1,n);
+        }
+        if (ldb == -1)
+        {
+            ldb = fla_max(1,n);
+        }
     }
 
     /* Create input matrix parameters */
@@ -174,7 +183,7 @@ void fla_test_potrs_experiment(test_params_t *params,
     /* Validate potrs call by computing Ax-b */
     if(info == 0)
         validate_potrs(n, nrhs, A_test, lda, X, B, ldb, datatype, residual, &vinfo);
-    
+
     FLA_TEST_CHECK_EINFO(residual, info, einfo);
 
     free_matrix(A);

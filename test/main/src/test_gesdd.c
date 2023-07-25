@@ -13,13 +13,6 @@ integer n_repeats, integer einfo, double* perf, double* t, double* residual);
 void prepare_gesdd_run(char *jobz, integer m_A, integer n_A, void *A, integer lda, void *s, void *U, integer ldu, void *V, integer ldvt, integer datatype, integer n_repeats, double* time_min_, integer *info);
 void invoke_gesdd(integer datatype, char* jobz, integer* m, integer* n, void* a, integer* lda, void* s, void* u, integer* ldu, void* vt, integer* ldvt, void* work, integer* lwork, void* rwork, integer* iwork, integer* info);
 
-/* Flag to indicate lwork availability status
- * <= 0 - To be calculated
- * > 0  - Use the value
- * */
-static integer g_lwork;
-static FILE* g_ext_fptr = NULL;
-
 void fla_test_gesdd(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Singular value decomposition";
@@ -29,6 +22,7 @@ void fla_test_gesdd(integer argc, char ** argv, test_params_t *params)
     if(argc == 1)
     {
         g_lwork = -1;
+        config_data = 1;
         fla_test_output_info("--- %s ---\n", op_str);
         fla_test_output_info("\n");
         fla_test_op_driver(front_str, RECT_INPUT, params, SVD, fla_test_gesdd_experiment);
@@ -111,6 +105,7 @@ void fla_test_gesdd(integer argc, char ** argv, test_params_t *params)
     if (g_ext_fptr != NULL)
     {
         fclose(g_ext_fptr);
+        g_ext_fptr = NULL;
     }
     return;
 }
@@ -150,10 +145,45 @@ void fla_test_gesdd_experiment(test_params_t *params,
     ldu = params->svd_paramslist[pci].ldu;
     ldvt = params->svd_paramslist[pci].ldvt;
 
-    if(lda < m || ldu < m || ldvt < n)
+    /* If leading dimensions = -1, set them to default value
+       when inputs are from config files */
+    if (config_data)
     {
-        *residual = DBL_MIN;
-        return;
+        if (lda == -1)
+        {
+            lda = fla_max(1,m);
+        }
+        /* LDU >= 1;
+           if JOBZ = 'S' or 'A' or JOBZ = 'O' and M < N, LDU >= M. */
+        if (ldu == -1)
+        {
+            if (((jobz == 'S') || (jobz == 'A')) || ((jobz == 'O') && (m < n)))
+            {
+                ldu = m;
+            }
+            else
+            {
+                ldu = 1;
+            }
+        }
+        /* LDVT >= 1;
+           if JOBZ = 'A' or JOBZ = 'O' and M >= N, LDVT >= N;
+           if JOBZ = 'S', LDVT >= min(M,N). */
+        if (ldvt == -1)
+        {
+            if ((jobz == 'A') || ((jobz == 'O') && (m >= n)))
+            {
+                ldvt = n;
+            }
+            else if (jobz == 'S')
+            {
+                ldvt = fla_min(m,n);
+            }
+            else
+            {
+                ldvt = 1;
+            }
+        }
     }
 
     /* Create input matrix parameters */
@@ -182,7 +212,7 @@ void fla_test_gesdd_experiment(test_params_t *params,
     /* output validation */
     if((jobz == 'A' || jobz == 'S' || jobz == 'O') && info == 0)
         validate_gesdd(&jobz, m, n, A, A_test, lda, s, U, ldu, V, ldvt, datatype, residual, &vinfo);
-    
+
     FLA_TEST_CHECK_EINFO(residual, info, einfo);
 
     /* Free up the buffers */

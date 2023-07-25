@@ -30,6 +30,23 @@ integer tests_passed[4];
 integer tests_failed[4];
 integer tests_incomplete[4];
 
+/* Flag to indicate lwork/liwork/lrwork availability status
+ * <= 0 - To be calculated
+ * > 0  - Use the value
+ * */
+integer g_lwork = -1;
+integer g_liwork= -1;
+integer g_lrwork= -1;
+/* Variable to indicate the source of inputs
+ * = 0 - Inputs are from command line
+ * = 1 - Inputs are from config file
+ * */
+integer config_data = 0;
+/* File pointer for external file which is used
+ * to pass the input matrix values
+ * */
+FILE* g_ext_fptr = NULL;
+
 #define SKIP_EXTRA_LINE_READ() \
         eol = fgetc(fp); \
         if(eol != '\n') \

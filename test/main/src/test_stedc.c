@@ -13,15 +13,6 @@ void invoke_stedc(integer datatype, char* compz, integer* n, void* D, void* E, v
                   integer* ldz, void* work, integer* lwork, void* rwork,
                   integer* lrwork, integer* iwork, integer* liwork, integer *info);
 
-/* Flag to indicate lwork availability status
- * <= 0 - To be calculated
- * > 0  - Use the value
- * */
-static integer g_lwork;
-static integer g_liwork;
-static integer g_lrwork;
-static FILE* g_ext_fptr = NULL;
-
 void fla_test_stedc(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Eigenvalues/eigenvectors of symmetric tridiagonal matrix";
@@ -33,6 +24,7 @@ void fla_test_stedc(integer argc, char ** argv, test_params_t *params)
         g_lwork = -1;
         g_liwork = -1;
         g_lrwork = -1;
+        config_data = 1;
         fla_test_output_info("--- %s ---\n", op_str);
         fla_test_output_info("\n");
         fla_test_op_driver(front_str, SQUARE_INPUT, params, EIG_SYM, fla_test_stedc_experiment);
@@ -114,6 +106,7 @@ void fla_test_stedc(integer argc, char ** argv, test_params_t *params)
     if(g_ext_fptr != NULL)
     {
         fclose(g_ext_fptr);
+        g_ext_fptr = NULL;
     }
     return;
 }
@@ -143,10 +136,14 @@ void fla_test_stedc_experiment(test_params_t *params,
     lda = params->eig_sym_paramslist[pci].lda;
     *residual = params->eig_sym_paramslist[pci].threshold_value;
 
-    if(lda < n)
+    /* If leading dimensions = -1, set them to default value
+       when inputs are from config files */
+    if (config_data)
     {
-        *residual = DBL_MIN;
-        return;
+        if (lda == -1)
+        {
+            lda = fla_max(1,n);
+        }
     }
 
     create_matrix(datatype, &A, lda, n);
@@ -233,7 +230,7 @@ void fla_test_stedc_experiment(test_params_t *params,
     /* Output validation. */
     if (info == 0)
         validate_stedc(compz, n, D_test, Z_input, Z_test, ldz, datatype, residual, &vinfo);
-    
+
     FLA_TEST_CHECK_EINFO(residual, info, einfo);
 
     /* Free up buffers. */

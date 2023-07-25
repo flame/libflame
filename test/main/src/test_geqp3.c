@@ -12,13 +12,6 @@ void prepare_geqp3_run(integer m_A, integer n_A, void *A, integer lda, integer *
 void invoke_geqp3(integer datatype, integer* m, integer* n, void* a, integer* lda, integer *jpvt,
                   void* tau, void* work, integer* lwork, void* rwork, integer* info);
 
-/* Flag to indicate lwork availability status
- * <= 0 - To be calculated
- * > 0  - Use the value
- * */
-static integer g_lwork;
-static FILE* g_ext_fptr = NULL;
-
 void fla_test_geqp3(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "QR factorization with column pivoting";
@@ -28,6 +21,7 @@ void fla_test_geqp3(integer argc, char ** argv, test_params_t *params)
     if(argc == 1)
     {
         g_lwork = -1;
+        config_data = 1;
         fla_test_output_info("--- %s ---\n", op_str);
         fla_test_output_info("\n");
         fla_test_op_driver(front_str, RECT_INPUT, params, LIN, fla_test_geqp3_experiment);
@@ -106,6 +100,7 @@ void fla_test_geqp3(integer argc, char ** argv, test_params_t *params)
     if(g_ext_fptr != NULL)
     {
         fclose(g_ext_fptr);
+        g_ext_fptr = NULL;
     }
     return;
 
@@ -134,10 +129,14 @@ void fla_test_geqp3_experiment(test_params_t *params,
     n = q_cur;
     lda = params->lin_solver_paramslist[pci].lda;
 
-    if(lda < m)
+    /* If leading dimensions = -1, set them to default value
+       when inputs are from config files */
+    if (config_data)
     {
-        *residual = DBL_MIN;
-        return;
+        if (lda == -1)
+        {
+             lda = fla_max(1,m);
+        }
     }
 
     /* Create input matrix parameters */
@@ -145,7 +144,6 @@ void fla_test_geqp3_experiment(test_params_t *params,
     create_vector(datatype, &T, fla_min(m,n));
 
     init_matrix(datatype, A, m, n, lda, g_ext_fptr, params->imatrix_char);
-
 
     /* Make a copy of input matrix A,required for validation. */
     create_matrix(datatype, &A_test, lda, n);
@@ -172,7 +170,7 @@ void fla_test_geqp3_experiment(test_params_t *params,
     /* output validation */
     if (info == 0)
         validate_geqp3(m, n, A, A_test, lda, jpvt, T, datatype, residual, &vinfo);
-    
+
     FLA_TEST_CHECK_EINFO(residual, info, einfo);
 
     /* Free up the buffers */

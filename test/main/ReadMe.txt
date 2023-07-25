@@ -215,3 +215,14 @@ NOTE:
    
    In the above example passing the value of --imatrix as 'N' will intialize the matrix with NAN values
    and if the value is 'I' then matrix will be intialized with the INFINITY.
+
+8. Tests with -1 for leading dimensions from config files
+
+   When -1 is passed as any of the leading dimensions(lda, ldab, ldu, ldvt, ldz etc) from config files,
+   least valid value is assigned to the corresponding leading dimension.
+
+   Example: If lda = -1 passed(from config file) to test_geev API
+            then main test-suite sets lda = fla_max(1,n) before calling lapack API geev.
+
+            If lda = -1 is passed through command line, then -1 will be taken as the given lda 
+            without any change.

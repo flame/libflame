@@ -9,7 +9,6 @@
 /* Local prototypes.*/
 void fla_test_potrf_experiment(test_params_t *params, integer datatype, integer  p_cur, integer  q_cur, integer  pci, integer  n_repeats, integer einfo, double* perf, double* time_min, double* residual);
 void prepare_potrf_run(char* uplo, integer m, void *A, integer lda, integer datatype, integer n_repeats, double* time_min_, integer *info);
-static FILE* g_ext_fptr = NULL;
 
 void fla_test_potrf(integer argc, char ** argv, test_params_t *params)
 {
@@ -18,6 +17,7 @@ void fla_test_potrf(integer argc, char ** argv, test_params_t *params)
     integer tests_not_run = 1, invalid_dtype = 0, einfo = 0;
     if(argc == 1)
     {
+        config_data = 1;
         fla_test_output_info("--- %s ---\n", op_str);
         fla_test_output_info("\n");
         fla_test_op_driver(front_str, SQUARE_INPUT, params, LIN, fla_test_potrf_experiment);
@@ -95,6 +95,7 @@ void fla_test_potrf(integer argc, char ** argv, test_params_t *params)
     if (g_ext_fptr != NULL)
     {
         fclose(g_ext_fptr);
+        g_ext_fptr = NULL;
     }
     return;
 }
@@ -120,10 +121,14 @@ void fla_test_potrf_experiment(test_params_t *params,
     m = p_cur;
     lda = params->lin_solver_paramslist[pci].lda;
 
-    if(lda < m)
+    /* If leading dimensions = -1, set them to default value
+       when inputs are from config files */
+    if (config_data)
     {
-        *residual = DBL_MIN;
-        return;
+        if (lda == -1)
+        {
+            lda = fla_max(1,m);
+        }
     }
 
     /* Create input matrix parameters */
