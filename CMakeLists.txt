@@ -794,7 +794,12 @@ file(MAKE_DIRECTORY ${BASE_INC_PATH})
 set (BLIS1_TARGET_PATH "${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/blis1.h")
 set (BLIS1__H_SRC_PATH "${CMAKE_SOURCE_DIR}/src/base/flamec/blis/include/blis1.h" )
 set (BLIS_FLATTEN_HEADER "${CMAKE_SOURCE_DIR}/build/flatten-headers.py")
-set (PYTHON_EXE "python")
+
+if(WIN32)
+	set (PYTHON_EXE "python")
+else()
+	set (PYTHON_EXE "python3")
+endif()
 
 execute_process(
     COMMAND ${PYTHON_EXE} ${BLIS_FLATTEN_HEADER} "${C_COMMENT}" "${VERBOSE}"

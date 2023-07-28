@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 #  BLIS    
 #  An object-based framework for developing high-performance BLAS-like
