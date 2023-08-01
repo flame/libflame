@@ -248,7 +248,7 @@ int zlatrs3_(char *uplo, char *trans, char *diag, char * normin, integer *n, int
     doublereal scaloc, scamin;
     extern doublereal dlarmm_(doublereal *, doublereal *, doublereal *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern doublereal zlange_(char *, integer *, integer *, doublecomplex *, integer *, doublereal *);
     doublereal bignum;
@@ -369,7 +369,7 @@ int zlatrs3_(char *uplo, char *trans, char *diag, char * normin, integer *n, int
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZLATRS3", &i__1);
+        xerbla_("ZLATRS3", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

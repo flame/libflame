@@ -106,7 +106,7 @@
  /* Local variables */
  integer i__, j, l;
  extern /* Subroutine */
- int  xerbla_(char *, integer *);
+ int  xerbla_(const char *srname, const integer *info, ftnlen srname_len);
  /* -- LAPACK computational routine -- */
  /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
  /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -147,7 +147,7 @@
  }
  if (*info != 0) {
  i__1 = -(*info);
- xerbla_("DORGL2", &i__1);
+ xerbla_("DORGL2", &i__1, (ftnlen)6);
  return 0;
  }
  /* Quick return if possible */

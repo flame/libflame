@@ -302,7 +302,7 @@ int zunbdb_(char *trans, char *signs, integer *m, integer *p, integer *q, double
     int zscal_(integer *, doublecomplex *, doublecomplex *, integer *), zlarf_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *), zaxpy_(integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *);
     extern doublereal dznrm2_(integer *, doublecomplex *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zlacgv_( integer *, doublecomplex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zlacgv_( integer *, doublecomplex *, integer *);
     logical lquery;
     extern /* Subroutine */
     int zlarfgp_(integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *);
@@ -448,7 +448,7 @@ int zunbdb_(char *trans, char *signs, integer *m, integer *p, integer *q, double
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("xORBDB", &i__1);
+        xerbla_("xORBDB", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

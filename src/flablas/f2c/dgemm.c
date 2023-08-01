@@ -13,7 +13,7 @@ int dgemm_(char *transa, char *transb, integer *m, integer * n, integer *k, doub
     extern logical lsame_(char *, char *);
     integer nrowa, nrowb;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
     /* .. */
@@ -182,7 +182,7 @@ int dgemm_(char *transa, char *transb, integer *m, integer * n, integer *k, doub
     }
     if (info != 0)
     {
-        xerbla_("DGEMM ", &info);
+        xerbla_("DGEMM ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

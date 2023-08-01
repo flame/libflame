@@ -222,7 +222,7 @@ int dspgvd_(integer *itype, char *jobz, char *uplo, integer * n, doublereal *ap,
     int dtpmv_(char *, char *, char *, integer *, doublereal *, doublereal *, integer *), dtpsv_(char *, char *, char *, integer *, doublereal *, doublereal *, integer *);
     logical wantz;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), dspevd_( char *, char *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), dspevd_( char *, char *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *, integer *, integer *);
     integer liwmin;
     extern /* Subroutine */
     int dpptrf_(char *, integer *, doublereal *, integer *), dspgst_(integer *, char *, integer *, doublereal *, doublereal *, integer *);
@@ -316,7 +316,7 @@ int dspgvd_(integer *itype, char *jobz, char *uplo, integer * n, doublereal *ap,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSPGVD", &i__1);
+        xerbla_("DSPGVD", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

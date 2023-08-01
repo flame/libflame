@@ -315,7 +315,7 @@ int dgges_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, integer *n, doub
     int dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *);
     doublereal safmax;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal bignum;
     extern /* Subroutine */
     int dhgeqz_(char *, char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *), dtgsen_(integer *, logical *, logical *, logical *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, integer *, integer *, integer *);
@@ -482,7 +482,7 @@ int dgges_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, integer *n, doub
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGGES ", &i__1);
+        xerbla_("DGGES ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

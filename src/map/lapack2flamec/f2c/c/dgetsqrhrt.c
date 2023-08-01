@@ -182,7 +182,7 @@ int dgetsqrhrt_(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2
     int dorgtsqr_row_(integer *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *);
     integer iinfo;
     extern /* Subroutine */
-    int dcopy_(integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dcopy_(integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical lquery;
     extern /* Subroutine */
     int dlatsqr_(integer *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *);
@@ -301,7 +301,7 @@ int dgetsqrhrt_(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGETSQRHRT", &i__1);
+        xerbla_("DGETSQRHRT", &i__1, (ftnlen)10);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

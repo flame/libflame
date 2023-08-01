@@ -340,7 +340,7 @@ int stgevc_(char *side, char *howmny, logical *select, integer *n, real *s, inte
     extern real slamch_(char *);
     real salfar, safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real xscale, bignum;
     logical ilcomp, ilcplx;
     extern /* Subroutine */
@@ -455,7 +455,7 @@ int stgevc_(char *side, char *howmny, logical *select, integer *n, real *s, inte
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("STGEVC", &i__1);
+        xerbla_("STGEVC", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
@@ -550,7 +550,7 @@ L10:
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("STGEVC", &i__1);
+        xerbla_("STGEVC", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

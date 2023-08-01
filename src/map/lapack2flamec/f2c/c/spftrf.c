@@ -202,7 +202,7 @@ int spftrf_(char *transr, char *uplo, integer *n, real *a, integer *info)
     extern logical lsame_(char *, char *);
     logical lower;
     extern /* Subroutine */
-    int strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), ssyrk_(char *, char *, integer *, integer *, real *, real *, integer *, real *, real *, integer * ), xerbla_(char *, integer *);
+    int strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), ssyrk_(char *, char *, integer *, integer *, real *, real *, integer *, real *, real *, integer * ), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical nisodd;
     extern /* Subroutine */
     int spotrf_(char *, integer *, real *, integer *, integer *);
@@ -244,7 +244,7 @@ int spftrf_(char *transr, char *uplo, integer *n, real *a, integer *info)
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SPFTRF", &i__1);
+        xerbla_("SPFTRF", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

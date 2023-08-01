@@ -170,7 +170,7 @@ int dlaeda_(integer *n, integer *tlvls, integer *curlvl, integer *curpbm, intege
     int drot_(integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *);
     integer curr, bsiz1, bsiz2, psiz1, psiz2, zptr1;
     extern /* Subroutine */
-    int dgemv_(char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), dcopy_(integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dgemv_(char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), dcopy_(integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -209,7 +209,7 @@ int dlaeda_(integer *n, integer *tlvls, integer *curlvl, integer *curpbm, intege
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DLAEDA", &i__1);
+        xerbla_("DLAEDA", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -141,7 +141,7 @@ int zhegst_fla(integer *itype, char *uplo, integer *n, doublecomplex *a, integer
     int zhemm_(char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *);
     logical upper;
     extern /* Subroutine */
-    int ztrmm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), ztrsm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), zhegs2_(integer *, char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *), zher2k_(char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublecomplex *, integer *), xerbla_(char *, integer *);
+    int ztrmm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), ztrsm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), zhegs2_(integer *, char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *), zher2k_(char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -196,7 +196,7 @@ int zhegst_fla(integer *itype, char *uplo, integer *n, doublecomplex *a, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHEGST", &i__1);
+        xerbla_("ZHEGST", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

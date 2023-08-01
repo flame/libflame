@@ -227,7 +227,7 @@ int dlaed2_(integer *k, integer *n, integer *n1, doublereal * d__, doublereal *q
     extern doublereal dlapy2_(doublereal *, doublereal *), dlamch_(char *);
     extern integer idamax_(integer *, doublereal *, integer *);
     extern /* Subroutine */
-    int dlamrg_(integer *, integer *, doublereal *, integer *, integer *, integer *), dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dlamrg_(integer *, integer *, doublereal *, integer *, integer *, integer *), dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -289,7 +289,7 @@ int dlaed2_(integer *k, integer *n, integer *n1, doublereal * d__, doublereal *q
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DLAED2", &i__1);
+        xerbla_("DLAED2", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

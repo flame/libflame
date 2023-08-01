@@ -428,7 +428,7 @@ int csyrfsx_(char *uplo, char *equed, integer *n, integer * nrhs, complex *a, in
     logical rcequ;
     extern real cla_syrcond_c_(char *, integer *, complex *, integer *, complex *, integer *, integer *, real *, logical *, integer *, complex *, real *), cla_syrcond_x_(char *, integer *, complex *, integer *, complex *, integer *, integer *, complex *, integer *, complex *, real *), slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern real clansy_(char *, char *, integer *, complex *, integer *, real *);
     extern /* Subroutine */
     int csycon_(char *, integer *, complex *, integer *, integer *, real *, real *, complex *, integer *);
@@ -579,7 +579,7 @@ int csyrfsx_(char *uplo, char *equed, integer *n, integer * nrhs, complex *a, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CSYRFSX", &i__1);
+        xerbla_("CSYRFSX", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

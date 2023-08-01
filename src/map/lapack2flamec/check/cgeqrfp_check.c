@@ -44,7 +44,7 @@ int cgeqrfp_check(integer *m, integer *n, scomplex *a, integer * lda, scomplex *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGEQRFP", &i__1);
+        xerbla_("CGEQRFP", &i__1, (ftnlen)7);
         return LAPACK_FAILURE;
     }
     else if (lquery)

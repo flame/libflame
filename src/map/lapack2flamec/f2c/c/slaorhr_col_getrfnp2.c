@@ -182,7 +182,7 @@ int slaorhr_col_getrfnp2_(integer *m, integer *n, real *a, integer *lda, real *d
     int strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * );
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.9.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -226,7 +226,7 @@ int slaorhr_col_getrfnp2_(integer *m, integer *n, real *a, integer *lda, real *d
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLAORHR_COL_GETRFNP2", &i__1);
+        xerbla_("SLAORHR_COL_GETRFNP2", &i__1, (ftnlen)20);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

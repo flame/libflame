@@ -87,7 +87,7 @@ int dormqr_check(char *side, char *trans, integer *m, integer *n, integer *k, do
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DORMQR", &i__1);
+        xerbla_("DORMQR", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

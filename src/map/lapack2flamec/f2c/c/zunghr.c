@@ -126,7 +126,7 @@ int zunghr_(integer *n, integer *ilo, integer *ihi, doublecomplex *a, integer *l
     /* Local variables */
     integer i__, j, nb, nh, iinfo;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer lwkopt;
     logical lquery;
@@ -193,7 +193,7 @@ int zunghr_(integer *n, integer *ilo, integer *ihi, doublecomplex *a, integer *l
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZUNGHR", &i__1);
+        xerbla_("ZUNGHR", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

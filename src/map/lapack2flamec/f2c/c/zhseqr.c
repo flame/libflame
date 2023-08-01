@@ -318,7 +318,7 @@ int zhseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, doub
     doublecomplex workl[49];
     logical wantt, wantz;
     extern /* Subroutine */
-    int zcopy_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), zlaqr0_(logical *, logical *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *), xerbla_(char *, integer * );
+    int zcopy_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), zlaqr0_(logical *, logical *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int zlahqr_(logical *, logical *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *, doublecomplex *, integer *, integer *), zlacpy_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), zlaset_(char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *);
@@ -410,7 +410,7 @@ int zhseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, doub
     {
         /* ==== Quick return in case of invalid argument. ==== */
         i__1 = -(*info);
-        xerbla_("ZHSEQR", &i__1);
+        xerbla_("ZHSEQR", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -157,7 +157,7 @@ int chetri_rook_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv
     integer kstep;
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.5.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -203,7 +203,7 @@ int chetri_rook_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHETRI_ROOK", &i__1);
+        xerbla_("CHETRI_ROOK", &i__1, (ftnlen)11);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

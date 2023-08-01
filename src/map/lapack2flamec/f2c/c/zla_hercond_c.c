@@ -146,7 +146,7 @@ doublereal zla_hercond_c_(char *uplo, integer *n, doublecomplex *a, integer * ld
     doublereal anorm;
     logical upper;
     extern /* Subroutine */
-    int zlacn2_(integer *, doublecomplex *, doublecomplex *, doublereal *, integer *, integer *), xerbla_( char *, integer *);
+    int zlacn2_(integer *, doublecomplex *, doublecomplex *, doublereal *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal ainvnm;
     extern /* Subroutine */
     int zhetrs_(char *, integer *, integer *, doublecomplex *, integer *, integer *, doublecomplex *, integer *, integer *);
@@ -208,7 +208,7 @@ doublereal zla_hercond_c_(char *uplo, integer *n, doublecomplex *a, integer * ld
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZLA_HERCOND_C", &i__1);
+        xerbla_("ZLA_HERCOND_C", &i__1, (ftnlen)13);
         AOCL_DTL_TRACE_LOG_EXIT
         return ret_val;
     }

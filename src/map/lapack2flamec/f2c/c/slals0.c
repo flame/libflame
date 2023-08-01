@@ -277,7 +277,7 @@ int slals0_(integer *icompq, integer *nl, integer *nr, integer *sqre, integer *n
     int sscal_(integer *, real *, real *, integer *), sgemv_(char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), scopy_( integer *, real *, integer *, real *, integer *);
     extern real slamc3_(real *, real *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real dsigjp;
     extern /* Subroutine */
     int slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *), slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *);
@@ -376,7 +376,7 @@ int slals0_(integer *icompq, integer *nl, integer *nr, integer *sqre, integer *n
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLALS0", &i__1);
+        xerbla_("SLALS0", &i__1, (ftnlen)6);
         return 0;
     }
     m = n + *sqre;

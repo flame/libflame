@@ -110,7 +110,7 @@ int spotrf2_(char *uplo, integer *n, real *a, integer *lda, integer *info)
     integer iinfo;
     logical upper;
     extern /* Subroutine */
-    int strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), ssyrk_(char *, char *, integer *, integer *, real *, real *, integer *, real *, real *, integer * ), xerbla_(char *, integer *);
+    int strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), ssyrk_(char *, char *, integer *, integer *, real *, real *, integer *, real *, real *, integer * ), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern logical sisnan_(real *);
     /* -- LAPACK computational routine (version 3.8.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -155,7 +155,7 @@ int spotrf2_(char *uplo, integer *n, real *a, integer *lda, integer *info)
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SPOTRF2", &i__1);
+        xerbla_("SPOTRF2", &i__1, (ftnlen)7);
         return 0;
     }
     /* Quick return if possible */

@@ -219,7 +219,7 @@ int zcgesv_(integer *n, integer *nrhs, doublecomplex *a, integer *lda, integer *
     int zgemm_(char *, char *, integer *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), zaxpy_(integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), clag2z_( integer *, integer *, complex *, integer *, doublecomplex *, integer *, integer *), zlag2c_(integer *, integer *, doublecomplex *, integer *, complex *, integer *, integer *);
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int cgetrf_(integer *, integer *, complex *, integer *, integer *, integer *), xerbla_(char *, integer *);
+    int cgetrf_(integer *, integer *, complex *, integer *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern doublereal zlange_(char *, integer *, integer *, doublecomplex *, integer *, doublereal *);
     extern /* Subroutine */
     int cgetrs_(char *, integer *, integer *, complex *, integer *, integer *, complex *, integer *, integer *);
@@ -291,7 +291,7 @@ int zcgesv_(integer *n, integer *nrhs, doublecomplex *a, integer *lda, integer *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZCGESV", &i__1);
+        xerbla_("ZCGESV", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -147,7 +147,7 @@ int sgbtrs_(char *trans, integer *n, integer *kl, integer * ku, integer *nrhs, r
     int sgemv_(char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *);
     logical lnoti;
     extern /* Subroutine */
-    int sswap_(integer *, real *, integer *, real *, integer *), stbsv_(char *, char *, char *, integer *, integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *);
+    int sswap_(integer *, real *, integer *, real *, integer *), stbsv_(char *, char *, char *, integer *, integer *, real *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical notran;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -212,7 +212,7 @@ int sgbtrs_(char *trans, integer *n, integer *kl, integer * ku, integer *nrhs, r
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGBTRS", &i__1);
+        xerbla_("SGBTRS", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

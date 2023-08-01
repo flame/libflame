@@ -179,7 +179,7 @@ int lapack_dormlq(char *side, char *trans, integer *m, integer *n, integer *k, d
     extern logical lsame_(char *, char *);
     integer nbmin, iinfo;
     extern /* Subroutine */
-    int lapack_dorml2(char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *), dlarfb_(char *, char *, char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), dlarft_(char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
+    int lapack_dorml2(char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *), dlarfb_(char *, char *, char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), dlarft_(char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     logical notran;
     integer ldwork;
@@ -270,7 +270,7 @@ int lapack_dormlq(char *side, char *trans, integer *m, integer *n, integer *k, d
     }
     if (*info != 0) {
         i__1 = -(*info);
-        xerbla_("DORMLQ", &i__1);
+        xerbla_("DORMLQ", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery) {

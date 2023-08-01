@@ -329,7 +329,7 @@ int zuncsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
     int zbbcsd_(char *, char *, char *, char *, char *, integer *, integer *, integer *, doublereal *, doublereal *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, integer *);
     integer lorgqrworkmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer lorglqworkopt;
     extern /* Subroutine */
     int zunbdb_(char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublecomplex *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, integer *);
@@ -672,7 +672,7 @@ int zuncsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZUNCSD", &i__1);
+        xerbla_("ZUNCSD", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

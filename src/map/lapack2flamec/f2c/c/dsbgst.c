@@ -175,7 +175,7 @@ int dsbgst_(char *vect, char *uplo, integer *n, integer *ka, integer *kb, double
     extern logical lsame_(char *, char *);
     logical upper, wantx;
     extern /* Subroutine */
-    int dlar2v_(integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), dlartg_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *), xerbla_( char *, integer *), dlargv_(integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *);
+    int dlar2v_(integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), dlartg_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), dlargv_(integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *);
     logical update;
     extern /* Subroutine */
     int dlartv_(integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *);
@@ -252,7 +252,7 @@ int dsbgst_(char *vect, char *uplo, integer *n, integer *ka, integer *kb, double
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSBGST", &i__1);
+        xerbla_("DSBGST", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

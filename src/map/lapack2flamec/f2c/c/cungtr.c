@@ -130,7 +130,7 @@ int cungtr_(char *uplo, integer *n, complex *a, integer *lda, complex *tau, comp
     integer iinfo;
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int cungql_(integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *), cungqr_(integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *);
@@ -215,7 +215,7 @@ int cungtr_(char *uplo, integer *n, complex *a, integer *lda, complex *tau, comp
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CUNGTR", &i__1);
+        xerbla_("CUNGTR", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

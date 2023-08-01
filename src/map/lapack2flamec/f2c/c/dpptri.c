@@ -102,7 +102,7 @@ int dpptri_(char *uplo, integer *n, doublereal *ap, integer * info)
     int dtpmv_(char *, char *, char *, integer *, doublereal *, doublereal *, integer *);
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), dtptri_( char *, char *, integer *, doublereal *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), dtptri_( char *, char *, integer *, doublereal *, integer *);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -138,7 +138,7 @@ int dpptri_(char *uplo, integer *n, doublereal *ap, integer * info)
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DPPTRI", &i__1);
+        xerbla_("DPPTRI", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

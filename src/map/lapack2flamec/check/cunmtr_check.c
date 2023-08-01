@@ -114,7 +114,7 @@ int cunmtr_check(char *side, char *uplo, char *trans, integer *m, integer *n, sc
     if (*info != 0)
     {
         i__2 = -(*info);
-        xerbla_("CUNMTR", &i__2);
+        xerbla_("CUNMTR", &i__2, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

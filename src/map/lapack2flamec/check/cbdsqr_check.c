@@ -64,7 +64,7 @@ int cbdsqr_check(char *uplo, integer *n, integer *ncvt, integer * nru, integer *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CBDSQR", &i__1);
+        xerbla_("CBDSQR", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     if (*n == 0)

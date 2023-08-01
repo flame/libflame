@@ -179,7 +179,7 @@ int cunmrq_(char *side, char *trans, integer *m, integer *n, integer *k, complex
     extern logical lsame_(char *, char *);
     integer nbmin, iinfo;
     extern /* Subroutine */
-    int cunmr2_(char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *, integer *), clarfb_(char *, char *, char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *), clarft_(char *, char *, integer *, integer *, complex *, integer *, complex *, complex *, integer *), xerbla_(char *, integer *);
+    int cunmr2_(char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *, integer *), clarfb_(char *, char *, char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *), clarft_(char *, char *, integer *, integer *, complex *, integer *, complex *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     logical notran;
     integer ldwork;
@@ -285,7 +285,7 @@ int cunmrq_(char *side, char *trans, integer *m, integer *n, integer *k, complex
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CUNMRQ", &i__1);    
+        xerbla_("CUNMRQ", &i__1, (ftnlen)6);    
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

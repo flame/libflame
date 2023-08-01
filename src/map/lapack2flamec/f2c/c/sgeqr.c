@@ -178,7 +178,7 @@ int sgeqr_(integer *m, integer *n, real *a, integer *lda, real *t, integer *tsiz
     logical mint, minw;
     integer nblcks;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int sgeqrt_(integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *);
@@ -346,7 +346,7 @@ int sgeqr_(integer *m, integer *n, real *a, integer *lda, real *t, integer *tsiz
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGEQR", &i__1);
+        xerbla_("SGEQR", &i__1, (ftnlen)5);
         return 0;
     }
     else if (lquery)

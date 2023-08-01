@@ -336,7 +336,7 @@ int dgegv_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
     char chtemp[1];
     logical ldumma[1];
     extern /* Subroutine */
-    int dhgeqz_(char *, char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *), dtgevc_(char *, char *, logical *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *, integer *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dhgeqz_(char *, char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *), dtgevc_(char *, char *, logical *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer ijobvl, iright;
     logical ilimit;
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
@@ -478,7 +478,7 @@ int dgegv_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGEGV ", &i__1);
+        xerbla_("DGEGV ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -130,7 +130,7 @@ int ztptri_(char *uplo, char *diag, integer *n, doublecomplex *ap, integer *info
     int zscal_(integer *, doublecomplex *, doublecomplex *, integer *);
     logical upper;
     extern /* Subroutine */
-    int ztpmv_(char *, char *, char *, integer *, doublecomplex *, doublecomplex *, integer *), xerbla_(char *, integer *);
+    int ztpmv_(char *, char *, char *, integer *, doublecomplex *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer jclast;
     logical nounit;
     /* -- LAPACK computational routine (version 3.4.0) -- */
@@ -174,7 +174,7 @@ int ztptri_(char *uplo, char *diag, integer *n, doublecomplex *ap, integer *info
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZTPTRI", &i__1);
+        xerbla_("ZTPTRI", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

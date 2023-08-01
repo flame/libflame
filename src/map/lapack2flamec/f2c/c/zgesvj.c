@@ -411,7 +411,7 @@ int zgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doubleco
     int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *);
     extern integer idamax_(integer *, doublereal *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer ijblsk, swband;
     extern /* Subroutine */
     int zdscal_(integer *, doublereal *, doublecomplex *, integer *);
@@ -530,7 +530,7 @@ int zgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doubleco
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGESVJ", &i__1);
+        xerbla_("ZGESVJ", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -590,7 +590,7 @@ int zgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doubleco
     {
         *info = -4;
         i__1 = -(*info);
-        xerbla_("ZGESVJ", &i__1);
+        xerbla_("ZGESVJ", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -632,7 +632,7 @@ int zgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doubleco
             {
                 *info = -6;
                 i__2 = -(*info);
-                xerbla_("ZGESVJ", &i__2);
+                xerbla_("ZGESVJ", &i__2, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
@@ -676,7 +676,7 @@ int zgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doubleco
             {
                 *info = -6;
                 i__2 = -(*info);
-                xerbla_("ZGESVJ", &i__2);
+                xerbla_("ZGESVJ", &i__2, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
@@ -720,7 +720,7 @@ int zgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doubleco
             {
                 *info = -6;
                 i__2 = -(*info);
-                xerbla_("ZGESVJ", &i__2);
+                xerbla_("ZGESVJ", &i__2, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }

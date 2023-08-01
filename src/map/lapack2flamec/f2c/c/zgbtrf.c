@@ -160,7 +160,7 @@ int zgbtrf_(integer *m, integer *n, integer *kl, integer *ku, doublecomplex *ab,
     , work31[4160] /* was [65][64] */
     ;
     extern /* Subroutine */
-    int zgeru_(integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), zcopy_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), zswap_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), ztrsm_( char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), zgbtf2_(integer *, integer *, integer *, integer *, doublecomplex *, integer *, integer *, integer *), xerbla_(char *, integer *);
+    int zgeru_(integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), zcopy_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), zswap_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), ztrsm_( char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), zgbtf2_(integer *, integer *, integer *, integer *, doublecomplex *, integer *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *), izamax_(integer *, doublecomplex *, integer *);
     extern /* Subroutine */
     int zlaswp_(integer *, doublecomplex *, integer *, integer *, integer *, integer *, integer *);
@@ -224,7 +224,7 @@ int zgbtrf_(integer *m, integer *n, integer *kl, integer *ku, doublecomplex *ab,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGBTRF", &i__1);
+        xerbla_("ZGBTRF", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

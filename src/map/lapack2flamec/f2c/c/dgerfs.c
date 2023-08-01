@@ -200,7 +200,7 @@ int dgerfs_(char *trans, integer *n, integer *nrhs, doublereal *a, integer *lda,
     extern doublereal dlamch_(char *);
     doublereal safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), dgetrs_( char *, integer *, integer *, doublereal *, integer *, integer *, doublereal *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), dgetrs_( char *, integer *, integer *, doublereal *, integer *, integer *, doublereal *, integer *, integer *);
     logical notran;
     char transt[1];
     doublereal lstres;
@@ -279,7 +279,7 @@ int dgerfs_(char *trans, integer *n, integer *nrhs, doublereal *a, integer *lda,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGERFS", &i__1);
+        xerbla_("DGERFS", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

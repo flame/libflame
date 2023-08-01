@@ -291,7 +291,7 @@ int dtrevc3_(char *side, char *howmny, logical *select, integer *n, doublereal *
     extern doublereal dlamch_(char *);
     extern integer idamax_(integer *, doublereal *, integer *);
     extern /* Subroutine */
-    int dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *);
@@ -444,7 +444,7 @@ int dtrevc3_(char *side, char *howmny, logical *select, integer *n, doublereal *
     if (*info != 0)
     {
         i__2 = -(*info);
-        xerbla_("DTREVC3", &i__2);
+        xerbla_("DTREVC3", &i__2, (ftnlen)7);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

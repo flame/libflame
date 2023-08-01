@@ -197,7 +197,7 @@ int chetri_3x_(char *uplo, integer *n, complex *a, integer * lda, complex *e, in
     logical upper;
     complex u01_i_j__, u11_i_j__;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer icount;
     extern /* Subroutine */
     int ctrtri_(char *, char *, integer *, complex *, integer *, integer *);
@@ -251,7 +251,7 @@ int chetri_3x_(char *uplo, integer *n, complex *a, integer * lda, complex *e, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHETRI_3X", &i__1);
+        xerbla_("CHETRI_3X", &i__1, (ftnlen)9);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

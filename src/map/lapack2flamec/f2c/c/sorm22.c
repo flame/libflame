@@ -164,7 +164,7 @@ int sorm22_(char *side, char *trans, integer *m, integer *n, integer *n1, intege
     logical left;
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int sgemm_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), strmm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer *), xerbla_(char *, integer *), slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *);
+    int sgemm_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), strmm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *);
     logical notran;
     integer ldwork, lwkopt;
     logical lquery;
@@ -261,7 +261,7 @@ int sorm22_(char *side, char *trans, integer *m, integer *n, integer *n1, intege
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SORM22", &i__1);
+        xerbla_("SORM22", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

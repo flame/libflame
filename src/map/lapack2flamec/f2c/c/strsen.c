@@ -345,7 +345,7 @@ int strsen_(char *job, char *compq, logical *select, integer *n, real *t, intege
     int slacn2_(integer *, real *, real *, integer *, real *, integer *, integer *);
     extern real slange_(char *, integer *, integer *, real *, integer *, real *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical wantbh;
     extern /* Subroutine */
     int slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *);
@@ -502,7 +502,7 @@ int strsen_(char *job, char *compq, logical *select, integer *n, real *t, intege
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("STRSEN", &i__1);
+        xerbla_("STRSEN", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

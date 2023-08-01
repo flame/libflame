@@ -131,7 +131,7 @@ int dgeqrt2_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *t
     int dger_(integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *);
     doublereal alpha;
     extern /* Subroutine */
-    int dgemv_(char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), dtrmv_(char *, char *, char *, integer *, doublereal *, integer *, doublereal *, integer *), dlarfg_(integer *, doublereal *, doublereal *, integer *, doublereal *), xerbla_(char *, integer *);
+    int dgemv_(char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), dtrmv_(char *, char *, char *, integer *, doublereal *, integer *, doublereal *, integer *), dlarfg_(integer *, doublereal *, doublereal *, integer *, doublereal *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -176,7 +176,7 @@ int dgeqrt2_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *t
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGEQRT2", &i__1);
+        xerbla_("DGEQRT2", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

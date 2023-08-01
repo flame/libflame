@@ -378,7 +378,7 @@ int fla_dhgeqz_opt(char *job, char *compq, char *compz, integer *n, integer *ilo
     int dlartg_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
     doublereal safmax;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal eshift;
     logical ilschr;
     integer icompq, ilastm, ischur;
@@ -536,7 +536,7 @@ int fla_dhgeqz_opt(char *job, char *compq, char *compz, integer *n, integer *ilo
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DHGEQZ", &i__1);
+        xerbla_("DHGEQZ", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)
@@ -1634,7 +1634,7 @@ int fla_dhgeqz_native(char *job, char *compq, char *compz, integer *n, integer *
     int dlartg_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
     doublereal safmax;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal eshift;
     logical ilschr;
     integer icompq, ilastm, ischur;
@@ -1790,7 +1790,7 @@ int fla_dhgeqz_native(char *job, char *compq, char *compz, integer *n, integer *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DHGEQZ", &i__1);
+        xerbla_("DHGEQZ", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

@@ -139,7 +139,7 @@ int ssyequb_(char *uplo, integer *n, real *a, integer *lda, real *s, real *scond
     real sumsq;
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     extern /* Subroutine */
     int slassq_(integer *, real *, integer *, real *, real *);
@@ -188,7 +188,7 @@ int ssyequb_(char *uplo, integer *n, real *a, integer *lda, real *s, real *scond
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSYEQUB", &i__1);
+        xerbla_("SSYEQUB", &i__1, (ftnlen)7);
         return 0;
     }
     up = lsame_(uplo, "U");

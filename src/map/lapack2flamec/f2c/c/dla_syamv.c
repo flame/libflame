@@ -178,7 +178,7 @@ int dla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublereal *a, inte
     doublereal temp, safe1;
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilauplo_(char *);
     /* -- LAPACK computational routine (version 3.7.1) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -231,7 +231,7 @@ int dla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublereal *a, inte
     }
     if (info != 0)
     {
-        xerbla_("DLA_SYAMV", &info);
+        xerbla_("DLA_SYAMV", &info, (ftnlen)9);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

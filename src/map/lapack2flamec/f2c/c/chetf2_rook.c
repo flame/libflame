@@ -228,7 +228,7 @@ int chetf2_rook_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv
     extern integer icamax_(integer *, complex *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int csscal_(integer *, real *, complex *, integer *), xerbla_(char *, integer *);
+    int csscal_(integer *, real *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real colmax, rowmax;
     /* -- LAPACK computational routine (version 3.5.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -280,7 +280,7 @@ int chetf2_rook_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHETF2_ROOK", &i__1);
+        xerbla_("CHETF2_ROOK", &i__1, (ftnlen)11);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

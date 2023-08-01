@@ -330,7 +330,7 @@ int chbgvx_(char *jobz, char *range, char *uplo, integer *n, integer *ka, intege
     int chbtrd_(char *, char *, integer *, integer *, complex *, integer *, real *, real *, complex *, integer *, complex *, integer *);
     logical valeig;
     extern /* Subroutine */
-    int chbgst_(char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, real *, integer *), clacpy_( char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *), cpbstf_( char *, integer *, integer *, complex *, integer *, integer *);
+    int chbgst_(char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, real *, integer *), clacpy_( char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), cpbstf_( char *, integer *, integer *, complex *, integer *, integer *);
     integer indiwk, indisp;
     extern /* Subroutine */
     int cstein_(integer *, real *, real *, integer *, real *, integer *, integer *, complex *, integer *, real *, integer *, integer *, integer *);
@@ -453,7 +453,7 @@ int chbgvx_(char *jobz, char *range, char *uplo, integer *n, integer *ka, intege
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHBGVX", &i__1);
+        xerbla_("CHBGVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

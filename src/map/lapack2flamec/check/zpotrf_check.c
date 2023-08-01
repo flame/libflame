@@ -30,7 +30,7 @@ int zpotrf_check(char *uplo, integer *n, dcomplex *a, integer *lda, integer *inf
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZPOTRF", &i__1);
+        xerbla_("ZPOTRF", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */

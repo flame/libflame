@@ -202,7 +202,7 @@ int ssysv_rook_(char *uplo, integer *n, integer *nrhs, real *a, integer *lda, in
     int ssytrf_rook_(char *, integer *, real *, integer *, integer *, real *, integer *, integer *), ssytrs_rook_(char *, integer *, integer *, real *, integer *, integer *, real *, integer *, integer *);
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer lwkopt;
     logical lquery;
     /* -- LAPACK driver routine -- */
@@ -275,7 +275,7 @@ int ssysv_rook_(char *uplo, integer *n, integer *nrhs, real *a, integer *lda, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSYSV_ROOK ", &i__1);
+        xerbla_("SSYSV_ROOK ", &i__1, (ftnlen)11);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

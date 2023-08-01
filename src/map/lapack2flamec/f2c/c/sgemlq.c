@@ -173,7 +173,7 @@ int sgemlq_(char *side, char *trans, integer *m, integer *n, integer *k, real *a
     extern logical lsame_(char *, char *);
     logical right;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical notran, lquery;
     extern /* Subroutine */
     int sgemlqt_(char *, char *, integer *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *);
@@ -268,7 +268,7 @@ int sgemlq_(char *side, char *trans, integer *m, integer *n, integer *k, real *a
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGEMLQ", &i__1);
+        xerbla_("SGEMLQ", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

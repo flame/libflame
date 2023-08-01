@@ -122,7 +122,7 @@ int sgetrf2_(integer *m, integer *n, real *a, integer *lda, integer *ipiv, integ
     int strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * );
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer isamax_(integer *, real *, integer *);
     extern /* Subroutine */
     int slaswp_(integer *, real *, integer *, integer *, integer *, integer *, integer *);
@@ -173,7 +173,7 @@ int sgetrf2_(integer *m, integer *n, real *a, integer *lda, integer *ipiv, integ
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGETRF2", &i__1);
+        xerbla_("SGETRF2", &i__1, (ftnlen)7);
         return 0;
     }
     /* Quick return if possible */

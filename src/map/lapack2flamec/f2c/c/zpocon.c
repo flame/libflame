@@ -130,7 +130,7 @@ int zpocon_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublereal *
     extern doublereal dlamch_(char *);
     doublereal scalel, scaleu;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal ainvnm;
     extern integer izamax_(integer *, doublecomplex *, integer *);
     extern /* Subroutine */
@@ -194,7 +194,7 @@ int zpocon_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublereal *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZPOCON", &i__1);
+        xerbla_("ZPOCON", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -208,7 +208,7 @@ int zgels_(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex *a
     int dlabad_(doublereal *, doublereal *);
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer scllen;
     doublereal bignum;
@@ -348,7 +348,7 @@ int zgels_(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex *a
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGELS ", &i__1);
+        xerbla_("ZGELS ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

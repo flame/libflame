@@ -168,7 +168,7 @@ int csysv_(char *uplo, integer *n, integer *nrhs, complex *a, integer *lda, inte
     /* Local variables */
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), csytrf_( char *, integer *, complex *, integer *, integer *, complex *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), csytrf_( char *, integer *, complex *, integer *, integer *, complex *, integer *, integer *);
     integer lwkopt;
     logical lquery;
     extern /* Subroutine */
@@ -244,7 +244,7 @@ int csysv_(char *uplo, integer *n, integer *nrhs, complex *a, integer *lda, inte
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CSYSV ", &i__1);
+        xerbla_("CSYSV ", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -185,7 +185,7 @@ int zungtsqr_(integer *m, integer *n, integer *mb, integer * nb, doublecomplex *
     int zlamtsqr_(char *, char *, integer *, integer *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *);
     integer lworkopt, j, lc, lw, ldc, iinfo;
     extern /* Subroutine */
-    int zcopy_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(char *, integer *), zlaset_(char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *);
+    int zcopy_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), zlaset_(char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *);
     logical lquery;
     integer nblocal;
     /* -- LAPACK computational routine (version 3.9.0) -- */
@@ -278,7 +278,7 @@ int zungtsqr_(integer *m, integer *n, integer *mb, integer * nb, doublecomplex *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZUNGTSQR", &i__1);
+        xerbla_("ZUNGTSQR", &i__1, (ftnlen)8);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

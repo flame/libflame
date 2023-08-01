@@ -436,7 +436,7 @@ int dgerfsx_(char *trans, char *equed, integer *n, integer * nrhs, doublereal *a
     doublereal anorm;
     extern doublereal dlamch_(char *), dlange_(char *, integer *, integer *, doublereal *, integer *, doublereal *);
     extern /* Subroutine */
-    int dgecon_(char *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, integer *), xerbla_(char *, integer *);
+    int dgecon_(char *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical colequ, notran, rowequ;
     extern integer ilaprec_(char *);
     integer ithresh, n_norms__;
@@ -589,7 +589,7 @@ int dgerfsx_(char *trans, char *equed, integer *n, integer * nrhs, doublereal *a
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGERFSX", &i__1);
+        xerbla_("DGERFSX", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

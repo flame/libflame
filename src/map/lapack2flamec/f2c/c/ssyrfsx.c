@@ -420,7 +420,7 @@ int ssyrfsx_(char *uplo, char *equed, integer *n, integer * nrhs, real *a, integ
     logical rcequ;
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern real slansy_(char *, char *, integer *, real *, integer *, real *);
     extern /* Subroutine */
     int ssycon_(char *, integer *, real *, integer *, integer *, real *, real *, real *, integer *, integer *);
@@ -571,7 +571,7 @@ int ssyrfsx_(char *uplo, char *equed, integer *n, integer * nrhs, real *a, integ
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSYRFSX", &i__1);
+        xerbla_("SSYRFSX", &i__1, (ftnlen)7);
         return 0;
     }
     /* Quick return if possible. */

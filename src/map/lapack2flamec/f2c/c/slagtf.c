@@ -152,7 +152,7 @@ int slagtf_(integer *n, real *a, real *lambda, real *b, real *c__, real *tol, re
     real tl, eps, piv1, piv2, temp, mult, scale1, scale2;
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -185,7 +185,7 @@ int slagtf_(integer *n, real *a, real *lambda, real *b, real *c__, real *tol, re
     {
         *info = -1;
         i__1 = -(*info);
-        xerbla_("SLAGTF", &i__1);
+        xerbla_("SLAGTF", &i__1, (ftnlen)6);
         return 0;
     }
     if (*n == 0)

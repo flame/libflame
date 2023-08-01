@@ -150,7 +150,7 @@ int spbtrf_(char *uplo, integer *n, integer *kd, real *ab, integer *ldab, intege
     ;
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int sgemm_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer *), ssyrk_(char *, char *, integer *, integer *, real *, real *, integer *, real *, real *, integer *), spbtf2_(char *, integer *, integer *, real *, integer *, integer *), spotf2_(char *, integer *, real *, integer *, integer *), xerbla_(char *, integer *);
+    int sgemm_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer *), ssyrk_(char *, char *, integer *, integer *, real *, real *, integer *, real *, real *, integer *), spbtf2_(char *, integer *, integer *, real *, integer *, integer *), spotf2_(char *, integer *, real *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -200,7 +200,7 @@ int spbtrf_(char *uplo, integer *n, integer *kd, real *ab, integer *ldab, intege
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SPBTRF", &i__1);
+        xerbla_("SPBTRF", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

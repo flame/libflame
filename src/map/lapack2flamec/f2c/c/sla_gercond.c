@@ -149,7 +149,7 @@ real sla_gercond_(char *trans, integer *n, real *a, integer *lda, real *af, inte
     extern logical lsame_(char *, char *);
     integer isave[3];
     extern /* Subroutine */
-    int slacn2_(integer *, real *, real *, integer *, real *, integer *, integer *), xerbla_(char *, integer *);
+    int slacn2_(integer *, real *, real *, integer *, real *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real ainvnm;
     extern /* Subroutine */
     int sgetrs_(char *, integer *, integer *, real *, integer *, integer *, real *, integer *, integer *);
@@ -208,7 +208,7 @@ real sla_gercond_(char *trans, integer *n, real *a, integer *lda, real *af, inte
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLA_GERCOND", &i__1);
+        xerbla_("SLA_GERCOND", &i__1, (ftnlen)11);
         return ret_val;
     }
     if (*n == 0)

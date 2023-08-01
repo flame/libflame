@@ -467,7 +467,7 @@ int ctgsen_(integer *ijob, logical *wantq, logical *wantz, logical *select, inte
     int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *);
     real safmin;
     extern /* Subroutine */
-    int ctgexc_(logical *, logical *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, integer *, integer *, integer *), xerbla_( char *, integer *), classq_(integer *, complex *, integer *, real *, real *);
+    int ctgexc_(logical *, logical *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, integer *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), classq_(integer *, complex *, integer *, real *, real *);
     integer liwmin;
     extern /* Subroutine */
     int ctgsyl_(char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, real *, real *, complex *, integer *, integer *, integer *);
@@ -542,7 +542,7 @@ int ctgsen_(integer *ijob, logical *wantq, logical *wantz, logical *select, inte
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTGSEN", &i__1);
+        xerbla_("CTGSEN", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
@@ -628,7 +628,7 @@ int ctgsen_(integer *ijob, logical *wantq, logical *wantz, logical *select, inte
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTGSEN", &i__1);
+        xerbla_("CTGSEN", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

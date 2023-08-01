@@ -517,7 +517,7 @@ int cposvxx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *a, int
     extern real slamch_(char *);
     logical nofact;
     extern /* Subroutine */
-    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *);
+    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     integer infequ;
     extern /* Subroutine */
@@ -666,7 +666,7 @@ int cposvxx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *a, int
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CPOSVXX", &i__1);
+        xerbla_("CPOSVXX", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

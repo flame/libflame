@@ -254,7 +254,7 @@ int lapack_dgesdd(char *jobz, integer *m, integer *n, doublereal * a, integer *l
     extern doublereal dlange_(char *, integer *, integer *, doublereal *, integer *, doublereal *);
     integer iu;
     extern /* Subroutine */
-    int dgelqf_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), dgeqrf_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *), dorgbr_(char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
+    int dgelqf_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), dgeqrf_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), dorgbr_(char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
     extern logical disnan_(doublereal *);
     doublereal bignum;
     extern /* Subroutine */
@@ -766,7 +766,7 @@ int lapack_dgesdd(char *jobz, integer *m, integer *n, doublereal * a, integer *l
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGESDD", &i__1);
+        xerbla_("DGESDD", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

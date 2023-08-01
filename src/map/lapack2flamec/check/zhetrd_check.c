@@ -52,7 +52,7 @@ int zhetrd_check(char *uplo, integer *n, dcomplex *a, integer *lda, double *d__,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHETRD", &i__1);
+        xerbla_("ZHETRD", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

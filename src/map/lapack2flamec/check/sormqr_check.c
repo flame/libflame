@@ -87,7 +87,7 @@ int sormqr_check(char *side, char *trans, integer *m, integer *n, integer *k, fl
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SORMQR", &i__1);
+        xerbla_("SORMQR", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

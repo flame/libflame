@@ -193,7 +193,7 @@ int spftri_(char *transr, char *uplo, integer *n, real *a, integer *info)
     extern logical lsame_(char *, char *);
     logical lower;
     extern /* Subroutine */
-    int strmm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), ssyrk_(char *, char *, integer *, integer *, real *, real *, integer *, real *, real *, integer * ), xerbla_(char *, integer *);
+    int strmm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), ssyrk_(char *, char *, integer *, integer *, real *, real *, integer *, real *, real *, integer * ), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical nisodd;
     extern /* Subroutine */
     int slauum_(char *, integer *, real *, integer *, integer *), stftri_(char *, char *, char *, integer *, real *, integer *);
@@ -235,7 +235,7 @@ int spftri_(char *transr, char *uplo, integer *n, real *a, integer *info)
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SPFTRI", &i__1);
+        xerbla_("SPFTRI", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

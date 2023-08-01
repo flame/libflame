@@ -17,7 +17,7 @@ int zhemm_(char *side, char *uplo, integer *m, integer *n, doublecomplex *alpha,
     integer nrowa;
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
     /* .. */
@@ -178,7 +178,7 @@ int zhemm_(char *side, char *uplo, integer *m, integer *n, doublecomplex *alpha,
     }
     if (info != 0)
     {
-        xerbla_("ZHEMM ", &info);
+        xerbla_("ZHEMM ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

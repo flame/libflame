@@ -97,7 +97,7 @@ int cungbr_check(char *vect, integer *m, integer *n, integer *k, scomplex *a, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CUNGBR", &i__1);
+        xerbla_("CUNGBR", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

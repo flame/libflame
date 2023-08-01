@@ -209,7 +209,7 @@ int cptrfs_(char *uplo, integer *n, integer *nrhs, real *d__, complex *e, real *
     extern real slamch_(char *);
     real safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer isamax_(integer *, real *, integer *);
     real lstres;
     extern /* Subroutine */
@@ -280,7 +280,7 @@ int cptrfs_(char *uplo, integer *n, integer *nrhs, real *d__, complex *e, real *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CPTRFS", &i__1);
+        xerbla_("CPTRFS", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -31,7 +31,7 @@ int sgetrfnp_check(integer *m, integer *n, float *a, integer * lda, integer *inf
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGETRFNP", &i__1);
+        xerbla_("SGETRFNP", &i__1, (ftnlen)8);
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */

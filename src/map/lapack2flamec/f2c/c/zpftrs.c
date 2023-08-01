@@ -227,7 +227,7 @@ int zpftrs_(char *transr, char *uplo, integer *n, integer * nrhs, doublecomplex 
     extern logical lsame_(char *, char *);
     logical lower;
     extern /* Subroutine */
-    int ztfsm_(char *, char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *), xerbla_(char *, integer *);
+    int ztfsm_(char *, char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -280,7 +280,7 @@ int zpftrs_(char *transr, char *uplo, integer *n, integer * nrhs, doublecomplex 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZPFTRS", &i__1);
+        xerbla_("ZPFTRS", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

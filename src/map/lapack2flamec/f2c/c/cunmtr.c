@@ -181,7 +181,7 @@ int cunmtr_(char *side, char *uplo, char *trans, integer *m, integer *n, complex
     integer iinfo;
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int cunmql_(char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *, integer *, integer *), cunmqr_(char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *, integer *, integer *);
@@ -301,7 +301,7 @@ int cunmtr_(char *side, char *uplo, char *trans, integer *m, integer *n, complex
     if (*info != 0)
     {
         i__2 = -(*info);
-        xerbla_("CUNMTR", &i__2);
+        xerbla_("CUNMTR", &i__2, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

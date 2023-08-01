@@ -248,7 +248,7 @@ int slatps_(char *uplo, char *trans, char *diag, char * normin, integer *n, real
     int saxpy_(integer *, real *, real *, integer *, real *, integer *), stpsv_(char *, char *, char *, integer *, real *, real *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     extern integer isamax_(integer *, real *, integer *);
     logical notran;
@@ -309,7 +309,7 @@ int slatps_(char *uplo, char *trans, char *diag, char * normin, integer *n, real
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLATPS", &i__1);
+        xerbla_("SLATPS", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

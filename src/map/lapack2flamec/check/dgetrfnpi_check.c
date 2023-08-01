@@ -35,7 +35,7 @@ int dgetrfnpi_check(integer *m, integer *n, integer *nfact, double *a, integer *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGETRFNPI", &i__1);
+        xerbla_("DGETRFNPI", &i__1, (ftnlen)9);
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */

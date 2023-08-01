@@ -160,7 +160,7 @@ int dorm2r_fla(char *side, char *trans, integer *m, integer *n, integer *k, doub
     int dlarf_(char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *);
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical notran;
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -236,7 +236,7 @@ int dorm2r_fla(char *side, char *trans, integer *m, integer *n, integer *k, doub
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DORM2R", &i__1);
+        xerbla_("DORM2R", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

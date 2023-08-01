@@ -246,7 +246,7 @@ int ssygv_2stage_(integer *itype, char *jobz, char *uplo, integer *n, real *a, i
     int strmm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * );
     logical wantz;
     extern /* Subroutine */
-    int strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), xerbla_(char *, integer *), spotrf_(char *, integer *, real *, integer *, integer *);
+    int strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), xerbla_(const char *srname, const integer *info, ftnlen srname_len), spotrf_(char *, integer *, real *, integer *, integer *);
     logical lquery;
     extern /* Subroutine */
     int ssygst_(integer *, char *, integer *, real *, integer *, real *, integer *, integer *);
@@ -325,7 +325,7 @@ int ssygv_2stage_(integer *itype, char *jobz, char *uplo, integer *n, real *a, i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSYGV_2STAGE ", &i__1);
+        xerbla_("SSYGV_2STAGE ", &i__1, (ftnlen)13);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

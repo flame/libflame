@@ -279,7 +279,7 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
     complex salpha;
     real safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     logical ilcomp;
     integer ihwmny;
@@ -395,7 +395,7 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTGEVC", &i__1);
+        xerbla_("CTGEVC", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
@@ -451,7 +451,7 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTGEVC", &i__1);
+        xerbla_("CTGEVC", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

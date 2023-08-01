@@ -479,7 +479,7 @@ int dtgsen_(integer *ijob, logical *wantq, logical *wantz, logical *select, inte
     extern doublereal dlamch_(char *);
     doublereal dscale, rdscal;
     extern /* Subroutine */
-    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(char *, integer *), dtgexc_(logical *, logical *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *, integer *, doublereal *, integer *, integer *), dlassq_(integer *, doublereal *, integer *, doublereal *, doublereal *);
+    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), dtgexc_(logical *, logical *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *, integer *, doublereal *, integer *, integer *), dlassq_(integer *, doublereal *, integer *, doublereal *, doublereal *);
     integer liwmin;
     extern /* Subroutine */
     int dtgsyl_(char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, integer *, integer *);
@@ -558,7 +558,7 @@ int dtgsen_(integer *ijob, logical *wantq, logical *wantz, logical *select, inte
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DTGSEN", &i__1);
+        xerbla_("DTGSEN", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -662,7 +662,7 @@ int dtgsen_(integer *ijob, logical *wantq, logical *wantz, logical *select, inte
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DTGSEN", &i__1);
+        xerbla_("DTGSEN", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

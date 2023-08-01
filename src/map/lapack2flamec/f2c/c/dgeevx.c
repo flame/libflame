@@ -340,7 +340,7 @@ int dgeevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, do
     int dgehrd_(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *);
     extern integer idamax_(integer *, doublereal *, integer *);
     extern /* Subroutine */
-    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), dlartg_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *), xerbla_(char *, integer *);
+    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), dlartg_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical select[1];
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     doublereal bignum;
@@ -543,7 +543,7 @@ int dgeevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, do
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGEEVX", &i__1);
+        xerbla_("DGEEVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

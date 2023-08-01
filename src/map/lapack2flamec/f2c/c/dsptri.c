@@ -125,7 +125,7 @@ int dsptri_(char *uplo, integer *n, doublereal *ap, integer * ipiv, doublereal *
     int dspmv_(char *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, integer *);
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer kcnext;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -166,7 +166,7 @@ int dsptri_(char *uplo, integer *n, doublereal *ap, integer * ipiv, doublereal *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSPTRI", &i__1);
+        xerbla_("DSPTRI", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -199,7 +199,7 @@ int zhbtrd_(char *vect, char *uplo, integer *n, integer *kd, doublecomplex *ab, 
     int zlar2v_(integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, doublereal *, doublecomplex *, integer *);
     integer iqaend;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zlacgv_( integer *, doublecomplex *, integer *), zlaset_(char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *), zlartg_(doublecomplex *, doublecomplex *, doublereal *, doublecomplex *, doublecomplex *), zlargv_(integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, integer *), zlartv_(integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublecomplex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zlacgv_( integer *, doublecomplex *, integer *), zlaset_(char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *), zlartg_(doublecomplex *, doublecomplex *, doublereal *, doublecomplex *, doublecomplex *), zlargv_(integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, integer *), zlartv_(integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublecomplex *, integer *);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -267,7 +267,7 @@ int zhbtrd_(char *vect, char *uplo, integer *n, integer *kd, doublecomplex *ab, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHBTRD", &i__1);
+        xerbla_("ZHBTRD", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -71,7 +71,7 @@
     /* Local variables */
     static TLS_CLASS_SPEC integer j;
     static TLS_CLASS_SPEC integer jp;
-    extern /* Subroutine */ int xerbla_(char *, integer *);
+    extern /* Subroutine */ int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
 #define a_subscr(a_1,a_2) (a_2)*a_dim1 + a_1
 #define a_ref(a_1,a_2) a[a_subscr(a_1,a_2)]
 
@@ -92,7 +92,7 @@
     }
     if (*info != 0) {
 	i__1 = -(*info);
-	xerbla_("LAPACK_CGETF2", &i__1);
+	xerbla_("LAPACK_CGETF2", &i__1, (ftnlen)13);
 	return 0;
     }
 

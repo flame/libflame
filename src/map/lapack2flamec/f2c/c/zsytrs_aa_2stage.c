@@ -145,7 +145,7 @@ int zsytrs_aa_2stage_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, i
     extern logical lsame_(char *, char *);
     logical upper;
     extern /* Subroutine */
-    int ztrsm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(char *, integer *), zgbtrs_(char *, integer *, integer *, integer *, integer *, doublecomplex *, integer *, integer *, doublecomplex *, integer *, integer *), zlaswp_(integer *, doublecomplex *, integer *, integer *, integer *, integer *, integer *);
+    int ztrsm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), zgbtrs_(char *, integer *, integer *, integer *, integer *, doublecomplex *, integer *, integer *, doublecomplex *, integer *, integer *), zlaswp_(integer *, doublecomplex *, integer *, integer *, integer *, integer *, integer *);
     /* -- LAPACK computational routine (version 3.8.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -205,7 +205,7 @@ int zsytrs_aa_2stage_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZSYTRS_AA_2STAGE", &i__1);
+        xerbla_("ZSYTRS_AA_2STAGE", &i__1, (ftnlen)16);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -192,7 +192,7 @@ int chetrf_aa_2stage_(char *uplo, integer *n, complex *a, integer *lda, complex 
     int ccopy_(integer *, complex *, integer *, complex *, integer *), cswap_(integer *, complex *, integer *, complex *, integer *), ctrsm_(char *, char *, char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *);
     logical upper;
     extern /* Subroutine */
-    int clacgv_(integer *, complex *, integer *), cgbtrf_(integer *, integer *, integer *, integer *, complex *, integer *, integer *, integer *), cgetrf_(integer *, integer *, complex *, integer *, integer *, integer *), clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(char *, integer *);
+    int clacgv_(integer *, complex *, integer *), cgbtrf_(integer *, integer *, integer *, integer *, complex *, integer *, integer *, integer *), cgetrf_(integer *, integer *, complex *, integer *, integer *, integer *), clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int chegst_(integer *, char *, integer *, complex *, integer *, complex *, integer *, integer *);
@@ -253,7 +253,7 @@ int chetrf_aa_2stage_(char *uplo, integer *n, complex *a, integer *lda, complex 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHETRF_AA_2STAGE", &i__1);
+        xerbla_("CHETRF_AA_2STAGE", &i__1, (ftnlen)16);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

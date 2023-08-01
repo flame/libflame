@@ -36,7 +36,7 @@ int ctrti2_check(char *uplo, char *diag, integer *n, scomplex *a, integer *lda, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTRTI2", &i__1);
+        xerbla_("CTRTI2", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     return LAPACK_SUCCESS;

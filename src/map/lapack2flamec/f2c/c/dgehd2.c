@@ -149,7 +149,7 @@ int dgehd2_(integer *n, integer *ilo, integer *ihi, doublereal *a, integer *lda,
     integer i__;
     doublereal aii;
     extern /* Subroutine */
-    int dlarf_(char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *), dlarfg_(integer *, doublereal *, doublereal *, integer *, doublereal *), xerbla_(char *, integer *);
+    int dlarf_(char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *), dlarfg_(integer *, doublereal *, doublereal *, integer *, doublereal *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -196,7 +196,7 @@ int dgehd2_(integer *n, integer *ilo, integer *ihi, doublereal *a, integer *lda,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGEHD2", &i__1);
+        xerbla_("DGEHD2", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

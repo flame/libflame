@@ -459,7 +459,7 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
     extern integer idamax_(integer *, doublereal *, integer *);
     doublereal sconda;
     extern /* Subroutine */
-    int dgeqrf_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), dgesvd_(char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *), dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *), dlapmt_(logical *, integer *, integer *, doublereal *, integer *, integer *), dpocon_(char *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, integer *), dlaswp_(integer *, doublereal *, integer *, integer *, integer *, integer *, integer *), dormlq_(char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *), dormqr_(char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *);
+    int dgeqrf_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), dgesvd_(char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *), dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), dlapmt_(logical *, integer *, integer *, doublereal *, integer *, integer *), dpocon_(char *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, integer *), dlaswp_(integer *, doublereal *, integer *, integer *, integer *, integer *, integer *), dormlq_(char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *), dormqr_(char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *);
     integer minwrk;
     logical rtrans;
     doublereal rdummy[1];
@@ -928,7 +928,7 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGESVDQ", &i__1);
+        xerbla_("DGESVDQ", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -971,7 +971,7 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
             {
                 *info = -8;
                 i__2 = -(*info);
-                xerbla_("DGESVDQ", &i__2);
+                xerbla_("DGESVDQ", &i__2, (ftnlen)7);
                 AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
@@ -1064,7 +1064,7 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
         {
             *info = -8;
             i__1 = -(*info);
-            xerbla_("DGESVDQ", &i__1);
+            xerbla_("DGESVDQ", &i__1, (ftnlen)7);
             AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }

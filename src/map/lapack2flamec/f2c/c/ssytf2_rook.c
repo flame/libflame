@@ -215,7 +215,7 @@ int ssytf2_rook_(char *uplo, integer *n, real *a, integer * lda, integer *ipiv, 
     real absakk;
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer isamax_(integer *, real *, integer *);
     real colmax, rowmax;
     /* -- LAPACK computational routine (version 3.5.0) -- */
@@ -264,7 +264,7 @@ int ssytf2_rook_(char *uplo, integer *n, real *a, integer * lda, integer *ipiv, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSYTF2_ROOK", &i__1);
+        xerbla_("SSYTF2_ROOK", &i__1, (ftnlen)11);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

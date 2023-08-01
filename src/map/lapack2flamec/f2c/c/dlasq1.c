@@ -125,7 +125,7 @@ int dlasq1_(integer *n, doublereal *d__, doublereal *e, doublereal *work, intege
     int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *);
     doublereal safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), dlasrt_( char *, integer *, doublereal *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), dlasrt_( char *, integer *, doublereal *, integer *);
     /* -- LAPACK computational routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -156,7 +156,7 @@ int dlasq1_(integer *n, doublereal *d__, doublereal *e, doublereal *work, intege
     {
         *info = -1;
         i__1 = -(*info);
-        xerbla_("DLASQ1", &i__1);
+        xerbla_("DLASQ1", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

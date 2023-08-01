@@ -308,7 +308,7 @@ int sorcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
     int sbbcsd_(char *, char *, char *, char *, char * , integer *, integer *, integer *, real *, real *, real *, integer *, real *, integer *, real *, integer *, real *, integer * , real *, real *, real *, real *, real *, real *, real *, real *, real *, integer *, integer *);
     integer iorbdb, lorglqworkmin, lorgqrworkmin;
     extern /* Subroutine */
-    int sorbdb_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer * , real *, integer *, real *, real *, real *, real *, real *, real *, real *, integer *, integer *), xerbla_(char *, integer *);
+    int sorbdb_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer * , real *, integer *, real *, real *, real *, real *, real *, real *, real *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer lorglqworkopt, lorgqrworkopt;
     extern /* Subroutine */
     int slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *);
@@ -639,7 +639,7 @@ int sorcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SORCSD", &i__1);
+        xerbla_("SORCSD", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

@@ -128,7 +128,7 @@ int sgtsv_(integer *n, integer *nrhs, real *dl, real *d__, real *du, real *b, in
     integer i__, j;
     real fact, temp;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK driver routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -171,7 +171,7 @@ int sgtsv_(integer *n, integer *nrhs, real *dl, real *d__, real *du, real *b, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGTSV ", &i__1);
+        xerbla_("SGTSV ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

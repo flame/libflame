@@ -105,7 +105,7 @@ int dsterf_(integer *n, doublereal *d__, doublereal *e, integer *info)
     int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *);
     doublereal oldgam, safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal safmax;
     extern doublereal dlanst_(char *, integer *, doublereal *, doublereal *);
     extern /* Subroutine */
@@ -145,7 +145,7 @@ int dsterf_(integer *n, doublereal *d__, doublereal *e, integer *info)
     {
         *info = -1;
         i__1 = -(*info);
-        xerbla_("DSTERF", &i__1);
+        xerbla_("DSTERF", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -207,7 +207,7 @@ int stftri_(char *transr, char *uplo, char *diag, integer *n, real *a, integer *
     extern logical lsame_(char *, char *);
     logical lower;
     extern /* Subroutine */
-    int strmm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), xerbla_(char *, integer *);
+    int strmm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical nisodd;
     extern /* Subroutine */
     int strtri_(char *, char *, integer *, real *, integer *, integer *);
@@ -254,7 +254,7 @@ int stftri_(char *transr, char *uplo, char *diag, integer *n, real *a, integer *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("STFTRI", &i__1);
+        xerbla_("STFTRI", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

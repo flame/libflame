@@ -47,7 +47,7 @@ int sorglq_check(integer *m, integer *n, integer *k, float *a, integer *lda, flo
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SORGLQ", &i__1);
+        xerbla_("SORGLQ", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

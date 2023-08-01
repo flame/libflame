@@ -170,7 +170,7 @@ int cgbtrf_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
     int ctrsm_(char *, char *, char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *), cgbtf2_(integer *, integer *, integer *, integer *, complex *, integer *, integer *, integer *);
     extern integer icamax_(integer *, complex *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int claswp_(integer *, complex *, integer *, integer *, integer *, integer *, integer *);
@@ -234,7 +234,7 @@ int cgbtrf_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGBTRF", &i__1);
+        xerbla_("CGBTRF", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

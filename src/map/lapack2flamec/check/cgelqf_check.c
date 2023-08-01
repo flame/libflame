@@ -44,7 +44,7 @@ int cgelqf_check(integer *m, integer *n, scomplex *a, integer *lda, scomplex *ta
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGELQF", &i__1);
+        xerbla_("CGELQF", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

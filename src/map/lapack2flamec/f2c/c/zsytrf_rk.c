@@ -265,7 +265,7 @@ int zsytrf_rk_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecom
     integer nbmin, iinfo;
     logical upper;
     extern /* Subroutine */
-    int zswap_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(char *, integer *);
+    int zswap_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer ldwork, lwkopt;
     logical lquery;
@@ -326,7 +326,7 @@ int zsytrf_rk_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecom
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZSYTRF_RK", &i__1);
+        xerbla_("ZSYTRF_RK", &i__1, (ftnlen)9);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

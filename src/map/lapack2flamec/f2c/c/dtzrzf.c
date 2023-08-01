@@ -149,7 +149,7 @@ int dtzrzf_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *ta
     /* Local variables */
     integer i__, m1, ib, nb, ki, kk, mu, nx, iws, nbmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), dlarzb_( char *, char *, char *, char *, integer *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), dlarzb_( char *, char *, char *, char *, integer *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int dlarzt_(char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *);
@@ -224,7 +224,7 @@ int dtzrzf_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *ta
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DTZRZF", &i__1);
+        xerbla_("DTZRZF", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

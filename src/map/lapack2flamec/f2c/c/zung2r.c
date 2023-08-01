@@ -115,7 +115,7 @@ int zung2r_(integer *m, integer *n, integer *k, doublecomplex *a, integer *lda, 
     /* Local variables */
     integer i__, j, l;
     extern /* Subroutine */
-    int zscal_(integer *, doublecomplex *, doublecomplex *, integer *), zlarf_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *), xerbla_(char *, integer *);
+    int zscal_(integer *, doublecomplex *, doublecomplex *, integer *), zlarf_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern int fla_zscal(integer *, doublecomplex *, doublecomplex *, integer *);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -167,7 +167,7 @@ int zung2r_(integer *m, integer *n, integer *k, doublecomplex *a, integer *lda, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZUNG2R", &i__1);
+        xerbla_("ZUNG2R", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

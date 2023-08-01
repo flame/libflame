@@ -191,7 +191,7 @@ int zggglm_(integer *n, integer *m, integer *p, doublecomplex *a, integer *lda, 
     /* Local variables */
     integer i__, nb, np, nb1, nb2, nb3, nb4, lopt;
     extern /* Subroutine */
-    int zgemv_(char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), zcopy_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(char *, integer *);
+    int zgemv_(char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), zcopy_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int zggqrf_(integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, integer *) ;
@@ -285,7 +285,7 @@ int zggglm_(integer *n, integer *m, integer *p, doublecomplex *a, integer *lda, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGGGLM", &i__1);
+        xerbla_("ZGGGLM", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

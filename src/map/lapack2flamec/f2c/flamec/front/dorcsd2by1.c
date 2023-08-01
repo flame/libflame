@@ -245,7 +245,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
     int dbbcsd_();
     integer ibbcsd, lbbcsd, iorbdb, lorbdb;
     extern /* Subroutine */
-    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(char *, integer *), dlapmr_(logical *, integer *, integer *, doublereal *, integer *, integer *), dlapmt_(logical *, integer *, integer *, doublereal *, integer *, integer *);
+    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), dlapmr_(logical *, integer *, integer *, doublereal *, integer *, integer *), dlapmt_(logical *, integer *, integer *, doublereal *, integer *, integer *);
     integer iorglq;
     extern int /* Subroutine */
       dorglq_fla(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *),
@@ -569,7 +569,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DORCSD2BY1", &i__1);
+        xerbla_("DORCSD2BY1", &i__1, (ftnlen)10);
         return 0;
     }
     else if (lquery)

@@ -133,7 +133,7 @@ int sppcon_(char *uplo, integer *n, real *ap, real *anorm, real *rcond, real *wo
     extern real slamch_(char *);
     real scaleu;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer isamax_(integer *, real *, integer *);
     real ainvnm;
     char normin[1];
@@ -185,7 +185,7 @@ int sppcon_(char *uplo, integer *n, real *ap, real *anorm, real *rcond, real *wo
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SPPCON", &i__1);
+        xerbla_("SPPCON", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

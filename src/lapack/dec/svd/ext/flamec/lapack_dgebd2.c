@@ -194,7 +194,7 @@
  /* Local variables */
  integer i__;
  extern /* Subroutine */
- int dlarf_(char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *), dlarfg_(integer *, doublereal *, doublereal *, integer *, doublereal *), xerbla_(char *, integer *);
+ int dlarf_(char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *), dlarfg_(integer *, doublereal *, doublereal *, integer *, doublereal *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
  /* -- LAPACK computational routine -- */
  /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
  /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -235,7 +235,7 @@
  }
  if (*info < 0) {
  i__1 = -(*info);
- xerbla_("DGEBD2", &i__1);
+ xerbla_("DGEBD2", &i__1, (ftnlen)6);
  return 0;
  }
  if (*m >= *n) {

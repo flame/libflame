@@ -297,7 +297,7 @@ int zggsvp3_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer
     extern logical lsame_(char *, char *);
     logical wantq, wantu, wantv;
     extern /* Subroutine */
-    int zgeqp3_(integer *, integer *, doublecomplex *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublereal *, integer *), zgeqr2_(integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), zgerq2_(integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), zung2r_( integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), zunm2r_(char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), zunmr2_(char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(char *, integer *), zlacpy_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *);
+    int zgeqp3_(integer *, integer *, doublecomplex *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublereal *, integer *), zgeqr2_(integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), zgerq2_(integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), zung2r_( integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), zunm2r_(char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), zunmr2_(char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), zlacpy_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *);
     logical forwrd;
     extern /* Subroutine */
     int zlaset_(char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *), zlapmt_(logical *, integer *, integer *, doublecomplex *, integer *, integer *);
@@ -433,7 +433,7 @@ int zggsvp3_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGGSVP3", &i__1);
+        xerbla_("ZGGSVP3", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -152,7 +152,7 @@ doublereal dla_syrcond_(char *uplo, integer *n, doublereal *a, integer *lda, dou
     int dlacn2_(integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *);
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal ainvnm;
     char normin[1];
     extern /* Subroutine */
@@ -206,7 +206,7 @@ doublereal dla_syrcond_(char *uplo, integer *n, doublereal *a, integer *lda, dou
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DLA_SYRCOND", &i__1);
+        xerbla_("DLA_SYRCOND", &i__1, (ftnlen)11);
         AOCL_DTL_TRACE_LOG_EXIT
         return ret_val;
     }

@@ -138,7 +138,7 @@ int slasq2_(integer *n, real *z__, integer *info)
     integer iwhila, iwhilb;
     real oldemn, safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), slasrt_( char *, integer *, real *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), slasrt_( char *, integer *, real *, integer *);
     /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -173,7 +173,7 @@ int slasq2_(integer *n, real *z__, integer *info)
     if (*n < 0)
     {
         *info = -1;
-        xerbla_("SLASQ2", &c__1);
+        xerbla_("SLASQ2", &c__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -188,7 +188,7 @@ int slasq2_(integer *n, real *z__, integer *info)
         if (z__[1] < 0.f)
         {
             *info = -201;
-            xerbla_("SLASQ2", &c__2);
+            xerbla_("SLASQ2", &c__2, (ftnlen)6);
         }
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
@@ -199,21 +199,21 @@ int slasq2_(integer *n, real *z__, integer *info)
         if (z__[1] < 0.f)
         {
             *info = -201;
-            xerbla_("SLASQ2", &c__2);
+            xerbla_("SLASQ2", &c__2, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         else if (z__[2] < 0.f)
         {
             *info = -202;
-            xerbla_("SLASQ2", &c__2);
+            xerbla_("SLASQ2", &c__2, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         else if (z__[3] < 0.f)
         {
             *info = -203;
-            xerbla_("SLASQ2", &c__2);
+            xerbla_("SLASQ2", &c__2, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
@@ -260,14 +260,14 @@ int slasq2_(integer *n, real *z__, integer *info)
         if (z__[k] < 0.f)
         {
             *info = -(k + 200);
-            xerbla_("SLASQ2", &c__2);
+            xerbla_("SLASQ2", &c__2, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         else if (z__[k + 1] < 0.f)
         {
             *info = -(k + 201);
-            xerbla_("SLASQ2", &c__2);
+            xerbla_("SLASQ2", &c__2, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
@@ -290,7 +290,7 @@ int slasq2_(integer *n, real *z__, integer *info)
     if (z__[(*n << 1) - 1] < 0.f)
     {
         *info = -((*n << 1) + 199);
-        xerbla_("SLASQ2", &c__2);
+        xerbla_("SLASQ2", &c__2, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -21,7 +21,7 @@ static doublereal c_b12 = 1.;
 
     /* Builtin functions */
     double sqrt(doublereal);
-	int xerbla_(char *srname, integer *info);
+	int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
 	logical lsame_(char *ca, char *cb);
 
     /* Local variables */
@@ -96,7 +96,7 @@ static doublereal c_b12 = 1.;
     }
     if (*info != 0) {
 	i__1 = -(*info);
-	xerbla_("LAPACK_DPOTF2", &i__1);
+	xerbla_("LAPACK_DPOTF2", &i__1, (ftnlen)13);
 	return 0;
     }
 

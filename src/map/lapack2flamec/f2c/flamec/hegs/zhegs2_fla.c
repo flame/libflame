@@ -136,7 +136,7 @@ int zhegs2_fla(integer *itype, char *uplo, integer *n, doublecomplex *a, integer
     extern logical lsame_(char *, char *);
     logical upper;
     extern /* Subroutine */
-    int zaxpy_(integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), ztrmv_( char *, char *, char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), ztrsv_(char *, char *, char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(char *, integer *), zdscal_(integer *, doublereal *, doublecomplex *, integer *), zlacgv_(integer *, doublecomplex *, integer *);
+    int zaxpy_(integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), ztrmv_( char *, char *, char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), ztrsv_(char *, char *, char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), zdscal_(integer *, doublereal *, doublecomplex *, integer *), zlacgv_(integer *, doublecomplex *, integer *);
     /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -190,7 +190,7 @@ int zhegs2_fla(integer *itype, char *uplo, integer *n, doublecomplex *a, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHEGS2", &i__1);
+        xerbla_("ZHEGS2", &i__1, (ftnlen)6);
         return 0;
     }
     if (*itype == 1)

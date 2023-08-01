@@ -127,7 +127,7 @@ int dgetrf2_(integer *m, integer *n, doublereal *a, integer * lda, integer *ipiv
     extern doublereal dlamch_(char *);
     extern integer idamax_(integer *, doublereal *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), dlaswp_( integer *, doublereal *, integer *, integer *, integer *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), dlaswp_( integer *, doublereal *, integer *, integer *, integer *, integer *, integer *);
 
     /* -- LAPACK computational routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -176,7 +176,7 @@ int dgetrf2_(integer *m, integer *n, doublereal *a, integer * lda, integer *ipiv
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGETRF2", &i__1);
+        xerbla_("DGETRF2", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

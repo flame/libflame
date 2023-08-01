@@ -128,7 +128,7 @@ int zgetrf2_(integer *m, integer *n, doublecomplex *a, integer *lda, integer *ip
     int zscal_(integer *, doublecomplex *, doublecomplex *, integer *), zgemm_(char *, char *, integer *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), ztrsm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *);
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer izamax_(integer *, doublecomplex *, integer *);
     extern /* Subroutine */
     int zlaswp_(integer *, doublecomplex *, integer *, integer *, integer *, integer *, integer *);
@@ -179,7 +179,7 @@ int zgetrf2_(integer *m, integer *n, doublecomplex *a, integer *lda, integer *ip
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGETRF2", &i__1);
+        xerbla_("ZGETRF2", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

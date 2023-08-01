@@ -31,7 +31,7 @@ int dgetrfnp_check(integer *m, integer *n, double *a, integer * lda, integer *in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGETRFNP", &i__1);
+        xerbla_("DGETRFNP", &i__1, (ftnlen)8);
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */

@@ -36,7 +36,7 @@ int dtrtri_check(char *uplo, char *diag, integer *n, double * a, integer *lda, i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DTRTRI", &i__1);
+        xerbla_("DTRTRI", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */

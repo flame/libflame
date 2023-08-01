@@ -347,7 +347,7 @@ int dggsvd_(char *jobu, char *jobv, char *jobq, integer *m, integer *n, integer 
     int dtgsja_(char *, char *, char *, integer *, integer *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *);
     integer ncycle;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), dggsvp_( char *, char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *, doublereal *, doublereal *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), dggsvp_( char *, char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *, doublereal *, doublereal *, integer *);
     /* -- LAPACK driver routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -439,7 +439,7 @@ int dggsvd_(char *jobu, char *jobv, char *jobq, integer *m, integer *n, integer 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGGSVD", &i__1);
+        xerbla_("DGGSVD", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

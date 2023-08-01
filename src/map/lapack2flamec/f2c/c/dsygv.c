@@ -189,7 +189,7 @@ int dsygv_(integer *itype, char *jobz, char *uplo, integer * n, doublereal *a, i
     int dsyev_(char *, char *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
     logical wantz;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int dpotrf_(char *, integer *, doublereal *, integer *, integer *);
@@ -277,7 +277,7 @@ int dsygv_(integer *itype, char *jobz, char *uplo, integer * n, doublereal *a, i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSYGV ", &i__1);
+        xerbla_("DSYGV ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

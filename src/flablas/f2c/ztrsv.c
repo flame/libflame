@@ -15,7 +15,7 @@ int ztrsv_(char *uplo, char *trans, char *diag, integer *n, doublecomplex *a, in
     extern logical lsame_(char *, char *);
     integer ix, jx, kx;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical noconj, nounit;
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
@@ -127,7 +127,7 @@ int ztrsv_(char *uplo, char *trans, char *diag, integer *n, doublecomplex *a, in
     }
     if (info != 0)
     {
-        xerbla_("ZTRSV ", &info);
+        xerbla_("ZTRSV ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

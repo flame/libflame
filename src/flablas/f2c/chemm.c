@@ -17,7 +17,7 @@ int chemm_(char *side, char *uplo, integer *m, integer *n, complex *alpha, compl
     integer nrowa;
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
     /* .. */
@@ -178,7 +178,7 @@ int chemm_(char *side, char *uplo, integer *m, integer *n, complex *alpha, compl
     }
     if (info != 0)
     {
-        xerbla_("CHEMM ", &info);
+        xerbla_("CHEMM ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

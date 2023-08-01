@@ -183,7 +183,7 @@ int cgebal_(char *job, integer *n, complex *a, integer *lda, integer *ilo, integ
     extern integer icamax_(integer *, complex *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int csscal_(integer *, real *, complex *, integer *), xerbla_(char *, integer *);
+    int csscal_(integer *, real *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern logical sisnan_(real *);
     logical noconv;
     /* -- LAPACK computational routine (version 3.7.0) -- */
@@ -227,7 +227,7 @@ int cgebal_(char *job, integer *n, complex *a, integer *lda, integer *ilo, integ
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGEBAL", &i__1);
+        xerbla_("CGEBAL", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
@@ -398,7 +398,7 @@ L160: /* Computing MAX */
             /* Exit if NaN to avoid infinite loop */
             *info = -3;
             i__2 = -(*info);
-            xerbla_("CGEBAL", &i__2);
+            xerbla_("CGEBAL", &i__2, (ftnlen)6);
             AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }

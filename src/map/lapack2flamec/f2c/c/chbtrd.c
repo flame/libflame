@@ -208,7 +208,7 @@ int chbtrd_(char *vect, char *uplo, integer *n, integer *kd, complex *ab, intege
     int clar2v_(integer *, complex *, complex *, complex *, integer *, real *, complex *, integer *), clacgv_( integer *, complex *, integer *);
     integer iqaend;
     extern /* Subroutine */
-    int claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), clartg_(complex *, complex *, real *, complex *, complex *), xerbla_(char *, integer *), clargv_(integer *, complex *, integer *, complex *, integer *, real *, integer *), clartv_(integer *, complex *, integer *, complex *, integer *, real *, complex *, integer *);
+    int claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), clartg_(complex *, complex *, real *, complex *, complex *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), clargv_(integer *, complex *, integer *, complex *, integer *, real *, integer *), clartv_(integer *, complex *, integer *, complex *, integer *, real *, complex *, integer *);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -276,7 +276,7 @@ int chbtrd_(char *vect, char *uplo, integer *n, integer *kd, complex *ab, intege
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHBTRD", &i__1);
+        xerbla_("CHBTRD", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

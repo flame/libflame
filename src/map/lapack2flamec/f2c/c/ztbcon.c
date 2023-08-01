@@ -155,7 +155,7 @@ int ztbcon_(char *norm, char *uplo, char *diag, integer *n, integer *kd, doublec
     int zlacn2_(integer *, doublecomplex *, doublecomplex *, doublereal *, integer *, integer *);
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal ainvnm;
     extern integer izamax_(integer *, doublecomplex *, integer *);
     extern doublereal zlantb_(char *, char *, char *, integer *, integer *, doublecomplex *, integer *, doublereal *);
@@ -230,7 +230,7 @@ int ztbcon_(char *norm, char *uplo, char *diag, integer *n, integer *kd, doublec
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZTBCON", &i__1);
+        xerbla_("ZTBCON", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -360,7 +360,7 @@ int dgesvx_(char *fact, char *trans, integer *n, integer * nrhs, doublereal *a, 
     doublereal colcnd;
     logical nofact;
     extern /* Subroutine */
-    int dgeequ_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *), dgerfs_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, integer *), dgetrf_(integer *, integer *, doublereal *, integer *, integer *, integer *), dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dgeequ_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *), dgerfs_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, integer *), dgetrf_(integer *, integer *, doublereal *, integer *, integer *, integer *), dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal bignum;
     extern doublereal dlantr_(char *, char *, char *, integer *, integer *, doublereal *, integer *, doublereal *);
     integer infequ;
@@ -542,7 +542,7 @@ int dgesvx_(char *fact, char *trans, integer *n, integer * nrhs, doublereal *a, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGESVX", &i__1);
+        xerbla_("DGESVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -574,7 +574,7 @@ int zgbsvxx_(char *fact, char *trans, integer *n, integer * kl, integer *ku, int
     doublereal colcnd;
     logical nofact;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zlaqgb_( integer *, integer *, integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, char *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zlaqgb_( integer *, integer *, integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, char *);
     doublereal bignum;
     integer infequ;
     logical colequ;
@@ -776,7 +776,7 @@ int zgbsvxx_(char *fact, char *trans, integer *n, integer * kl, integer *ku, int
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGBSVXX", &i__1);
+        xerbla_("ZGBSVXX", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

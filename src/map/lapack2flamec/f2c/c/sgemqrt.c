@@ -167,7 +167,7 @@ int sgemqrt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
     extern logical lsame_(char *, char *);
     logical right;
     extern /* Subroutine */
-    int slarfb_(char *, char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *);
+    int slarfb_(char *, char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical notran;
     integer ldwork;
     /* -- LAPACK computational routine (version 3.7.0) -- */
@@ -256,7 +256,7 @@ int sgemqrt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGEMQRT", &i__1);
+        xerbla_("SGEMQRT", &i__1, (ftnlen)7);
         return 0;
     }
     /* .. Quick return if possible .. */

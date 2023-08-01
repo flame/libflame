@@ -272,7 +272,7 @@ int dgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, d
     int dgghrd_(char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), dlartg_( doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
-    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer lwkopt;
     logical lquery;
     /* -- LAPACK computational routine (version 3.8.0) -- */
@@ -365,7 +365,7 @@ int dgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, d
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGGHD3", &i__1);
+        xerbla_("DGGHD3", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

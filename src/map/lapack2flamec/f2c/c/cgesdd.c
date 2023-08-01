@@ -285,7 +285,7 @@ int cgesdd_(char *jobz, integer *m, integer *n, complex *a, integer *lda, real *
     int cgelqf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *), clacrm_( integer *, integer *, complex *, integer *, real *, integer *, complex *, integer *, real *), clarcm_(integer *, integer *, real *, integer *, complex *, integer *, complex *, integer *, real *), clascl_(char *, integer *, integer *, real *, real *, integer *, integer *, complex *, integer *, integer *), sbdsdc_(char *, char *, integer *, real *, real *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *), cgeqrf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(char *, integer *), cungbr_(char *, integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *);
+    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), cungbr_(char *, integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *);
     real bignum;
     extern /* Subroutine */
     int slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *), cunmbr_(char *, char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *, integer *, integer *), cunglq_( integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *);
@@ -814,7 +814,7 @@ int cgesdd_(char *jobz, integer *m, integer *n, complex *a, integer *lda, real *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGESDD", &i__1);
+        xerbla_("CGESDD", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

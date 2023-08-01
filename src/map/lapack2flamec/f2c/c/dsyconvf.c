@@ -209,7 +209,7 @@ int dsyconvf_(char *uplo, char *way, integer *n, doublereal * a, integer *lda, d
     int dswap_(integer *, doublereal *, integer *, doublereal *, integer *);
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical convert;
     /* -- LAPACK computational routine (version 3.8.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -256,7 +256,7 @@ int dsyconvf_(char *uplo, char *way, integer *n, doublereal * a, integer *lda, d
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSYCONVF", &i__1);
+        xerbla_("DSYCONVF", &i__1, (ftnlen)8);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

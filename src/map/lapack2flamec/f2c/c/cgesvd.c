@@ -269,7 +269,7 @@ int cgesvd_(char *jobu, char *jobvt, integer *m, integer *n, complex *a, integer
     int cgelqf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *), clascl_( char *, integer *, integer *, real *, real *, integer *, integer *, complex *, integer *, integer *), cgeqrf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), cbdsqr_(char *, integer *, integer *, integer *, integer *, real *, real *, complex *, integer *, complex *, integer *, complex *, integer *, real *, integer *), xerbla_(char *, integer *), cungbr_(char *, integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *);
+    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), cbdsqr_(char *, integer *, integer *, integer *, integer *, real *, real *, complex *, integer *, complex *, integer *, complex *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), cungbr_(char *, integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *);
     real bignum;
     extern /* Subroutine */
     int slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *);
@@ -896,7 +896,7 @@ int cgesvd_(char *jobu, char *jobvt, integer *m, integer *n, complex *a, integer
     if (*info != 0)
     {
         i__2 = -(*info);
-        xerbla_("CGESVD", &i__2);
+        xerbla_("CGESVD", &i__2, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

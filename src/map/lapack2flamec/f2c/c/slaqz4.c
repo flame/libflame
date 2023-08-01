@@ -216,7 +216,7 @@ int slaqz4_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     int srot_(integer *, real *, integer *, real *, integer *, real *, real *), sgemm_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), slaqz1_(real *, integer *, real *, integer *, real *, real *, real *, real *, real *, real *), slaqz2_(logical *, logical *, integer *, integer *, integer *, integer *, real *, integer *, real *, integer *, integer *, integer *, real *, integer *, integer *, integer *, real *, integer *);
     integer nblock;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer ishift;
     extern /* Subroutine */
     int slaset_(char *, integer *, integer *, real *, real *, real *, integer *), slartg_(real *, real *, real *, real *, real *), slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *);
@@ -268,7 +268,7 @@ int slaqz4_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLAQZ4", &i__1);
+        xerbla_("SLAQZ4", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

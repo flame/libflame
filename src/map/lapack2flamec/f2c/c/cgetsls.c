@@ -202,7 +202,7 @@ int cgetsls_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, in
     int clascl_(char *, integer *, integer *, real *, real *, integer *, integer *, complex *, integer *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int cgemlq_(char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(char *, integer *), cgemqr_(char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, integer *);
+    int cgemlq_(char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), cgemqr_(char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, integer *);
     integer scllen;
     real bignum, smlnum;
     integer wsizem, wsizeo;
@@ -327,7 +327,7 @@ int cgetsls_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGETSLS", &i__1);
+        xerbla_("CGETSLS", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

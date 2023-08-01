@@ -211,7 +211,7 @@ int dsyev_2stage_(char *jobz, char *uplo, integer *n, doublereal *a, integer *ld
     int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *);
     doublereal safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal bignum;
     integer indtau;
     extern /* Subroutine */
@@ -288,7 +288,7 @@ int dsyev_2stage_(char *jobz, char *uplo, integer *n, doublereal *a, integer *ld
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSYEV_2STAGE ", &i__1);
+        xerbla_("DSYEV_2STAGE ", &i__1, (ftnlen)13);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

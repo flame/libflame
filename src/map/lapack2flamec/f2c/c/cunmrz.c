@@ -200,7 +200,7 @@ int cunmrz_(char *side, char *trans, integer *m, integer *n, integer *k, integer
     int cunmr3_(char *, char *, integer *, integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *, integer *), clarzb_(char *, char *, char *, char *, integer *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), clarzt_( char *, char *, integer *, integer *, complex *, integer *, complex *, complex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), clarzt_( char *, char *, integer *, integer *, complex *, integer *, complex *, complex *, integer *);
     logical notran;
     integer ldwork;
     char transt[1];
@@ -308,7 +308,7 @@ int cunmrz_(char *side, char *trans, integer *m, integer *n, integer *k, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CUNMRZ", &i__1);
+        xerbla_("CUNMRZ", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

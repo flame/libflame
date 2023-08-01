@@ -221,7 +221,7 @@ int cunbdb1_(integer *m, integer *p, integer *q, complex * x11, integer *ldx11, 
     int csrot_(integer *, complex *, integer *, complex *, integer *, real *, real *);
     extern real scnrm2_(integer *, complex *, integer *);
     extern /* Subroutine */
-    int clacgv_(integer *, complex *, integer *), xerbla_(char *, integer *);
+    int clacgv_(integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical lquery;
     extern /* Subroutine */
     int cunbdb5_(integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, integer *);
@@ -317,7 +317,7 @@ int cunbdb1_(integer *m, integer *p, integer *q, complex * x11, integer *ldx11, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CUNBDB1", &i__1);
+        xerbla_("CUNBDB1", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -192,7 +192,7 @@ int slarzt_(char *direct, char *storev, integer *n, integer * k, real *v, intege
     integer i__, j, info;
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int sgemv_(char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), strmv_(char *, char *, char *, integer *, real *, integer *, real *, integer *), xerbla_( char *, integer *);
+    int sgemv_(char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), strmv_(char *, char *, char *, integer *, real *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -233,7 +233,7 @@ int slarzt_(char *direct, char *storev, integer *n, integer * k, real *v, intege
     if (info != 0)
     {
         i__1 = -info;
-        xerbla_("SLARZT", &i__1);
+        xerbla_("SLARZT", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

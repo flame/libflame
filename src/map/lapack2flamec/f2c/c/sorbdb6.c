@@ -159,7 +159,7 @@ int sorbdb6_(integer *m1, integer *m2, integer *n, real *x1, integer *incx1, rea
     integer i__;
     real scl1, scl2, ssq1, ssq2;
     extern /* Subroutine */
-    int sgemv_(char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), xerbla_(char *, integer *), slassq_(integer *, real *, integer *, real *, real *);
+    int sgemv_(char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), slassq_(integer *, real *, integer *, real *, real *);
     real normsq1, normsq2;
     /* -- LAPACK computational routine (version 3.5.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -227,7 +227,7 @@ int sorbdb6_(integer *m1, integer *m2, integer *n, real *x1, integer *incx1, rea
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SORBDB6", &i__1);
+        xerbla_("SORBDB6", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

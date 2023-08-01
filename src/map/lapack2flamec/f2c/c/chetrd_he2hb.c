@@ -275,7 +275,7 @@ int chetrd_he2hb_(char *uplo, integer *n, integer *kd, complex *a, integer *lda,
     integer lwmin;
     logical upper;
     extern /* Subroutine */
-    int cher2k_(char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, real *, complex *, integer *), cgelqf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *), cgeqrf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *), clarft_(char *, char *, integer *, integer *, complex *, integer *, complex *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(char *, integer *);
+    int cher2k_(char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, real *, complex *, integer *), cgelqf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *), cgeqrf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *), clarft_(char *, char *, integer *, integer *, complex *, integer *, complex *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical lquery;
     /* -- LAPACK computational routine (version 3.8.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -346,7 +346,7 @@ int chetrd_he2hb_(char *uplo, integer *n, integer *kd, complex *a, integer *lda,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHETRD_HE2HB", &i__1);
+        xerbla_("CHETRD_HE2HB", &i__1, (ftnlen)12);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

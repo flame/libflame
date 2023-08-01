@@ -456,7 +456,7 @@ int sgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
     real sconda;
     extern real slamch_(char *), slange_(char *, integer *, integer *, real *, integer *, real *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), sgelqf_( integer *, integer *, real *, integer *, real *, real *, integer *, integer *), slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), sgelqf_( integer *, integer *, real *, integer *, real *, real *, integer *, integer *), slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *);
     extern integer isamax_(integer *, real *, integer *);
     extern /* Subroutine */
     int sgeqrf_(integer *, integer *, real *, integer *, real *, real *, integer *, integer *), sgesvd_(char *, char *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *, real *, integer *, integer *), slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *), slapmt_(logical *, integer *, integer *, real *, integer *, integer *), spocon_(char *, integer *, real *, integer *, real *, real *, real *, integer *, integer *);
@@ -938,7 +938,7 @@ int sgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGESVDQ", &i__1);
+        xerbla_("SGESVDQ", &i__1, (ftnlen)7);
         return 0;
     }
     else if (lquery)
@@ -978,7 +978,7 @@ int sgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
             {
                 *info = -8;
                 i__2 = -(*info);
-                xerbla_("SGESVDQ", &i__2);
+                xerbla_("SGESVDQ", &i__2, (ftnlen)7);
                 return 0;
             }
             /* L1904: */
@@ -1069,7 +1069,7 @@ int sgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
         {
             *info = -8;
             i__1 = -(*info);
-            xerbla_("SGESVDQ", &i__1);
+            xerbla_("SGESVDQ", &i__1, (ftnlen)7);
             return 0;
         }
         if (rtmp > big / sqrt((real) (*m)))

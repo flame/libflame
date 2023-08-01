@@ -196,7 +196,7 @@ int sgerfs_(char *trans, integer *n, integer *nrhs, real *a, integer *lda, real 
     extern real slamch_(char *);
     real safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical notran;
     extern /* Subroutine */
     int sgetrs_(char *, integer *, integer *, real *, integer *, integer *, real *, integer *, integer *);
@@ -277,7 +277,7 @@ int sgerfs_(char *trans, integer *n, integer *nrhs, real *a, integer *lda, real 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGERFS", &i__1);
+        xerbla_("SGERFS", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

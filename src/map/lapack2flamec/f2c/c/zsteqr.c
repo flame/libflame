@@ -169,7 +169,7 @@ int zsteqr_(char *compz, integer *n, doublereal *d__, doublereal *e, doublecompl
     int dlartg_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
     doublereal safmax;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern doublereal dlanst_(char *, integer *, doublereal *, doublereal *);
     extern /* Subroutine */
     int dlasrt_(char *, integer *, doublereal *, integer *);
@@ -240,7 +240,7 @@ int zsteqr_(char *compz, integer *n, doublereal *d__, doublereal *e, doublecompl
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZSTEQR", &i__1);
+        xerbla_("ZSTEQR", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

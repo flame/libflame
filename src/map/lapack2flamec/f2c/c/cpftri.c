@@ -234,7 +234,7 @@ int cpftri_(char *transr, char *uplo, integer *n, complex *a, integer *info)
     int ctrmm_(char *, char *, char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *);
     logical lower;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical nisodd;
     extern /* Subroutine */
     int clauum_(char *, integer *, complex *, integer *, integer *), ctftri_(char *, char *, char *, integer *, complex *, integer *);
@@ -276,7 +276,7 @@ int cpftri_(char *transr, char *uplo, integer *n, complex *a, integer *info)
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CPFTRI", &i__1);
+        xerbla_("CPFTRI", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

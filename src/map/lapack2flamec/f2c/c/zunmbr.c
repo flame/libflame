@@ -208,7 +208,7 @@ int zunmbr_(char *vect, char *side, char *trans, integer *m, integer *n, integer
     extern logical lsame_(char *, char *);
     integer iinfo;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     logical notran, applyq;
     char transt[1];
@@ -348,7 +348,7 @@ int zunmbr_(char *vect, char *side, char *trans, integer *m, integer *n, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZUNMBR", &i__1);
+        xerbla_("ZUNMBR", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

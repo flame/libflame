@@ -150,7 +150,7 @@ int dgbtf2_(integer *m, integer *n, integer *kl, integer *ku, doublereal *ab, in
     int dger_(integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), dscal_(integer *, doublereal *, doublereal *, integer *), dswap_(integer *, doublereal *, integer *, doublereal *, integer *);
     extern integer idamax_(integer *, doublereal *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -209,7 +209,7 @@ int dgbtf2_(integer *m, integer *n, integer *kl, integer *ku, doublereal *ab, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGBTF2", &i__1);
+        xerbla_("DGBTF2", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -253,7 +253,7 @@ int zhetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     integer grsiz, ttype, abdpos;
     extern /* Subroutine */
         int
-        xerbla_(char *, integer *);
+        xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer thgrid, thgrnb, indtau;
     doublereal abstmp;
     integer ofdpos;
@@ -345,7 +345,7 @@ int zhetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHETRD_HB2ST", &i__1);
+        xerbla_("ZHETRD_HB2ST", &i__1, (ftnlen)12);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

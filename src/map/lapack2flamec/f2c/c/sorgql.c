@@ -133,7 +133,7 @@ int sorgql_(integer *m, integer *n, integer *k, real *a, integer *lda, real *tau
     /* Local variables */
     integer i__, j, l, ib, nb, kk, nx, iws, nbmin, iinfo;
     extern /* Subroutine */
-    int sorg2l_(integer *, integer *, integer *, real *, integer *, real *, real *, integer *), slarfb_(char *, char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *);
+    int sorg2l_(integer *, integer *, integer *, real *, integer *, real *, real *, integer *), slarfb_(char *, char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int slarft_(char *, char *, integer *, integer *, real *, integer *, real *, real *, integer *);
@@ -205,7 +205,7 @@ int sorgql_(integer *m, integer *n, integer *k, real *a, integer *lda, real *tau
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SORGQL", &i__1);
+        xerbla_("SORGQL", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

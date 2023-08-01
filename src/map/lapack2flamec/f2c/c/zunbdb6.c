@@ -177,7 +177,7 @@ int zunbdb6_(integer *m1, integer *m2, integer *n, doublecomplex *x1, integer *i
     int zgemv_(char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *);
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zlassq_( integer *, doublecomplex *, integer *, doublereal *, doublereal *) ;
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zlassq_( integer *, doublecomplex *, integer *, doublereal *, doublereal *) ;
     /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -245,7 +245,7 @@ int zunbdb6_(integer *m1, integer *m2, integer *n, doublecomplex *x1, integer *i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZUNBDB6", &i__1);
+        xerbla_("ZUNBDB6", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -135,7 +135,7 @@ int dtzrqf_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *ta
     /* Local variables */
     integer i__, k, m1;
     extern /* Subroutine */
-    int dger_(integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), dgemv_(char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), dcopy_(integer *, doublereal *, integer *, doublereal *, integer *), daxpy_(integer *, doublereal *, doublereal *, integer *, doublereal *, integer *), dlarfg_( integer *, doublereal *, doublereal *, integer *, doublereal *), xerbla_(char *, integer *);
+    int dger_(integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), dgemv_(char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), dcopy_(integer *, doublereal *, integer *, doublereal *, integer *), daxpy_(integer *, doublereal *, doublereal *, integer *, doublereal *, integer *), dlarfg_( integer *, doublereal *, doublereal *, integer *, doublereal *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -177,7 +177,7 @@ int dtzrqf_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *ta
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DTZRQF", &i__1);
+        xerbla_("DTZRQF", &i__1, (ftnlen)6);
         return 0;
     }
     /* Perform the factorization. */

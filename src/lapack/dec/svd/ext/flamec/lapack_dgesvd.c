@@ -247,7 +247,7 @@
  extern /* Subroutine */
  int lapack_dgelqf(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), dgeqrf_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), lapack_dbdsqr(char *, integer *, integer *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), lapack_dorgbr(char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
  extern /* Subroutine */
- int xerbla_(char *, integer *);
+ int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
  extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
  extern /* Subroutine */
  int lapack_dormbr(char *, char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *), lapack_dorglq(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), lapack_dorgqr(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
@@ -1367,7 +1367,7 @@
 #endif
  if (*info != 0) {
  i__2 = -(*info);
- xerbla_("DGESVD", &i__2);
+ xerbla_("DGESVD", &i__2, (ftnlen)6);
  return 0;
  }
  else if (lquery) {

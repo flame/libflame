@@ -37,7 +37,7 @@ int strtri_check(char *uplo, char *diag, integer *n, float *a, integer *lda, int
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("STRTRI", &i__1);
+        xerbla_("STRTRI", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */

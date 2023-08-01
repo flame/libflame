@@ -228,7 +228,7 @@ int claqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     int claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), clartg_(complex *, complex *, real *, complex *, complex *);
     real safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real safmax;
     extern /* Subroutine */
     int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *);
@@ -280,7 +280,7 @@ int claqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CLAQZ3", &i__1);
+        xerbla_("CLAQZ3", &i__1, (ftnlen)6);
         return 0;
     }
     /* Executable statements */

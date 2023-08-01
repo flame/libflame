@@ -166,7 +166,7 @@ int slaswlq_(integer *m, integer *n, integer *mb, integer * nb, real *a, integer
     /* Local variables */
     integer i__, ii, kk, ctr;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), sgelqt_( integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), sgelqt_( integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *);
     logical lquery;
     extern /* Subroutine */
     int stplqt_(integer *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *);
@@ -233,7 +233,7 @@ int slaswlq_(integer *m, integer *n, integer *mb, integer * nb, real *a, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLASWLQ", &i__1);
+        xerbla_("SLASWLQ", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -161,7 +161,7 @@ int zgbcon_(char *norm, integer *n, integer *kl, integer *ku, doublecomplex *ab,
     int zaxpy_(integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), zlacn2_( integer *, doublecomplex *, doublecomplex *, doublereal *, integer *, integer *);
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal ainvnm;
     extern integer izamax_(integer *, doublecomplex *, integer *);
     logical onenrm;
@@ -233,7 +233,7 @@ int zgbcon_(char *norm, integer *n, integer *kl, integer *ku, doublecomplex *ab,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGBCON", &i__1);
+        xerbla_("ZGBCON", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -126,7 +126,7 @@ int spbtrs_(char *uplo, integer *n, integer *kd, integer * nrhs, real *ab, integ
     extern logical lsame_(char *, char *);
     logical upper;
     extern /* Subroutine */
-    int stbsv_(char *, char *, char *, integer *, integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *);
+    int stbsv_(char *, char *, char *, integer *, integer *, real *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -183,7 +183,7 @@ int spbtrs_(char *uplo, integer *n, integer *kd, integer * nrhs, real *ab, integ
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SPBTRS", &i__1);
+        xerbla_("SPBTRS", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -461,7 +461,7 @@ int sgbrfsx_(char *trans, char *equed, integer *n, integer * kl, integer *ku, in
     real anorm;
     extern real slangb_(char *, integer *, integer *, integer *, real *, integer *, real *), slamch_(char *);
     extern /* Subroutine */
-    int sgbcon_(char *, integer *, integer *, integer *, real *, integer *, integer *, real *, real *, real *, integer *, integer *), xerbla_(char *, integer *);
+    int sgbcon_(char *, integer *, integer *, integer *, real *, integer *, integer *, real *, real *, real *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical colequ, notran, rowequ;
     extern integer ilaprec_(char *);
     integer ithresh, n_norms__;
@@ -622,7 +622,7 @@ int sgbrfsx_(char *trans, char *equed, integer *n, integer * kl, integer *ku, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGBRFSX", &i__1);
+        xerbla_("SGBRFSX", &i__1, (ftnlen)7);
         return 0;
     }
     /* Quick return if possible. */

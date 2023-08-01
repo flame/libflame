@@ -187,7 +187,7 @@ int ctplqt2_(integer *m, integer *n, integer *l, complex *a, integer *lda, compl
     int cgerc_(integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, integer *);
     complex alpha;
     extern /* Subroutine */
-    int cgemv_(char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer *), ctrmv_(char *, char *, char *, integer *, complex *, integer *, complex *, integer *), clarfg_(integer *, complex *, complex *, integer *, complex *), xerbla_(char *, integer *);
+    int cgemv_(char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer *), ctrmv_(char *, char *, char *, integer *, complex *, integer *, complex *, integer *), clarfg_(integer *, complex *, complex *, integer *, complex *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.7.1) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -246,7 +246,7 @@ int ctplqt2_(integer *m, integer *n, integer *l, complex *a, integer *lda, compl
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTPLQT2", &i__1);
+        xerbla_("CTPLQT2", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

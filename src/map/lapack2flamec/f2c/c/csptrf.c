@@ -193,7 +193,7 @@ int csptrf_(char *uplo, integer *n, complex *ap, integer * ipiv, integer *info)
     real absakk;
     extern integer icamax_(integer *, complex *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real colmax, rowmax;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -238,7 +238,7 @@ int csptrf_(char *uplo, integer *n, complex *ap, integer * ipiv, integer *info)
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CSPTRF", &i__1);
+        xerbla_("CSPTRF", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

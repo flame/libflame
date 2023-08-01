@@ -180,7 +180,7 @@ int zgetsqrhrt_(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2
     int zunhr_col_(integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *);
     integer lw1, lw2, num_all_row_blocks__, lwt, ldwt, iinfo;
     extern /* Subroutine */
-    int zungtsqr_row_(integer *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *), zcopy_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_( char *, integer *);
+    int zungtsqr_row_(integer *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *), zcopy_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical lquery;
     integer nb1local, nb2local;
     extern /* Subroutine */
@@ -299,7 +299,7 @@ int zgetsqrhrt_(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGETSQRHRT", &i__1);
+        xerbla_("ZGETSQRHRT", &i__1, (ftnlen)10);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -33,7 +33,7 @@ int cung2r_check(integer *m, integer *n, integer *k, scomplex *a, integer *lda, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CUNG2R", &i__1);
+        xerbla_("CUNG2R", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */

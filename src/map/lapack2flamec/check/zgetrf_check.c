@@ -27,7 +27,7 @@ int zgetrf_check(integer *m, integer *n, dcomplex *a, integer *lda, integer *ipi
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGETRF", &i__1);
+        xerbla_("ZGETRF", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */

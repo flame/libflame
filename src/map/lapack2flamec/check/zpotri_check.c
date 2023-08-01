@@ -33,7 +33,7 @@ int zpotri_check(char *uplo, integer *n, dcomplex *a, integer *lda, integer *inf
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZPOTRI", &i__1);
+        xerbla_("ZPOTRI", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */

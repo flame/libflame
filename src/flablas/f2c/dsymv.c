@@ -12,7 +12,7 @@ int dsymv_(char *uplo, integer *n, doublereal *alpha, doublereal *a, integer *ld
     extern logical lsame_(char *, char *);
     integer ix, iy, jx, jy, kx, ky;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
     /* .. */
@@ -121,7 +121,7 @@ int dsymv_(char *uplo, integer *n, doublereal *alpha, doublereal *a, integer *ld
     }
     if (info != 0)
     {
-        xerbla_("DSYMV ", &info);
+        xerbla_("DSYMV ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

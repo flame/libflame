@@ -326,7 +326,7 @@ int sppsvx_(char *fact, char *uplo, integer *n, integer * nrhs, real *ap, real *
     extern real slamch_(char *);
     logical nofact;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     integer infequ;
     extern /* Subroutine */
@@ -458,7 +458,7 @@ int sppsvx_(char *fact, char *uplo, integer *n, integer * nrhs, real *ap, real *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SPPSVX", &i__1);
+        xerbla_("SPPSVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

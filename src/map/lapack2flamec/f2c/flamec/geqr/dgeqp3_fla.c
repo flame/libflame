@@ -156,7 +156,7 @@ int dgeqp3_fla(integer *m, integer *n, doublereal *a, integer * lda, integer *jp
     int dswap_(integer *, doublereal *, integer *, doublereal *, integer *);
     integer minws;
     extern /* Subroutine */
-    int dlaqp2_(integer *, integer *, integer *, doublereal *, integer *, integer *, doublereal *, doublereal *, doublereal *, doublereal *), dgeqrf_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), xerbla_(char *, integer *);
+    int dlaqp2_(integer *, integer *, integer *, doublereal *, integer *, integer *, doublereal *, doublereal *, doublereal *, doublereal *), dgeqrf_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int dlaqps_(integer *, integer *, integer *, integer *, integer *, doublereal *, integer *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *);
@@ -236,7 +236,7 @@ int dgeqp3_fla(integer *m, integer *n, doublereal *a, integer * lda, integer *jp
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGEQP3", &i__1);
+        xerbla_("DGEQP3", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

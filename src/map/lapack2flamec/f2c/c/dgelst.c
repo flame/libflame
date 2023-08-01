@@ -214,7 +214,7 @@ int dgelst_(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a, 
     int dlabad_(doublereal *, doublereal *);
     extern doublereal dlamch_(char *), dlange_(char *, integer *, integer *, doublereal *, integer *, doublereal *);
     extern /* Subroutine */
-    int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer scllen;
     doublereal bignum;
@@ -317,7 +317,7 @@ int dgelst_(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGELST ", &i__1);
+        xerbla_("DGELST ", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

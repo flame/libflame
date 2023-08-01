@@ -33,7 +33,7 @@ int chetd2_check(char *uplo, integer *n, scomplex *a, integer *lda, float *d__, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHETD2", &i__1);
+        xerbla_("CHETD2", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */

@@ -278,7 +278,7 @@ int zgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, d
     int ztrmv_(char *, char *, char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *);
     char compq2[1], compz2[1];
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int zgghrd_(char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer * ), zlaset_(char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *), zlartg_(doublecomplex *, doublecomplex *, doublereal *, doublecomplex *, doublecomplex *), zlacpy_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *);
@@ -377,7 +377,7 @@ int zgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, d
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGGHD3", &i__1);
+        xerbla_("ZGGHD3", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

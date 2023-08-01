@@ -247,7 +247,7 @@ int slaed8_(integer *icompq, integer *k, integer *n, integer *qsiz, real *d__, r
     int srot_(integer *, real *, integer *, real *, integer *, real *, real *), sscal_(integer *, real *, real *, integer *), scopy_(integer *, real *, integer *, real *, integer * );
     extern real slapy2_(real *, real *), slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer isamax_(integer *, real *, integer *);
     extern /* Subroutine */
     int slamrg_(integer *, integer *, real *, integer *, integer *, integer *), slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *);
@@ -319,7 +319,7 @@ int slaed8_(integer *icompq, integer *k, integer *n, integer *qsiz, real *d__, r
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLAED8", &i__1);
+        xerbla_("SLAED8", &i__1, (ftnlen)6);
         return 0;
     }
     /* Need to initialize GIVPTR to O here in case of quick exit */

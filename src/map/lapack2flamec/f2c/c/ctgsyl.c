@@ -328,7 +328,7 @@ int ctgsyl_(char *trans, integer *ijob, integer *m, integer * n, complex *a, int
     int ctgsy2_(char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, real *, real *, real *, integer *);
     real dscale, scaloc;
     extern /* Subroutine */
-    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(char *, integer *);
+    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer iround;
     logical notran;
@@ -459,7 +459,7 @@ int ctgsyl_(char *trans, integer *ijob, integer *m, integer * n, complex *a, int
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTGSYL", &i__1);
+        xerbla_("CTGSYL", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

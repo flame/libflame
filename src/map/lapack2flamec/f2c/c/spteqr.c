@@ -159,7 +159,7 @@ int spteqr_(char *compz, integer *n, real *d__, real *e, real *z__, integer *ldz
     integer nru;
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), slaset_( char *, integer *, integer *, real *, real *, real *, integer *), sbdsqr_(char *, integer *, integer *, integer *, integer *, real *, real *, real *, integer *, real *, integer *, real *, integer *, real *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), slaset_( char *, integer *, integer *, real *, real *, real *, integer *), sbdsqr_(char *, integer *, integer *, integer *, integer *, real *, real *, real *, integer *, real *, integer *, real *, integer *, real *, integer *);
     integer icompz;
     extern /* Subroutine */
     int spttrf_(integer *, real *, real *, integer *);
@@ -226,7 +226,7 @@ int spteqr_(char *compz, integer *n, real *d__, real *e, real *z__, integer *ldz
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SPTEQR", &i__1);
+        xerbla_("SPTEQR", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

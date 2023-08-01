@@ -286,7 +286,7 @@ int slasda_(integer *icompq, integer *smlsiz, integer *n, integer *sqre, real *d
     int scopy_(integer *, real *, integer *, real *, integer *), slasd6_(integer *, integer *, integer *, integer *, real *, real *, real *, real *, real *, integer *, integer *, integer *, integer *, integer *, real *, integer *, real *, real *, real *, real *, integer *, real *, real *, real *, integer *, integer *);
     integer nwork1, nwork2;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), slasdq_( char *, integer *, integer *, integer *, integer *, integer *, real *, real *, real *, integer *, real *, integer *, real *, integer *, real *, integer *), slasdt_(integer *, integer *, integer *, integer *, integer *, integer *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), slasdq_( char *, integer *, integer *, integer *, integer *, integer *, real *, real *, real *, integer *, real *, integer *, real *, integer *, real *, integer *), slasdt_(integer *, integer *, integer *, integer *, integer *, integer *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
     integer smlszp;
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -370,7 +370,7 @@ int slasda_(integer *icompq, integer *smlsiz, integer *n, integer *sqre, real *d
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLASDA", &i__1);
+        xerbla_("SLASDA", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

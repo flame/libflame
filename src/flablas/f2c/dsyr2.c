@@ -12,7 +12,7 @@ int dsyr2_(char *uplo, integer *n, doublereal *alpha, doublereal *x, integer *in
     extern logical lsame_(char *, char *);
     integer ix, iy, jx, jy, kx, ky;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
     /* .. */
@@ -120,7 +120,7 @@ int dsyr2_(char *uplo, integer *n, doublereal *alpha, doublereal *x, integer *in
     }
     if (info != 0)
     {
-        xerbla_("DSYR2 ", &info);
+        xerbla_("DSYR2 ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

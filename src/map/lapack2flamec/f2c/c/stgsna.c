@@ -421,7 +421,7 @@ int stgsna_(char *job, char *howmny, logical *select, integer *n, real *a, integ
     real dummy1[1], alphai, alphar;
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical wantbh, wantdf;
     extern /* Subroutine */
     int slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *), stgexc_(logical *, logical *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *, integer *, real *, integer *, integer *);
@@ -584,7 +584,7 @@ int stgsna_(char *job, char *howmny, logical *select, integer *n, real *a, integ
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("STGSNA", &i__1);
+        xerbla_("STGSNA", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

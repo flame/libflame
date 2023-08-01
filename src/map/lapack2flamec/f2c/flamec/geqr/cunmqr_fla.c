@@ -183,7 +183,7 @@ int cunmqr_fla(char *side, char *trans, integer *m, integer *n, integer *k, comp
     extern logical lsame_(char *, char *);
     integer nbmin, iinfo;
     extern /* Subroutine */
-    int cunm2r_fla(char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *, integer *), clarfb_(char *, char *, char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *), clarft_(char *, char * , integer *, integer *, complex *, integer *, complex *, complex * , integer *), xerbla_(char *, integer *);
+    int cunm2r_fla(char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *, integer *), clarfb_(char *, char *, char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *), clarft_(char *, char * , integer *, integer *, complex *, integer *, complex *, complex * , integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     logical notran;
     integer ldwork, lwkopt;
@@ -283,7 +283,7 @@ int cunmqr_fla(char *side, char *trans, integer *m, integer *n, integer *k, comp
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CUNMQR", &i__1);
+        xerbla_("CUNMQR", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

@@ -160,7 +160,7 @@ int zupmtr_(char *side, char *uplo, char *trans, integer *m, integer *n, doublec
     int zlarf_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *);
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical notran, forwrd;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -231,7 +231,7 @@ int zupmtr_(char *side, char *uplo, char *trans, integer *m, integer *n, doublec
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZUPMTR", &i__1);
+        xerbla_("ZUPMTR", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

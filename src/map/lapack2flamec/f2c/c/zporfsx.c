@@ -411,7 +411,7 @@ int zporfsx_(char *uplo, char *equed, integer *n, integer * nrhs, doublecomplex 
     logical rcequ;
     extern doublereal zla_porcond_c_(char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, logical *, integer *, doublecomplex *, doublereal *), zla_porcond_x_(char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublereal *), dlamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern doublereal zlanhe_(char *, char *, integer *, doublecomplex *, integer *, doublereal *);
     extern /* Subroutine */
     int zpocon_(char *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublereal *, integer *);
@@ -561,7 +561,7 @@ int zporfsx_(char *uplo, char *equed, integer *n, integer * nrhs, doublecomplex 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZPORFSX", &i__1);
+        xerbla_("ZPORFSX", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

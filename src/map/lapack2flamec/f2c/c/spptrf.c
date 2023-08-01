@@ -134,7 +134,7 @@ int spptrf_(char *uplo, integer *n, real *ap, integer *info)
     int sscal_(integer *, real *, real *, integer *);
     logical upper;
     extern /* Subroutine */
-    int stpsv_(char *, char *, char *, integer *, real *, real *, integer *), xerbla_(char *, integer *);
+    int stpsv_(char *, char *, char *, integer *, real *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -172,7 +172,7 @@ int spptrf_(char *uplo, integer *n, real *ap, integer *info)
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SPPTRF", &i__1);
+        xerbla_("SPPTRF", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

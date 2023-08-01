@@ -300,7 +300,7 @@ int dorbdb_(char *trans, char *signs, integer *m, integer *p, integer *q, double
     int dscal_(integer *, doublereal *, doublereal *, integer *), dlarf_(char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *);
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int daxpy_(integer *, doublereal *, doublereal *, integer *, doublereal *, integer *), xerbla_(char *, integer *);
+    int daxpy_(integer *, doublereal *, doublereal *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical lquery;
     extern /* Subroutine */
     int dlarfgp_(integer *, doublereal *, doublereal *, integer *, doublereal *);
@@ -445,7 +445,7 @@ int dorbdb_(char *trans, char *signs, integer *m, integer *p, integer *q, double
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("xORBDB", &i__1);
+        xerbla_("xORBDB", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

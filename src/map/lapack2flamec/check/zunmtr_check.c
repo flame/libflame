@@ -111,7 +111,7 @@ int zunmtr_check(char *side, char *uplo, char *trans, integer *m, integer *n, dc
     if (*info != 0)
     {
         i__2 = -(*info);
-        xerbla_("ZUNMTR", &i__2);
+        xerbla_("ZUNMTR", &i__2, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

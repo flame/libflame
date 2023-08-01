@@ -356,7 +356,7 @@ int sgesvx_(char *fact, char *trans, integer *n, integer * nrhs, real *a, intege
     extern real slamch_(char *), slange_(char *, integer *, integer *, real *, integer *, real *);
     logical nofact;
     extern /* Subroutine */
-    int slaqge_(integer *, integer *, real *, integer *, real *, real *, real *, real *, real *, char *), xerbla_(char *, integer *), sgecon_(char *, integer *, real *, integer *, real *, real *, real *, integer *, integer *);
+    int slaqge_(integer *, integer *, real *, integer *, real *, real *, real *, real *, real *, char *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), sgecon_(char *, integer *, real *, integer *, real *, real *, real *, integer *, integer *);
     real bignum;
     integer infequ;
     logical colequ;
@@ -542,7 +542,7 @@ int sgesvx_(char *fact, char *trans, integer *n, integer * nrhs, real *a, intege
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGESVX", &i__1);
+        xerbla_("SGESVX", &i__1, (ftnlen)6);
         return 0;
     }
     if (equil)

@@ -426,7 +426,7 @@ int dla_syrfsx_extended_(integer *prec_type__, char *uplo, integer *n, integer *
     doublereal normx, normy;
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal normdx;
     extern /* Subroutine */
     int dsytrs_(char *, integer *, integer *, doublereal *, integer *, integer *, doublereal *, integer *, integer *);
@@ -513,7 +513,7 @@ int dla_syrfsx_extended_(integer *prec_type__, char *uplo, integer *n, integer *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DLA_SYRFSX_EXTENDED", &i__1);
+        xerbla_("DLA_SYRFSX_EXTENDED", &i__1, (ftnlen)19);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

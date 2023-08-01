@@ -615,7 +615,7 @@ int zgesvd_check(char *jobu, char *jobvt, integer *m, integer *n, dcomplex *a, i
     if (*info != 0)
     {
         i__2 = -(*info);
-        xerbla_("ZGESVD", &i__2);
+        xerbla_("ZGESVD", &i__2, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

@@ -180,7 +180,7 @@ int ssytri_3_(char *uplo, integer *n, real *a, integer *lda, real *e, integer *i
     extern logical lsame_(char *, char *);
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer lwkopt;
     logical lquery;
@@ -239,7 +239,7 @@ int ssytri_3_(char *uplo, integer *n, real *a, integer *lda, real *e, integer *i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSYTRI_3", &i__1);
+        xerbla_("SSYTRI_3", &i__1, (ftnlen)8);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

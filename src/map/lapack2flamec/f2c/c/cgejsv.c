@@ -646,7 +646,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
     int claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *);
     extern integer isamax_(integer *, real *, integer *);
     extern /* Subroutine */
-    int slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *), cpocon_(char *, integer *, complex *, integer *, real *, real *, complex *, real *, integer *), csscal_(integer *, real *, complex *, integer *), classq_(integer *, complex *, integer *, real *, real *), xerbla_(char *, integer *), cgesvj_(char *, char *, char *, integer *, integer *, complex *, integer *, real *, integer *, complex *, integer *, complex *, integer *, real *, integer *, integer *), claswp_(integer *, complex *, integer *, integer *, integer *, integer *, integer *);
+    int slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *), cpocon_(char *, integer *, complex *, integer *, real *, real *, complex *, real *, integer *), csscal_(integer *, real *, complex *, integer *), classq_(integer *, complex *, integer *, real *, real *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), cgesvj_(char *, char *, char *, integer *, integer *, complex *, integer *, real *, integer *, complex *, integer *, complex *, integer *, real *, integer *, integer *), claswp_(integer *, complex *, integer *, integer *, integer *, integer *, integer *);
     real entrat;
     logical almort;
     complex cdummy[1];
@@ -1297,7 +1297,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
     {
         /* #:( */
         i__1 = -(*info);
-        xerbla_("CGEJSV", &i__1);
+        xerbla_("CGEJSV", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -1366,7 +1366,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
         {
             *info = -9;
             i__2 = -(*info);
-            xerbla_("CGEJSV", &i__2);
+            xerbla_("CGEJSV", &i__2, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }

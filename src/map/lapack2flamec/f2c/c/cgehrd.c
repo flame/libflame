@@ -191,7 +191,7 @@ int cgehrd_(integer *n, integer *ilo, integer *ihi, complex * a, integer *lda, c
     int cgemm_(char *, char *, integer *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer *);
     integer nbmin, iinfo;
     extern /* Subroutine */
-    int ctrmm_(char *, char *, char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *), caxpy_(integer *, complex *, complex *, integer *, complex *, integer *), cgehd2_( integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *), clahr2_(integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *, integer *), clarfb_(char *, char *, char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *);
+    int ctrmm_(char *, char *, char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *), caxpy_(integer *, complex *, complex *, integer *, complex *, integer *), cgehd2_( integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *), clahr2_(integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *, integer *), clarfb_(char *, char *, char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer ldwork, lwkopt;
     logical lquery;
@@ -260,7 +260,7 @@ int cgehrd_(integer *n, integer *ilo, integer *ihi, complex * a, integer *lda, c
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGEHRD", &i__1);
+        xerbla_("CGEHRD", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -18,7 +18,7 @@ int cherk_(char *uplo, char *trans, integer *n, integer *k, real *alpha, complex
     real rtemp;
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
     /* .. */
@@ -158,7 +158,7 @@ int cherk_(char *uplo, char *trans, integer *n, integer *k, real *alpha, complex
     }
     if (info != 0)
     {
-        xerbla_("CHERK ", &info);
+        xerbla_("CHERK ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

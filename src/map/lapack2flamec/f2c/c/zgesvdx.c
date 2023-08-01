@@ -303,7 +303,7 @@ int zgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, doub
     logical wantu;
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), zgebrd_(integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, integer *), xerbla_(char *, integer *);
+    int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), zgebrd_(integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern doublereal zlange_(char *, integer *, integer *, doublecomplex *, integer *, doublereal *);
     doublereal bignum;
@@ -544,7 +544,7 @@ int zgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, doub
     if (*info != 0)
     {
         i__2 = -(*info);
-        xerbla_("ZGESVDX", &i__2);
+        xerbla_("ZGESVDX", &i__2, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

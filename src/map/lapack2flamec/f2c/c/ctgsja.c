@@ -423,7 +423,7 @@ int ctgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
     int clags2_(logical *, real *, complex *, real *, real *, complex *, real *, real *, complex *, real *, complex *, real *, complex *), clapll_(integer *, complex *, integer *, complex *, integer *, real *), csscal_(integer *, real *, complex *, integer *);
     integer kcycle;
     extern /* Subroutine */
-    int claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(char *, integer *), slartg_(real *, real *, real *, real *, real * );
+    int claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), slartg_(real *, real *, real *, real *, real * );
     real hugenum;
     /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -520,7 +520,7 @@ int ctgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTGSJA", &i__1);
+        xerbla_("CTGSJA", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

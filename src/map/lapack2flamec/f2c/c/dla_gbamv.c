@@ -189,7 +189,7 @@ int dla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
     doublereal safe1;
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -253,7 +253,7 @@ int dla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
     }
     if (info != 0)
     {
-        xerbla_("DLA_GBAMV ", &info);
+        xerbla_("DLA_GBAMV ", &info, (ftnlen)10);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

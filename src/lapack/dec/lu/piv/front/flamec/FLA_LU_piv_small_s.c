@@ -105,7 +105,7 @@ integer FLA_LU_piv_small_s_var1( integer *m, integer *n,
     integer i__, j, jp;
     extern real slamch_(char *);
     extern integer isamax_(integer *, real *, integer *);
-    extern /* Subroutine */ int xerbla_(char *, integer *);
+    extern /* Subroutine */ int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real sfmin;
     
     a_dim1 = *lda;

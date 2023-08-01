@@ -121,7 +121,7 @@ int zpttrs_(char *uplo, integer *n, integer *nrhs, doublereal *d__, doublecomple
     integer j, jb, nb, iuplo;
     logical upper;
     extern /* Subroutine */
-    int zptts2_(integer *, integer *, integer *, doublereal *, doublecomplex *, doublecomplex *, integer *), xerbla_(char *, integer *);
+    int zptts2_(integer *, integer *, integer *, doublereal *, doublecomplex *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -170,7 +170,7 @@ int zpttrs_(char *uplo, integer *n, integer *nrhs, doublereal *d__, doublecomple
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZPTTRS", &i__1);
+        xerbla_("ZPTTRS", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -124,7 +124,7 @@ int dpbtrs_(char *uplo, integer *n, integer *kd, integer * nrhs, doublereal *ab,
     int dtbsv_(char *, char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *);
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -181,7 +181,7 @@ int dpbtrs_(char *uplo, integer *n, integer *kd, integer * nrhs, doublereal *ab,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DPBTRS", &i__1);
+        xerbla_("DPBTRS", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

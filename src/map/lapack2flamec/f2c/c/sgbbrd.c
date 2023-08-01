@@ -199,7 +199,7 @@ int sgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
     integer minmn;
     logical wantq;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), slaset_( char *, integer *, integer *, real *, real *, real *, integer *), slartg_(real *, real *, real *, real *, real *), slargv_( integer *, real *, integer *, real *, integer *, real *, integer * ), slartv_(integer *, real *, integer *, real *, integer *, real *, real *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), slaset_( char *, integer *, integer *, real *, real *, real *, integer *), slartg_(real *, real *, real *, real *, real *), slargv_( integer *, real *, integer *, real *, integer *, real *, integer * ), slartv_(integer *, real *, integer *, real *, integer *, real *, real *, integer *);
     logical wantpt;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -288,7 +288,7 @@ int sgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGBBRD", &i__1);
+        xerbla_("SGBBRD", &i__1, (ftnlen)6);
         return 0;
     }
     /* Initialize Q and P**T to the unit matrix, if needed */

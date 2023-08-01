@@ -193,7 +193,7 @@ int dlaed0_(integer *icompq, integer *qsiz, integer *n, doublereal *d__, doubler
     int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *);
     integer igivcl;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer igivnm, submat, curprb, subpbs, igivpt;
     extern /* Subroutine */
@@ -263,7 +263,7 @@ int dlaed0_(integer *icompq, integer *qsiz, integer *n, doublereal *d__, doubler
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DLAED0", &i__1);
+        xerbla_("DLAED0", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

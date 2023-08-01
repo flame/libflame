@@ -140,7 +140,7 @@ int zsycon_rook_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer
     integer isave[3];
     logical upper;
     extern /* Subroutine */
-    int zlacn2_(integer *, doublecomplex *, doublecomplex *, doublereal *, integer *, integer *), xerbla_( char *, integer *);
+    int zlacn2_(integer *, doublecomplex *, doublecomplex *, doublereal *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal ainvnm;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -193,7 +193,7 @@ int zsycon_rook_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZSYCON_ROOK", &i__1);
+        xerbla_("ZSYCON_ROOK", &i__1, (ftnlen)11);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

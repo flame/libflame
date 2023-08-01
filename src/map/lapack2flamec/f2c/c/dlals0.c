@@ -281,7 +281,7 @@ int dlals0_(integer *icompq, integer *nl, integer *nr, integer *sqre, integer *n
     int dgemv_(char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), dcopy_(integer *, doublereal *, integer *, doublereal *, integer *);
     extern doublereal dlamc3_(doublereal *, doublereal *);
     extern /* Subroutine */
-    int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal dsigjp;
     /* -- LAPACK computational routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -378,7 +378,7 @@ int dlals0_(integer *icompq, integer *nl, integer *nr, integer *sqre, integer *n
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DLALS0", &i__1);
+        xerbla_("DLALS0", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -353,7 +353,7 @@ int zpbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, doub
     extern doublereal dlamch_(char *);
     logical nofact;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern doublereal zlanhb_(char *, char *, integer *, integer *, doublecomplex *, integer *, doublereal *);
     doublereal bignum;
     extern /* Subroutine */
@@ -502,7 +502,7 @@ int zpbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, doub
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZPBSVX", &i__1);
+        xerbla_("ZPBSVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

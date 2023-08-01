@@ -274,7 +274,7 @@ int zhbgvd_(char *jobz, char *uplo, integer *n, integer *ka, integer *kb, double
     logical wantz;
     integer indwk2;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), dsterf_( integer *, doublereal *, doublereal *, integer *), zstedc_(char *, integer *, doublereal *, doublereal *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, integer *, integer *, integer *, integer *), zhbtrd_(char *, char *, integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, integer *, doublecomplex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), dsterf_( integer *, doublereal *, doublereal *, integer *), zstedc_(char *, integer *, doublereal *, doublereal *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, integer *, integer *, integer *, integer *), zhbtrd_(char *, char *, integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, integer *, doublecomplex *, integer *);
     integer indwrk, liwmin;
     extern /* Subroutine */
     int zhbgst_(char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublereal *, integer *), zlacpy_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *);
@@ -396,7 +396,7 @@ int zhbgvd_(char *jobz, char *uplo, integer *n, integer *ka, integer *kb, double
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHBGVD", &i__1);
+        xerbla_("ZHBGVD", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

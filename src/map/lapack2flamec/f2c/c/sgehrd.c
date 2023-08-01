@@ -174,7 +174,7 @@ int sgehrd_(integer *n, integer *ilo, integer *ihi, real *a, integer *lda, real 
     real ei;
     integer nb, nh, nx, iwt, nbmin, iinfo;
     extern /* Subroutine */
-    int sgemm_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), strmm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer *), saxpy_(integer *, real *, real *, integer *, real *, integer *), sgehd2_(integer *, integer *, integer *, real *, integer *, real *, real *, integer * ), slahr2_(integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *), slarfb_(char *, char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer * ), xerbla_(char *, integer *);
+    int sgemm_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), strmm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer *), saxpy_(integer *, real *, real *, integer *, real *, integer *), sgehd2_(integer *, integer *, integer *, real *, integer *, real *, real *, integer * ), slahr2_(integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *), slarfb_(char *, char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer * ), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer ldwork, lwkopt;
     logical lquery;
@@ -242,7 +242,7 @@ int sgehrd_(integer *n, integer *ilo, integer *ihi, real *a, integer *lda, real 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGEHRD", &i__1);
+        xerbla_("SGEHRD", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

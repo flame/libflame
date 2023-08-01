@@ -148,7 +148,7 @@ int zsytrs_rook_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, intege
     int zscal_(integer *, doublecomplex *, doublecomplex *, integer *), zgemv_(char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *);
     logical upper;
     extern /* Subroutine */
-    int zgeru_(integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), zswap_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(char *, integer *);
+    int zgeru_(integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), zswap_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -203,7 +203,7 @@ int zsytrs_rook_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, intege
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZSYTRS_ROOK", &i__1);
+        xerbla_("ZSYTRS_ROOK", &i__1, (ftnlen)11);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

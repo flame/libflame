@@ -194,7 +194,7 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
     int sgebrd_(integer *, integer *, real *, integer *, real *, real *, real *, real *, real *, integer *, integer *);
     extern real slamch_(char *), slange_(char *, integer *, integer *, real *, integer *, real *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     real bignum;
     extern /* Subroutine */
@@ -446,7 +446,7 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGELSS", &i__1);
+        xerbla_("SGELSS", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

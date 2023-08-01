@@ -327,7 +327,7 @@ int shseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, real
     real workl[49];
     logical wantt, wantz;
     extern /* Subroutine */
-    int slaqr0_(logical *, logical *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *, real *, integer *, real *, integer *, integer *), xerbla_(char *, integer *);
+    int slaqr0_(logical *, logical *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *, real *, integer *, real *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int slahqr_(logical *, logical *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *), slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
@@ -416,7 +416,7 @@ int shseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, real
     {
         /* ==== Quick return in case of invalid argument. ==== */
         i__1 = -(*info);
-        xerbla_("SHSEQR", &i__1);
+        xerbla_("SHSEQR", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

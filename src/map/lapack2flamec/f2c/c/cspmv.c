@@ -157,7 +157,7 @@ int cspmv_(char *uplo, integer *n, complex *alpha, complex * ap, complex *x, int
     complex temp1, temp2;
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -201,7 +201,7 @@ int cspmv_(char *uplo, integer *n, complex *alpha, complex * ap, complex *x, int
     }
     if (info != 0)
     {
-        xerbla_("CSPMV ", &info);
+        xerbla_("CSPMV ", &info, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

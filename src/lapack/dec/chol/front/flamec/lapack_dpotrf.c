@@ -22,7 +22,7 @@ static doublereal c_b14 = 1.;
     logical upper;
 
 	logical lsame_(char *ca, char *cb);
-	int xerbla_(char *srname, integer *info);
+	int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
 	int lapack_dpotf2(char *uplo, integer *n, doublereal *a, integer *lda, integer *info);
 
 /*  DPOTRF computes the Cholesky factorization of a real symmetric */
@@ -94,7 +94,7 @@ static doublereal c_b14 = 1.;
     }
     if (*info != 0) {
 	i__1 = -(*info);
-	xerbla_("DPOTRF", &i__1);
+	xerbla_("DPOTRF", &i__1, (ftnlen)6);
 	return 0;
     }
 

@@ -116,7 +116,7 @@ int sgetri_(integer *n, real *a, integer *lda, integer *ipiv, real *work, intege
     /* Local variables */
     integer i__, j, jb, nb, jj, jp, nn, iws, nbmin;
     extern /* Subroutine */
-    int sgemm_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), sgemv_(char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), sswap_(integer *, real *, integer *, real *, integer *), strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), xerbla_(char *, integer *);
+    int sgemm_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), sgemv_(char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), sswap_(integer *, real *, integer *, real *, integer *), strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer ldwork, lwkopt;
     logical lquery;
@@ -170,7 +170,7 @@ int sgetri_(integer *n, real *a, integer *lda, integer *ipiv, real *work, intege
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGETRI", &i__1);
+        xerbla_("SGETRI", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

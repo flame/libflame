@@ -113,7 +113,7 @@ int zupgtr_(char *uplo, integer *n, doublecomplex *ap, doublecomplex *tau, doubl
     integer iinfo;
     logical upper;
     extern /* Subroutine */
-    int zung2l_(integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), zung2r_(integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), xerbla_(char *, integer *);
+    int zung2l_(integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), zung2r_(integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -160,7 +160,7 @@ int zupgtr_(char *uplo, integer *n, doublecomplex *ap, doublecomplex *tau, doubl
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZUPGTR", &i__1);
+        xerbla_("ZUPGTR", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

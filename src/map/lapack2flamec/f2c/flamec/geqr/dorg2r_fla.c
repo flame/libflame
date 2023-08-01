@@ -136,7 +136,7 @@ int dorg2r_fla_opt(integer *m, integer *n, integer *k, doublereal * a, integer *
     /* Local variables */
     integer i__, j, l;
     extern /* Subroutine */
-    int fla_dscal(integer *, doublereal *, doublereal *, integer *), dscal_(integer *, doublereal *, doublereal *, integer *), dlarf_(char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *), xerbla_(char *, integer *);
+    int fla_dscal(integer *, doublereal *, doublereal *, integer *), dscal_(integer *, doublereal *, doublereal *, integer *), dlarf_(char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* Test the input arguments */
     /* Parameter adjustments */
     a_dim1 = *lda;
@@ -165,7 +165,7 @@ int dorg2r_fla_opt(integer *m, integer *n, integer *k, doublereal * a, integer *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DORG2R", &i__1);
+        xerbla_("DORG2R", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */
@@ -241,7 +241,7 @@ int dorg2r_fla_native(integer *m, integer *n, integer *k, doublereal * a, intege
     /* Local variables */
     integer i__, j, l;
     extern /* Subroutine */
-    int dscal_(integer *, doublereal *, doublereal *, integer *), dlarf_(char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *), xerbla_(char *, integer *);
+    int dscal_(integer *, doublereal *, doublereal *, integer *), dlarf_(char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -288,7 +288,7 @@ int dorg2r_fla_native(integer *m, integer *n, integer *k, doublereal * a, intege
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DORG2R", &i__1);
+        xerbla_("DORG2R", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

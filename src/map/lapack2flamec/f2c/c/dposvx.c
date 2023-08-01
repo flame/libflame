@@ -311,7 +311,7 @@ int dposvx_(char *fact, char *uplo, integer *n, integer * nrhs, doublereal *a, i
     extern doublereal dlamch_(char *);
     logical nofact;
     extern /* Subroutine */
-    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal bignum;
     extern /* Subroutine */
     int dpocon_(char *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, integer *);
@@ -455,7 +455,7 @@ int dposvx_(char *fact, char *uplo, integer *n, integer * nrhs, doublereal *a, i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DPOSVX", &i__1);
+        xerbla_("DPOSVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

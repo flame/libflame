@@ -188,7 +188,7 @@ int cgeqr_(integer *m, integer *n, complex *a, integer *lda, complex *t, integer
     logical mint, minw;
     integer nblcks;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int cgeqrt_(integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *);
@@ -365,7 +365,7 @@ int cgeqr_(integer *m, integer *n, complex *a, integer *lda, complex *t, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGEQR", &i__1);
+        xerbla_("CGEQR", &i__1, (ftnlen)5);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

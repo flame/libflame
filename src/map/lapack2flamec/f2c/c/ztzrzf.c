@@ -151,7 +151,7 @@ int ztzrzf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
     /* Local variables */
     integer i__, m1, ib, nb, ki, kk, mu, nx, iws, nbmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer lwkmin, ldwork;
     extern /* Subroutine */
@@ -227,7 +227,7 @@ int ztzrzf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZTZRZF", &i__1);
+        xerbla_("ZTZRZF", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

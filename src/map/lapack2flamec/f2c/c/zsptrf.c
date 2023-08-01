@@ -185,7 +185,7 @@ int zsptrf_(char *uplo, integer *n, doublecomplex *ap, integer *ipiv, integer *i
     int zswap_(integer *, doublecomplex *, integer *, doublecomplex *, integer *);
     doublereal absakk;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal colmax;
     extern integer izamax_(integer *, doublecomplex *, integer *);
     doublereal rowmax;
@@ -232,7 +232,7 @@ int zsptrf_(char *uplo, integer *n, doublecomplex *ap, integer *ipiv, integer *i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZSPTRF", &i__1);
+        xerbla_("ZSPTRF", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

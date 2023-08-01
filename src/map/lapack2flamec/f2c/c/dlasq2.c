@@ -141,7 +141,7 @@ int dlasq2_(integer *n, doublereal *z__, integer *info)
     integer iwhila, iwhilb;
     doublereal oldemn, safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int dlasrt_(char *, integer *, doublereal *, integer *);
@@ -179,7 +179,7 @@ int dlasq2_(integer *n, doublereal *z__, integer *info)
     if (*n < 0)
     {
         *info = -1;
-        xerbla_("DLASQ2", &c__1);
+        xerbla_("DLASQ2", &c__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -194,7 +194,7 @@ int dlasq2_(integer *n, doublereal *z__, integer *info)
         if (z__[1] < 0.)
         {
             *info = -201;
-            xerbla_("DLASQ2", &c__2);
+            xerbla_("DLASQ2", &c__2, (ftnlen)6);
         }
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
@@ -205,21 +205,21 @@ int dlasq2_(integer *n, doublereal *z__, integer *info)
         if (z__[1] < 0.)
         {
             *info = -201;
-            xerbla_("DLASQ2", &c__2);
+            xerbla_("DLASQ2", &c__2, (ftnlen)6);
             AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         else if (z__[2] < 0.)
         {
             *info = -202;
-            xerbla_("DLASQ2", &c__2);
+            xerbla_("DLASQ2", &c__2, (ftnlen)6);
             AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         else if (z__[3] < 0.)
         {
             *info = -203;
-            xerbla_("DLASQ2", &c__2);
+            xerbla_("DLASQ2", &c__2, (ftnlen)6);
             AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
@@ -266,14 +266,14 @@ int dlasq2_(integer *n, doublereal *z__, integer *info)
         if (z__[k] < 0.)
         {
             *info = -(k + 200);
-            xerbla_("DLASQ2", &c__2);
+            xerbla_("DLASQ2", &c__2, (ftnlen)6);
             AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         else if (z__[k + 1] < 0.)
         {
             *info = -(k + 201);
-            xerbla_("DLASQ2", &c__2);
+            xerbla_("DLASQ2", &c__2, (ftnlen)6);
             AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
@@ -296,7 +296,7 @@ int dlasq2_(integer *n, doublereal *z__, integer *info)
     if (z__[(*n << 1) - 1] < 0.)
     {
         *info = -((*n << 1) + 199);
-        xerbla_("DLASQ2", &c__2);
+        xerbla_("DLASQ2", &c__2, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

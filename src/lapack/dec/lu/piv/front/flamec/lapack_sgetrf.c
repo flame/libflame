@@ -21,7 +21,7 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *,integer *, integer *);
     extern /* Subroutine */ int slaswp_(integer *, real *, integer *, integer
 	    *, integer *, integer *, integer *);
-	extern int xerbla_(char *srname, integer *info);
+	extern int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
 
 
 /*  ======= */
@@ -103,7 +103,7 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
     }
     if (*info != 0) {
 	i__1 = -(*info);
-	xerbla_("LAPACK_SGETRF", &i__1);
+	xerbla_("LAPACK_SGETRF", &i__1, (ftnlen)13);
 	return *info;
     }
 

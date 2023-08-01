@@ -671,7 +671,7 @@ int dgesdd_fla_check(char *jobu, char *jobvt, integer *m, integer *n, double * a
     if (*info != 0)
     {
         i__2 = -(*info);
-        xerbla_("DGESVD", &i__2);
+        xerbla_("DGESVD", &i__2, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

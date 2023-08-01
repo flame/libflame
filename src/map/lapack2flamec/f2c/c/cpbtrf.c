@@ -162,7 +162,7 @@ int cpbtrf_(char *uplo, integer *n, integer *kd, complex *ab, integer *ldab, int
     int cgemm_(char *, char *, integer *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer *), cherk_(char *, char *, integer *, integer *, real *, complex *, integer *, real *, complex *, integer *);
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int ctrsm_(char *, char *, char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *), cpbtf2_(char *, integer *, integer *, complex *, integer *, integer *), cpotf2_(char *, integer *, complex *, integer *, integer *), xerbla_(char *, integer *);
+    int ctrsm_(char *, char *, char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *), cpbtf2_(char *, integer *, integer *, complex *, integer *, integer *), cpotf2_(char *, integer *, complex *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -212,7 +212,7 @@ int cpbtrf_(char *uplo, integer *n, integer *kd, complex *ab, integer *ldab, int
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CPBTRF", &i__1);
+        xerbla_("CPBTRF", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

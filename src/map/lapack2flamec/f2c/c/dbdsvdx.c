@@ -282,7 +282,7 @@ int dbdsvdx_(char *uplo, char *jobz, char *range, integer *n, doublereal *d__, d
     integer iifail;
     extern integer idamax_(integer *, doublereal *, integer *);
     extern /* Subroutine */
-    int dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal abstol, thresh;
     integer iiwork;
     extern /* Subroutine */
@@ -375,7 +375,7 @@ int dbdsvdx_(char *uplo, char *jobz, char *range, integer *n, doublereal *d__, d
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DBDSVDX", &i__1);
+        xerbla_("DBDSVDX", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

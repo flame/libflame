@@ -167,7 +167,7 @@ int zgemlqt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
     extern logical lsame_(char *, char *);
     logical right;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zlarfb_( char *, char *, char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zlarfb_( char *, char *, char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *);
     logical notran;
     integer ldwork;
     /* -- LAPACK computational routine -- */
@@ -255,7 +255,7 @@ int zgemlqt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGEMLQT", &i__1);
+        xerbla_("ZGEMLQT", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

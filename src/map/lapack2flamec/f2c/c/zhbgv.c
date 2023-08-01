@@ -186,7 +186,7 @@ int zhbgv_(char *jobz, char *uplo, integer *n, integer *ka, integer *kb, doublec
     integer iinfo;
     logical upper, wantz;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), dsterf_( integer *, doublereal *, doublereal *, integer *), zhbtrd_(char *, char *, integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, integer *, doublecomplex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), dsterf_( integer *, doublereal *, doublereal *, integer *), zhbtrd_(char *, char *, integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, integer *, doublecomplex *, integer *);
     integer indwrk;
     extern /* Subroutine */
     int zhbgst_(char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublereal *, integer *), zpbstf_(char *, integer *, integer *, doublecomplex *, integer *, integer *), zsteqr_(char *, integer *, doublereal *, doublereal *, doublecomplex *, integer *, doublereal *, integer *);
@@ -259,7 +259,7 @@ int zhbgv_(char *jobz, char *uplo, integer *n, integer *ka, integer *kb, doublec
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHBGV ", &i__1);
+        xerbla_("ZHBGV ", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

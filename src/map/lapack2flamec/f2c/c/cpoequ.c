@@ -120,7 +120,7 @@ int cpoequ_(integer *n, complex *a, integer *lda, real *s, real *scond, real *am
     integer i__;
     real smin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -158,7 +158,7 @@ int cpoequ_(integer *n, complex *a, integer *lda, real *s, real *scond, real *am
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CPOEQU", &i__1);
+        xerbla_("CPOEQU", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

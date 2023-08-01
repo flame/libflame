@@ -294,7 +294,7 @@ int csysvx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *a, inte
     extern real slamch_(char *);
     logical nofact;
     extern /* Subroutine */
-    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *);
+    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern real clansy_(char *, char *, integer *, complex *, integer *, real *);
     extern /* Subroutine */
@@ -408,7 +408,7 @@ int csysvx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *a, inte
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CSYSVX", &i__1);
+        xerbla_("CSYSVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

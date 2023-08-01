@@ -184,7 +184,7 @@ int ssbtrd_(char *vect, char *uplo, integer *n, integer *kd, real *ab, integer *
     int slar2v_(integer *, real *, real *, real *, integer *, real *, real *, integer *);
     integer iqaend;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), slaset_( char *, integer *, integer *, real *, real *, real *, integer *), slartg_(real *, real *, real *, real *, real *), slargv_( integer *, real *, integer *, real *, integer *, real *, integer * ), slartv_(integer *, real *, integer *, real *, integer *, real *, real *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), slaset_( char *, integer *, integer *, real *, real *, real *, integer *), slartg_(real *, real *, real *, real *, real *), slargv_( integer *, real *, integer *, real *, integer *, real *, integer * ), slartv_(integer *, real *, integer *, real *, integer *, real *, real *, integer *);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -252,7 +252,7 @@ int ssbtrd_(char *vect, char *uplo, integer *n, integer *kd, real *ab, integer *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSBTRD", &i__1);
+        xerbla_("SSBTRD", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

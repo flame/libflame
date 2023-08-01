@@ -68,7 +68,7 @@
     /* Local variables */
 	static TLS_CLASS_SPEC integer j;
     static TLS_CLASS_SPEC integer jp;
-    extern /* Subroutine */ int xerbla_(char *, integer *);
+    extern /* Subroutine */ int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer isamax_(integer *, real *, integer *);
     int kn;
     float safmin;
@@ -92,7 +92,7 @@
     }
     if (*info != 0) {
 	i__1 = -(*info);
-	xerbla_("LAPACK_SGETF2", &i__1);
+	xerbla_("LAPACK_SGETF2", &i__1, (ftnlen)13);
 	return 0;
     }
 

@@ -417,7 +417,7 @@ int dtgsna_(char *job, char *howmny, logical *select, integer *n, doublereal *a,
     extern doublereal dlamch_(char *);
     doublereal alphai, alphar;
     extern /* Subroutine */
-    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(char *, integer *), dtgexc_(logical *, logical *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *, integer *, doublereal *, integer *, integer *);
+    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), dtgexc_(logical *, logical *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *, integer *, doublereal *, integer *, integer *);
     logical wantbh, wantdf, somcon;
     doublereal alprqt;
     extern /* Subroutine */
@@ -578,7 +578,7 @@ int dtgsna_(char *job, char *howmny, logical *select, integer *n, doublereal *a,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DTGSNA", &i__1);
+        xerbla_("DTGSNA", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

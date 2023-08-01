@@ -212,7 +212,7 @@ int csyconvf_rook_(char *uplo, char *way, integer *n, complex *a, integer *lda, 
     int cswap_(integer *, complex *, integer *, complex *, integer *);
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical convert;
     /* -- LAPACK computational routine (version 3.8.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -259,7 +259,7 @@ int csyconvf_rook_(char *uplo, char *way, integer *n, complex *a, integer *lda, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CSYCONVF_ROOK", &i__1);
+        xerbla_("CSYCONVF_ROOK", &i__1, (ftnlen)13);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

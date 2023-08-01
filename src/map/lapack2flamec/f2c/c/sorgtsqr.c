@@ -180,7 +180,7 @@ int sorgtsqr_(integer *m, integer *n, integer *mb, integer * nb, real *a, intege
     int slamtsqr_(char *, char *, integer *, integer *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *);
     integer lworkopt, j, lc, lw, ldc, iinfo;
     extern /* Subroutine */
-    int scopy_(integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
+    int scopy_(integer *, real *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
     logical lquery;
     integer nblocal;
     /* -- LAPACK computational routine (version 3.9.0) -- */
@@ -273,7 +273,7 @@ int sorgtsqr_(integer *m, integer *n, integer *mb, integer * nb, real *a, intege
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SORGTSQR", &i__1);
+        xerbla_("SORGTSQR", &i__1, (ftnlen)8);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

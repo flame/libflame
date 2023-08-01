@@ -188,7 +188,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
     real scaloc;
     extern real slamch_(char *);
     extern /* Subroutine */
-    int csscal_(integer *, real *, complex *, integer *), xerbla_(char *, integer *);
+    int csscal_(integer *, real *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     logical notrna, notrnb;
     real smlnum;
@@ -264,7 +264,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTRSYL", &i__1);
+        xerbla_("CTRSYL", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

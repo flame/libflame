@@ -269,7 +269,7 @@ int ztrsna_(char *job, char *howmny, logical *select, integer *n, doublecomplex 
     int zlacn2_(integer *, doublecomplex *, doublecomplex *, doublereal *, integer *, integer *), dlabad_( doublereal *, doublereal *);
     extern doublereal dznrm2_(integer *, doublecomplex *, integer *), dlamch_( char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal bignum;
     logical wantbh;
     extern integer izamax_(integer *, doublecomplex *, integer *);
@@ -389,7 +389,7 @@ int ztrsna_(char *job, char *howmny, logical *select, integer *n, doublecomplex 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZTRSNA", &i__1);
+        xerbla_("ZTRSNA", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -161,7 +161,7 @@ int sormr2_(char *side, char *trans, integer *m, integer *n, integer *k, real *a
     logical left;
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int slarf_(char *, integer *, integer *, real *, integer *, real *, real *, integer *, real *), xerbla_( char *, integer *);
+    int slarf_(char *, integer *, integer *, real *, integer *, real *, real *, integer *, real *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical notran;
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -237,7 +237,7 @@ int sormr2_(char *side, char *trans, integer *m, integer *n, integer *k, real *a
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SORMR2", &i__1);
+        xerbla_("SORMR2", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

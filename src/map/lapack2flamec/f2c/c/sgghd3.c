@@ -265,7 +265,7 @@ int sgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, r
     int strmv_(char *, char *, char *, integer *, real *, integer *, real *, integer *);
     char compq2[1], compz2[1];
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int sgghrd_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *), slartg_(real *, real *, real *, real *, real *), slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *);
@@ -361,7 +361,7 @@ int sgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, r
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGGHD3", &i__1);
+        xerbla_("SGGHD3", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

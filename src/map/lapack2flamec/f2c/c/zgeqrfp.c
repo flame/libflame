@@ -139,7 +139,7 @@ int zgeqrfp_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecompl
     /* Local variables */
     integer i__, k, ib, nb, nx, iws, nbmin, iinfo;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int zlarfb_(char *, char *, char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *);
@@ -201,7 +201,7 @@ int zgeqrfp_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecompl
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGEQRFP", &i__1);
+        xerbla_("ZGEQRFP", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

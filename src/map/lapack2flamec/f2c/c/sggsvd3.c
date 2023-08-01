@@ -362,7 +362,7 @@ int sggsvd3_(char *jobu, char *jobv, char *jobq, integer *m, integer *n, integer
     extern real slamch_(char *), slange_(char *, integer *, integer *, real *, integer *, real *);
     integer ncycle;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), stgsja_( char *, char *, char *, integer *, integer *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, real *, real *, real *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), stgsja_( char *, char *, char *, integer *, integer *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, real *, real *, real *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *);
     integer lwkopt;
     logical lquery;
     extern /* Subroutine */
@@ -476,7 +476,7 @@ int sggsvd3_(char *jobu, char *jobv, char *jobq, integer *m, integer *n, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGGSVD3", &i__1);
+        xerbla_("SGGSVD3", &i__1, (ftnlen)7);
         return 0;
     }
     if (lquery)

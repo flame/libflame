@@ -273,7 +273,7 @@
  int dlasq1_(integer *, doublereal *, doublereal *, doublereal *, integer *), dlasv2_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
  extern doublereal dlamch_(char *);
  extern /* Subroutine */
- int dlartg_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *), xerbla_(char *, integer *);
+ int dlartg_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
  doublereal sminoa, thresh;
  logical rotate;
  doublereal tolmul;
@@ -339,7 +339,7 @@
  }
  if (*info != 0) {
  i__1 = -(*info);
- xerbla_("DBDSQR", &i__1);
+ xerbla_("DBDSQR", &i__1, (ftnlen)6);
  return 0;
  }
  if (*n == 0) {

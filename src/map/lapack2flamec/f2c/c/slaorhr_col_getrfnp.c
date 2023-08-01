@@ -156,7 +156,7 @@ int slaorhr_col_getrfnp_(integer *m, integer *n, real *a, integer *lda, real *d_
     int slaorhr_col_getrfnp2_(integer *, integer *, real *, integer *, real *, integer *);
     integer iinfo;
     extern /* Subroutine */
-    int sgemm_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer *), xerbla_(char *, integer *);
+    int sgemm_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     /* -- LAPACK computational routine (version 3.9.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -201,7 +201,7 @@ int slaorhr_col_getrfnp_(integer *m, integer *n, real *a, integer *lda, real *d_
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLAORHR_COL_GETRFNP", &i__1);
+        xerbla_("SLAORHR_COL_GETRFNP", &i__1, (ftnlen)19);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -12,7 +12,7 @@ int dspr2_(char *uplo, integer *n, doublereal *alpha, doublereal *x, integer *in
     extern logical lsame_(char *, char *);
     integer kk, ix, iy, jx, jy, kx, ky;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
     /* .. */
@@ -111,7 +111,7 @@ int dspr2_(char *uplo, integer *n, doublereal *alpha, doublereal *x, integer *in
     }
     if (info != 0)
     {
-        xerbla_("DSPR2 ", &info);
+        xerbla_("DSPR2 ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

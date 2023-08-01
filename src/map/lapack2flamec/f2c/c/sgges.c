@@ -309,7 +309,7 @@ int sgges_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, integer *n, real
     int sgghrd_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *);
     real safmax;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     extern /* Subroutine */
     int slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *);
@@ -482,7 +482,7 @@ int sgges_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, integer *n, real
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGGES ", &i__1);
+        xerbla_("SGGES ", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

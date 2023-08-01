@@ -201,7 +201,7 @@ int chbgst_(char *vect, char *uplo, integer *n, integer *ka, integer *kb, comple
     int cgeru_(integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, integer *);
     logical upper, wantx;
     extern /* Subroutine */
-    int clar2v_(integer *, complex *, complex *, complex *, integer *, real *, complex *, integer *), clacgv_( integer *, complex *, integer *), csscal_(integer *, real *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), clartg_( complex *, complex *, real *, complex *, complex *), xerbla_(char *, integer *), clargv_(integer *, complex *, integer *, complex *, integer *, real *, integer *);
+    int clar2v_(integer *, complex *, complex *, complex *, integer *, real *, complex *, integer *), clacgv_( integer *, complex *, integer *), csscal_(integer *, real *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), clartg_( complex *, complex *, real *, complex *, complex *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), clargv_(integer *, complex *, integer *, complex *, integer *, real *, integer *);
     logical update;
     extern /* Subroutine */
     int clartv_(integer *, complex *, integer *, complex *, integer *, real *, complex *, integer *);
@@ -280,7 +280,7 @@ int chbgst_(char *vect, char *uplo, integer *n, integer *ka, integer *kb, comple
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHBGST", &i__1);
+        xerbla_("CHBGST", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

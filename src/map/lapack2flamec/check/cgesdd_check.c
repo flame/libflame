@@ -437,7 +437,7 @@ int cgesdd_check(char *jobz, integer *m, integer *n, scomplex *a, integer *lda, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGESDD", &i__1);
+        xerbla_("CGESDD", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     if (*lwork == -1)

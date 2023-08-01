@@ -210,7 +210,7 @@ int dorbdb3_(integer *m, integer *p, integer *q, doublereal * x11, integer *ldx1
     int dlarf_(char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *);
     integer ilarf, llarf;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical lquery;
     extern /* Subroutine */
     int dorbdb5_(integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *);
@@ -305,7 +305,7 @@ int dorbdb3_(integer *m, integer *p, integer *q, doublereal * x11, integer *ldx1
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DORBDB3", &i__1);
+        xerbla_("DORBDB3", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

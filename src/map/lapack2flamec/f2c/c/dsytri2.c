@@ -133,7 +133,7 @@ int dsytri2_(char *uplo, integer *n, doublereal *a, integer * lda, integer *ipiv
     integer nbmax;
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int dsytri_(char *, integer *, doublereal *, integer *, integer *, doublereal *, integer *);
@@ -196,7 +196,7 @@ int dsytri2_(char *uplo, integer *n, doublereal *a, integer * lda, integer *ipiv
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSYTRI2", &i__1);
+        xerbla_("DSYTRI2", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

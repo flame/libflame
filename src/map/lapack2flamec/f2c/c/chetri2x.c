@@ -159,7 +159,7 @@ int chetri2x_(char *uplo, integer *n, complex *a, integer * lda, integer *ipiv, 
     logical upper;
     complex u01_i_j__, u11_i_j__;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), ctrtri_( char *, char *, integer *, complex *, integer *, integer *), csyconv_(char *, char *, integer *, complex *, integer *, integer *, complex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), ctrtri_( char *, char *, integer *, complex *, integer *, integer *), csyconv_(char *, char *, integer *, complex *, integer *, integer *, complex *, integer *);
     complex u01_ip1_j__, u11_ip1_j__;
     /* -- LAPACK computational routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -209,7 +209,7 @@ int chetri2x_(char *uplo, integer *n, complex *a, integer * lda, integer *ipiv, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHETRI2X", &i__1);
+        xerbla_("CHETRI2X", &i__1, (ftnlen)8);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

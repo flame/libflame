@@ -166,7 +166,7 @@ int dlaed1_(integer *n, doublereal *d__, doublereal *q, integer *ldq, integer *i
     int dlaed2_(integer *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, integer *, integer *, integer *, integer *), dlaed3_(integer *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, integer *, doublereal *, doublereal *, integer *);
     integer idlmda;
     extern /* Subroutine */
-    int dlamrg_(integer *, integer *, doublereal *, integer *, integer *, integer *), xerbla_(char *, integer *);
+    int dlamrg_(integer *, integer *, doublereal *, integer *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer coltyp;
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -216,7 +216,7 @@ int dlaed1_(integer *n, doublereal *d__, doublereal *q, integer *ldq, integer *i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DLAED1", &i__1);
+        xerbla_("DLAED1", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -291,7 +291,7 @@ int clals0_(integer *icompq, integer *nl, integer *nr, integer *sqre, integer *n
     int ccopy_(integer *, complex *, integer *, complex *, integer *), sgemv_(char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), csrot_(integer *, complex *, integer *, complex *, integer *, real *, real *);
     extern real slamc3_(real *, real *);
     extern /* Subroutine */
-    int clascl_(char *, integer *, integer *, real *, real *, integer *, integer *, complex *, integer *, integer *), csscal_(integer *, real *, complex *, integer *), clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *);
+    int clascl_(char *, integer *, integer *, real *, real *, integer *, integer *, complex *, integer *, integer *), csscal_(integer *, real *, complex *, integer *), clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real dsigjp;
     /* -- LAPACK computational routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -388,7 +388,7 @@ int clals0_(integer *icompq, integer *nl, integer *nr, integer *sqre, integer *n
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CLALS0", &i__1);
+        xerbla_("CLALS0", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

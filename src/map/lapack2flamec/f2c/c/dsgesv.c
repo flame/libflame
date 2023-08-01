@@ -209,7 +209,7 @@ int dsgesv_(integer *n, integer *nrhs, doublereal *a, integer *lda, integer *ipi
     extern doublereal dlamch_(char *), dlange_(char *, integer *, integer *, doublereal *, integer *, doublereal *);
     extern integer idamax_(integer *, doublereal *, integer *);
     extern /* Subroutine */
-    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), dgetrf_(integer *, integer *, doublereal *, integer *, integer *, integer *), xerbla_(char *, integer *), dgetrs_(char *, integer *, integer *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), sgetrf_(integer *, integer *, real *, integer *, integer *, integer *), sgetrs_(char *, integer *, integer *, real *, integer *, integer *, real *, integer *, integer *);
+    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), dgetrf_(integer *, integer *, doublereal *, integer *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), dgetrs_(char *, integer *, integer *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), sgetrf_(integer *, integer *, real *, integer *, integer *, integer *), sgetrs_(char *, integer *, integer *, real *, integer *, integer *, real *, integer *, integer *);
     /* -- LAPACK driver routine (version 3.8.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -270,7 +270,7 @@ int dsgesv_(integer *n, integer *nrhs, doublereal *a, integer *lda, integer *ipi
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSGESV", &i__1);
+        xerbla_("DSGESV", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

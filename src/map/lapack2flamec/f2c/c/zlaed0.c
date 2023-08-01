@@ -156,7 +156,7 @@ int zlaed0_(integer *qsiz, integer *n, doublereal *d__, doublereal *e, doublecom
     int zcopy_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), zlaed7_(integer *, integer *, integer *, integer *, integer *, integer *, doublereal *, doublecomplex *, integer *, doublereal *, integer *, doublereal *, integer *, integer *, integer *, integer *, integer *, doublereal *, doublecomplex *, doublereal *, integer *, integer *) ;
     integer igivcl;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int zlacrm_(integer *, integer *, doublecomplex *, integer *, doublereal *, integer *, doublecomplex *, integer *, doublereal *);
@@ -222,7 +222,7 @@ int zlaed0_(integer *qsiz, integer *n, doublereal *d__, doublereal *e, doublecom
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZLAED0", &i__1);
+        xerbla_("ZLAED0", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

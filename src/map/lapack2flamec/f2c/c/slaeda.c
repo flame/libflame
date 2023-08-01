@@ -168,7 +168,7 @@ int slaeda_(integer *n, integer *tlvls, integer *curlvl, integer *curpbm, intege
     int srot_(integer *, real *, integer *, real *, integer *, real *, real *);
     integer bsiz1, bsiz2, psiz1, psiz2, zptr1;
     extern /* Subroutine */
-    int sgemv_(char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), scopy_(integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *);
+    int sgemv_(char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), scopy_(integer *, real *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -207,7 +207,7 @@ int slaeda_(integer *n, integer *tlvls, integer *curlvl, integer *curpbm, intege
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLAEDA", &i__1);
+        xerbla_("SLAEDA", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

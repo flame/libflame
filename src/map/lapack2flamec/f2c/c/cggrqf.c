@@ -216,7 +216,7 @@ int cggrqf_(integer *m, integer *p, integer *n, complex *a, integer *lda, comple
     /* Local variables */
     integer nb, nb1, nb2, nb3, lopt;
     extern /* Subroutine */
-    int cgeqrf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *), cgerqf_( integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *), xerbla_(char *, integer *);
+    int cgeqrf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *), cgerqf_( integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int cunmrq_(char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *, integer *, integer *);
@@ -297,7 +297,7 @@ int cggrqf_(integer *m, integer *p, integer *n, complex *a, integer *lda, comple
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGGRQF", &i__1);
+        xerbla_("CGGRQF", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

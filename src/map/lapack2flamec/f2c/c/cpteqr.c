@@ -171,7 +171,7 @@ int cpteqr_(char *compz, integer *n, real *d__, real *e, complex *z__, integer *
     integer nru;
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(char *, integer *), cbdsqr_(char *, integer *, integer *, integer *, integer *, real *, real *, complex *, integer *, complex *, integer *, complex *, integer *, real *, integer *);
+    int claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), cbdsqr_(char *, integer *, integer *, integer *, integer *, real *, real *, complex *, integer *, complex *, integer *, complex *, integer *, real *, integer *);
     integer icompz;
     extern /* Subroutine */
     int spttrf_(integer *, real *, real *, integer *);
@@ -238,7 +238,7 @@ int cpteqr_(char *compz, integer *n, real *d__, real *e, complex *z__, integer *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CPTEQR", &i__1);
+        xerbla_("CPTEQR", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

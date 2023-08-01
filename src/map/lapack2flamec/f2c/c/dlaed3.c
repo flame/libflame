@@ -191,7 +191,7 @@ int dlaed3_(integer *k, integer *n, integer *n1, doublereal * d__, doublereal *q
     int dgemm_(char *, char *, integer *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), dcopy_(integer *, doublereal *, integer *, doublereal *, integer *), dlaed4_(integer *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *);
     extern doublereal dlamc3_(doublereal *, doublereal *);
     extern /* Subroutine */
-    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -241,7 +241,7 @@ int dlaed3_(integer *k, integer *n, integer *n1, doublereal * d__, doublereal *q
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DLAED3", &i__1);
+        xerbla_("DLAED3", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

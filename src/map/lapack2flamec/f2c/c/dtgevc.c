@@ -342,7 +342,7 @@ int dtgevc_(char *side, char *howmny, logical *select, integer *n, doublereal *s
     int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *);
     doublereal xscale, bignum;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical ilcomp, ilcplx;
     integer ihwmny;
     /* -- LAPACK computational routine (version 3.4.0) -- */
@@ -454,7 +454,7 @@ int dtgevc_(char *side, char *howmny, logical *select, integer *n, doublereal *s
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DTGEVC", &i__1);
+        xerbla_("DTGEVC", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -549,7 +549,7 @@ L10:
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DTGEVC", &i__1);
+        xerbla_("DTGEVC", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

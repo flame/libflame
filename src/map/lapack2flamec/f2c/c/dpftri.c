@@ -197,7 +197,7 @@ int dpftri_(char *transr, char *uplo, integer *n, doublereal *a, integer *info)
     int dtrmm_(char *, char *, char *, char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *);
     logical lower;
     extern /* Subroutine */
-    int dsyrk_(char *, char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dsyrk_(char *, char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical nisodd;
     extern /* Subroutine */
     int dlauum_(char *, integer *, doublereal *, integer *, integer *), dtftri_(char *, char *, char *, integer *, doublereal *, integer *);
@@ -239,7 +239,7 @@ int dpftri_(char *transr, char *uplo, integer *n, doublereal *a, integer *info)
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DPFTRI", &i__1);
+        xerbla_("DPFTRI", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

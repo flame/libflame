@@ -359,7 +359,7 @@ int fla_zhgeqz(char *job, char *compq, char *compz, integer *n, integer *ilo, in
     doublecomplex signbc;
     doublereal safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublecomplex eshift;
     logical ilschr;
     integer icompq, ilastm;
@@ -575,7 +575,7 @@ int fla_zhgeqz(char *job, char *compq, char *compz, integer *n, integer *ilo, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHGEQZ", &i__1);
+        xerbla_("ZHGEQZ", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

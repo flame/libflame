@@ -316,7 +316,7 @@ int ctfsm_(char *transr, char *side, char *uplo, char *trans, char *diag, intege
     extern logical lsame_(char *, char *);
     logical lower;
     extern /* Subroutine */
-    int ctrsm_(char *, char *, char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *);
+    int ctrsm_(char *, char *, char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical misodd, nisodd, notrans;
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -385,7 +385,7 @@ int ctfsm_(char *transr, char *side, char *uplo, char *trans, char *diag, intege
     if (info != 0)
     {
         i__1 = -info;
-        xerbla_("CTFSM ", &i__1);
+        xerbla_("CTFSM ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

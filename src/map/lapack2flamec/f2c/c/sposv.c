@@ -130,7 +130,7 @@ int sposv_(char *uplo, integer *n, integer *nrhs, real *a, integer *lda, real *b
     /* Local variables */
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), spotrf_( char *, integer *, real *, integer *, integer *), spotrs_( char *, integer *, integer *, real *, integer *, real *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), spotrf_( char *, integer *, real *, integer *, integer *), spotrs_( char *, integer *, integer *, real *, integer *, real *, integer *, integer *);
     /* -- LAPACK driver routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -180,7 +180,7 @@ int sposv_(char *uplo, integer *n, integer *nrhs, real *a, integer *lda, real *b
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SPOSV ", &i__1);
+        xerbla_("SPOSV ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

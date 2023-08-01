@@ -169,7 +169,7 @@ int sgebal_(char *job, integer *n, real *a, integer *lda, integer *ilo, integer 
     real sfmin1, sfmin2, sfmax1, sfmax2;
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer isamax_(integer *, real *, integer *);
     extern logical sisnan_(real *);
     logical noconv;
@@ -216,7 +216,7 @@ int sgebal_(char *job, integer *n, real *a, integer *lda, integer *ilo, integer 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGEBAL", &i__1);
+        xerbla_("SGEBAL", &i__1, (ftnlen)6);
         return 0;
     }
     k = 1;
@@ -400,7 +400,7 @@ L180: /* Computing MIN */
             /* Exit if NaN to avoid infinite loop */
             *info = -3;
             i__2 = -(*info);
-            xerbla_("SGEBAL", &i__2);
+            xerbla_("SGEBAL", &i__2, (ftnlen)6);
             return 0;
         }
         f /= 2.f;

@@ -156,7 +156,7 @@ int dgeqpf_fla(integer *m, integer *n, doublereal *a, integer * lda, integer *jp
     int dlarfg_(integer *, doublereal *, doublereal *, integer *, doublereal *);
     extern integer idamax_(integer *, doublereal *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -201,7 +201,7 @@ int dgeqpf_fla(integer *m, integer *n, doublereal *a, integer * lda, integer *jp
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGEQPF", &i__1);
+        xerbla_("DGEQPF", &i__1, (ftnlen)6);
         return 0;
     }
     mn = fla_min(*m,*n);

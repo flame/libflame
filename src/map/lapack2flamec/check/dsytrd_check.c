@@ -51,7 +51,7 @@ int dsytrd_check(char *uplo, integer *n, double *a, integer * lda, double *d__, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSYTRD", &i__1);
+        xerbla_("DSYTRD", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

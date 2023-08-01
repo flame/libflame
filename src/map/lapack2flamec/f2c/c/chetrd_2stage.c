@@ -246,7 +246,7 @@ int chetrd_2stage_(char *vect, char *uplo, integer *n, complex *a, integer *lda,
     integer abpos, lhmin, lwmin;
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical lquery;
     /* -- LAPACK computational routine (version 3.8.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -320,7 +320,7 @@ int chetrd_2stage_(char *vect, char *uplo, integer *n, complex *a, integer *lda,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHETRD_2STAGE", &i__1);
+        xerbla_("CHETRD_2STAGE", &i__1, (ftnlen)13);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
@@ -346,7 +346,7 @@ int chetrd_2stage_(char *vect, char *uplo, integer *n, complex *a, integer *lda,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHETRD_HE2HB", &i__1);
+        xerbla_("CHETRD_HE2HB", &i__1, (ftnlen)12);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
@@ -354,7 +354,7 @@ int chetrd_2stage_(char *vect, char *uplo, integer *n, complex *a, integer *lda,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHETRD_HB2ST", &i__1);
+        xerbla_("CHETRD_HB2ST", &i__1, (ftnlen)12);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

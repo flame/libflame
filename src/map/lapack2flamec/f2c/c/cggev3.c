@@ -260,7 +260,7 @@ int cggev3_(char *jobvl, char *jobvr, integer *n, complex *a, integer *lda, comp
     int cgeqrf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), ctgevc_(char *, char *, logical *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, integer *, integer *, complex *, real *, integer *), xerbla_(char *, integer *);
+    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), ctgevc_(char *, char *, logical *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, integer *, integer *, complex *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical ldumma[1];
     char chtemp[1];
     real bignum;
@@ -447,7 +447,7 @@ int cggev3_(char *jobvl, char *jobvr, integer *n, complex *a, integer *lda, comp
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGGEV3 ", &i__1);
+        xerbla_("CGGEV3 ", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

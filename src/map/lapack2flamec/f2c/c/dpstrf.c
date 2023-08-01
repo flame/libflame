@@ -161,7 +161,7 @@ int dpstrf_(char *uplo, integer *n, doublereal *a, integer * lda, integer *piv, 
     extern doublereal dlamch_(char *);
     extern logical disnan_(doublereal *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *), dmaxloc_(doublereal *, integer *);
     /* -- LAPACK computational routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -208,7 +208,7 @@ int dpstrf_(char *uplo, integer *n, doublereal *a, integer * lda, integer *piv, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DPSTRF", &i__1);
+        xerbla_("DPSTRF", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

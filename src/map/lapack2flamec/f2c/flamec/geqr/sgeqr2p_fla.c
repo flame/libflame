@@ -130,7 +130,7 @@
  /* Local variables */
  integer i__, k;
  extern /* Subroutine */
- int slarf_(char *, integer *, integer *, real *, integer *, real *, real *, integer *, real *), xerbla_( char *, integer *);
+ int slarf_(char *, integer *, integer *, real *, integer *, real *, real *, integer *, real *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
  real aii;
  extern /* Subroutine */
  int slarfgp_(integer *, real *, real *, integer *, real *);
@@ -171,7 +171,7 @@
  }
  if (*info != 0) {
  i__1 = -(*info);
- xerbla_("SGEQR2P", &i__1);
+ xerbla_("SGEQR2P", &i__1, (ftnlen)7);
  return 0;
  }
  k = fla_min(*m,*n);

@@ -175,7 +175,7 @@ int ssytrf_aa_2stage_(char *uplo, integer *n, real *a, integer *lda, real *tb, i
     int sgemm_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *);
     logical upper;
     extern /* Subroutine */
-    int scopy_(integer *, real *, integer *, real *, integer *), sswap_(integer *, real *, integer *, real *, integer * ), strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer *), xerbla_(char *, integer *);
+    int scopy_(integer *, real *, integer *, real *, integer *), sswap_(integer *, real *, integer *, real *, integer * ), strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int sgbtrf_(integer *, integer *, integer *, integer *, real *, integer *, integer *, integer *), sgetrf_( integer *, integer *, real *, integer *, integer *, integer *), slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
@@ -238,7 +238,7 @@ int ssytrf_aa_2stage_(char *uplo, integer *n, real *a, integer *lda, real *tb, i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSYTRF_AA_2STAGE", &i__1);
+        xerbla_("SSYTRF_AA_2STAGE", &i__1, (ftnlen)16);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

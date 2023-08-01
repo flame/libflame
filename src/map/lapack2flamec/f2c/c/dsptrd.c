@@ -163,7 +163,7 @@ int dsptrd_(char *uplo, integer *n, doublereal *ap, doublereal *d__, doublereal 
     int daxpy_(integer *, doublereal *, doublereal *, integer *, doublereal *, integer *), dspmv_(char *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, integer *);
     logical upper;
     extern /* Subroutine */
-    int dlarfg_(integer *, doublereal *, doublereal *, integer *, doublereal *), xerbla_(char *, integer *);
+    int dlarfg_(integer *, doublereal *, doublereal *, integer *, doublereal *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -202,7 +202,7 @@ int dsptrd_(char *uplo, integer *n, doublereal *ap, doublereal *d__, doublereal 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSPTRD", &i__1);
+        xerbla_("DSPTRD", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

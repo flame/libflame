@@ -152,7 +152,7 @@ int zunbdb5_(integer *m1, integer *m2, integer *n, doublecomplex *x1, integer *i
     integer i__, j, childinfo;
     extern doublereal dznrm2_(integer *, doublecomplex *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zunbdb6_( integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *) ;
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zunbdb6_( integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *) ;
     /* -- LAPACK computational routine (version 3.5.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -221,7 +221,7 @@ int zunbdb5_(integer *m1, integer *m2, integer *n, doublecomplex *x1, integer *i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZUNBDB5", &i__1);
+        xerbla_("ZUNBDB5", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

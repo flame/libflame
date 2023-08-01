@@ -36,7 +36,7 @@ int ctrtri_check(char *uplo, char *diag, integer *n, scomplex *a, integer *lda, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTRTRI", &i__1);
+        xerbla_("CTRTRI", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */

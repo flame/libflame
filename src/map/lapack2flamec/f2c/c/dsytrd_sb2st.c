@@ -247,7 +247,8 @@ int dsytrd_sb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     extern /* Subroutine */
         int
         dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *),
-        dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
+        dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *),
+        xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer thgrid;
     extern /* Subroutine */
         int
@@ -335,7 +336,7 @@ int dsytrd_sb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSYTRD_SB2ST", &i__1);
+        xerbla_("DSYTRD_SB2ST", &i__1, (ftnlen)12);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

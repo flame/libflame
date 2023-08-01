@@ -154,7 +154,7 @@ int dsyev_(char *jobz, char *uplo, integer *n, doublereal *a, integer *lda, doub
     doublereal safmin;
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal bignum;
     integer indtau;
     extern /* Subroutine */
@@ -238,7 +238,7 @@ int dsyev_(char *jobz, char *uplo, integer *n, doublereal *a, integer *lda, doub
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSYEV ", &i__1);
+        xerbla_("DSYEV ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -300,7 +300,7 @@ int sgtsvx_(char *fact, char *trans, integer *n, integer * nrhs, real *dl, real 
     extern real slamch_(char *);
     logical nofact;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern real slangt_(char *, integer *, real *, real *, real *);
     extern /* Subroutine */
     int slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *), sgtcon_(char *, integer *, real *, real *, real *, real *, integer *, real *, real *, real *, integer *, integer *);
@@ -377,7 +377,7 @@ int sgtsvx_(char *fact, char *trans, integer *n, integer * nrhs, real *dl, real 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGTSVX", &i__1);
+        xerbla_("SGTSVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

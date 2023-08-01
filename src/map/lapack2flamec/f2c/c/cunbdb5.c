@@ -160,7 +160,7 @@ int cunbdb5_(integer *m1, integer *m2, integer *n, complex * x1, integer *incx1,
     integer i__, j, childinfo;
     extern real scnrm2_(integer *, complex *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), cunbdb6_( integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), cunbdb6_( integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, integer *);
     /* -- LAPACK computational routine (version 3.5.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -229,7 +229,7 @@ int cunbdb5_(integer *m1, integer *m2, integer *n, complex * x1, integer *incx1,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CUNBDB5", &i__1);
+        xerbla_("CUNBDB5", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

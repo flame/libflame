@@ -308,7 +308,7 @@ int sgges3_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, integer *n, rea
     extern real slamch_(char *), slange_(char *, integer *, integer *, real *, integer *, real *);
     real safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real safmax, bignum;
     extern /* Subroutine */
     int slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *);
@@ -487,7 +487,7 @@ int sgges3_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, integer *n, rea
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGGES3 ", &i__1);
+        xerbla_("SGGES3 ", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

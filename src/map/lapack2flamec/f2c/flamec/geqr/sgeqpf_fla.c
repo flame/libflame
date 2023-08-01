@@ -153,7 +153,7 @@ int sgeqpf_fla(integer *m, integer *n, real *a, integer *lda, integer *jpvt, rea
     int sswap_(integer *, real *, integer *, real *, integer *), sgeqr2_(integer *, integer *, real *, integer *, real *, real *, integer *), sorm2r_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), slarfg_( integer *, real *, real *, integer *, real *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), slarfg_( integer *, real *, real *, integer *, real *);
     extern integer isamax_(integer *, real *, integer *);
     /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -199,7 +199,7 @@ int sgeqpf_fla(integer *m, integer *n, real *a, integer *lda, integer *jpvt, rea
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGEQPF", &i__1);
+        xerbla_("SGEQPF", &i__1, (ftnlen)6);
         return 0;
     }
     mn = fla_min(*m,*n);

@@ -168,7 +168,7 @@ int dlatsqr_(integer *m, integer *n, integer *mb, integer * nb, doublereal *a, i
     /* Local variables */
     integer i__, ii, kk, ctr;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), dgeqrt_( integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), dtpqrt_( integer *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), dgeqrt_( integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), dtpqrt_( integer *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *);
     logical lquery;
     /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -233,7 +233,7 @@ int dlatsqr_(integer *m, integer *n, integer *mb, integer * nb, doublereal *a, i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DLATSQR", &i__1);
+        xerbla_("DLATSQR", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

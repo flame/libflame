@@ -232,7 +232,7 @@ int cpftrf_(char *transr, char *uplo, integer *n, complex *a, integer *info)
     extern logical lsame_(char *, char *);
     logical lower;
     extern /* Subroutine */
-    int ctrsm_(char *, char *, char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *);
+    int ctrsm_(char *, char *, char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical nisodd;
     extern /* Subroutine */
     int cpotrf_(char *, integer *, complex *, integer *, integer *);
@@ -274,7 +274,7 @@ int cpftrf_(char *transr, char *uplo, integer *n, complex *a, integer *info)
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CPFTRF", &i__1);
+        xerbla_("CPFTRF", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -251,7 +251,7 @@ int sgsvj1_(char *jobv, integer *m, integer *n, integer *n1, real *a, integer *l
     int scopy_(integer *, real *, integer *, real *, integer *);
     logical rotok;
     extern /* Subroutine */
-    int sswap_(integer *, real *, integer *, real *, integer *), saxpy_(integer *, real *, real *, integer *, real *, integer *), srotm_(integer *, real *, integer *, real *, integer *, real *), xerbla_(char *, integer *);
+    int sswap_(integer *, real *, integer *, real *, integer *), saxpy_(integer *, real *, real *, integer *, real *, integer *), srotm_(integer *, real *, integer *, real *, integer *, real *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer ijblsk, swband;
     extern /* Subroutine */
     int slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *);
@@ -349,7 +349,7 @@ int sgsvj1_(char *jobv, integer *m, integer *n, integer *n1, real *a, integer *l
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGSVJ1", &i__1);
+        xerbla_("SGSVJ1", &i__1, (ftnlen)6);
         return 0;
     }
     if (rsvec)

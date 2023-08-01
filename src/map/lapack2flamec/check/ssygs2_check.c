@@ -40,7 +40,7 @@ int ssygs2_check(integer *itype, char *uplo, integer *n, float *a, integer *lda,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSYGS2", &i__1);
+        xerbla_("SSYGS2", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     return LAPACK_SUCCESS;

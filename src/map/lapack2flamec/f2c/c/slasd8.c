@@ -181,7 +181,7 @@ int slasd8_(integer *icompq, integer *k, real *d__, real * z__, real *vf, real *
     int scopy_(integer *, real *, integer *, real *, integer *);
     extern real slamc3_(real *, real *);
     extern /* Subroutine */
-    int slasd4_(integer *, integer *, real *, real *, real *, real *, real *, real *, integer *), xerbla_(char *, integer *);
+    int slasd4_(integer *, integer *, real *, real *, real *, real *, real *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real dsigjp;
     extern /* Subroutine */
     int slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
@@ -235,7 +235,7 @@ int slasd8_(integer *icompq, integer *k, real *d__, real * z__, real *vf, real *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLASD8", &i__1);
+        xerbla_("SLASD8", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

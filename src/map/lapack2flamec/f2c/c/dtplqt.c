@@ -185,7 +185,7 @@ int dtplqt_(integer *m, integer *n, integer *l, integer *mb, doublereal *a, inte
     /* Local variables */
     integer i__, ib, lb, nb, iinfo;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), dtprfb_( char *, char *, char *, char *, integer *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), dtplqt2_(integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), dtprfb_( char *, char *, char *, char *, integer *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), dtplqt2_(integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *);
     /* -- LAPACK computational routine (version 3.7.1) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -246,7 +246,7 @@ int dtplqt_(integer *m, integer *n, integer *l, integer *mb, doublereal *a, inte
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DTPLQT", &i__1);
+        xerbla_("DTPLQT", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

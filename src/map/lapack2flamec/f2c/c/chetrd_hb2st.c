@@ -266,7 +266,8 @@ int chetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     extern /* Subroutine */
         int
         clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *),
-        claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(char *, integer *);
+        claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *),
+        xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer thgrid, thgrnb, indtau;
     real abstmp;
     integer ofdpos;
@@ -354,7 +355,7 @@ int chetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHETRD_HB2ST", &i__1);
+        xerbla_("CHETRD_HB2ST", &i__1, (ftnlen)12);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

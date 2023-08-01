@@ -268,7 +268,7 @@ int slalsa_(integer *icompq, integer *smlsiz, integer *n, integer *nrhs, real *b
     int sgemm_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *);
     integer ndimr;
     extern /* Subroutine */
-    int scopy_(integer *, real *, integer *, real *, integer *), slals0_(integer *, integer *, integer *, integer *, integer *, real *, integer *, real *, integer *, integer *, integer *, integer *, integer *, real *, integer *, real *, real *, real *, real *, integer *, real *, real *, real *, integer *), xerbla_(char *, integer *), slasdt_(integer *, integer *, integer *, integer *, integer *, integer *, integer *);
+    int scopy_(integer *, real *, integer *, real *, integer *), slals0_(integer *, integer *, integer *, integer *, integer *, real *, integer *, real *, integer *, integer *, integer *, integer *, integer *, real *, integer *, real *, real *, real *, real *, integer *, real *, real *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), slasdt_(integer *, integer *, integer *, integer *, integer *, integer *, integer *);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -363,7 +363,7 @@ int slalsa_(integer *icompq, integer *smlsiz, integer *n, integer *nrhs, real *b
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLALSA", &i__1);
+        xerbla_("SLALSA", &i__1, (ftnlen)6);
         return 0;
     }
     /* Book-keeping and setting up the computation tree. */

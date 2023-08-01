@@ -140,7 +140,7 @@ int ctptri_(char *uplo, char *diag, integer *n, complex *ap, integer *info)
     int ctpmv_(char *, char *, char *, integer *, complex *, complex *, integer *);
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer jclast;
     logical nounit;
     /* -- LAPACK computational routine (version 3.4.0) -- */
@@ -184,7 +184,7 @@ int ctptri_(char *uplo, char *diag, integer *n, complex *ap, integer *info)
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTPTRI", &i__1);
+        xerbla_("CTPTRI", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -138,7 +138,7 @@ int chegs2_fla(integer *itype, char *uplo, integer *n, complex * a, integer *lda
     int caxpy_(integer *, complex *, complex *, integer *, complex *, integer *);
     logical upper;
     extern /* Subroutine */
-    int ctrmv_(char *, char *, char *, integer *, complex *, integer *, complex *, integer *), ctrsv_(char *, char *, char *, integer *, complex *, integer *, complex *, integer *), clacgv_( integer *, complex *, integer *), csscal_(integer *, real *, complex *, integer *), xerbla_(char *, integer *);
+    int ctrmv_(char *, char *, char *, integer *, complex *, integer *, complex *, integer *), ctrsv_(char *, char *, char *, integer *, complex *, integer *, complex *, integer *), clacgv_( integer *, complex *, integer *), csscal_(integer *, real *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -192,7 +192,7 @@ int chegs2_fla(integer *itype, char *uplo, integer *n, complex * a, integer *lda
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHEGS2", &i__1);
+        xerbla_("CHEGS2", &i__1, (ftnlen)6);
         return 0;
     }
     if (*itype == 1)

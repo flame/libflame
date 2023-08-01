@@ -133,7 +133,7 @@ int dsytrs_aa_(char *uplo, integer *n, integer *nrhs, doublereal *a, integer *ld
     int dswap_(integer *, doublereal *, integer *, doublereal *, integer *), dgtsv_(integer *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, integer *), dtrsm_(char *, char *, char *, char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *);
     logical upper;
     extern /* Subroutine */
-    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer lwkopt;
     logical lquery;
     /* -- LAPACK computational routine (version 3.8.0) -- */
@@ -201,7 +201,7 @@ int dsytrs_aa_(char *uplo, integer *n, integer *nrhs, doublereal *a, integer *ld
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSYTRS_AA", &i__1);
+        xerbla_("DSYTRS_AA", &i__1, (ftnlen)9);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

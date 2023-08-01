@@ -373,7 +373,7 @@ int cgesvx_(char *fact, char *trans, integer *n, integer * nrhs, complex *a, int
     int cgeequ_(integer *, integer *, complex *, integer *, real *, real *, real *, real *, real *, integer *);
     logical nofact;
     extern /* Subroutine */
-    int cgerfs_(char *, integer *, integer *, complex *, integer *, complex *, integer *, integer *, complex *, integer *, complex *, integer *, real *, real *, complex *, real *, integer *), cgetrf_(integer *, integer *, complex *, integer *, integer *, integer *), clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *);
+    int cgerfs_(char *, integer *, integer *, complex *, integer *, complex *, integer *, integer *, complex *, integer *, complex *, integer *, real *, real *, complex *, real *, integer *), cgetrf_(integer *, integer *, complex *, integer *, integer *, integer *), clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     extern real clantr_(char *, char *, char *, integer *, integer *, complex *, integer *, real *);
     integer infequ;
@@ -555,7 +555,7 @@ int cgesvx_(char *fact, char *trans, integer *n, integer * nrhs, complex *a, int
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGESVX", &i__1);
+        xerbla_("CGESVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

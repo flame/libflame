@@ -577,7 +577,7 @@ int sgbsvxx_(char *fact, char *trans, integer *n, integer * kl, integer *ku, int
     int slaqgb_(integer *, integer *, integer *, integer *, real *, integer *, real *, real *, real *, real *, real *, char *);
     logical nofact;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     integer infequ;
     logical colequ;
@@ -777,7 +777,7 @@ int sgbsvxx_(char *fact, char *trans, integer *n, integer * kl, integer *ku, int
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGBSVXX", &i__1);
+        xerbla_("SGBSVXX", &i__1, (ftnlen)7);
         return 0;
     }
     if (equil)

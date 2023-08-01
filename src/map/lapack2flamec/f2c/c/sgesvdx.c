@@ -292,7 +292,7 @@ int sgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, real
     int sgebrd_(integer *, integer *, real *, integer *, real *, real *, real *, real *, real *, integer *, integer *);
     extern real slamch_(char *), slange_(char *, integer *, integer *, real *, integer *, real *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     real bignum;
     extern /* Subroutine */
@@ -560,7 +560,7 @@ int sgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, real
     if (*info != 0)
     {
         i__2 = -(*info);
-        xerbla_("SGESVDX", &i__2);
+        xerbla_("SGESVDX", &i__2, (ftnlen)7);
         return 0;
     }
     else if (lquery)

@@ -261,7 +261,7 @@ int ssytrd_sy2sb_(char *uplo, integer *n, integer *kd, real *a, integer *lda, re
     integer lwmin;
     logical upper;
     extern /* Subroutine */
-    int scopy_(integer *, real *, integer *, real *, integer *), ssymm_(char *, char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), ssyr2k_(char *, char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), xerbla_(char *, integer *), sgelqf_(integer *, integer *, real *, integer *, real *, real *, integer *, integer *), sgeqrf_(integer *, integer *, real *, integer *, real *, real *, integer *, integer *), slarft_(char *, char *, integer *, integer *, real *, integer *, real *, real *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
+    int scopy_(integer *, real *, integer *, real *, integer *), ssymm_(char *, char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), ssyr2k_(char *, char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), sgelqf_(integer *, integer *, real *, integer *, real *, real *, integer *, integer *), sgeqrf_(integer *, integer *, real *, integer *, real *, real *, integer *, integer *), slarft_(char *, char *, integer *, integer *, real *, integer *, real *, real *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
     logical lquery;
     /* -- LAPACK computational routine (version 3.8.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -332,7 +332,7 @@ int ssytrd_sy2sb_(char *uplo, integer *n, integer *kd, real *a, integer *lda, re
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSYTRD_SY2SB", &i__1);
+        xerbla_("SSYTRD_SY2SB", &i__1, (ftnlen)12);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

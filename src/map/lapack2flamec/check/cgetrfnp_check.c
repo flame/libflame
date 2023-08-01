@@ -30,7 +30,7 @@ int cgetrfnp_check(integer *m, integer *n, scomplex *a, integer *lda, integer *i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGETRFNP", &i__1);
+        xerbla_("CGETRFNP", &i__1, (ftnlen)8);
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */

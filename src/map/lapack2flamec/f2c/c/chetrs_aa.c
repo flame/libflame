@@ -145,7 +145,7 @@ int chetrs_aa_(char *uplo, integer *n, integer *nrhs, complex *a, integer *lda, 
     int cswap_(integer *, complex *, integer *, complex *, integer *), cgtsv_(integer *, integer *, complex *, complex *, complex *, complex *, integer *, integer *), ctrsm_( char *, char *, char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *);
     logical upper;
     extern /* Subroutine */
-    int clacgv_(integer *, complex *, integer *), clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *);
+    int clacgv_(integer *, complex *, integer *), clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer lwkopt;
     logical lquery;
     /* -- LAPACK computational routine (version 3.8.0) -- */
@@ -213,7 +213,7 @@ int chetrs_aa_(char *uplo, integer *n, integer *nrhs, complex *a, integer *lda, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHETRS_AA", &i__1);
+        xerbla_("CHETRS_AA", &i__1, (ftnlen)9);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

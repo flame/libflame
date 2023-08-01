@@ -243,7 +243,7 @@ int slatrs3_(char *uplo, char *trans, char *diag, char * normin, integer *n, int
     extern real slamch_(char *), slange_(char *, integer *, integer *, real *, integer *, real *);
     real scamin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     real bignum;
     extern real slarmm_(real *, real *, real *);
@@ -361,7 +361,7 @@ int slatrs3_(char *uplo, char *trans, char *diag, char * normin, integer *n, int
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLATRS3", &i__1);
+        xerbla_("SLATRS3", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

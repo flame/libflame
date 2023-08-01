@@ -149,7 +149,7 @@ int cppsv_(char *uplo, integer *n, integer *nrhs, complex * ap, complex *b, inte
     /* Local variables */
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), cpptrf_( char *, integer *, complex *, integer *), cpptrs_(char *, integer *, integer *, complex *, complex *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), cpptrf_( char *, integer *, complex *, integer *), cpptrs_(char *, integer *, integer *, complex *, complex *, integer *, integer *);
     /* -- LAPACK driver routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -193,7 +193,7 @@ int cppsv_(char *uplo, integer *n, integer *nrhs, complex * ap, complex *b, inte
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CPPSV ", &i__1);
+        xerbla_("CPPSV ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -315,7 +315,7 @@ int dtgsyl_(char *trans, integer *ijob, integer *m, integer * n, doublereal *a, 
     int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer iround;
     logical notran;
     integer isolve;
@@ -444,7 +444,7 @@ int dtgsyl_(char *trans, integer *ijob, integer *m, integer * n, doublereal *a, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DTGSYL", &i__1);
+        xerbla_("DTGSYL", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

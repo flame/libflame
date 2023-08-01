@@ -201,7 +201,7 @@ int cungtsqr_row_(integer *m, integer *n, integer *mb, integer *nb, complex *a, 
     complex dummy[1] /* was [1][1] */
     ;
     extern /* Subroutine */
-    int claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(char *, integer *);
+    int claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical lquery;
     integer nblocal, kb_last__;
     /* -- LAPACK computational routine -- */
@@ -282,7 +282,7 @@ int cungtsqr_row_(integer *m, integer *n, integer *mb, integer *nb, complex *a, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CUNGTSQR_ROW", &i__1);
+        xerbla_("CUNGTSQR_ROW", &i__1, (ftnlen)12);
         return 0;
     }
     else if (lquery)

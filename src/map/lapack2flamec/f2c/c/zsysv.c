@@ -170,7 +170,7 @@ int zsysv_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *lda
     /* Local variables */
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer lwkopt;
     logical lquery;
     extern /* Subroutine */
@@ -247,7 +247,7 @@ int zsysv_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *lda
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZSYSV ", &i__1);
+        xerbla_("ZSYSV ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

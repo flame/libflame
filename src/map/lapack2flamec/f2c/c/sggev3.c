@@ -245,7 +245,7 @@ int sggev3_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *b
     logical ilascl, ilbscl;
     extern real slamch_(char *), slange_(char *, integer *, integer *, real *, integer *, real *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical ldumma[1];
     char chtemp[1];
     real bignum;
@@ -425,7 +425,7 @@ int sggev3_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *b
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGGEV3 ", &i__1);
+        xerbla_("SGGEV3 ", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

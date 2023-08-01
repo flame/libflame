@@ -212,7 +212,7 @@ int dsytrf_rook_(char *uplo, integer *n, doublereal *a, integer *lda, integer *i
     integer nbmin, iinfo;
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer ldwork, lwkopt;
     logical lquery;
@@ -274,7 +274,7 @@ int dsytrf_rook_(char *uplo, integer *n, doublereal *a, integer *lda, integer *i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSYTRF_ROOK", &i__1);
+        xerbla_("DSYTRF_ROOK", &i__1, (ftnlen)11);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

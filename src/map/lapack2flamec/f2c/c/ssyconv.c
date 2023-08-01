@@ -117,7 +117,7 @@ int ssyconv_(char *uplo, char *way, integer *n, real *a, integer *lda, integer *
     extern logical lsame_(char *, char *);
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical convert;
     /* -- LAPACK computational routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -164,7 +164,7 @@ int ssyconv_(char *uplo, char *way, integer *n, real *a, integer *lda, integer *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSYCONV", &i__1);
+        xerbla_("SSYCONV", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -228,7 +228,7 @@ int zstedc_(char *compz, integer *n, doublereal *d__, doublereal *e, doublecompl
     int zswap_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), zlaed0_(integer *, integer *, doublereal *, doublereal *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, integer *, integer *);
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), dstedc_(char *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *, integer *, integer *), dlaset_( char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), dstedc_(char *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *, integer *, integer *), dlaset_( char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer finish;
     extern doublereal dlanst_(char *, integer *, doublereal *, doublereal *);
@@ -368,7 +368,7 @@ int zstedc_(char *compz, integer *n, doublereal *d__, doublereal *e, doublecompl
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZSTEDC", &i__1);
+        xerbla_("ZSTEDC", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

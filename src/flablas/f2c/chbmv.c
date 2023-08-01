@@ -16,7 +16,7 @@ int chbmv_(char *uplo, integer *n, integer *k, complex * alpha, complex *a, inte
     extern logical lsame_(char *, char *);
     integer kplus1, ix, iy, jx, jy, kx, ky;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
     /* .. */
@@ -157,7 +157,7 @@ int chbmv_(char *uplo, integer *n, integer *k, complex * alpha, complex *a, inte
     }
     if (info != 0)
     {
-        xerbla_("CHBMV ", &info);
+        xerbla_("CHBMV ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

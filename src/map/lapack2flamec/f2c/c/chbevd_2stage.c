@@ -315,7 +315,7 @@ int chbevd_2stage_(char *jobz, char *uplo, integer *n, integer *kd, complex *ab,
     int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *);
     real safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     integer indrwk, liwmin;
     extern /* Subroutine */
@@ -438,7 +438,7 @@ int chbevd_2stage_(char *jobz, char *uplo, integer *n, integer *kd, complex *ab,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHBEVD_2STAGE", &i__1);
+        xerbla_("CHBEVD_2STAGE", &i__1, (ftnlen)13);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

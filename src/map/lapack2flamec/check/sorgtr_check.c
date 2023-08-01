@@ -70,7 +70,7 @@ int sorgtr_check(char *uplo, integer *n, float *a, integer *lda, float *tau, flo
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SORGTR", &i__1);
+        xerbla_("SORGTR", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

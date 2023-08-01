@@ -250,7 +250,7 @@ int ssytrd_sb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     integer grsiz, ttype, abdpos;
     extern /* Subroutine */
         int
-        xerbla_(char *, integer *);
+        xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer thgrid, thgrnb, indtau, ofdpos;
     extern /* Subroutine */
         int
@@ -338,7 +338,7 @@ int ssytrd_sb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSYTRD_SB2ST", &i__1);
+        xerbla_("SSYTRD_SB2ST", &i__1, (ftnlen)12);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

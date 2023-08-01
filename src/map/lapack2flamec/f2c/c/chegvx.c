@@ -323,7 +323,7 @@ int chegvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, co
     int chegst_(integer *, char *, integer *, complex *, integer *, complex *, integer *, integer *);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), cheevx_( char *, char *, char *, integer *, complex *, integer *, real *, real *, integer *, integer *, real *, integer *, real *, complex *, integer *, complex *, integer *, real *, integer *, integer *, integer *), cpotrf_(char *, integer *, complex *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), cheevx_( char *, char *, char *, integer *, complex *, integer *, real *, real *, integer *, integer *, real *, integer *, real *, complex *, integer *, complex *, integer *, real *, integer *, integer *, integer *), cpotrf_(char *, integer *, complex *, integer *, integer *);
     integer lwkopt;
     logical lquery;
     /* -- LAPACK driver routine (version 3.4.0) -- */
@@ -446,7 +446,7 @@ int chegvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, co
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHEGVX", &i__1);
+        xerbla_("CHEGVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

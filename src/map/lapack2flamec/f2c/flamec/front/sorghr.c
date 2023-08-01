@@ -124,7 +124,7 @@ int sorghr_(integer *n, integer *ilo, integer *ihi, real *a, integer *lda, real 
     /* Local variables */
     integer i__, j, nb, nh, iinfo;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int sorgqr_fla(integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *);
@@ -190,7 +190,7 @@ int sorghr_(integer *n, integer *ilo, integer *ihi, real *a, integer *lda, real 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SORGHR", &i__1);
+        xerbla_("SORGHR", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

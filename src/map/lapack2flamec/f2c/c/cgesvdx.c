@@ -316,7 +316,7 @@ int cgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, comp
     int cgelqf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *), clascl_( char *, integer *, integer *, real *, real *, integer *, integer *, complex *, integer *, integer *), cgeqrf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *);
+    int claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     real bignum;
     extern /* Subroutine */
@@ -556,7 +556,7 @@ int cgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, comp
     if (*info != 0)
     {
         i__2 = -(*info);
-        xerbla_("CGESVDX", &i__2);
+        xerbla_("CGESVDX", &i__2, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

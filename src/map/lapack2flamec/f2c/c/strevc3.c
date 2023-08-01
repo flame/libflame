@@ -290,7 +290,7 @@ int strevc3_(char *side, char *howmny, logical *select, integer *n, real *t, int
     int saxpy_(integer *, real *, real *, integer *, real *, integer *), slaln2_(logical *, integer *, integer *, real *, real *, real *, integer *, real *, real *, real *, integer *, real *, real *, real *, integer *, real *, real *, integer *), slabad_(real *, real *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     real bignum;
     extern integer isamax_(integer *, real *, integer *);
@@ -444,7 +444,7 @@ int strevc3_(char *side, char *howmny, logical *select, integer *n, real *t, int
     if (*info != 0)
     {
         i__2 = -(*info);
-        xerbla_("STREVC3", &i__2);
+        xerbla_("STREVC3", &i__2, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

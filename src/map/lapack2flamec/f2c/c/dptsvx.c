@@ -228,7 +228,7 @@ int dptsvx_(char *fact, integer *n, integer *nrhs, doublereal *d__, doublereal *
     extern doublereal dlamch_(char *);
     logical nofact;
     extern /* Subroutine */
-    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern doublereal dlanst_(char *, integer *, doublereal *, doublereal *);
     extern /* Subroutine */
     int dptcon_(integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *), dptrfs_( integer *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *), dpttrf_( integer *, doublereal *, doublereal *, integer *), dpttrs_( integer *, integer *, doublereal *, doublereal *, doublereal *, integer *, integer *);
@@ -293,7 +293,7 @@ int dptsvx_(char *fact, integer *n, integer *nrhs, doublereal *d__, doublereal *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DPTSVX", &i__1);
+        xerbla_("DPTSVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -259,7 +259,7 @@ int dlatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, doub
     extern doublereal dlamch_(char *), dlange_(char *, integer *, integer *, doublereal *, integer *, doublereal *);
     extern integer idamax_(integer *, doublereal *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal bignum;
     logical notran;
     integer jfirst;
@@ -324,7 +324,7 @@ int dlatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, doub
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DLATRS", &i__1);
+        xerbla_("DLATRS", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

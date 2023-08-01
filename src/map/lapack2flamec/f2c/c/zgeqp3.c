@@ -168,7 +168,7 @@ int zgeqp3_(integer *m, integer *n, doublecomplex *a, integer *lda, integer *jpv
     int zswap_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), zlaqp2_(integer *, integer *, integer *, doublecomplex *, integer *, integer *, doublecomplex *, doublereal *, doublereal *, doublecomplex *);
     extern doublereal dznrm2_(integer *, doublecomplex *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int zgeqrf_(integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, integer * );
@@ -254,7 +254,7 @@ int zgeqp3_(integer *m, integer *n, doublecomplex *a, integer *lda, integer *jpv
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGEQP3", &i__1);
+        xerbla_("ZGEQP3", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

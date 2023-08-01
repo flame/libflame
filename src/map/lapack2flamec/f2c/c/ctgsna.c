@@ -357,7 +357,7 @@ int ctgsna_(char *job, char *howmny, logical *select, integer *n, complex *a, in
     int slabad_(real *, real *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), ctgexc_(logical *, logical *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, integer *, integer *, integer *), xerbla_(char *, integer *);
+    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), ctgexc_(logical *, logical *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, integer *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     logical wantbh, wantdf, somcon;
     extern /* Subroutine */
@@ -489,7 +489,7 @@ int ctgsna_(char *job, char *howmny, logical *select, integer *n, complex *a, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTGSNA", &i__1);
+        xerbla_("CTGSNA", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

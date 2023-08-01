@@ -190,7 +190,7 @@ int zgetsls_(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex 
     int dlabad_(doublereal *, doublereal *);
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer scllen;
     doublereal bignum;
     extern doublereal zlange_(char *, integer *, integer *, doublecomplex *, integer *, doublereal *);
@@ -319,7 +319,7 @@ int zgetsls_(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGETSLS", &i__1);
+        xerbla_("ZGETSLS", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

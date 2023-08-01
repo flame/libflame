@@ -251,7 +251,7 @@ int clatrs3_(char *uplo, char *trans, char *diag, char * normin, integer *n, int
     int csscal_(integer *, real *, complex *, integer *);
     real scamin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     real bignum;
     extern /* Subroutine */
@@ -369,7 +369,7 @@ int clatrs3_(char *uplo, char *trans, char *diag, char * normin, integer *n, int
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CLATRS3", &i__1);
+        xerbla_("CLATRS3", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -164,7 +164,7 @@ int zpstf2_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *piv
     extern doublereal dlamch_(char *);
     extern logical disnan_(doublereal *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zdscal_( integer *, doublereal *, doublecomplex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zdscal_( integer *, doublereal *, doublecomplex *, integer *);
     extern integer dmaxloc_(doublereal *, integer *);
     extern /* Subroutine */
     int zlacgv_(integer *, doublecomplex *, integer *) ;
@@ -213,7 +213,7 @@ int zpstf2_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *piv
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZPSTF2", &i__1);
+        xerbla_("ZPSTF2", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -200,7 +200,7 @@ int zstein_(integer *n, doublereal *d__, doublereal *e, integer *m, doublereal *
     int dlagtf_(integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, integer *);
     extern integer idamax_(integer *, doublereal *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), dlagts_( integer *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), dlagts_( integer *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, integer *);
     integer nrmchk;
     extern /* Subroutine */
     int dlarnv_(integer *, integer *, integer *, doublereal *);
@@ -293,7 +293,7 @@ L30:
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZSTEIN", &i__1);
+        xerbla_("ZSTEIN", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

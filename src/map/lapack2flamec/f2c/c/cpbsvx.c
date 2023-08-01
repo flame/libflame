@@ -363,7 +363,7 @@ int cpbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, comp
     extern real slamch_(char *);
     logical nofact;
     extern /* Subroutine */
-    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *), cpbequ_(char *, integer *, integer *, complex *, integer *, real *, real *, real *, integer *), cpbrfs_( char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, real *, real *, complex *, real *, integer *);
+    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), cpbequ_(char *, integer *, integer *, complex *, integer *, real *, real *, real *, integer *), cpbrfs_( char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, real *, real *, complex *, real *, integer *);
     real bignum;
     extern /* Subroutine */
     int cpbtrf_(char *, integer *, integer *, complex *, integer *, integer *);
@@ -509,7 +509,7 @@ int cpbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, comp
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CPBSVX", &i__1);
+        xerbla_("CPBSVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

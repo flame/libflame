@@ -40,7 +40,7 @@ int chegs2_check(integer *itype, char *uplo, integer *n, scomplex * a, integer *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHEGS2", &i__1);
+        xerbla_("CHEGS2", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     return LAPACK_SUCCESS;

@@ -51,7 +51,7 @@ switch ( r_val )                                                      \
   }
 
 extern int lsame_(char *, char *);
-extern int xerbla_(char *, integer *);
+extern int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
 extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
 
 

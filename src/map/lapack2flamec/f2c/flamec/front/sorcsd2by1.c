@@ -242,7 +242,7 @@ int sorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
     int sbbcsd_();
     integer iorbdb, lorbdb;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), slacpy_( char *, integer *, integer *, real *, integer *, real *, integer * );
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), slacpy_( char *, integer *, integer *, real *, integer *, real *, integer * );
     integer iorglq;
     extern /* Subroutine */
     int slapmr_(logical *, integer *, integer *, real *, integer *, integer *);
@@ -572,7 +572,7 @@ int sorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SORCSD2BY1", &i__1);
+        xerbla_("SORCSD2BY1", &i__1, (ftnlen)10);
         return 0;
     }
     else if (lquery)

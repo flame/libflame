@@ -152,7 +152,7 @@ int zhetri2x_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *i
     int ztrmm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *);
     doublecomplex u01_i_j__, u11_i_j__;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), ztrtri_( char *, char *, integer *, doublecomplex *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), ztrtri_( char *, char *, integer *, doublecomplex *, integer *, integer *);
     doublecomplex u01_ip1_j__, u11_ip1_j__;
     extern /* Subroutine */
     int zsyconv_(char *, char *, integer *, doublecomplex *, integer *, integer *, doublecomplex *, integer *);
@@ -204,7 +204,7 @@ int zhetri2x_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHETRI2X", &i__1);
+        xerbla_("ZHETRI2X", &i__1, (ftnlen)8);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

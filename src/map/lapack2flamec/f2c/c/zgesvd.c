@@ -258,7 +258,7 @@ int zgesvd_(char *jobu, char *jobvt, integer *m, integer *n, doublecomplex *a, i
     logical wntua, wntva, wntun, wntuo, wntvn, wntvo, wntus, wntvs;
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), xerbla_(char *, integer *), zgebrd_(integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, integer *);
+    int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), zgebrd_(integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, integer *);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern doublereal zlange_(char *, integer *, integer *, doublecomplex *, integer *, doublereal *);
     doublereal bignum;
@@ -892,7 +892,7 @@ int zgesvd_(char *jobu, char *jobvt, integer *m, integer *n, doublecomplex *a, i
     if (*info != 0)
     {
         i__2 = -(*info);
-        xerbla_("ZGESVD", &i__2);
+        xerbla_("ZGESVD", &i__2, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

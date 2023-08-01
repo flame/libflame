@@ -155,7 +155,7 @@ int dpteqr_(char *compz, integer *n, doublereal *d__, doublereal *e, doublereal 
     integer nru;
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *), dbdsqr_(char *, integer *, integer *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *);
+    int dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), dbdsqr_(char *, integer *, integer *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *);
     integer icompz;
     extern /* Subroutine */
     int dpttrf_(integer *, doublereal *, doublereal *, integer *);
@@ -222,7 +222,7 @@ int dpteqr_(char *compz, integer *n, doublereal *d__, doublereal *e, doublereal 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DPTEQR", &i__1);
+        xerbla_("DPTEQR", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

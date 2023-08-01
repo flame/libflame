@@ -212,7 +212,7 @@ int dstedc_(char *compz, integer *n, doublereal *d__, doublereal *e, doublereal 
     int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer finish;
     extern doublereal dlanst_(char *, integer *, doublereal *, doublereal *);
     extern /* Subroutine */
@@ -339,7 +339,7 @@ int dstedc_(char *compz, integer *n, doublereal *d__, doublereal *e, doublereal 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSTEDC", &i__1);
+        xerbla_("DSTEDC", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

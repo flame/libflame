@@ -190,7 +190,7 @@ int fla_zunmlq(char *side, char *trans, integer *m, integer *n, integer *k, doub
     extern logical lsame_(char *, char *);
     integer nbmin, iinfo;
     extern /* Subroutine */
-    int zunml2_(char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(char *, integer *);
+    int zunml2_(char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int zlarfb_(char *, char *, char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *);
@@ -299,7 +299,7 @@ int fla_zunmlq(char *side, char *trans, integer *m, integer *n, integer *k, doub
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZUNMLQ", &i__1);
+        xerbla_("ZUNMLQ", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

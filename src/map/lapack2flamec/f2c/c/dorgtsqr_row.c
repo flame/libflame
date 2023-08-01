@@ -193,7 +193,7 @@ int dorgtsqr_row_(integer *m, integer *n, integer *mb, integer *nb, doublereal *
     doublereal dummy[1] /* was [1][1] */
     ;
     extern /* Subroutine */
-    int dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical lquery;
     integer nblocal, kb_last__;
     /* -- LAPACK computational routine -- */
@@ -274,7 +274,7 @@ int dorgtsqr_row_(integer *m, integer *n, integer *mb, integer *nb, doublereal *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DORGTSQR_ROW", &i__1);
+        xerbla_("DORGTSQR_ROW", &i__1, (ftnlen)12);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

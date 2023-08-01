@@ -29,7 +29,7 @@ int sgeqr2_check(integer *m, integer *n, float *a, integer *lda, float *tau, flo
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGEQR2", &i__1);
+        xerbla_("SGEQR2", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */

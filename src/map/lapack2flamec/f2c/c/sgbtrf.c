@@ -160,7 +160,7 @@ int sgbtrf_(integer *m, integer *n, integer *kl, integer *ku, real *ab, integer 
     , work31[4160] /* was [65][ 64] */
     ;
     extern /* Subroutine */
-    int scopy_(integer *, real *, integer *, real *, integer *), sswap_(integer *, real *, integer *, real *, integer * ), strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer *), sgbtf2_(integer *, integer *, integer *, integer *, real *, integer *, integer *, integer *), xerbla_(char *, integer *);
+    int scopy_(integer *, real *, integer *, real *, integer *), sswap_(integer *, real *, integer *, real *, integer * ), strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer *), sgbtf2_(integer *, integer *, integer *, integer *, real *, integer *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *), isamax_(integer *, real *, integer *);
     extern /* Subroutine */
     int slaswp_(integer *, real *, integer *, integer *, integer *, integer *, integer *);
@@ -224,7 +224,7 @@ int sgbtrf_(integer *m, integer *n, integer *kl, integer *ku, real *ab, integer 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGBTRF", &i__1);
+        xerbla_("SGBTRF", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

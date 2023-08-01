@@ -186,7 +186,7 @@ int sgelsx_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
     int strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), slaic1_(integer *, integer *, real *, real *, real *, real *, real *, real *, real *), sorm2r_( char *, char *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *), slabad_(real *, real *);
     extern real slamch_(char *), slange_(char *, integer *, integer *, real *, integer *, real *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     extern /* Subroutine */
     int slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *), sgeqpf_(integer *, integer *, real *, integer *, integer *, real *, real *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
@@ -256,7 +256,7 @@ int sgelsx_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGELSX", &i__1);
+        xerbla_("SGELSX", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

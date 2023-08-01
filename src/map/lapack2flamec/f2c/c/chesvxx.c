@@ -530,7 +530,7 @@ int chesvxx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *a, int
     extern real slamch_(char *);
     logical nofact;
     extern /* Subroutine */
-    int chetrf_(char *, integer *, complex *, integer *, integer *, complex *, integer *, integer *), clacpy_( char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *);
+    int chetrf_(char *, integer *, complex *, integer *, integer *, complex *, integer *, integer *), clacpy_( char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     integer infequ;
     extern /* Subroutine */
@@ -680,7 +680,7 @@ int chesvxx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *a, int
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHESVXX", &i__1);
+        xerbla_("CHESVXX", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

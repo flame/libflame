@@ -241,7 +241,7 @@ int zhpgvd_(integer *itype, char *jobz, char *uplo, integer * n, doublecomplex *
     char trans[1];
     logical upper, wantz;
     extern /* Subroutine */
-    int ztpmv_(char *, char *, char *, integer *, doublecomplex *, doublecomplex *, integer *), ztpsv_(char *, char *, char *, integer *, doublecomplex *, doublecomplex *, integer *), xerbla_( char *, integer *);
+    int ztpmv_(char *, char *, char *, integer *, doublecomplex *, doublecomplex *, integer *), ztpsv_(char *, char *, char *, integer *, doublecomplex *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer liwmin;
     extern /* Subroutine */
     int zhpevd_(char *, char *, integer *, doublecomplex *, doublereal *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, integer *, integer *, integer *, integer *);
@@ -350,7 +350,7 @@ int zhpgvd_(integer *itype, char *jobz, char *uplo, integer * n, doublecomplex *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHPGVD", &i__1);
+        xerbla_("ZHPGVD", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

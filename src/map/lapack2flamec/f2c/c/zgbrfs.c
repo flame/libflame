@@ -227,7 +227,7 @@ int zgbrfs_(char *trans, integer *n, integer *kl, integer * ku, integer *nrhs, d
     extern doublereal dlamch_(char *);
     doublereal safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical notran;
     char transn[1], transt[1];
     doublereal lstres;
@@ -320,7 +320,7 @@ int zgbrfs_(char *trans, integer *n, integer *kl, integer * ku, integer *nrhs, d
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGBRFS", &i__1);
+        xerbla_("ZGBRFS", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

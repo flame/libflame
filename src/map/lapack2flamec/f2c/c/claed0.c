@@ -170,7 +170,7 @@ int claed0_(integer *qsiz, integer *n, real *d__, real *e, complex *q, integer *
     int clacrm_(integer *, integer *, complex *, integer *, real *, integer *, complex *, integer *, real *);
     integer igivcl;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer igivnm, submat, curprb, subpbs, igivpt, curlvl, matsiz, iprmpt, smlsiz;
     extern /* Subroutine */
@@ -233,7 +233,7 @@ int claed0_(integer *qsiz, integer *n, real *d__, real *e, complex *q, integer *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CLAED0", &i__1);
+        xerbla_("CLAED0", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

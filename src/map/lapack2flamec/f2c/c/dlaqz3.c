@@ -261,7 +261,7 @@ int dlaqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *);
     doublereal safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal safmax;
     extern /* Subroutine */
     int dtgexc_(logical *, logical *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *, integer *, doublereal *, integer *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), dlartg_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
@@ -345,7 +345,7 @@ int dlaqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DLAQZ3", &i__1);
+        xerbla_("DLAQZ3", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

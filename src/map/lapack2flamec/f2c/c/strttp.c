@@ -100,7 +100,7 @@ int strttp_(char *uplo, integer *n, real *a, integer *lda, real *ap, integer *in
     extern logical lsame_(char *, char *);
     logical lower;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -143,7 +143,7 @@ int strttp_(char *uplo, integer *n, real *a, integer *lda, real *ap, integer *in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("STRTTP", &i__1);
+        xerbla_("STRTTP", &i__1, (ftnlen)6);
         return 0;
     }
     if (lower)

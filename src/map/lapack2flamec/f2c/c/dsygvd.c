@@ -240,7 +240,7 @@ int dsygvd_(integer *itype, char *jobz, char *uplo, integer * n, doublereal *a, 
     int dtrsm_(char *, char *, char *, char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *);
     logical upper, wantz;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), dpotrf_( char *, integer *, doublereal *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), dpotrf_( char *, integer *, doublereal *, integer *, integer *);
     integer liwmin;
     extern /* Subroutine */
     int dsyevd_(char *, char *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *, integer *, integer *), dsygst_(integer *, char *, integer *, doublereal *, integer *, doublereal *, integer *, integer *);
@@ -340,7 +340,7 @@ int dsygvd_(integer *itype, char *jobz, char *uplo, integer * n, doublereal *a, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSYGVD", &i__1);
+        xerbla_("DSYGVD", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

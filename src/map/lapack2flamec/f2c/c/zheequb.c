@@ -142,7 +142,7 @@ int zheequb_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublereal 
     doublereal sumsq;
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal bignum, smlnum;
     extern /* Subroutine */
     int zlassq_(integer *, doublecomplex *, integer *, doublereal *, doublereal *);
@@ -193,7 +193,7 @@ int zheequb_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublereal 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHEEQUB", &i__1);
+        xerbla_("ZHEEQUB", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -421,7 +421,7 @@ int cgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, complex 
     int clascl_(char *, integer *, integer *, real *, real *, integer *, integer *, complex *, integer *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int csscal_(integer *, real *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(char *, integer *);
+    int csscal_(integer *, real *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer ijblsk, swband;
     extern integer isamax_(integer *, real *, integer *);
     extern /* Subroutine */
@@ -535,7 +535,7 @@ int cgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, complex 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGESVJ", &i__1);
+        xerbla_("CGESVJ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
@@ -595,7 +595,7 @@ int cgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, complex 
     {
         *info = -4;
         i__1 = -(*info);
-        xerbla_("CGESVJ", &i__1);
+        xerbla_("CGESVJ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
@@ -637,7 +637,7 @@ int cgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, complex 
             {
                 *info = -6;
                 i__2 = -(*info);
-                xerbla_("CGESVJ", &i__2);
+                xerbla_("CGESVJ", &i__2, (ftnlen)6);
                 AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
@@ -681,7 +681,7 @@ int cgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, complex 
             {
                 *info = -6;
                 i__2 = -(*info);
-                xerbla_("CGESVJ", &i__2);
+                xerbla_("CGESVJ", &i__2, (ftnlen)6);
                 AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
@@ -725,7 +725,7 @@ int cgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, complex 
             {
                 *info = -6;
                 i__2 = -(*info);
-                xerbla_("CGESVJ", &i__2);
+                xerbla_("CGESVJ", &i__2, (ftnlen)6);
                 AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }

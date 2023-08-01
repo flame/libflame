@@ -132,7 +132,7 @@ int cgeqr2_(integer *m, integer *n, complex *a, integer *lda, complex *tau, comp
     integer i__, k;
     complex alpha;
     extern /* Subroutine */
-    int clarf_(char *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *), clarfg_(integer *, complex *, complex *, integer *, complex *), xerbla_(char *, integer *);
+    int clarf_(char *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *), clarfg_(integer *, complex *, complex *, integer *, complex *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -175,7 +175,7 @@ int cgeqr2_(integer *m, integer *n, complex *a, integer *lda, complex *tau, comp
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGEQR2", &i__1);
+        xerbla_("CGEQR2", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

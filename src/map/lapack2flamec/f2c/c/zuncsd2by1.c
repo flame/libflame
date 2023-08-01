@@ -265,7 +265,7 @@ int zuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
     logical wantu1, wantu2;
     integer ibbcsd, lbbcsd, iorbdb, lorbdb;
     extern /* Subroutine */
-    int zbbcsd_(char *, char *, char *, char *, char *, integer *, integer *, integer *, doublereal *, doublereal *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, integer *), xerbla_(char *, integer *);
+    int zbbcsd_(char *, char *, char *, char *, char *, integer *, integer *, integer *, doublereal *, doublereal *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer iorglq, lorglq;
     extern /* Subroutine */
     int zlacpy_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *);
@@ -649,7 +649,7 @@ int zuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZUNCSD2BY1", &i__1);
+        xerbla_("ZUNCSD2BY1", &i__1, (ftnlen)10);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

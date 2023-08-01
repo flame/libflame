@@ -217,7 +217,7 @@ int zsytf2_rook_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer
     extern doublereal dlamch_(char *);
     doublereal absakk;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal colmax;
     extern integer izamax_(integer *, doublecomplex *, integer *);
     doublereal rowmax;
@@ -271,7 +271,7 @@ int zsytf2_rook_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZSYTF2_ROOK", &i__1);
+        xerbla_("ZSYTF2_ROOK", &i__1, (ftnlen)11);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -228,7 +228,7 @@ int zcposv_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     int zhemm_(char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), zaxpy_(integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), zlag2c_(integer *, integer *, doublecomplex *, integer *, complex *, integer *, integer *), clag2z_(integer *, integer *, complex *, integer *, doublecomplex *, integer *, integer *), zlat2c_(char *, integer *, doublecomplex *, integer *, complex *, integer *, integer *);
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern doublereal zlanhe_(char *, char *, integer *, doublecomplex *, integer *, doublereal *);
     extern integer izamax_(integer *, doublecomplex *, integer *);
     extern /* Subroutine */
@@ -300,7 +300,7 @@ int zcposv_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZCPOSV", &i__1);
+        xerbla_("ZCPOSV", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

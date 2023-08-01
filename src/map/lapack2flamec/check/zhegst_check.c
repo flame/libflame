@@ -41,7 +41,7 @@ int zhegst_check(integer *itype, char *uplo, integer *n, dcomplex *a, integer *l
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHEGST", &i__1);
+        xerbla_("ZHEGST", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */

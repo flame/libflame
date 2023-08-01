@@ -27,7 +27,7 @@ int cgeqr2p_check(integer *m, integer *n, scomplex *a, integer * lda, scomplex *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGEQR2P", &i__1);
+        xerbla_("CGEQR2P", &i__1, (ftnlen)7);
         return LAPACK_FAILURE;
     }
     return LAPACK_SUCCESS;

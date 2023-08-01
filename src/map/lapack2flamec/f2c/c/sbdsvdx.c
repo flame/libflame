@@ -280,7 +280,7 @@ int sbdsvdx_(char *uplo, char *jobz, char *range, integer *n, real *d__, real *e
     integer irowz, iifail;
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer isamax_(integer *, real *, integer *);
     real abstol;
     extern /* Subroutine */
@@ -377,7 +377,7 @@ int sbdsvdx_(char *uplo, char *jobz, char *range, integer *n, real *d__, real *e
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SBDSVDX", &i__1);
+        xerbla_("SBDSVDX", &i__1, (ftnlen)7);
         return 0;
     }
     /* Quick return if possible (N.LE.1) */

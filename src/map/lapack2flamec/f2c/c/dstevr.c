@@ -333,7 +333,7 @@ int dstevr_(char *jobz, char *range, integer *n, doublereal * d__, doublereal *e
     doublereal safmin;
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal bignum;
     extern doublereal dlanst_(char *, integer *, doublereal *, doublereal *);
     integer indisp;
@@ -450,7 +450,7 @@ int dstevr_(char *jobz, char *range, integer *n, doublereal * d__, doublereal *e
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSTEVR", &i__1);
+        xerbla_("DSTEVR", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

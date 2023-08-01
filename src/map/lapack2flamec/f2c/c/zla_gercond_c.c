@@ -147,7 +147,7 @@ doublereal zla_gercond_c_(char *trans, integer *n, doublecomplex *a, integer *ld
     integer isave[3];
     doublereal anorm;
     extern /* Subroutine */
-    int zlacn2_(integer *, doublecomplex *, doublecomplex *, doublereal *, integer *, integer *), xerbla_( char *, integer *);
+    int zlacn2_(integer *, doublecomplex *, doublecomplex *, doublereal *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal ainvnm;
     extern /* Subroutine */
     int zgetrs_(char *, integer *, integer *, doublecomplex *, integer *, integer *, doublecomplex *, integer *, integer *);
@@ -210,7 +210,7 @@ doublereal zla_gercond_c_(char *trans, integer *n, doublecomplex *a, integer *ld
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZLA_GERCOND_C", &i__1);
+        xerbla_("ZLA_GERCOND_C", &i__1, (ftnlen)13);
         AOCL_DTL_TRACE_LOG_EXIT
         return ret_val;
     }

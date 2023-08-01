@@ -300,7 +300,7 @@ int dsygvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, do
     int dtrsm_(char *, char *, char *, char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *);
     logical upper, wantz, alleig, indeig, valeig;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int dpotrf_(char *, integer *, doublereal *, integer *, integer *);
@@ -430,7 +430,7 @@ int dsygvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, do
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSYGVX", &i__1);
+        xerbla_("DSYGVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

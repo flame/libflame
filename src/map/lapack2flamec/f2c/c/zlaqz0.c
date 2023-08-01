@@ -331,7 +331,7 @@ int zlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     integer nibble, nblock;
     doublereal safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal safmax;
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     doublecomplex eshift;
@@ -473,7 +473,7 @@ int zlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZLAQZ0", &i__1);
+        xerbla_("ZLAQZ0", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -548,7 +548,7 @@ int zlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     }
     if (*info != 0)
     {
-        xerbla_("ZLAQZ0", info);
+        xerbla_("ZLAQZ0", info, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

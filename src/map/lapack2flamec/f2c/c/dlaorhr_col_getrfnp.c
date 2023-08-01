@@ -152,7 +152,7 @@ int dlaorhr_col_getrfnp_(integer *m, integer *n, doublereal *a, integer *lda, do
     int dlaorhr_col_getrfnp2_(integer *, integer *, doublereal *, integer *, doublereal *, integer *), dgemm_(char *, char *, integer *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *);
     integer iinfo;
     extern /* Subroutine */
-    int dtrsm_(char *, char *, char *, char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *), xerbla_( char *, integer *);
+    int dtrsm_(char *, char *, char *, char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     /* -- LAPACK computational routine (version 3.9.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -197,7 +197,7 @@ int dlaorhr_col_getrfnp_(integer *m, integer *n, doublereal *a, integer *lda, do
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DLAORHR_COL_GETRFNP", &i__1);
+        xerbla_("DLAORHR_COL_GETRFNP", &i__1, (ftnlen)19);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

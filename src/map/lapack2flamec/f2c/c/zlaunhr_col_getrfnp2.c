@@ -182,7 +182,7 @@ int zlaunhr_col_getrfnp2_(integer *m, integer *n, doublecomplex *a, integer *lda
     int zscal_(integer *, doublecomplex *, doublecomplex *, integer *), zgemm_(char *, char *, integer *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), ztrsm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *);
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.9.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -230,7 +230,7 @@ int zlaunhr_col_getrfnp2_(integer *m, integer *n, doublecomplex *a, integer *lda
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZLAUNHR_COL_GETRFNP2", &i__1);
+        xerbla_("ZLAUNHR_COL_GETRFNP2", &i__1, (ftnlen)20);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

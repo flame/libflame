@@ -154,7 +154,7 @@ int zgbtf2_(integer *m, integer *n, integer *kl, integer *ku, doublecomplex *ab,
     /* Local variables */
     integer i__, j, km, jp, ju, kv;
     extern /* Subroutine */
-    int zscal_(integer *, doublecomplex *, doublecomplex *, integer *), zgeru_(integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), zswap_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_( char *, integer *);
+    int zscal_(integer *, doublecomplex *, doublecomplex *, integer *), zgeru_(integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), zswap_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer izamax_(integer *, doublecomplex *, integer *);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -214,7 +214,7 @@ int zgbtf2_(integer *m, integer *n, integer *kl, integer *ku, doublecomplex *ab,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGBTF2", &i__1);
+        xerbla_("ZGBTF2", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

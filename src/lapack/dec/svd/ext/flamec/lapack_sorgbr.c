@@ -159,7 +159,7 @@ int lapack_sorgbr(char *vect, integer *m, integer *n, integer *k, real *a, integ
     logical wantq;
     integer mn;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), lapack_sorglq( integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *), lapack_sorgqr(integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), lapack_sorglq( integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *), lapack_sorgqr(integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *);
     integer lwkopt;
     logical lquery;
     /* -- LAPACK computational routine -- */
@@ -260,7 +260,7 @@ int lapack_sorgbr(char *vect, integer *m, integer *n, integer *k, real *a, integ
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SORGBR", &i__1);
+        xerbla_("SORGBR", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

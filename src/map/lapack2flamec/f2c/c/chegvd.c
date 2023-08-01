@@ -268,7 +268,7 @@ int chegvd_(integer *itype, char *jobz, char *uplo, integer * n, complex *a, int
     integer lropt;
     logical wantz;
     extern /* Subroutine */
-    int cheevd_(char *, char *, integer *, complex *, integer *, real *, complex *, integer *, real *, integer *, integer *, integer *, integer *), chegst_(integer *, char *, integer *, complex *, integer *, complex *, integer *, integer *), xerbla_(char *, integer *), cpotrf_( char *, integer *, complex *, integer *, integer *);
+    int cheevd_(char *, char *, integer *, complex *, integer *, real *, complex *, integer *, real *, integer *, integer *, integer *, integer *), chegst_(integer *, char *, integer *, complex *, integer *, complex *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), cpotrf_( char *, integer *, complex *, integer *, integer *);
     integer liwmin, lrwmin;
     logical lquery;
     /* -- LAPACK driver routine -- */
@@ -374,7 +374,7 @@ int chegvd_(integer *itype, char *jobz, char *uplo, integer * n, complex *a, int
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHEGVD", &i__1);
+        xerbla_("CHEGVD", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -143,7 +143,7 @@ int chegst_fla(integer *itype, char *uplo, integer *n, complex * a, integer *lda
     int ctrmm_(char *, char *, char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *), ctrsm_(char *, char *, char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *);
     logical upper;
     extern /* Subroutine */
-    int chegs2_(integer *, char *, integer *, complex *, integer *, complex *, integer *, integer *), cher2k_( char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, real *, complex *, integer *), xerbla_(char *, integer *);
+    int chegs2_(integer *, char *, integer *, complex *, integer *, complex *, integer *, integer *), cher2k_( char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, real *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -198,7 +198,7 @@ int chegst_fla(integer *itype, char *uplo, integer *n, complex * a, integer *lda
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHEGST", &i__1);
+        xerbla_("CHEGST", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

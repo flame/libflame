@@ -271,7 +271,7 @@ int dspgvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, do
     int dtpmv_(char *, char *, char *, integer *, doublereal *, doublereal *, integer *), dtpsv_(char *, char *, char *, integer *, doublereal *, doublereal *, integer *);
     logical wantz, alleig, indeig, valeig;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), dpptrf_( char *, integer *, doublereal *, integer *), dspgst_( integer *, char *, integer *, doublereal *, doublereal *, integer *), dspevx_(char *, char *, char *, integer *, doublereal *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), dpptrf_( char *, integer *, doublereal *, integer *), dspgst_( integer *, char *, integer *, doublereal *, doublereal *, integer *), dspevx_(char *, char *, char *, integer *, doublereal *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *, integer *);
     /* -- LAPACK driver routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -359,7 +359,7 @@ int dspgvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, do
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSPGVX", &i__1);
+        xerbla_("DSPGVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

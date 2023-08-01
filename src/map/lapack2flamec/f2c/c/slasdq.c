@@ -219,7 +219,7 @@ int slasdq_(char *uplo, integer *sqre, integer *n, integer * ncvt, integer *nru,
     int slasr_(char *, char *, char *, integer *, integer *, real *, real *, real *, integer *);
     integer iuplo;
     extern /* Subroutine */
-    int sswap_(integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *), slartg_(real *, real *, real *, real *, real *);
+    int sswap_(integer *, real *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), slartg_(real *, real *, real *, real *, real *);
     logical rotate;
     extern /* Subroutine */
     int sbdsqr_(char *, integer *, integer *, integer *, integer *, real *, real *, real *, integer *, real *, integer *, real *, integer *, real *, integer *);
@@ -307,7 +307,7 @@ int slasdq_(char *uplo, integer *sqre, integer *n, integer * ncvt, integer *nru,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLASDQ", &i__1);
+        xerbla_("SLASDQ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

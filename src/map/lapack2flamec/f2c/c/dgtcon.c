@@ -147,7 +147,7 @@ int dgtcon_(char *norm, integer *n, doublereal *dl, doublereal *d__, doublereal 
     extern logical lsame_(char *, char *);
     integer isave[3];
     extern /* Subroutine */
-    int dlacn2_(integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *), xerbla_(char *, integer *);
+    int dlacn2_(integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal ainvnm;
     logical onenrm;
     extern /* Subroutine */
@@ -199,7 +199,7 @@ int dgtcon_(char *norm, integer *n, doublereal *dl, doublereal *d__, doublereal 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGTCON", &i__1);
+        xerbla_("DGTCON", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -11,7 +11,7 @@ int cgeru_(integer *m, integer *n, complex *alpha, complex * x, integer *incx, c
     complex temp;
     integer i__, j, ix, jy, kx;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
     /* .. */
@@ -104,7 +104,7 @@ int cgeru_(integer *m, integer *n, complex *alpha, complex * x, integer *incx, c
     }
     if (info != 0)
     {
-        xerbla_("CGERU ", &info);
+        xerbla_("CGERU ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

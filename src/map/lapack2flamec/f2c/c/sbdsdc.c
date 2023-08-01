@@ -224,7 +224,7 @@ int sbdsdc_(char *uplo, char *compq, integer *n, real *d__, real *e, real *u, in
     int scopy_(integer *, real *, integer *, real *, integer *), sswap_(integer *, real *, integer *, real *, integer * ), slasd0_(integer *, integer *, real *, real *, real *, integer *, real *, integer *, integer *, integer *, real *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int slasda_(integer *, integer *, integer *, integer *, real *, real *, real *, integer *, real *, integer *, real *, real *, real *, real *, integer *, integer *, integer *, integer *, real *, real *, real *, real *, integer *, integer *), xerbla_(char *, integer *);
+    int slasda_(integer *, integer *, integer *, integer *, real *, real *, real *, integer *, real *, integer *, real *, real *, real *, real *, integer *, integer *, integer *, integer *, real *, real *, real *, real *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *);
@@ -334,7 +334,7 @@ int sbdsdc_(char *uplo, char *compq, integer *n, real *d__, real *e, real *u, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SBDSDC", &i__1);
+        xerbla_("SBDSDC", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

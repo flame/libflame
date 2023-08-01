@@ -264,7 +264,7 @@ int chegv_2stage_(integer *itype, char *jobz, char *uplo, integer *n, complex *a
     integer lwtrd;
     logical wantz;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), chegst_( integer *, char *, integer *, complex *, integer *, complex *, integer *, integer *), cpotrf_(char *, integer *, complex *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), chegst_( integer *, char *, integer *, complex *, integer *, complex *, integer *, integer *), cpotrf_(char *, integer *, complex *, integer *, integer *);
     logical lquery;
     /* -- LAPACK driver routine (version 3.8.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -343,7 +343,7 @@ int chegv_2stage_(integer *itype, char *jobz, char *uplo, integer *n, complex *a
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHEGV_2STAGE ", &i__1);
+        xerbla_("CHEGV_2STAGE ", &i__1, (ftnlen)13);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

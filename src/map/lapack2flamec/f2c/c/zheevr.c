@@ -383,7 +383,7 @@ int zheevr_(char *jobz, char *range, char *uplo, integer *n, doublecomplex *a, i
     doublereal safmin;
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zdscal_( integer *, doublereal *, doublecomplex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zdscal_( integer *, doublereal *, doublecomplex *, integer *);
     doublereal abstll, bignum;
     integer indtau, indisp;
     extern /* Subroutine */
@@ -537,7 +537,7 @@ int zheevr_(char *jobz, char *range, char *uplo, integer *n, doublecomplex *a, i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHEEVR", &i__1);
+        xerbla_("ZHEEVR", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

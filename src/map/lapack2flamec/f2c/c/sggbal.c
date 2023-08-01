@@ -205,7 +205,7 @@ int sggbal_(char *job, integer *n, real *a, integer *lda, real *b, integer *ldb,
     real pgamma;
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer isamax_(integer *, real *, integer *);
     integer lsfmin, lsfmax;
     /* -- LAPACK computational routine -- */
@@ -259,7 +259,7 @@ int sggbal_(char *job, integer *n, real *a, integer *lda, real *b, integer *ldb,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGGBAL", &i__1);
+        xerbla_("SGGBAL", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

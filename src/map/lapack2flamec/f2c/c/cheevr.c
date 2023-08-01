@@ -392,7 +392,7 @@ int cheevr_(char *jobz, char *range, char *uplo, integer *n, complex *a, integer
     real safmin;
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real abstll, bignum;
     integer indtau, indisp;
     extern /* Subroutine */
@@ -543,7 +543,7 @@ int cheevr_(char *jobz, char *range, char *uplo, integer *n, complex *a, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHEEVR", &i__1);
+        xerbla_("CHEEVR", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

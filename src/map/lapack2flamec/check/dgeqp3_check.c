@@ -58,7 +58,7 @@ int dgeqp3_check(integer *m, integer *n, double *a, integer * lda, integer *jpvt
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGEQP3", &i__1);
+        xerbla_("DGEQP3", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

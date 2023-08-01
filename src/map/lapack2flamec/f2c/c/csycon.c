@@ -133,7 +133,7 @@ int csycon_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv, rea
     integer isave[3];
     logical upper;
     extern /* Subroutine */
-    int clacn2_(integer *, complex *, complex *, real *, integer *, integer *), xerbla_(char *, integer *);
+    int clacn2_(integer *, complex *, complex *, real *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real ainvnm;
     extern /* Subroutine */
     int csytrs_(char *, integer *, integer *, complex *, integer *, integer *, complex *, integer *, integer *);
@@ -188,7 +188,7 @@ int csycon_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv, rea
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CSYCON", &i__1);
+        xerbla_("CSYCON", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -15,7 +15,7 @@ int ctpmv_(char *uplo, char *trans, char *diag, integer *n, complex *ap, complex
     extern logical lsame_(char *, char *);
     integer kk, ix, jx, kx;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical noconj, nounit;
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
@@ -117,7 +117,7 @@ int ctpmv_(char *uplo, char *trans, char *diag, integer *n, complex *ap, complex
     }
     if (info != 0)
     {
-        xerbla_("CTPMV ", &info);
+        xerbla_("CTPMV ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

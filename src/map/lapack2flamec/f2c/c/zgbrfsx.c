@@ -461,7 +461,7 @@ int zgbrfsx_(char *trans, char *equed, integer *n, integer * kl, integer *ku, in
     doublereal anorm;
     extern doublereal zla_gbrcond_c_(char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *, doublereal *, logical *, integer *, doublecomplex *, doublereal *), zla_gbrcond_x_(char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublereal *), dlamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern doublereal zlangb_(char *, integer *, integer *, integer *, doublecomplex *, integer *, doublereal *);
     extern /* Subroutine */
     int zgbcon_(char *, integer *, integer *, integer *, doublecomplex *, integer *, integer *, doublereal *, doublereal *, doublecomplex *, doublereal *, integer *);
@@ -625,7 +625,7 @@ int zgbrfsx_(char *trans, char *equed, integer *n, integer * kl, integer *ku, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGBRFSX", &i__1);
+        xerbla_("ZGBRFSX", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

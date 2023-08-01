@@ -420,7 +420,7 @@ int zsyrfsx_(char *uplo, char *equed, integer *n, integer * nrhs, doublecomplex 
     logical rcequ;
     extern doublereal zla_syrcond_c_(char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *, doublereal *, logical *, integer *, doublecomplex *, doublereal *), zla_syrcond_x_(char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublereal *), dlamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern doublereal zlansy_(char *, char *, integer *, doublecomplex *, integer *, doublereal *);
     extern /* Subroutine */
     int zsycon_(char *, integer *, doublecomplex *, integer *, integer *, doublereal *, doublereal *, doublecomplex *, integer *);
@@ -571,7 +571,7 @@ int zsyrfsx_(char *uplo, char *equed, integer *n, integer * nrhs, doublecomplex 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZSYRFSX", &i__1);
+        xerbla_("ZSYRFSX", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

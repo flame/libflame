@@ -47,7 +47,7 @@ int dorglq_check(integer *m, integer *n, integer *k, double * a, integer *lda, d
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DORGLQ", &i__1);
+        xerbla_("DORGLQ", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

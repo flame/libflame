@@ -102,7 +102,7 @@ int dtpttr_(char *uplo, integer *n, doublereal *ap, doublereal *a, integer *lda,
     extern logical lsame_(char *, char *);
     logical lower;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -145,7 +145,7 @@ int dtpttr_(char *uplo, integer *n, doublereal *ap, doublereal *a, integer *lda,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DTPTTR", &i__1);
+        xerbla_("DTPTTR", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

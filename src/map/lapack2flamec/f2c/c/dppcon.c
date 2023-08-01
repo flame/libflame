@@ -130,7 +130,7 @@ int dppcon_(char *uplo, integer *n, doublereal *ap, doublereal *anorm, doublerea
     extern integer idamax_(integer *, doublereal *, integer *);
     doublereal scaleu;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), dlatps_( char *, char *, char *, char *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), dlatps_( char *, char *, char *, char *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, integer *);
     doublereal ainvnm;
     char normin[1];
     doublereal smlnum;
@@ -179,7 +179,7 @@ int dppcon_(char *uplo, integer *n, doublereal *ap, doublereal *anorm, doublerea
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DPPCON", &i__1);
+        xerbla_("DPPCON", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
