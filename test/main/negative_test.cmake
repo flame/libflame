@@ -167,7 +167,6 @@ set(TEST_NUM 1)
 foreach(neg_test_cases IN LISTS NEGATIVE_TEST_CASES)
     # this line splits entire string into separate arguments as ctest requres the arguments to be passed separately rather than a single string
     string(REPLACE " " ";" COMMANDLINE_PARAMS ${neg_test_cases})
-    message(STATUS "Test added ${neg_test_cases}")
     set(TEST_NAME NEGATIVE_TEST_CASE_${TEST_NUM} )
     add_test(${TEST_NAME} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${PROJECT_NAME} ${COMMANDLINE_PARAMS})
     set_tests_properties(${TEST_NAME} PROPERTIES FAIL_REGULAR_EXPRESSION "FAIL;No test was run, give valid arguments")

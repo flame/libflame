@@ -152,6 +152,7 @@ if(UNIX)
 	set(GCC_WARNING_FLAGS "-Wall -Wno-comment")
 	set(COMPILER_LANGUAGE_FLAGS "-std=gnu99 -Wno-unused-function -Wno-parentheses -Wfatal-errors ")
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COMPILER_DEBUG_FLAG} ${GCC_WARNING_FLAGS} ${COMPILER_LANGUAGE_FLAGS}")
+	add_compile_options(-fPIC)
 endif()
 
 message(STATUS "checking SIMD  ")
