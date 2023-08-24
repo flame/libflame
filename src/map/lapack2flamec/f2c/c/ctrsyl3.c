@@ -174,7 +174,8 @@ int ctrsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, co
     real buf, sgn, scal;
     complex csgn;
     real anrm, bnrm, cnrm;
-    integer awrk, bwrk, temp;
+    integer awrk, bwrk;
+    int temp;
     real *wnrm;
     real xnrm;
     extern /* Subroutine */

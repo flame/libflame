@@ -174,7 +174,8 @@ int ztrsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, do
     doublereal buf, sgn, scal;
     doublecomplex csgn;
     doublereal anrm, bnrm, cnrm;
-    integer awrk, bwrk, temp;
+    integer awrk, bwrk;
+    int temp;
     doublereal *wnrm, xnrm;
     extern logical lsame_(char *, char *);
     integer iinfo;

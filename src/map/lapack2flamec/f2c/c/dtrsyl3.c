@@ -191,11 +191,10 @@ int dtrsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, do
     /* Builtin functions */
     double pow_dd(doublereal *, doublereal *);
     /* Local variables */
-    extern /* Subroutine */
-    int f90_cycle_(void);
     integer i__, j, k, l, i1, i2, j1, j2, k1, k2, l1, l2, nb, pc, jj, ll, nba, nbb;
     doublereal buf, sgn, scal, anrm, bnrm, cnrm;
-    integer awrk, bwrk, temp;
+    integer awrk, bwrk;
+    int temp;
     logical skip;
     doublereal *wnrm, xnrm;
     extern /* Subroutine */
