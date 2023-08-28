@@ -187,7 +187,7 @@ integer iparam2stage_(integer *ispec, char *name__, char *opts, integer *ni, int
     nthreads = 1;
 #ifdef FLA_OPENMP_MULTITHREADING
 #pragma omp parallel
-    nthreads = omp_get_num_threads();
+    nthreads = fla_thread_get_num_threads();
 #endif
     /* WRITE(*,*) 'IPARAM VOICI NTHREADS ISPEC ',NTHREADS, ISPEC */
     if (*ispec != 19)

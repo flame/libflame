@@ -651,7 +651,6 @@ int zhetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
                                         tid = omp_get_thread_num();
                                         zhb2st_kernels_(uplo, &wantq, &ttype, &stind, &edind, &sweepid, n, kd, &ib, &work[inda], &lda, &hous[indv], &hous[indtau], &ldv, &work[indw + tid * *kd]);
                                     }
-#pragma omp taskwait
                                 }
                                 else
                                 {
@@ -661,7 +660,6 @@ int zhetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
                                         tid = omp_get_thread_num();
                                         zhb2st_kernels_(uplo, &wantq, &ttype, &stind, &edind, &sweepid, n, kd, &ib, &work[inda], &lda, &hous[indv], &hous[indtau], &ldv, &work[indw + tid * *kd]);
                                     }
-#pragma omp taskwait
                                 }
 #else
                         zhb2st_kernels_(uplo, &wantq, &ttype, &stind, &edind, &sweepid, n, kd, &ib, &work[inda], &lda, &hous[indv], &hous[indtau], &ldv, &work[indw + tid * *kd]);

@@ -573,7 +573,6 @@ int ssytrd_sb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
                                         tid = omp_get_thread_num();
                                         ssb2st_kernels_(uplo, &wantq, &ttype, &stind, &edind, &sweepid, n, kd, &ib, &work[inda], &lda, &hous[indv], &hous[indtau], &ldv, &work[indw + tid * *kd]);
                                     }
-#pragma omp taskwait
                                 }
                                 else
                                 {
@@ -583,7 +582,6 @@ int ssytrd_sb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
                                         tid = omp_get_thread_num();
                                         ssb2st_kernels_(uplo, &wantq, &ttype, &stind, &edind, &sweepid, n, kd, &ib, &work[inda], &lda, &hous[indv], &hous[indtau], &ldv, &work[indw + tid * *kd]);
                                     }
-#pragma omp taskwait
                                 }
 #else
                         ssb2st_kernels_(uplo, &wantq, &ttype, &stind, &edind, &sweepid, n, kd, &ib, &work[inda], &lda, &hous[indv], &hous[indtau], &ldv, &work[indw + tid * *kd]);
