@@ -3,6 +3,7 @@
 *******************************************************************************/
 
 #include "FLAME.h"
+#include "fla_lapack_avx2_kernels.h"
 
 #ifdef FLA_ENABLE_AMD_OPT
 /*
@@ -11,7 +12,9 @@
  * All the computations are done inline without using
  * corresponding BLAS APIs to reduce function overheads.
  */
-int fla_zgetrf_small_avx2( integer *m, integer *n, doublecomplex *a, integer *lda, integer *ipiv, integer *info)
+integer fla_zgetrf_small_avx2(integer *m, integer *n,
+                              doublecomplex *a, integer *lda,
+                              integer *ipiv, integer *info)
 {
     integer mi, ni;
     integer i, j, i_1, i_2, i_3, i_4, i_5, i_6, i_7;

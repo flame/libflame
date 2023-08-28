@@ -7,6 +7,8 @@
  *         to choose optimized paths
  *  *  */
 
+#include "FLAME.h"
+
 #ifdef FLA_ENABLE_AMD_OPT
 int fla_dhrot3(integer *n,
                doublereal *a, integer *lda,
@@ -26,6 +28,13 @@ int fla_sger(integer *m, integer *n, real *alpha,
              real *x, integer *incx, real *y, 
              integer *incy, real *a, integer *lda);
 int fla_dgetrf_small_simd(integer *m, integer *n,
-                     doublereal *a, integer *lda,
-                     integer *ipiv, integer *info);
+                          doublereal *a, integer *lda,
+                          integer *ipiv, integer *info);
+int fla_dgesvd_small6T(integer *m, integer *n,
+                       doublereal *a, integer *lda,
+                       doublereal *ql, integer *ldql,
+                       doublereal *s,
+                       doublereal *u, integer *ldu,
+                       doublereal *vt, integer *ldvt,
+                       doublereal *work);
 #endif

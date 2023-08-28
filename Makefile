@@ -286,7 +286,6 @@ PARENT_PATH     := ./$(OBJ_DIR)/$(HOST)
 # Create a list of the makefile fragments.
 MAKEFILE_FRAGMENTS := $(addsuffix /$(FRAGMENT_MK), $(FRAGMENT_DIR_PATHS))
 
-
 # Detect whether we actually got any makefile fragments. If we didn't, then it
 # is likely that the user has not yet generated them (via configure).
 ifeq ($(strip $(MAKEFILE_FRAGMENTS)),)
@@ -339,9 +338,22 @@ MK_HEADER_FILES := $(strip $(MK_HEADER_FILES))
 # Then, strip the header filename to leave the path to each header location.
 # Notice this process even weeds out duplicates! Add the config directory manually
 # since it contains FLA_config.h.
+
 MK_HEADER_DIR_PATHS := $(dir $(foreach frag_path, $(FRAGMENT_DIR_PATHS), \
                                        $(firstword $(wildcard $(frag_path)/*.h))))
 MK_HEADER_DIR_PATHS += $(BASE_CONFIG_PATH)
+
+# Create list of header file paths to be not included for flattening.
+# These paths will be removed from the list of search directories used
+# for flattening.
+
+MK_EXC_HEADER_PATHS := ./src/lapack/x86/
+MK_EXC_HEADER_PATHS += ./src/lapack/x86/avx2/
+MK_EXC_HEADER_PATHS += ./src/lapack/x86/avx512/
+MK_EXC_HEADER_PATHS += ./src/lapack/x86/front/
+
+# Remove the header paths in exclude list
+MK_HEADER_DIR_PATHS := $(filter-out $(MK_EXC_HEADER_PATHS), $(MK_HEADER_DIR_PATHS))
 
 # Define a list of headers to flatten. We have to flatten blis1.h and FLA_f2c.h
 # because a few files #include only those files, but they aren't needed after
@@ -381,6 +393,13 @@ INCLUDE_PATHS += $(strip $(patsubst %, -I%, $(LAPACKE_HEADERS_DIR)))
 ifeq ($(strip $(LIBAOCLUTILS_LIBRARY_PATH)),)
 INCLUDE_PATHS += "-I$(LIBAOCLUTILS_DIR)/$(LIBAOCLUTILS_REPO)/include"
 endif
+
+$(info MK_EXC_HEADER_PATHS is $(MK_EXC_HEADER_PATHS))
+$(info INCLUDE_PATHS is $(INCLUDE_PATHS))
+
+# Add the paths of non-flattened header files to INCLUDE_PATHS
+MK_EXC_HEADER_PATHS := $(strip $(patsubst %, -I%, $(MK_EXC_HEADER_PATHS)))
+INCLUDE_PATHS += $(MK_EXC_HEADER_PATHS)
 
 # Add the include flags determined above to various compiler flags variables.
 CFLAGS          := $(CFLAGS) $(INCLUDE_PATHS)

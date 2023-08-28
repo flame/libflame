@@ -5,7 +5,10 @@
  *  @brief Common front-end functions
  *         to choose optimized paths
  *  *  */
-#include "FLAME.h"
+
+#include "fla_lapack_x86_common.h"
+#include "fla_lapack_avx512_kernels.h"
+
 #ifdef FLA_ENABLE_AMD_OPT
 /* 3x3 Householder Rotation */
 int fla_dhrot3(integer *n,
@@ -109,7 +112,10 @@ int fla_sger(integer *m, integer *n, real *alpha, real *x,
     }
     return 0;
 }
-/* To be used only when vectorized code via avx2/avx512 is enabled */
+
+/* LU factorization.
+ * To be used only when vectorized code via avx2/avx512 is enabled
+ * */
 int fla_dgetrf_small_simd(integer *m, integer *n,
                           doublereal *a, integer *lda,
                           integer *ipiv, integer *info)
@@ -125,4 +131,24 @@ int fla_dgetrf_small_simd(integer *m, integer *n,
     }
     return 0;
 }
+
+/* SVD for small fat-matrices with LQ factorization
+ * already computed
+ */
+int fla_dgesvd_small6T(integer *m, integer *n,
+                       doublereal *a, integer *lda,
+                       doublereal *ql, integer *ldql,
+                       doublereal *s,
+                       doublereal *u, integer *ldu,
+                       doublereal *vt, integer *ldvt,
+                       doublereal *work)
+{
+    if(global_context.is_avx2)
+    {
+        fla_dgesvd_small6T_avx2(m, n, a, lda, ql, ldql, s,
+                                u, ldu, vt, ldvt, work);
+    }
+    return 0;
+}
+
 #endif

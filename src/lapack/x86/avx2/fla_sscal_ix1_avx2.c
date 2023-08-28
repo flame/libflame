@@ -7,6 +7,7 @@
  *  */
 
 #include "FLAME.h"
+#include "fla_lapack_avx2_kernels.h"
 
 #ifdef FLA_ENABLE_AMD_OPT
 int fla_sscal_ix1_avx2(integer *n, real *alpha, real *x)

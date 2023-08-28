@@ -2930,6 +2930,14 @@
  i__2 = *m - 1;
  i__3 = *m - 1;
  dlaset_("U", &i__2, &i__3, &c_b57, &c_b57, &work[iu + ldwrku], &ldwrku);
+#ifdef FLA_ENABLE_AMD_OPT
+ if (*n < 128)
+ {
+     fla_dgesvd_small6T(m, n, &work[iu], &ldwrku, &a[a_offset], lda, &s[1], &u[u_offset], ldu, &vt[vt_offset], ldvt, &work[1]);
+ }
+ else
+#endif
+ {
  /* Generate Q in A */
  /* (Workspace: need M*M + 2*M, prefer M*M + M + M*NB) */
  i__2 = *lwork - iwork + 1;
@@ -2962,6 +2970,7 @@
  /* Q in A, storing result in VT */
  /* (Workspace: need M*M) */
  dgemm_("N", "N", m, n, m, &c_b79, &work[iu], &ldwrku, &a[a_offset], lda, &c_b57, &vt[vt_offset], ldvt);
+ }
  }
  else {
  /* Insufficient workspace for a fast algorithm */

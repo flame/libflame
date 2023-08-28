@@ -788,10 +788,6 @@ string (APPEND MK_HEADER_DIR_PATHS
 	" ${CMAKE_SOURCE_DIR}/src/lapack/util/app/qutinc/front/flamec/"
 	" ${CMAKE_SOURCE_DIR}/src/lapack/util/app/qutinc/lhfc/flamec/"
 	" ${CMAKE_SOURCE_DIR}/src/lapack/util/app/qutinc/lnfc/flamec/"
-	" ${CMAKE_SOURCE_DIR}/src/lapack/x86/"
-	" ${CMAKE_SOURCE_DIR}/src/lapack/x86/avx2"
-	" ${CMAKE_SOURCE_DIR}/src/lapack/x86/avx512"
-	" ${CMAKE_SOURCE_DIR}/src/lapack/x86/front"
 	" ${CMAKE_SOURCE_DIR}/src/lapacke/LAPACKE/example/"
 	" ${CMAKE_SOURCE_DIR}/src/lapacke/LAPACKE/include/"
 	" ${CMAKE_SOURCE_DIR}/src/lapacke/LAPACKE/src/"
@@ -980,6 +976,10 @@ if (ENABLE_AOCL_BLAS)
   	target_link_libraries(${PROJECT_NAME} ${BLAS_LIBRARY})
   	target_include_directories(${PROJECT_NAME} PUBLIC ${BLAS_INCLUDE_DIR}) 
 endif ()
+
+	target_include_directories(${PROJECT_NAME} PUBLIC src/lapack/x86/avx2)
+	target_include_directories(${PROJECT_NAME} PUBLIC src/lapack/x86/avx512)
+	target_include_directories(${PROJECT_NAME} PUBLIC src/lapack/x86/front)
 
 #AOCLUtils library path handling
 #If user has provided the library path, use it. 
