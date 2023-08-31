@@ -22,7 +22,10 @@ main()
         'dotu_('                    'dotu_f2c_(' \
         ' abs('                     ' f2c_abs(' \
         '__('                       '_(' \
-	'ladiv_('                   'ladiv_f2c_(' \
+	    'cladiv_('                   'cladiv_f2c_(' \
+        'zladiv_('                   'zladiv_f2c_(' \
+        ' max('                      ' fla_max('\
+        ' min('                      ' fla_min('\
         )
 
     # '\\#include \"blaswrap.h\"' ' ' \
