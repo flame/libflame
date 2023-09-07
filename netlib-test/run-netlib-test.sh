@@ -12,6 +12,7 @@ DTL_LIB_PATH=
 ILP64=0
 DTL=0
 GCOV=0
+AOCL_LAPACK_SUMMARY=1
 
 for ARG in "$@"
 do
@@ -29,6 +30,7 @@ do
          ILP64)              ILP64=${DATA} ;;   
          DTL)                DTL=${DATA} ;; 
 		 GCOV)               GCOV=${DATA} ;;  
+		 AOCL_LAPACK_SUMMARY)  AOCL_LAPACK_SUMMARY=${DATA} ;;
          *)   
    esac    
 done
@@ -68,6 +70,7 @@ then
   	echo "DTL_LIB_PATH : path to DTL library chosen in DTL_LIB (if DTL is enabled)"
 	echo "LAPACK_TEST_DIR : netlib lapack test directory name. Default=lapack-3.10.0"
 	echo "GCOV : Enable(1) or disable(0) Code Coverage. Only Enable if Code Coverage is enabled on the library. Default=0"
+	echo "AOCL_LAPACK_SUMMARY : run aocl-lapack netlib test suite summary script. Default=1"
 	echo
 	exit 1
 fi
@@ -124,3 +127,8 @@ fi
 
 OMP_NUM_THREADS=1 make FC="$FORTRAN_FLAGS" LDFLAGS+="-lstdc++ -lpthread -fopenmp $GCOV_FLAGS" LAPACKLIB="$TESTLAPACKLIB" -j
 
+if [[ $AOCL_LAPACK_SUMMARY = "1" ]]
+then
+	cd ../
+	python3 run-netlib-test-summary.py
+fi
