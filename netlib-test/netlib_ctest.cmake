@@ -1,15 +1,13 @@
-message(STATUS "Adding NETLIB TEST =>>> ${CMAKE_SOURCE_DIR}")
 if((NOT EXT_LAPACK_LIBRARY_PATH) OR (NOT EXT_LAPACK_LIBNAME))
 		set(EXT_LAPACK_LIBRARY_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
         set(EXT_LAPACK_LIBNAME "libflame.a")
 endif()
 enable_testing()
-message(STATUS "${CMAKE_C_COMPILER}")
 if(CMAKE_C_COMPILER MATCHES "clang$")
-    message(STATUS "using AOCC")
+    # Run the netlib test using AOCC if clang compiler is detected 
     set(NETLIB_BASH_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/netlib-test/run-netlib-test-aocc.sh)
 else()
-    message(STATUS "using GCC")
+    # Run the netlib test using GCC if gcc compiler is detected 
     set(NETLIB_BASH_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/netlib-test/run-netlib-test.sh)
 endif()
 

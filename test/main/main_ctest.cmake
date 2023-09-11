@@ -7,7 +7,9 @@ else()
 endif()
 
 # Added test to run main test suite
-add_test(NAME main_test COMMAND ${CTEST_MAIN_COMMAND} WORKING_DIRECTORY ${CTEST_WORKING_DIR})
+foreach(CONFIG_TYPE "long" "medium" "short" "micro")
+    add_test(NAME main_test_${CONFIG_TYPE} COMMAND ${CTEST_MAIN_COMMAND}  --config-dir=${CONFIG_TYPE} WORKING_DIRECTORY ${CTEST_WORKING_DIR})
+endforeach()
 
 #Example to add further tests to ctest
 add_test(NAME custom_main_test_gesv_sdcz_10x10 COMMAND ${CTEST_MAIN_COMMAND} gesv sdzc 10 10 10 10 100)

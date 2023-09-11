@@ -70,8 +70,8 @@ $ cmake ../ -DENABLE_AMD_FLAGS=ON -DCMAKE_INSTALL_PREFIX=<path> -DLIBAOCLUTILS_L
      -DBUILD_LEGACY_TEST=ON -DCMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH=/path/to/blas/library -DEXT_BLAS_LIBNAME=blas_lib_name
     -DBLAS_HEADER_PATH="<path to BLIS header file blis.h>" 
     Note: On Windows, to build and run legacy test suite, a separate macro flag is enabled during libflame library build because of certain constraints in legacy test suite.
-    # 2. To Build Netlib-test on windows add -DBUILD_NETLIB_TEST=ON along with cmake commands.
-
+    # 2. To Build Netlib-test add -DBUILD_NETLIB_TEST=ON along with cmake commands.
+        note: Windows requires running create_new_testdir.bat script before running netlib test
 
 ## 4. ENABLE TRACE and LOGS
     User may also enable trace and logs by passing
@@ -102,11 +102,9 @@ $ cmake ../ -DENABLE_AMD_FLAGS=ON -DCMAKE_INSTALL_PREFIX=<path> -DLIBAOCLUTILS_L
         ctest --test-dir [BUILD_DIR]
     To run a specific ctest following command can be given.
         ctest -R [TEST_NAME] 
-        TEST_NAME
-        1. main_test
-        2. aocl_fla_progress_test
-        3. legacy_test
-        4. netlib-test
+    Note: Test names can be listed by 
+        ctest -N
+    
     To run build from any location 
         ctest --test-dir [BUILD_DIR]
     Additionally --verbose can be added to print the output from the executable.
@@ -123,3 +121,6 @@ $ cmake ../ -DENABLE_AMD_FLAGS=ON -DCMAKE_INSTALL_PREFIX=<path> -DLIBAOCLUTILS_L
         bash generate_code_coverage_html.sh. 
     It will give you a prompt to view the code coverage of that particular application.
 
+## 9. Installing LibFlame library
+    Use the following command to install the libflame library
+        make DESTDIR=<Install Path> install.
