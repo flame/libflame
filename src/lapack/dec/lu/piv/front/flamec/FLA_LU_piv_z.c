@@ -4,12 +4,16 @@
 
 #include "FLAME.h"
 #include "FLA_f2c.h"
+#include "fla_lapack_x86_common.h"
 
-#define FLA_LU_SMALL_BLOCK_SIZE 16
+#define FLA_LU_SMALL_BLOCK_SIZE 4096
+#define FLA_LU_SMALL_DIM 32
 
 static dcomplex z__1 = { -1, 0};
 static dcomplex c_b1 = {1.,0.};
 static integer c__1 = 1;
+
+#ifdef FLA_ENABLE_AMD_OPT
 
 void FLA_get_optimum_params_zgetrf(integer m, integer n, integer *nb, int *n_threads)
 {
@@ -74,23 +78,23 @@ void FLA_get_optimum_params_zgetrf(integer m, integer n, integer *nb, int *n_thr
  * All the computations are done inline without using
  * corresponding BLAS APIs to reduce function overheads.
  */
-integer FLA_LU_piv_small_z_var0( integer *m, integer *n,
-                                   doublecomplex *a, integer *lda,
+int FLA_LU_piv_small_z_var0( integer *m, integer *n,
+                                   dcomplex *a, integer *lda,
                                    integer *ipiv,
                                    integer *info)
 {
     integer mi, ni;
     integer i, j, i_1, i_2, i_3;
-    doublereal max_val, t_val, z_val;
-    doublecomplex *acur, *apiv, *asrc;
+    double max_val, t_val, z_val;
+    dcomplex *acur, *apiv, *asrc;
     integer p_idx;
     integer min_m_n = fla_min(*m, *n);
 #ifndef _WIN32
-    doublecomplex z__1;
+    dcomplex z__1;
     double _Complex pinv;
 #else
-    doublereal piv_r, piv_i;
-    doublereal pinv;
+    double piv_r, piv_i;
+    double pinv;
 #endif
 
     *info = 0;
@@ -125,7 +129,7 @@ integer FLA_LU_piv_small_z_var0( integer *m, integer *n,
         p_idx = i;
         for( i_1 = 0; i_1 < mi; i_1++ )
         {
-            t_val = f2c_abs(acur[i_1].r) + f2c_abs(acur[i_1].i);
+            t_val = f2c_abs(acur[i_1].real) + f2c_abs(acur[i_1].imag);
             if( t_val > max_val )
             {
                 max_val = t_val;
@@ -138,7 +142,7 @@ integer FLA_LU_piv_small_z_var0( integer *m, integer *n,
         ipiv[i] = p_idx + 1;
 
         /* Swap rows and calculate a column of L */
-        if( apiv[*lda * i].r != 0. || apiv[*lda * i].i != 0. )
+        if( apiv[*lda * i].real != 0. || apiv[*lda * i].imag != 0. )
         {
             /* Swap entire rows */
             if( p_idx != i )
@@ -146,47 +150,47 @@ integer FLA_LU_piv_small_z_var0( integer *m, integer *n,
                 for( i_1 = 0; i_1 < *n ; i_1++ )
                 {
                     i_2 = i_1 * *lda;
-                    t_val = apiv[i_2].r;
-                    z_val = apiv[i_2].i;
-                    apiv[i_2].r = asrc[i_2].r;
-                    apiv[i_2].i = asrc[i_2].i;
-                    asrc[i_2].r = t_val;
-                    asrc[i_2].i = z_val;
+                    t_val = apiv[i_2].real;
+                    z_val = apiv[i_2].imag;
+                    apiv[i_2].real = asrc[i_2].real;
+                    apiv[i_2].imag = asrc[i_2].imag;
+                    asrc[i_2].real = t_val;
+                    asrc[i_2].imag = z_val;
                  }
             }
 
             /* Calculate scalefactors (L) & update trailing matrix */
 
 #ifndef _WIN32
-            pinv = 1.0 / ((*acur).r + (I * (*acur).i));
-            z__1.r = creal(pinv);
-            z__1.i = cimag(pinv);
+            pinv = 1.0 / ((*acur).real + (I * (*acur).imag));
+            z__1.real = creal(pinv);
+            z__1.imag = cimag(pinv);
 #else
-            piv_r = (*acur).r;
-            piv_i = (*acur).i;
+            piv_r = (*acur).real;
+            piv_i = (*acur).imag;
             pinv = piv_r * piv_r + piv_i * piv_i;
 #endif
 
             for( i_1 = 1; i_1 < mi; i_1++ )
             {
-                t_val = acur[i_1].r;
+                t_val = acur[i_1].real;
 #ifndef _WIN32
-                acur[i_1].r = (t_val * z__1.r - acur[i_1].i * z__1.i);
-                acur[i_1].i = (t_val * z__1.i + acur[i_1].i * z__1.r);
+                acur[i_1].real = (t_val * z__1.real - acur[i_1].imag * z__1.imag);
+                acur[i_1].imag = (t_val * z__1.imag + acur[i_1].imag * z__1.real);
 #else
-                acur[i_1].r = (acur[i_1].i * piv_i + t_val * piv_r) / pinv;
-                acur[i_1].i = (acur[i_1].i * piv_r - t_val * piv_i) / pinv;
+                acur[i_1].real = (acur[i_1].imag * piv_i + t_val * piv_r) / pinv;
+                acur[i_1].imag = (acur[i_1].imag * piv_r - t_val * piv_i) / pinv;
 #endif
-                t_val = acur[i_1].r;
-                z_val = acur[i_1].i;
+                t_val = acur[i_1].real;
+                z_val = acur[i_1].imag;
 
                 for( j = 1; j < ni; j++ )
                 {
                     i_2 = i_1 + j * *lda;
                     i_3 = j * *lda;
 
-                    acur[i_2].r = acur[i_2].r - t_val * acur[i_3].r + z_val * acur[i_3].i;
-                    acur[i_2].i = acur[i_2].i - t_val * acur[i_3].i - z_val * acur[i_3].r;
+                    acur[i_2].real = acur[i_2].real - t_val * acur[i_3].real + z_val * acur[i_3].imag;
+                    acur[i_2].imag = acur[i_2].imag - t_val * acur[i_3].imag - z_val * acur[i_3].real;
                 }
             }
         }
@@ -201,9 +205,9 @@ integer FLA_LU_piv_small_z_var0( integer *m, integer *n,
 
 
 /* LU factorization recursive variant*/
-integer FLA_LU_piv_z_var0(integer *m, integer *n, dcomplex *a, integer *lda, integer *ipiv, integer *info)
+int FLA_LU_piv_z_var0(integer *m, integer *n, dcomplex *a, integer *lda, integer *ipiv, integer *info)
 {
-    integer a_dim1, i__1, i__2, i__, n1, n2;
+    integer a_dim1, i__1, i__2, i__, n1, n2, block_size;
     integer iinfo;
 
     /* Adjust dimension of the matrix */
@@ -235,16 +239,19 @@ integer FLA_LU_piv_z_var0(integer *m, integer *n, dcomplex *a, integer *lda, int
         return 0;
     }
 
-    if (*m <= FLA_LU_SMALL_BLOCK_SIZE && *n <= FLA_LU_SMALL_BLOCK_SIZE)
-    {
-       fla_zgetrf_small_avx2(m, n, (doublecomplex *) a, lda, ipiv, &iinfo);
+    /* compute matrix size*/
+    block_size = *m * *n;
 
-       if (*info == 0 && iinfo > 0)
-       {
-           *info = iinfo;
-       }
+    if ( (block_size <= FLA_LU_SMALL_BLOCK_SIZE) && ( *m <= FLA_LU_SMALL_DIM || *n <= FLA_LU_SMALL_DIM ) )
+    {
+        fla_zgetrf_small_simd(m, n, a, lda, ipiv, &iinfo);
+
+        if (*info == 0 && iinfo > 0)
+        {
+            *info = iinfo;
+        }
     }
-    else if (*m <= FLA_LU_SMALL_BLOCK_SIZE || *n <= FLA_LU_SMALL_BLOCK_SIZE)
+    else if (*m == 1 || *n == 1)
     {
         lapack_zgetf2(m, n, a, lda, ipiv, &iinfo);
 
@@ -313,7 +320,7 @@ integer FLA_LU_piv_z_var0(integer *m, integer *n, dcomplex *a, integer *lda, int
 #ifdef FLA_OPENMP_MULTITHREADING
 
 /* LU factorization blocked varaiant */
-integer FLA_LU_piv_z_var1_parallel( integer *m, integer *n, doublecomplex *a, integer *lda, integer *ipiv, integer *info)
+int FLA_LU_piv_z_var1_parallel( integer *m, integer *n, dcomplex *a, integer *lda, integer *ipiv, integer *info)
 {
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7, i__8;
@@ -354,7 +361,7 @@ integer FLA_LU_piv_z_var1_parallel( integer *m, integer *n, doublecomplex *a, in
     /* call sequencial algorithm for single thread*/
     if(n_threads == 1)
     {
-        FLA_LU_piv_z_var0( m, n, (dcomplex *) a, lda, ipiv, info);
+        FLA_LU_piv_z_var0( m, n, a, lda, ipiv, info);
         return *info;
     }
 
@@ -521,4 +528,5 @@ integer FLA_LU_piv_z_var1_parallel( integer *m, integer *n, doublecomplex *a, in
     return *info;
 }
 
+#endif
 #endif

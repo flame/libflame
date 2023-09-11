@@ -63,6 +63,16 @@ set_property(TEST DGESVD_SML_OPT22 PROPERTY ENVIRONMENT "OMP_NUM_THREADS=64")
 add_test(NAME DGESVD_SML_OPT23 COMMAND ${CTEST_MAIN_COMMAND} gesvd d S S 6 4 6 6 4 -1 1000)
 set_property(TEST DGESVD_SML_OPT23 PROPERTY ENVIRONMENT "OMP_NUM_THREADS=64")
 
+#Performance tests for ZGETRF
+foreach(FUNCTION "getrf")
+    foreach(PREC "z") 
+        foreach(SIZE_N "8" "16" "32" "64" "128" "256" "512" "1024")
+            add_test(NAME LU_FACTORIZATION_${PREC}${FUNCTION}_${SIZE_N}x${SIZE_N} COMMAND ${CTEST_MAIN_COMMAND} ${FUNCTION} ${PREC} ${SIZE_N} ${SIZE_N} -1 100)
+            set_property(TEST LU_FACTORIZATION_${PREC}${FUNCTION}_${SIZE_N}x${SIZE_N} PROPERTY ENVIRONMENT "OMP_NUM_THREADS=1")
+        endforeach(SIZE_N)
+    endforeach(PREC)
+endforeach(FUNCTION)
+
 #Example to add loop based tests to ctest
 # Note: in forloop based test the variable should also modify the name of the test, since 2 tests cannot have same name 
 foreach(FUNCTION "gesv")

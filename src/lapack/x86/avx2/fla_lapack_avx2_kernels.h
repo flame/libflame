@@ -32,8 +32,8 @@ int fla_sger_avx2(integer *m, integer *n, real *alpha,
                   real *x, integer *incx,
                   real *y, integer *incy,
                   real *a, integer *lda);
-integer fla_zgetrf_small_avx2(integer *m, integer *n,
-                              doublecomplex *a, integer *lda,
+int fla_zgetrf_small_avx2(integer *m, integer *n,
+                              dcomplex *a, integer *lda,
                               integer *ipiv, integer *info);
 int fla_zrot_avx2(integer *n, 
                   doublecomplex *cx, integer *incx, 

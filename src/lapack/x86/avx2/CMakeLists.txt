@@ -1,4 +1,6 @@
-##Copyright (C) 2023, Advanced Micro Devices, Inc.## 
+##Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.##
+
+
 add_library(AVX2_LU
      OBJECT
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_lapack_avx2_kernels.h

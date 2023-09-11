@@ -7,9 +7,11 @@
     directory, or at http://opensource.org/licenses/BSD-3-Clause
 
 */
+
 /*
- *  Copyright (c) 2020-2023 Advanced Micro Devices, Inc.  All rights reserved.
- */
+    Modifications Copyright (c) 2021-2023 Advanced Micro Devices, Inc.  All rights reserved.
+*/
+
 #include "FLA_LU_piv_vars.h"
 
 FLA_Error FLA_LU_piv_internal( FLA_Obj A, FLA_Obj p, fla_lu_t* cntl );
@@ -23,9 +25,10 @@ integer   FLA_LU_piv_small_d_var1( integer *m, integer *n, doublereal *a, intege
                                    integer *ipiv, integer *info );
 integer   FLA_LU_piv_small_d_var2( integer *m, integer *n, doublereal *a, integer *lda,
                                    integer *ipiv, integer *info );
-integer   FLA_LU_piv_small_z_var0( integer *m, integer *n, doublecomplex *a, integer *lda,
+int   FLA_LU_piv_small_z_var0( integer *m, integer *n, dcomplex *a, integer *lda,
                                    integer *ipiv, integer *info);
-integer   FLA_LU_piv_z_var0(integer *m, integer *n, dcomplex *a, integer *lda, integer *ipiv, integer *info);
+int   FLA_LU_piv_z_var0(integer *m, integer *n, dcomplex *a, integer *lda, integer *ipiv, integer *info);
+int   FLA_LU_piv_z_var1_parallel( integer *m, integer *n, dcomplex *a, integer *lda, integer *ipiv, integer *info);
 integer   FLA_LU_piv_small_s_var0( integer *m, integer *n, real *a, integer *lda,
                                    integer *ipiv, integer *info );
 integer   FLA_LU_piv_small_s_var1( integer *m, integer *n, real *a, integer *lda,

@@ -133,4 +133,23 @@ int fla_dgesvd_small6T(integer *m, integer *n,
     return 0;
 }
 
+int fla_zgetrf_small_simd(integer *m, integer *n,
+                     dcomplex *a, integer *lda,
+                     integer *ipiv, integer *info)
+{
+    if(global_context.is_avx512)
+    {
+        fla_zgetrf_small_avx512(m, n, a, lda, ipiv, info);
+    }
+    else if(global_context.is_avx2)
+    {
+        fla_zgetrf_small_avx2(m, n, a, lda, ipiv, info);
+    }
+    else
+    {
+        lapack_zgetf2(m, n, a, lda, ipiv, info);
+    }
+
+    return 0;
+}
 #endif

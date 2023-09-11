@@ -3,6 +3,7 @@
 */
 
 #include "FLAME.h"
+#include "fla_lapack_x86_common.h"
 
 /*
  * LU with partial pivoting for tiny matrices

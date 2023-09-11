@@ -9,7 +9,7 @@
 */
 
 /*
-    Copyright (c) 2021-2023 Advanced Micro Devices, Inc.  All rights reserved.
+    Modifications Copyright (c) 2021-2023 Advanced Micro Devices, Inc.  All rights reserved.
 */
 
 
@@ -262,8 +262,7 @@
 #define FLA_DGETRF_SMALL_AVX2_THRESH0      (81)
 #define FLA_DGETRF_SMALL_AVX512_THRESH0    (160)
 
-#define FLA_ZGETRF_SMALL_THRESH0      (22)
-#define FLA_ZGETRF_SMALL_THRESH1      (50)
+#define FLA_ZGETRF_SMALL_THRESH      (100)
 
 // GETRFNPI , these thresholds are used to chose between 3 algorithms to get best
 // results in terms of perfmormance

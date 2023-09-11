@@ -9,7 +9,7 @@
 */
 
 /*
-    Copyright (c) 2021-2023 Advanced Micro Devices, Inc.  All rights reserved.
+    Modifications Copyright (c) 2021-2023 Advanced Micro Devices, Inc.  All rights reserved.
 */
 
 #include "FLAME.h"
@@ -20,6 +20,7 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_lapack2flame_prototypes.h"
 #include "fla_lapack_x86_common.h"
+#include "fla_lapack_avx2_kernels.h"
 
 /*
   GETRF computes an LU factorization of a general M-by-N matrix A
@@ -41,9 +42,6 @@ extern void DTL_Trace(
 		    const int8 *pi8FunctionName,
 		    uint32 ui32LineNumber,
 		    const int8 *pi8Message);
-extern integer FLA_LU_piv_z_var1_parallel( integer *m, integer *n, doublecomplex *a, integer *lda, integer *ipiv, integer *info);
-
-#define FLA_ENABLE_ALT_PATH 0
 
 #define LAPACK_getrf(prefix)                                                           \
   int F77_ ## prefix ## getrf( integer* m,                                             \
@@ -65,7 +63,7 @@ extern fla_context global_context;                                              
   else                                                                                 \
   {                                                                                    \
     /* Initialize global context data */                                               \
-    aocl_fla_init();                                                                   \  
+    aocl_fla_init();                                                                   \
     if(global_context.is_avx2 && *m < FLA_DGETRF_SMALL_AVX2_THRESH0 && *n < FLA_DGETRF_SMALL_AVX2_THRESH0) \
     {                                                                                  \
         /* Calling vectorized code when avx2 supported architecture detected */        \
@@ -79,31 +77,20 @@ extern fla_context global_context;                                              
 
 #ifdef FLA_OPENMP_MULTITHREADING
 
-  #define LAPACK_getrf_body_z(prefix)                                                  \
-  if( *m <= FLA_ZGETRF_SMALL_THRESH0 && *n <= FLA_ZGETRF_SMALL_THRESH0 )               \
-  {                                                                                    \
-    fla_zgetrf_small_avx2( m, n, (doublecomplex *)buff_A, ldim_A, buff_p, info );      \
-  }                                                                                    \
-  else if( *m <= FLA_ZGETRF_SMALL_THRESH1 && *n <= FLA_ZGETRF_SMALL_THRESH1 )          \
-  {                                                                                    \
-    FLA_LU_piv_z_var0( m, n, (dcomplex *) buff_A, ldim_A, buff_p, info);               \
-  }                                                                                    \
-  else                                                                                 \
-  {                                                                                    \
-    FLA_LU_piv_z_var1_parallel( m, n, (doublecomplex *) buff_A, ldim_A, buff_p, info); \
+  #define LAPACK_getrf_body_z(prefix)                                                           \
+  if( *m <= FLA_ZGETRF_SMALL_THRESH && *n <= FLA_ZGETRF_SMALL_THRESH )                          \
+  {                                                                                             \
+    FLA_LU_piv_z_var0( m, n, buff_A, ldim_A, buff_p, info );                                    \
+  }                                                                                             \
+  else                                                                                          \
+  {                                                                                             \
+    FLA_LU_piv_z_var1_parallel( m, n, buff_A, ldim_A, buff_p, info);                            \
   }
 
 #else
 
-  #define LAPACK_getrf_body_z(prefix)                                                    \
-    if( *m <= FLA_ZGETRF_SMALL_THRESH0 && *n <= FLA_ZGETRF_SMALL_THRESH0 )               \
-    {                                                                                    \
-      fla_zgetrf_small_avx2( m, n, (dcomplex *)buff_A, ldim_A, buff_p, info );           \
-    }                                                                                    \
-    else                                                                                 \
-    {                                                                                    \
-      FLA_LU_piv_z_var0( m, n, buff_A, ldim_A, buff_p, info);                            \
-    }
+  #define LAPACK_getrf_body_z(prefix)                                                           \
+      FLA_LU_piv_z_var0( m, n, buff_A, ldim_A, buff_p, info);
 
 #endif
 
@@ -192,7 +179,7 @@ extern fla_context global_context;                                              
   FLA_Bool skip = FALSE;                                        \
                                                                 \
                                                                 \
-  if( *m < FLA_GETRF_SMALL  && *n < FLA_GETRF_SMALL && !FLA_ENABLE_ALT_PATH )  /* Small sizes- lapack path */       \
+  if( *m < FLA_GETRF_SMALL  && *n < FLA_GETRF_SMALL )  /* Small sizes- lapack path */                               \
   {                                                                                                                 \
     switch(datatype)                                                                                                \
     {                                                                                                               \

@@ -34,4 +34,7 @@ int fla_dgesvd_small6T(integer *m, integer *n,
                        doublereal *u, integer *ldu,
                        doublereal *vt, integer *ldvt,
                        doublereal *work);
+int fla_zgetrf_small_simd(integer *m, integer *n,
+                     dcomplex *a, integer *lda,
+                     integer *ipiv, integer *info);
 #endif
