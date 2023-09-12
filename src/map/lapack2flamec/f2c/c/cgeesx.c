@@ -237,7 +237,7 @@ if */
 /* > \ingroup complexGEeigen */
 /* ===================================================================== */
 /* Subroutine */
-int cgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, complex *a, integer *lda, integer *sdim, complex * w, complex *vs, integer *ldvs, real *rconde, real *rcondv, complex * work, integer *lwork, real *rwork, logical *bwork, integer *info)
+int cgeesx_(char *jobvs, char *sort, L_fp1 select, char * sense, integer *n, complex *a, integer *lda, integer *sdim, complex * w, complex *vs, integer *ldvs, real *rconde, real *rcondv, complex * work, integer *lwork, real *rwork, logical *bwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("cgeesx inputs: jobvs %c, sort %c, sense %c, n %" FLA_IS ", lda %" FLA_IS ", ldvs %" FLA_IS "",*jobvs, *sort, *sense, *n, *lda, *ldvs);

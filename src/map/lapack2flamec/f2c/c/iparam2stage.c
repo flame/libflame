@@ -163,6 +163,7 @@ integer iparam2stage_(integer *ispec, char *name__, char *opts, integer *ni, int
     char subnam[12];
     integer lqoptnb, qroptnb;
     ftnlen name_len = strlen(name__);
+    int fla_thread_get_num_threads(void);
     /* -- LAPACK auxiliary routine (version 3.8.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */

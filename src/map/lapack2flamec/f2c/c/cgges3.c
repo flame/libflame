@@ -271,7 +271,7 @@ the routine */
 /* > \ingroup complexGEeigen */
 /* ===================================================================== */
 /* Subroutine */
-int cgges3_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, integer *n, complex *a, integer *lda, complex *b, integer * ldb, integer *sdim, complex *alpha, complex *beta, complex *vsl, integer *ldvsl, complex *vsr, integer *ldvsr, complex *work, integer * lwork, real *rwork, logical *bwork, integer *info)
+int cgges3_(char *jobvsl, char *jobvsr, char *sort, L_fp2 selctg, integer *n, complex *a, integer *lda, complex *b, integer * ldb, integer *sdim, complex *alpha, complex *beta, complex *vsl, integer *ldvsl, complex *vsr, integer *ldvsr, complex *work, integer * lwork, real *rwork, logical *bwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
 #if LF_AOCL_DTL_LOG_ENABLE

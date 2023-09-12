@@ -328,6 +328,8 @@ int dstebz_(char *range, char *order, integer *n, doublereal *vl, doublereal *vu
     --d__;
     /* Function Body */
     *info = 0;
+    wlu = 0;
+    wul = 0;
     /* Decode RANGE */
     if (lsame_(range, "A"))
     {

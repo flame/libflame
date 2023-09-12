@@ -271,7 +271,7 @@ the routine */
 /* > \ingroup complex16GEeigen */
 /* ===================================================================== */
 /* Subroutine */
-int zgges3_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, integer *sdim, doublecomplex *alpha, doublecomplex * beta, doublecomplex *vsl, integer *ldvsl, doublecomplex *vsr, integer *ldvsr, doublecomplex *work, integer *lwork, doublereal *rwork, logical *bwork, integer *info)
+int zgges3_(char *jobvsl, char *jobvsr, char *sort, L_fpz2 selctg, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, integer *sdim, doublecomplex *alpha, doublecomplex * beta, doublecomplex *vsl, integer *ldvsl, doublecomplex *vsr, integer *ldvsr, doublecomplex *work, integer *lwork, doublereal *rwork, logical *bwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("zgges3 inputs: jobvsl %c, jobvsr %c, sort %c, n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", sdim %" FLA_IS ", ldvsl %" FLA_IS ", ldvsr %" FLA_IS "",*jobvsl, *jobvsr, *sort, *n, *lda, *ldb, *sdim, *ldvsl, *ldvsr);

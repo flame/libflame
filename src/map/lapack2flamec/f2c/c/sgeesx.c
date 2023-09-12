@@ -283,7 +283,7 @@ if */
 /* > \ingroup realGEeigen */
 /* ===================================================================== */
 /* Subroutine */
-int sgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, real *a, integer *lda, integer *sdim, real *wr, real *wi, real *vs, integer *ldvs, real *rconde, real *rcondv, real * work, integer *lwork, integer *iwork, integer *liwork, logical *bwork, integer *info)
+int sgeesx_(char *jobvs, char *sort, L_fps2 select, char * sense, integer *n, real *a, integer *lda, integer *sdim, real *wr, real *wi, real *vs, integer *ldvs, real *rconde, real *rcondv, real * work, integer *lwork, integer *iwork, integer *liwork, logical *bwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("sgeesx inputs: jobvs %c, sort %c, sense %c, n %" FLA_IS ", lda %" FLA_IS ", sdim %" FLA_IS ", ldvs %" FLA_IS "",*jobvs, *sort, *sense, *n, *lda, *sdim, *ldvs);

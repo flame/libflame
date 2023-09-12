@@ -238,7 +238,7 @@ if */
 /* > \ingroup complex16GEeigen */
 /* ===================================================================== */
 /* Subroutine */
-int zgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, doublecomplex *a, integer *lda, integer *sdim, doublecomplex *w, doublecomplex *vs, integer *ldvs, doublereal * rconde, doublereal *rcondv, doublecomplex *work, integer *lwork, doublereal *rwork, logical *bwork, integer *info)
+int zgeesx_(char *jobvs, char *sort, L_fpz1 select, char * sense, integer *n, doublecomplex *a, integer *lda, integer *sdim, doublecomplex *w, doublecomplex *vs, integer *ldvs, doublereal * rconde, doublereal *rcondv, doublecomplex *work, integer *lwork, doublereal *rwork, logical *bwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("zgeesx inputs: jobvs %c, sort %c, sense %c, n %" FLA_IS ", lda %" FLA_IS ", sdim %" FLA_IS ", ldvs %" FLA_IS "",*jobvs, *sort, *sense, *n, *lda, *sdim, *ldvs);

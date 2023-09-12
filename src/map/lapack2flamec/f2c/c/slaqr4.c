@@ -338,6 +338,7 @@ int slaqr4_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
     --work;
     /* Function Body */
     *info = 0;
+    ndec = 0;
     /* ==== Quick return for N = 0: nothing to do. ==== */
     if (*n == 0)
     {

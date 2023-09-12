@@ -112,6 +112,7 @@ int fla_dgetrf_small_simd(integer *m, integer *n,
                      doublereal *a, integer *lda,
                      integer *ipiv, integer *info)
 {
+    integer fla_dgetrf_small_avx512( integer *m, integer *n, doublereal *a, integer *lda, integer *ipiv, integer *info);
     if(global_context.is_avx512)
     {
         fla_dgetrf_small_avx512(m, n, a, lda, ipiv, info);

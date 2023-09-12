@@ -18,12 +18,11 @@ integer fla_dgetrf_small_avx2( integer *m, integer *n,
                                    integer *info)
 {
     integer mi, ni;
-    integer i, j, i_1, lda_t, b_off, y_off;
+    integer i, i_1, lda_t;
 
-    doublereal p_val, max_val, t_val;
+    doublereal max_val, t_val;
     doublereal *acur, *apiv, *asrc;
     integer p_idx;
-    __m256d result[4], tempY[4], tempb[4], tempx, p_val4;
     integer min_m_n = fla_min(*m, *n);
     lda_t = *lda;
 

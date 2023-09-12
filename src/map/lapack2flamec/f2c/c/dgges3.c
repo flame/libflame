@@ -279,7 +279,7 @@ the routine */
 /* > \ingroup doubleGEeigen */
 /* ===================================================================== */
 /* Subroutine */
-int dgges3_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, integer *n, doublereal *a, integer *lda, doublereal *b, integer *ldb, integer *sdim, doublereal *alphar, doublereal *alphai, doublereal *beta, doublereal *vsl, integer *ldvsl, doublereal *vsr, integer *ldvsr, doublereal *work, integer *lwork, logical *bwork, integer *info)
+int dgges3_(char *jobvsl, char *jobvsr, char *sort, L_fpd3 selctg, integer *n, doublereal *a, integer *lda, doublereal *b, integer *ldb, integer *sdim, doublereal *alphar, doublereal *alphai, doublereal *beta, doublereal *vsl, integer *ldvsl, doublereal *vsr, integer *ldvsr, doublereal *work, integer *lwork, logical *bwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("dgges3 inputs: jobvsl %c, jobvsr %c, sort %c, n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", sdim %" FLA_IS ", ldvsl %" FLA_IS ", ldvsr %" FLA_IS ", lwork  %" FLA_IS "",*jobvsl, *jobvsr, *sort, *n, *lda, *ldb, *sdim, *ldvsl, *ldvsr, *lwork);

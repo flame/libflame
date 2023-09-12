@@ -286,7 +286,7 @@ int dbdsvdx_(char *uplo, char *jobz, char *range, integer *n, doublereal *d__, d
     doublereal abstol, thresh;
     integer iiwork;
     extern /* Subroutine */
-    int dstevx_();
+    int dstevx_(char *jobz, char *range, integer *n, doublereal * d__, doublereal *e, doublereal *vl, doublereal *vu, integer *il, integer *iu, doublereal *abstol, integer *m, doublereal *w, doublereal *z__, integer *ldz, doublereal *work, integer *iwork, integer *ifail, integer *info);
     /* -- LAPACK driver routine (version 3.8.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */

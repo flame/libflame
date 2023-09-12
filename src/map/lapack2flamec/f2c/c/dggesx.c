@@ -366,7 +366,7 @@ the */
 /* > */
 /* ===================================================================== */
 /* Subroutine */
-int dggesx_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, char *sense, integer *n, doublereal *a, integer *lda, doublereal *b, integer *ldb, integer *sdim, doublereal *alphar, doublereal *alphai, doublereal *beta, doublereal *vsl, integer *ldvsl, doublereal *vsr, integer *ldvsr, doublereal *rconde, doublereal * rcondv, doublereal *work, integer *lwork, integer *iwork, integer * liwork, logical *bwork, integer *info)
+int dggesx_(char *jobvsl, char *jobvsr, char *sort, L_fpd3 selctg, char *sense, integer *n, doublereal *a, integer *lda, doublereal *b, integer *ldb, integer *sdim, doublereal *alphar, doublereal *alphai, doublereal *beta, doublereal *vsl, integer *ldvsl, doublereal *vsr, integer *ldvsr, doublereal *rconde, doublereal * rcondv, doublereal *work, integer *lwork, integer *iwork, integer * liwork, logical *bwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("dggesx inputs: jobvsl %c, jobvsr %c, sort %c, sense %c, n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", sdim %" FLA_IS ", ldvsl %" FLA_IS ", ldvsr %" FLA_IS ", lwork %" FLA_IS ", liwork %" FLA_IS "",*jobvsl, *jobvsr, *sort, *sense, *n, *lda, *ldb, *sdim, *ldvsl, *ldvsr, *lwork, *liwork);

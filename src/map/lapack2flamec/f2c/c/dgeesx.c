@@ -284,7 +284,7 @@ if */
 /* > \ingroup doubleGEeigen */
 /* ===================================================================== */
 /* Subroutine */
-int dgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, doublereal *a, integer *lda, integer *sdim, doublereal *wr, doublereal *wi, doublereal *vs, integer *ldvs, doublereal *rconde, doublereal *rcondv, doublereal *work, integer * lwork, integer *iwork, integer *liwork, logical *bwork, integer *info)
+int dgeesx_(char *jobvs, char *sort, L_fpd2 select, char * sense, integer *n, doublereal *a, integer *lda, integer *sdim, doublereal *wr, doublereal *wi, doublereal *vs, integer *ldvs, doublereal *rconde, doublereal *rcondv, doublereal *work, integer * lwork, integer *iwork, integer *liwork, logical *bwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("dgeesx inputs: jobvs %c, sort %c, sense %c, n %" FLA_IS ", lda %" FLA_IS ", ldvs %" FLA_IS ", lwork %" FLA_IS "",*jobvs, *sort, *sense, *n, *lda, *ldvs, *lwork);

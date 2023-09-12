@@ -213,7 +213,7 @@ if */
 /* > \ingroup realGEeigen */
 /* ===================================================================== */
 /* Subroutine */
-int sgees_(char *jobvs, char *sort, L_fp select, integer *n, real *a, integer *lda, integer *sdim, real *wr, real *wi, real *vs, integer *ldvs, real *work, integer *lwork, logical *bwork, integer * info)
+int sgees_(char *jobvs, char *sort, L_fps2 select, integer *n, real *a, integer *lda, integer *sdim, real *wr, real *wi, real *vs, integer *ldvs, real *work, integer *lwork, logical *bwork, integer * info)
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("sgees inputs: jobvs %c, sort %c, n %" FLA_IS ", lda %" FLA_IS ", sdim %" FLA_IS ", ldvs %" FLA_IS "",*jobvs, *sort, *n, *lda, *sdim, *ldvs);
