@@ -204,4 +204,13 @@ void fla_dgesvd_small6T(integer *m, integer *n,
     return;
 }
 
+/* Small DGETRS path (NOTRANS) should only be used for size between 3 to 8 and NRHS <= N */
+int fla_dgetrs_small_notrans(char *trans, integer *n, integer *nrhs, doublereal *a, integer *lda, integer *ipiv, doublereal *b, integer *ldb, integer *info)
+{
+    if (global_context.is_avx2)
+    {
+        fla_dgetrs_small_trsm_ll_avx2(trans, n, nrhs, a, lda, ipiv, b, ldb, info);
+    }
+    return 0;
+}
 #endif
