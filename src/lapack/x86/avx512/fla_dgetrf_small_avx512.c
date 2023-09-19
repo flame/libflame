@@ -3,6 +3,7 @@
 *******************************************************************************/
 
 #include "FLAME.h"
+#include "fla_lapack_avx2_kernels.h"
 
 #ifdef FLA_ENABLE_AMD_OPT
 

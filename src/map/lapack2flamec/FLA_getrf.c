@@ -19,6 +19,7 @@
 #include "FLA_lapack2flame_util_defs.h"
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_lapack2flame_prototypes.h"
+#include "fla_lapack_x86_common.h"
 
 /*
   GETRF computes an LU factorization of a general M-by-N matrix A

@@ -7,6 +7,7 @@
  *  *  */
 
 #include "fla_lapack_x86_common.h"
+#include "fla_lapack_avx2_kernels.h"
 #include "fla_lapack_avx512_kernels.h"
 
 #ifdef FLA_ENABLE_AMD_OPT
