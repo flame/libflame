@@ -240,6 +240,7 @@ extern fla_context global_context;                                              
 
 #else /* FLA_ENABLE_SUPERMATRIX */
 
+#define LAPACK_getrf_body_s LAPACK_getrf_body
 #define LAPACK_getrf_body_d LAPACK_getrf_body
 #define LAPACK_getrf_body_z LAPACK_getrf_body
 
