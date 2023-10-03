@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
 */
 
 #include "test_lapack.h"
@@ -7,14 +7,20 @@
 #include "test_prototype.h"
 
 /* Local prototypes.*/
-void fla_test_orgqr_experiment(test_params_t *params, integer datatype, integer  p_cur, integer  q_cur, integer  pci, integer  n_repeats, integer einfo, double* perf, double* t,double* residual);
-void prepare_orgqr_run(integer m, integer n, void *A, integer lda, void *T, void* work, integer *lwork, integer datatype, integer n_repeats, double* time_min_, integer *info);
-void invoke_orgqr(integer datatype, integer* m, integer* n, integer *min_A, void* a, integer* lda, void* tau, void* work, integer* lwork, integer* info);
+void fla_test_org2r_experiment(test_params_t *params, integer datatype,
+                               integer  p_cur, integer  q_cur, integer  pci,
+                               integer  n_repeats, integer einfo, double* perf,
+                               double* t,double* residual);
+void prepare_org2r_run(integer m, integer n, void *A, integer lda, void *T,
+                       void* work, integer datatype, integer n_repeats,
+                       double* time_min_, integer *info);
+void invoke_org2r(integer datatype, integer* m, integer* n, integer *min_A,
+                  void* a, integer* lda, void* tau, void* work, integer* info);
 
-void fla_test_orgqr(integer argc, char ** argv, test_params_t *params)
+void fla_test_org2r(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "QR factorization";
-    char* front_str = "ORGQR";
+    char* front_str = "ORG2R";
     integer tests_not_run = 1, invalid_dtype = 0, einfo = 0;
 
     if(argc == 1)
@@ -23,14 +29,14 @@ void fla_test_orgqr(integer argc, char ** argv, test_params_t *params)
         config_data = 1;
         fla_test_output_info("--- %s ---\n", op_str);
         fla_test_output_info("\n");
-        fla_test_op_driver(front_str, RECT_INPUT, params, LIN, fla_test_orgqr_experiment);
+        fla_test_op_driver(front_str, RECT_INPUT, params, LIN, fla_test_org2r_experiment);
         tests_not_run = 0;
     }
-    if (argc == 9)
+    if (argc == 8)
     {
-        FLA_TEST_PARSE_LAST_ARG(argv[8]);
+        FLA_TEST_PARSE_LAST_ARG(argv[7]);
     }
-    if (argc >= 8 && argc <= 9)
+    if (argc >= 7 && argc <= 8)
     {
         integer i, num_types,N,M;
         integer datatype, n_repeats;
@@ -43,9 +49,9 @@ void fla_test_orgqr(integer argc, char ** argv, test_params_t *params)
         M = strtoimax(argv[3], &endptr, CLI_DECIMAL_BASE);
         N = strtoimax(argv[4], &endptr, CLI_DECIMAL_BASE);
         params->lin_solver_paramslist[0].lda = strtoimax(argv[5], &endptr, CLI_DECIMAL_BASE);
-        g_lwork = strtoimax(argv[6], &endptr, CLI_DECIMAL_BASE);
+        g_lwork = -1;
 
-        n_repeats = strtoimax(argv[7], &endptr, CLI_DECIMAL_BASE);
+        n_repeats = strtoimax(argv[6], &endptr, CLI_DECIMAL_BASE);
 
         if(n_repeats > 0)
         {
@@ -69,7 +75,7 @@ void fla_test_orgqr(integer argc, char ** argv, test_params_t *params)
                 type_flag[datatype - FLOAT] = 1;
 
                 /* Call the test code */
-                fla_test_orgqr_experiment(params, datatype,
+                fla_test_org2r_experiment(params, datatype,
                                           M, N,
                                           0,
                                           n_repeats, einfo,
@@ -89,8 +95,8 @@ void fla_test_orgqr(integer argc, char ** argv, test_params_t *params)
     /* Print error messages */
     if(tests_not_run)
     {
-        printf("\nIllegal arguments for orgqr\n");
-        printf("./<EXE> orgqr <precisions - sdcz> <M> <N> <lda> <LWORK> <repeats>\n");
+        printf("\nIllegal arguments for org2r\n");
+        printf("./<EXE> org2r <precisions - sdcz> <M> <N> <lda> <repeats>\n");
     }
     if(invalid_dtype)
     {
@@ -104,7 +110,7 @@ void fla_test_orgqr(integer argc, char ** argv, test_params_t *params)
     return;
 }
 
-void fla_test_orgqr_experiment(test_params_t *params,
+void fla_test_org2r_experiment(test_params_t *params,
     integer datatype,
     integer p_cur,
     integer q_cur,
@@ -149,7 +155,8 @@ void fla_test_orgqr_experiment(test_params_t *params,
 
         init_matrix(datatype, A, m, n, lda, g_ext_fptr, params->imatrix_char);
 
-        /* Make a copy of input matrix A. This is required to validate the API functionality.*/
+        /* Make a copy of input matrix A.
+           This is required to validate the API functionality.*/
         create_matrix(datatype, &A_test, lda, n);
         copy_matrix(datatype, "full", m, n, A, lda, A_test, lda);
 
@@ -165,7 +172,7 @@ void fla_test_orgqr_experiment(test_params_t *params,
             create_vector(datatype, &work, 1);
 
             /* call to  geqrf API */
-            invoke_geqrf(datatype, &m, &n, NULL, &lda, NULL, work, &lwork, &info);  
+            invoke_geqrf(datatype, &m, &n, NULL, &lda, NULL, work, &lwork, &info);
 
             if(info == 0)
             {
@@ -177,14 +184,10 @@ void fla_test_orgqr_experiment(test_params_t *params,
             the current output buffers.*/
             free_vector(work);
         }
-        else
-        {
-            lwork = g_lwork;
-        }
 
         /* create work buffer */
         create_matrix(datatype, &work, lwork, 1);
-        create_vector(datatype, &work_test, lwork);
+        create_vector(datatype, &work_test, n);
 
         /* QR Factorisation on matrix A to generate Q and R */
         invoke_geqrf(datatype, &m, &n, A_test, &lda, T_test, work, &lwork, &info);
@@ -195,8 +198,8 @@ void fla_test_orgqr_experiment(test_params_t *params,
 
         copy_matrix(datatype, "full", m, n, A_test, lda, Q, lda);
 
-        /*invoke orgqr API */
-        prepare_orgqr_run(m, n, Q, lda, T_test, work_test, &lwork, datatype, n_repeats, time_min, &info);
+        /*invoke org2r API */
+        prepare_org2r_run(m, n, Q, lda, T_test, work_test, datatype, n_repeats, time_min, &info);
 
         /* performance computation
            (2/3)*n2*(3m - n) */
@@ -221,12 +224,11 @@ void fla_test_orgqr_experiment(test_params_t *params,
     }
 }
 
-void prepare_orgqr_run(integer m, integer n,
+void prepare_org2r_run(integer m, integer n,
     void* A,
     integer lda,
     void* T,
     void* work,
-    integer *lwork,
     integer datatype,
     integer n_repeats,
     double* time_min_,
@@ -250,8 +252,8 @@ void prepare_orgqr_run(integer m, integer n,
 
         exe_time = fla_test_clock();
 
-        /* Call to  orgqr API */
-        invoke_orgqr(datatype, &m, &n, &n, A, &lda, T, work, lwork, info);
+        /* Call to  org2r API */
+        invoke_org2r(datatype, &m, &n, &n, A, &lda, T, work, info);
 
         exe_time = fla_test_clock() - exe_time;
 
@@ -266,31 +268,32 @@ void prepare_orgqr_run(integer m, integer n,
 }
 
 
-void invoke_orgqr(integer datatype, integer* m, integer* n, integer *min_A, void* a, integer* lda, void* tau, void* work, integer* lwork, integer* info)
+void invoke_org2r(integer datatype, integer* m, integer* n, integer *min_A,
+                  void* a, integer* lda, void* tau, void* work, integer* info)
 {
     switch(datatype)
     {
         case FLOAT:
         {
-            fla_lapack_sorgqr(m, n, n, a, lda, tau, work, lwork, info);
+            fla_lapack_sorg2r(m, n, n, a, lda, tau, work, info);
             break;
         }
 
         case DOUBLE:
         {
-            fla_lapack_dorgqr(m, n, n, a, lda, tau, work, lwork, info);
+            fla_lapack_dorg2r(m, n, n, a, lda, tau, work, info);
             break;
         }
 
         case COMPLEX:
         {
-            fla_lapack_cungqr(m, n, n, a, lda, tau, work, lwork, info);
+            fla_lapack_cung2r(m, n, n, a, lda, tau, work, info);
             break;
         }
 
         case DOUBLE_COMPLEX:
         {
-            fla_lapack_zungqr(m, n, n, a, lda, tau, work, lwork, info);
+            fla_lapack_zung2r(m, n, n, a, lda, tau, work, info);
             break;
         }
     }

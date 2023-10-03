@@ -161,7 +161,9 @@ set(NEGATIVE_TEST_CASES "ggevx sdcz A V V B 10 10 10 10 10 -1 1 --einfo=-1"
             "hgeqz sd S V V 10 2 4 10 10 10 -10 -1 1 --einfo=-17"
             "hgeqz cz S V V 10 2 4 10 10 10 -10 -1 1 --einfo=-16"
             "hgeqz sd S V V 10 2 4 10 10 10 10 1 1 --einfo=-19"
-            "hgeqz cz S V V 10 2 4 10 10 10 10 1 1 --einfo=-18")
+            "hgeqz cz S V V 10 2 4 10 10 10 10 1 1 --einfo=-18"
+            "org2r sdcz 10 -10 10 1 --einfo=-2"
+            "org2r sdcz 10 10 -10 1 --einfo=-5")
 
 set(TEST_NUM 1)
 foreach(neg_test_cases IN LISTS NEGATIVE_TEST_CASES)
