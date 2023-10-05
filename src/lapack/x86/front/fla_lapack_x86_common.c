@@ -114,25 +114,6 @@ int fla_sger(integer *m, integer *n, real *alpha, real *x,
     return 0;
 }
 
-/* LU factorization.
- * To be used only when vectorized code via avx2/avx512 is enabled
- * */
-int fla_dgetrf_small_simd(integer *m, integer *n,
-                          doublereal *a, integer *lda,
-                          integer *ipiv, integer *info)
-{
-    integer fla_dgetrf_small_avx512( integer *m, integer *n, doublereal *a, integer *lda, integer *ipiv, integer *info);
-    if(global_context.is_avx512)
-    {
-        fla_dgetrf_small_avx512(m, n, a, lda, ipiv, info);
-    }
-    else if (global_context.is_avx2)
-    {
-        fla_dgetrf_small_avx2(m, n, a, lda, ipiv, info);
-    }
-    return 0;
-}
-
 /* SVD for small fat-matrices with LQ factorization
  * already computed
  */

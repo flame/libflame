@@ -62,16 +62,20 @@ extern fla_context global_context;                                              
   {                                                                                    \
     FLA_LU_piv_small_d_var0( m, n, buff_A, ldim_A, buff_p, info);                      \
   }                                                                                    \
-  else if((global_context.is_avx512 && *m < FLA_DGETRF_SMALL_AVX512_THRESH0 && *n < FLA_DGETRF_SMALL_AVX512_THRESH0) || \
-     (global_context.is_avx2 && *m < FLA_DGETRF_SMALL_AVX2_THRESH0 && *n < FLA_DGETRF_SMALL_AVX2_THRESH0 )) \
-  {                                                                                    \
-    /* Calling vectorized code when avx2/avx512 supported architecture detected */     \
-    fla_dgetrf_small_simd( m, n, buff_A, ldim_A, buff_p, info );                       \
-  }                                                                                    \
   else                                                                                 \
   {                                                                                    \
-    dgetrf2_( m, n, buff_A, ldim_A, buff_p, info);                                     \
-  }
+    /* Initialize global context data */                                               \
+    aocl_fla_init();                                                                   \  
+    if(global_context.is_avx2 && *m < FLA_DGETRF_SMALL_AVX2_THRESH0 && *n < FLA_DGETRF_SMALL_AVX2_THRESH0) \
+    {                                                                                  \
+        /* Calling vectorized code when avx2 supported architecture detected */        \
+        fla_dgetrf_small_avx2( m, n, buff_A, ldim_A, buff_p, info );                   \
+    }                                                                                  \
+    else                                                                               \
+    {                                                                                  \
+        dgetrf2_( m, n, buff_A, ldim_A, buff_p, info);                                 \
+    }                                                                                  \
+  }                                                                                    \
 
 #ifdef FLA_OPENMP_MULTITHREADING
 
@@ -325,10 +329,8 @@ LAPACK_getrf(d)
     }
     if (fla_error == LAPACK_SUCCESS)
     {
-        /* Initialize global context data */
-        aocl_fla_init();
         LAPACK_getrf_body_d(d)
-             /** fla_error set to 0 on LAPACK_SUCCESS */
+        /* fla_error set to 0 on LAPACK_SUCCESS */
         fla_error = 0;
     }
     AOCL_DTL_TRACE_LOG_EXIT
