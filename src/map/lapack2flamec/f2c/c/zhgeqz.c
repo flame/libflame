@@ -324,6 +324,10 @@ int fla_zhgeqz(char *job, char *compq, char *compz, integer *n, integer *ilo, in
     doublereal d_imag(doublecomplex *);
     void z_div(doublecomplex *, doublecomplex *, doublecomplex *), z_sqrt( doublecomplex *, doublecomplex *), pow_zi(doublecomplex *, doublecomplex *, integer *);
     /* Local variables */
+#ifdef FLA_OPENMP_MULTITHREADING
+    extern /* Function */
+        int fla_thread_get_num_threads();    
+#endif
     doublereal c__;
     integer j;
     doublecomplex s, x, y;
@@ -376,18 +380,12 @@ int fla_zhgeqz(char *job, char *compq, char *compz, integer *n, integer *ilo, in
     int zlaset_(char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *);
     integer istart;
     logical lquery;
+    int num_threads, tid;
 
     /* Initialize global context data */
     aocl_fla_init();
 
 #ifdef FLA_ENABLE_AMD_OPT
-#ifdef FLA_OPENMP_MULTITHREADING
-    int num_threads = tl_context.num_threads;
-    int tid;
-#else
-    int num_threads = 1;
-    int tid = 0;
-#endif
     doublereal c1;
     doublecomplex s1;
     integer max_swps = QZ_MAX_SWEEPS;
@@ -1425,12 +1423,17 @@ L90: /* Do an implicit-shift QZ sweep. */
 
             num_swps++;
         }
+
 #ifdef FLA_OPENMP_MULTITHREADING
+        num_threads = fla_thread_get_num_threads();
+
         num_threads = fla_min(2, num_threads);
         #pragma omp parallel num_threads(num_threads) private(j, i__3, i__4, i__5, tid)
         {
             tid = omp_get_thread_num();
 #else
+    num_threads = 1;
+    tid = 0;
         {
 #endif
             for (j = istart;

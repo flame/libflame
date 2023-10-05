@@ -287,10 +287,6 @@ static fla_pthread_once_t once_finalize = FLA_PTHREAD_ONCE_INIT;
 void aocl_fla_init(void)
 {
     fla_pthread_once(&once_init, fla_context_init);
-
-    // Update the OpenMP information from the runtime, unless FLA_NUM_THREADS
-    // was set or fla_thread_set_num_threads() was called.
-    fla_thread_update_rntm_from_env(&tl_context);
 }
 
 void aocl_fla_finalize(void)
@@ -302,6 +298,10 @@ int fla_thread_get_num_threads(void)
 {
     // We must ensure that global_context and tl_context have been initialized.
     aocl_fla_init();
+
+    // Update the OpenMP information from the runtime, unless FLA_NUM_THREADS
+    // was set or fla_thread_set_num_threads() was called.
+    fla_thread_update_rntm_from_env(&tl_context);
 
     return tl_context.num_threads;
 }

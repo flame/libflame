@@ -244,6 +244,7 @@ int dsytrd_sb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     integer lhmin, sizea, shift, stind, colpt, lwmin, awpos;
     logical wantq, upper;
     integer grsiz, ttype, abdpos;
+    int nthreads;
     extern /* Subroutine */
         int
         dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *),
@@ -253,6 +254,10 @@ int dsytrd_sb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     extern /* Subroutine */
         int
         dsb2st_kernels_(char *, logical *, integer *, integer *, integer *, integer *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *);
+#ifdef FLA_OPENMP_MULTITHREADING
+    extern /* Function */
+        int fla_thread_get_num_threads();
+#endif
     integer thgrnb, indtau, ofdpos;
     logical lquery, afters1;
     integer ceiltmp, sweepid, nbtiles, sizetau, thgrsiz;
@@ -484,10 +489,14 @@ int dsytrd_sb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     i__1 = *kd + 1;
     dlacpy_("A", &i__1, n, &ab[ab_offset], ldab, &work[apos], &lda);
     dlaset_("A", kd, n, &c_b26, &c_b26, &work[awpos], &lda);
+
     /* openMP parallelisation start here */
+    nthreads = 1;
 #ifdef FLA_OPENMP_MULTITHREADING
-#pragma omp parallel private(tid, thgrid, blklastind) private(thed, i__, m, k, st, ed, stt, sweepid, myid, ttype, colpt, stind, edind) \
-    shared(uplo, wantq, indv, indtau, hous, work,                                                                                      \
+     nthreads = fla_thread_get_num_threads();
+#pragma omp parallel num_threads(nthreads) private(tid, thgrid, blklastind) \
+    private(thed, i__, m, k, st, ed, stt, sweepid, myid, ttype, colpt, stind, edind) \
+    shared(uplo, wantq, indv, indtau, hous, work, \
                n, kd, ib, nbtiles, lda, ldv, inda, stepercol, thgrnb, thgrsiz, grsiz, shift)
     {
 #pragma omp master

@@ -256,8 +256,14 @@ int ssytrd_sb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
         int
         slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *),
         slaset_(char *, integer *, integer *, real *, real *, real *, integer *), ssb2st_kernels_(char *, logical *, integer *, integer *, integer *, integer *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *);
+#ifdef FLA_OPENMP_MULTITHREADING
+    extern /* Function */
+        int fla_thread_get_num_threads();
+#endif
     logical lquery, afters1;
     integer ceiltmp, sweepid, nbtiles, sizetau, thgrsiz;
+    int nthreads;
+
     /* -- LAPACK computational routine (version 3.8.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -486,10 +492,14 @@ int ssytrd_sb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
     i__1 = *kd + 1;
     slacpy_("A", &i__1, n, &ab[ab_offset], ldab, &work[apos], &lda);
     slaset_("A", kd, n, &c_b26, &c_b26, &work[awpos], &lda);
+
+    nthreads = 1;
     /* openMP parallelisation start here */
 #ifdef FLA_OPENMP_MULTITHREADING
-#pragma omp parallel private(tid, thgrid, blklastind) private(thed, i__, m, k, st, ed, stt, sweepid, myid, ttype, colpt, stind, edind) \
-    shared(uplo, wantq, indv, indtau, hous, work,                                                                                      \
+    nthreads = fla_thread_get_num_threads();
+#pragma omp parallel num_threads(nthreads) private(tid, thgrid, blklastind) \
+            private(thed, i__, m, k, st, ed, stt, sweepid, myid, ttype, colpt, stind, edind) \
+            shared(uplo, wantq, indv, indtau, hous, work, \
                n, kd, ib, nbtiles, lda, ldv, inda, stepercol, thgrnb, thgrsiz, grsiz, shift)
     {
 #pragma omp master
