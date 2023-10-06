@@ -192,9 +192,9 @@ void fla_test_org2r_experiment(test_params_t *params,
         /* QR Factorisation on matrix A to generate Q and R */
         invoke_geqrf(datatype, &m, &n, A_test, &lda, T_test, work, &lwork, &info);
 
-        create_matrix(datatype, &R, m, n);
-        reset_matrix(datatype, m, n, R, m);
-        copy_matrix(datatype, "Upper", m, n, A_test, lda, R, m);
+        create_matrix(datatype, &R, n, n);
+        reset_matrix(datatype, n, n, R, n);
+        copy_matrix(datatype, "Upper", n, n, A_test, lda, R, n);
 
         copy_matrix(datatype, "full", m, n, A_test, lda, Q, lda);
 
