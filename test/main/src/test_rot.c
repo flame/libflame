@@ -10,6 +10,7 @@ void fla_test_rot_experiment(test_params_t *params, integer  datatype, integer  
 void prepare_rot_run(integer datatype, integer n_A, void* cx, integer incx, void* cy, integer incy, void *c, void *s, 
 integer n_repeats, double* time_min_);
 void invoke_rot(integer datatype, integer *n, void *cx, integer *incx, void *cy,integer *incy, void *c, void *s);
+extern void invoke_lartg(integer datatype, void *f, void *g, void *c, void *s, void *r);
 
 void fla_test_rot(integer argc, char ** argv, test_params_t *params)
 {

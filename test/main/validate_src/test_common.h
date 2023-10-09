@@ -15,6 +15,7 @@
 
 #include "blis.h"
 #include "test_prototype.h"
+#include "validate_common.h"
 
 // global variables
 extern integer i_zero , i_one , i_n_one;

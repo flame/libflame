@@ -61,6 +61,8 @@ FILE* g_ext_fptr = NULL;
             break; \
         } \
 
+int fla_check_cmd_config_dir( int argc, char** argv );
+
 #if AOCL_FLA_SET_PROGRESS_ENABLE == 1
 int aocl_fla_progress(const char* const api,const integer lenapi,const  integer* const progress,const integer* const current_thread,const integer* const total_threads)
 {
