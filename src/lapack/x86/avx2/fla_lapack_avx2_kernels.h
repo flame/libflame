@@ -10,7 +10,7 @@
 #include "FLAME.h"
 #include "fla_dgeqrf_small_avx2.h"
 
-#ifdef FLA_ENABLE_AMD_OPT
+#if FLA_ENABLE_AMD_OPT
 int fla_dhrot3_avx2(integer *n,
                     doublereal *a, integer *lda,
                     doublereal *v, doublereal *tau);
@@ -33,8 +33,8 @@ int fla_sger_avx2(integer *m, integer *n, real *alpha,
                   real *y, integer *incy,
                   real *a, integer *lda);
 int fla_zgetrf_small_avx2(integer *m, integer *n,
-                              dcomplex *a, integer *lda,
-                              integer *ipiv, integer *info);
+                          dcomplex *a, integer *lda,
+                          integer *ipiv, integer *info);
 int fla_zrot_avx2(integer *n, 
                   doublecomplex *cx, integer *incx, 
                   doublecomplex *cy, integer *incy, 
@@ -49,12 +49,23 @@ integer fla_dgetrf_small_avx2(integer *m, integer *n,
                               integer *info);
 void fla_lu_piv_small_d_update_tr_matrix_avx2(integer i_1, integer mi, integer ni,
                                               doublereal* acur, integer lda_t);
-int fla_dgesvd_small6T_avx2(integer *m, integer *n,
-                            doublereal *a, integer *lda,
-                            doublereal *ql, integer *ldql,
-                            doublereal *s,
-                            doublereal *u, integer *ldu,
-                            doublereal *vt, integer *ldvt,
-                            doublereal *work);
+void fla_dgesvd_small6T_avx2(integer *m, integer *n,
+                             doublereal *a, integer *lda,
+                             doublereal *ql, integer *ldql,
+                             doublereal *s,
+                             doublereal *u, integer *ldu,
+                             doublereal *vt, integer *ldvt,
+                             doublereal *work,
+                             integer *info);
+void fla_dgesvd_nn_small10_avx2(integer *m, integer *n,
+                                doublereal *a, integer *lda,
+                                doublereal *s,
+                                doublereal *work,
+                                integer *info);
+void fla_dgesvd_nn_small1T_avx2(integer *m, integer *n,
+                                doublereal *a, integer *lda,
+                                doublereal *s,
+                                doublereal *work,
+                                integer *info);
 #endif
 

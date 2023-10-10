@@ -9,7 +9,7 @@
 #include "FLAME.h"
 #include "fla_lapack_avx2_kernels.h"
 
-#ifdef FLA_ENABLE_AMD_OPT
+#if FLA_ENABLE_AMD_OPT
 
 /* Application of 2x2 Plane Rotation on two vectors */
 int fla_zrot_avx2(integer *n, doublecomplex *cx, integer *incx, doublecomplex *cy, integer *incy, doublereal *c__, doublecomplex *s)

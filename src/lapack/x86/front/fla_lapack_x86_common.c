@@ -10,7 +10,7 @@
 #include "fla_lapack_avx2_kernels.h"
 #include "fla_lapack_avx512_kernels.h"
 
-#ifdef FLA_ENABLE_AMD_OPT
+#if FLA_ENABLE_AMD_OPT
 /* 3x3 Householder Rotation */
 int fla_dhrot3(integer *n,
                doublereal *a, integer *lda,
@@ -114,21 +114,20 @@ int fla_sger(integer *m, integer *n, real *alpha, real *x,
     return 0;
 }
 
-/* SVD for small fat-matrices with LQ factorization
- * already computed
- */
-int fla_dgesvd_small6T(integer *m, integer *n,
-                       doublereal *a, integer *lda,
-                       doublereal *ql, integer *ldql,
-                       doublereal *s,
-                       doublereal *u, integer *ldu,
-                       doublereal *vt, integer *ldvt,
-                       doublereal *work)
+/* LU factorization.
+ * To be used only when vectorized code via avx2/avx512 is enabled
+ * */
+int fla_dgetrf_small_simd(integer *m, integer *n,
+                          doublereal *a, integer *lda,
+                          integer *ipiv, integer *info)
 {
-    if(global_context.is_avx2)
+    if(global_context.is_avx512)
     {
-        fla_dgesvd_small6T_avx2(m, n, a, lda, ql, ldql, s,
-                                u, ldu, vt, ldvt, work);
+        fla_dgetrf_small_avx512(m, n, a, lda, ipiv, info);
+    }
+    else if (global_context.is_avx2)
+    {
+        fla_dgetrf_small_avx2(m, n, a, lda, ipiv, info);
     }
     return 0;
 }
@@ -149,7 +148,42 @@ int fla_zgetrf_small_simd(integer *m, integer *n,
     {
         lapack_zgetf2(m, n, a, lda, ipiv, info);
     }
-
     return 0;
 }
+
+/* SVD for small fat-matrices with LQ factorization
+ * already computed
+ */
+void fla_dgesvd_small6T(integer *m, integer *n,
+                        doublereal *a, integer *lda,
+                        doublereal *ql, integer *ldql,
+                        doublereal *s,
+                        doublereal *u, integer *ldu,
+                        doublereal *vt, integer *ldvt,
+                        doublereal *work,
+                        integer *info)
+{
+    if(global_context.is_avx2)
+    {
+        fla_dgesvd_small6T_avx2(m, n, a, lda, ql, ldql, s,
+                                u, ldu, vt, ldvt, work, info);
+    }
+    return;
+}
+
+/* SVD for small tall-matrices in DGESVD
+ */
+void fla_dgesvd_nn_small10(integer *m, integer *n,
+                           doublereal *a, integer *lda,
+                           doublereal *s,
+                           doublereal *work,
+                           integer *info)
+{
+    if(global_context.is_avx2)
+    {
+        fla_dgesvd_nn_small10_avx2(m, n, a, lda, s, work, info);
+    }
+    return;
+}
+
 #endif

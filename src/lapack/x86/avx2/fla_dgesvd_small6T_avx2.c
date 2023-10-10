@@ -10,7 +10,7 @@
 #include "FLAME.h"
 #include "fla_lapack_avx2_kernels.h"
 
-#ifdef FLA_ENABLE_AMD_OPT
+#if FLA_ENABLE_AMD_OPT
 
 double d_sign(doublereal *, doublereal *);
 
@@ -20,21 +20,21 @@ static integer c__1 = 1;
 /* SVD for small fat-matrices with LQ factorization
  * already computed
  */
-int fla_dgesvd_small6T_avx2(integer *m, integer *n,
-                            doublereal *a, integer *lda,
-                            doublereal *ql, integer *ldql,
-                            doublereal *s,
-                            doublereal *u, integer *ldu,
-                            doublereal *vt, integer *ldvt,
-                            doublereal *work)
+void fla_dgesvd_small6T_avx2(integer *m, integer *n,
+                             doublereal *a, integer *lda,
+                             doublereal *ql, integer *ldql,
+                             doublereal *s,
+                             doublereal *u, integer *ldu,
+                             doublereal *vt, integer *ldvt,
+                             doublereal *work,
+                             integer *info)
 {
     /* Declare and init local variables */
     FLA_GEQRF_INIT_DSMALL();
 
-    integer iu, ie, iwork;
+    integer iu, ie, iwork, min_m_n;
     integer itau, itauq, itaup;
     integer i__1, rlen, knt;
-    integer info;
 
     doublereal *tau, *tauq, *taup;
     doublereal *e, *vtau, *avt;
@@ -66,116 +66,7 @@ int fla_dgesvd_small6T_avx2(integer *m, integer *n,
     taup = &work[itaup - 1];
 
     /* Upper Bidiagonalization */
-    for (i = 1; i <= *m; i++)
-    {
-        slen = *m - i;
-        /* input address */
-        doublereal *iptr;
-        integer has_outliers = 0;
-
-        /* Annihilate elements in current column */
-        iptr = (doublereal *) &a[i + 1 + i * *lda - 1];
-        if (slen == 0)
-        {
-            tauq[i] = 0.;
-            beta = 0.;
-        }
-        else if (slen < 4)
-        {
-            /* Generate elementary reflector to annihilate
-             * elements below diagonal A(i+1:m,i) */
-            FLA_ELEM_REFLECTOR_GENERATE_DSMALL(i, m, m, tauq);
-            /* Apply the reflector on A(i:m,i+1:m) from the left */
-            FLA_ELEM_REFLECTOR_APPLY_DSMALL(i, m, m, tauq);
-        }
-        else
-        {
-            /* Generate elementary reflector to annihilate
-             * elements below diagonal A(i+1:m,i) */
-            FLA_ELEM_REFLECTOR_GENERATE_DLARGE(i, m, m, tauq);
-            /* Apply the reflector on A(i:m,i+1:m) from the left */
-            FLA_ELEM_REFLECTOR_APPLY_DLARGE(i, m, m, tauq);
-        }
-        s[i] = *iptr;
-
-        /* Annihilate elements in current row */
-        beta = 0.;
-        rlen = slen - 1;
-        tau = taup;
-        if (rlen <= 0)
-        {
-            tau[i] = 0.;
-        }
-        else
-        {
-            /* Generate elementary reflector to annihilate
-             * elements A(i,i+2:m) */
-
-            /* Compute norm2 */
-            xnorm = dnrm2_(&rlen, &iptr[2 * *lda], lda);
-            if (xnorm == 0.)
-            {
-                tau[i] = 0.;
-            }
-            else
-            {
-                knt = 0;
-                v = iptr;
-                alpha = v[*lda];
-                d__1 = dlapy2_(&v[*lda], &xnorm);
-                beta = -d_sign(&d__1, &alpha);
-                if (f2c_abs(beta) < safmin)
-                {
-                    for (knt = 0; f2c_abs(beta) < safmin && knt < 20; knt++)
-                    {
-                        i__1 = *n - 1;
-                        dscal_(&i__1, &rsafmin, &v[2 * *lda], lda);
-                        beta *= rsafmin;
-                        alpha *= rsafmin;
-                    }
-                    /* New BETA is at most 1, at least SAFMIN */
-                    i__1 = rlen; // i__1 = *n - 1;
-                    xnorm = dnrm2_(&i__1, &v[2 * *lda], lda);
-                    d__1 = dlapy2_(&alpha, &xnorm);
-                    beta = -d_sign(&d__1, &alpha);
-                }
-                tau[i] = (beta - alpha) / beta;
-                i__1 = rlen; // i__1 = *n - 1;
-                d__1 = 1. / (alpha - beta);
-                dscal_(&i__1, &d__1, &v[2 * *lda], lda);
-                for (j = 1; j <= knt; ++j)
-                {
-                    beta *= safmin;
-                }
-
-                /* Apply the reflector on A(i+1:m,i+1:m) from the right */
-
-                /* for every row ac of A(i+1:m,i+1:m) */
-                ac = iptr;
-                v[*lda] = 1;
-                for (j = 1; j <= slen; j++)
-                {
-                    dtmp = 0;
-                    /* w = (ac .* v) */
-                    for (k = 1; k <= slen; k++)
-                    {
-                        dtmp = dtmp + ac[j + k * *lda] * v[k * *lda];
-                    }
-
-                    /* (ac .* v) * tau */
-                    dtmp = dtmp * tau[i];
-
-                    /* ac = ac - ac * dtmp */
-                    for (k = 1; k <= slen; k++)
-                    {
-                        ac[j + k * *lda] = ac[j + k * *lda] - v[k * *lda] * dtmp;
-                    }
-                }
-                v[*lda] = beta;
-            }
-        }
-        e[i] = iptr[*lda];
-    }
+    FLA_BIDIAGONALIZE_SMALL();
 
     for (i = 1; i <= *m; i++)
         for (j = 1; j <= *n; j++)
@@ -279,7 +170,7 @@ int fla_dgesvd_small6T_avx2(integer *m, integer *n,
                   &vt[1 + *ldvt], ldvt,
                   &u[1 + *ldu], ldu,
                   dum, &c__1,
-                  &work[iwork], &info);
+                  &work[iwork], info);
 
     tau = &work[itau - 1];
     vtau = tau + *m;
@@ -344,6 +235,6 @@ int fla_dgesvd_small6T_avx2(integer *m, integer *n,
         }
     }
 
-    return info;
+    return;
 }
 #endif

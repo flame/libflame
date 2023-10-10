@@ -3,11 +3,13 @@
  #include "FLAME.h"
  #include "FLA_f2c.h" /* Table of constant values */
  #include "fla_lapack_x86_common.h"
- 
+
  static integer c__6 = 6;
  static integer c__0 = 0;
-#ifndef FLA_ENABLE_AMD_OPT
+#if !FLA_ENABLE_AMD_OPT
  static integer c_n1 = -1;
+#else
+ #include "fla_lapack_x86_common.h"
 #endif
  static doublereal c_b57 = 0.;
  static integer c__1 = 1;
@@ -336,7 +338,7 @@
  /* as well as the preferred amount for good performance. */
  /* NB refers to the optimal block size for the immediately */
  /* following subroutine, as returned by ILAENV.) */
-#ifdef FLA_ENABLE_AMD_OPT
+#if FLA_ENABLE_AMD_OPT
  if (*info == 0)
  {
     minwrk = 1;
@@ -2333,6 +2335,14 @@
  /* M .LT. MNTHR */
  /* Path 10 (M at least N, but not much larger) */
  /* Reduce to bidiagonal form without QR decomposition */
+#if FLA_ENABLE_AMD_OPT
+ if ((wntun & wntvn) && (*m < 128) && global_context.is_avx2)
+ {
+     fla_dgesvd_nn_small10(m, n, &a[a_offset], lda, &s[1], &work[1], info);
+ }
+ else
+#endif
+ {
  ie = 1;
  itauq = ie + *n;
  itaup = itauq + *n;
@@ -2413,6 +2423,7 @@
  }
  }
  }
+ }
  else {
  /* A has more columns than rows. If A has sufficiently more */
  /* columns than rows, first reduce using the LQ decomposition (if */
@@ -2431,6 +2442,14 @@
  i__2 = *m - 1;
  i__3 = *m - 1;
  dlaset_("U", &i__2, &i__3, &c_b57, &c_b57, &a[(a_dim1 << 1) + 1], lda);
+#if FLA_ENABLE_AMD_OPT
+ if (!(wntuo & wntuas) && (*m < 128) && global_context.is_avx2)
+ {
+     fla_dgesvd_nn_small10(m, n, &a[a_offset], lda, &s[1], &work[1], info);
+ }
+ else
+#endif
+ {
  ie = 1;
  itauq = ie + *m;
  itaup = itauq + *m;
@@ -2457,6 +2476,7 @@
  /* If left singular vectors desired in U, copy them there */
  if (wntuas) {
  dlacpy_("F", m, m, &a[a_offset], lda, &u[u_offset], ldu);
+ }
  }
  }
  else if (wntvo && wntun) {
@@ -2932,10 +2952,10 @@
  i__2 = *m - 1;
  i__3 = *m - 1;
  dlaset_("U", &i__2, &i__3, &c_b57, &c_b57, &work[iu + ldwrku], &ldwrku);
-#ifdef FLA_ENABLE_AMD_OPT
- if (*n < 128)
+#if FLA_ENABLE_AMD_OPT
+ if (*n < 128 && global_context.is_avx2)
  {
-     fla_dgesvd_small6T(m, n, &work[iu], &ldwrku, &a[a_offset], lda, &s[1], &u[u_offset], ldu, &vt[vt_offset], ldvt, &work[1]);
+     fla_dgesvd_small6T(m, n, &work[iu], &ldwrku, &a[a_offset], lda, &s[1], &u[u_offset], ldu, &vt[vt_offset], ldvt, &work[1], info);
  }
  else
 #endif
@@ -3345,7 +3365,6 @@
  }
  else {
  /* N .LT. MNTHR */
- /* Path 10t(N greater than M, but not much larger) */
  /* Reduce to bidiagonal form without LQ decomposition */
  ie = 1;
  itauq = ie + *m;

@@ -9,7 +9,7 @@
 
 #include "FLAME.h"
 
-#ifdef FLA_ENABLE_AMD_OPT
+#if FLA_ENABLE_AMD_OPT
 int fla_dhrot3(integer *n,
                doublereal *a, integer *lda,
                doublereal *v, doublereal *tau);
@@ -27,14 +27,20 @@ int fla_sscal(integer *n, real *alpha,
 int fla_sger(integer *m, integer *n, real *alpha,
              real *x, integer *incx, real *y, 
              integer *incy, real *a, integer *lda);
-int fla_dgesvd_small6T(integer *m, integer *n,
-                       doublereal *a, integer *lda,
-                       doublereal *ql, integer *ldql,
-                       doublereal *s,
-                       doublereal *u, integer *ldu,
-                       doublereal *vt, integer *ldvt,
-                       doublereal *work);
 int fla_zgetrf_small_simd(integer *m, integer *n,
                      dcomplex *a, integer *lda,
                      integer *ipiv, integer *info);
+void fla_dgesvd_small6T(integer *m, integer *n,
+                        doublereal *a, integer *lda,
+                        doublereal *ql, integer *ldql,
+                        doublereal *s,
+                        doublereal *u, integer *ldu,
+                        doublereal *vt, integer *ldvt,
+                        doublereal *work,
+                        integer *info);
+void fla_dgesvd_nn_small10(integer *m, integer *n,
+                           doublereal *a, integer *lda,
+                           doublereal *s,
+                           doublereal *work,
+                           integer *info);
 #endif

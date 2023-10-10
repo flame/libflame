@@ -9,7 +9,7 @@
 #include "FLAME.h"
 #include "fla_lapack_avx2_kernels.h"
 
-#ifdef FLA_ENABLE_AMD_OPT
+#if FLA_ENABLE_AMD_OPT
 
 static integer c__1 = 1;
 /* QR for small sizes */
@@ -19,6 +19,8 @@ int fla_dgeqrf_small_avx2(integer *m, integer *n,
 {
     /* Declare and init local variables */
     FLA_GEQRF_INIT_DSMALL();
+
+    integer min_m_n;
 
     /* Adjust pointers */
     a -= (1 + *lda * 1);
