@@ -135,6 +135,7 @@ option (ENABLE_SET_LIB_VERSION "Set library version" OFF)
 option (ENABLE_BLAS_EXT_GEMMT "Enable BLAS GEMMT Usage" ON)
 set(ENABLE_AOCL_DTL OFF CACHE STRING "Enable DTL Usage. USE with Option ALL to Enable both Trace and Log, TRACE to enable Trace, and LOG to ENABLE only Input Logging ")
 set_property(CACHE ENABLE_AOCL_DTL PROPERTY STRINGS TRACE_AND_LOG TRACE LOG OFF )
+option (ENABLE_EMBED_AOCLUTILS "Enables embedding aocl-utils library in AOCL-LAPACK" OFF)
 
 message(STATUS "CMAKE_BUILD_TYPE : ${CMAKE_BUILD_TYPE}")
 if(WIN32)
@@ -985,17 +986,19 @@ endif ()
 	target_include_directories(${PROJECT_NAME} PUBLIC src/lapack/x86/avx512)
 	target_include_directories(${PROJECT_NAME} PUBLIC src/lapack/x86/front)
 
-#AOCLUtils library path handling
-#If user has provided the library path, use it. 
-if(LIBAOCLUTILS_LIBRARY_PATH AND LIBAOCLUTILS_INCLUDE_PATH)
+#If embedding AOCL-UTILS library in AOCL-LAPACK option is selected  
+if(ENABLE_EMBED_AOCLUTILS)
+  #AOCLUtils library path handling
+  #If user has provided the library path, use it. 
+  if(LIBAOCLUTILS_LIBRARY_PATH AND LIBAOCLUTILS_INCLUDE_PATH)
 
 	message(STATUS "User provided AOCLUtils library path : " ${LIBAOCLUTILS_LIBRARY_PATH})
 	message(STATUS "User provided AOCLUtils library headers path : " ${LIBAOCLUTILS_INCLUDE_PATH})
 	
 	target_include_directories(${PROJECT_NAME} PUBLIC ${LIBAOCLUTILS_INCLUDE_PATH})	
 
-else(LIBAOCLUTILS_LIBRARY_PATH AND LIBAOCLUTILS_INCLUDE_PATH)
-	#Else build from source
+  else(LIBAOCLUTILS_LIBRARY_PATH AND LIBAOCLUTILS_INCLUDE_PATH)
+	#Else build from source if EMBED_AOCLUTILS is selected
 	message(STATUS "LIBAOCLUTILS_LIBRARY_PATH and LIBAOCLUTILS_INCLUDE_PATH flags not provded")
 
 	set(LIBAOCLUTILS_SOURCE_DIR "${CMAKE_CURRENT_BINARY_DIR}/${LIBAOCLUTILS_PROJECT}-prefix/src/${LIBAOCLUTILS_PROJECT}")
@@ -1039,13 +1042,13 @@ else(LIBAOCLUTILS_LIBRARY_PATH AND LIBAOCLUTILS_INCLUDE_PATH)
 	set(LIBAOCLUTILS_LIBRARY_PATH ${LIBAOCLUTILS_INSTALL_DIR}/lib/${LIBAOCLUTILS_STATICLIB})
 	target_include_directories(${PROJECT_NAME} PUBLIC ${LIBAOCLUTILS_SOURCE_DIR}/include)	
 
-endif()
+  endif()
 
-#For libflame shared library, Link directly with libaoclutils library 
-#For libflame static library, merge libaoclutils and libflame binaries into a single static library
-if(BUILD_SHARED_LIBS)
+  #For libflame shared library, Link directly with libaoclutils library 
+  #For libflame static library, merge libaoclutils and libflame binaries into a single static library
+  if(BUILD_SHARED_LIBS)
 	target_link_libraries(${PROJECT_NAME} ${LIBAOCLUTILS_LIBRARY_PATH})
-else ()
+  else ()
 	if(UNIX)
 		#Merge libflame and libaoclutils libraries in post build step using archive command
 		add_custom_command(TARGET ${PROJECT_NAME}
@@ -1065,12 +1068,31 @@ else ()
 				COMMENT "Merging libflame and libaoclutils libraries"
 				)
 	endif ()
-endif()
+  endif()
 
-if(UNIX)
+  if(UNIX)
 	#Linking with libstdc++ library is needed for libaoclutils library dependency
 	target_link_libraries(${PROJECT_NAME} "libstdc++.so")
-endif ()
+  endif ()
+
+elseif(WIN32 AND BUILD_SHARED_LIBS) 
+	if(LIBAOCLUTILS_LIBRARY_PATH AND LIBAOCLUTILS_INCLUDE_PATH)
+		target_include_directories(${PROJECT_NAME} PUBLIC ${LIBAOCLUTILS_INCLUDE_PATH})	
+		target_link_libraries(${PROJECT_NAME} ${LIBAOCLUTILS_LIBRARY_PATH})
+	else()
+		message(FATAL_ERROR "Windows Shared Library build requires AOCL-Utils library and header path to be set! Please set the same using LIBAOCLUTILS_LIBRARY_PATH and LIBAOCLUTILS_INCLUDE_PATH options respectively")
+
+	endif()
+
+elseif(LIBAOCLUTILS_INCLUDE_PATH)
+
+	message(STATUS "User provided AOCLUtils library headers path : " ${LIBAOCLUTILS_INCLUDE_PATH})
+	
+	target_include_directories(${PROJECT_NAME} PUBLIC ${LIBAOCLUTILS_INCLUDE_PATH})	
+
+else()
+	message(FATAL_ERROR "Header file path of aocl-utils library not set! Please set the same using LIBAOCLUTILS_INCLUDE_PATH option")
+endif()
 
 # TODO : enable this flag to build source supplied blas library
 # link externally built blas library
@@ -1095,14 +1117,26 @@ ${CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH}/${EXT_BLAS_LIBNAME} \
 Does not exist.\n Please check the path again")
 	else()
 		add_library(blas SHARED IMPORTED)
+		add_library(aoclutils SHARED IMPORTED)
+		if(NOT ENABLE_EMBED_AOCLUTILS AND NOT EXISTS ${LIBAOCLUTILS_LIBRARY_PATH})
+			message(FATAL_ERROR "aocl-utils library path not set! Please set the same using LIBAOCLUTILS_LIBRARY_PATH option")
+		endif()
 		if(UNIX)
 			set_target_properties(blas PROPERTIES
 			IMPORTED_LOCATION ${CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH}/${EXT_BLAS_LIBNAME}
 			POSITION_INDEPENDENT_CODE ON
 			)
+			set_target_properties(aoclutils PROPERTIES
+			IMPORTED_LOCATION ${LIBAOCLUTILS_LIBRARY_PATH}
+			POSITION_INDEPENDENT_CODE ON
+			)
 		elseif(WIN32)
 			set_target_properties(blas PROPERTIES
 			IMPORTED_IMPLIB ${CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH}/${EXT_BLAS_LIBNAME}
+			POSITION_INDEPENDENT_CODE ON
+			)
+			set_target_properties(aoclutils PROPERTIES
+			IMPORTED_IMPLIB ${LIBAOCLUTILS_LIBRARY_PATH}
 			POSITION_INDEPENDENT_CODE ON
 			)
 		endif()

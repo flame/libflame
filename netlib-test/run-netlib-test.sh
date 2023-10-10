@@ -7,6 +7,8 @@ BLAS_LIB=libblis-mt.a
 BLAS_LIB_PATH= 
 LAPACK_LIB=libflame.a
 LAPACK_LIB_PATH=
+AOCLUTILS_LIB_PATH=
+AOCLUTILS_LIB=libaoclutils.a
 DTL_LIB=libaocldtl.a
 DTL_LIB_PATH=
 ILP64=0
@@ -24,6 +26,7 @@ do
          LAPACK_LIB)         LAPACK_LIB=${DATA} ;;     
          BLAS_LIB_PATH)      BLAS_LIB_PATH=${DATA} ;;
          LAPACK_LIB_PATH)    LAPACK_LIB_PATH=${DATA} ;; 
+         AOCLUTILS_LIB_PATH) AOCLUTILS_LIB_PATH=${DATA} ;; 
          DTL_LIB_PATH)       DTL_LIB_PATH=${DATA} ;; 
          DTL_LIB)            DTL_LIB=${DATA} ;;
          LAPACK_TEST_DIR)    LAPACK_TEST_DIR=${DATA} ;;     
@@ -39,13 +42,14 @@ echo "BLAS_LIB_PATH = $BLAS_LIB_PATH"
 echo "BLAS_LIB = $BLAS_LIB"
 echo "LAPACK_LIB_PATH = $LAPACK_LIB_PATH"
 echo "LAPACK_LIB = $LAPACK_LIB"
+echo "AOCLUTILS_LIB_PATH = $AOCLUTILS_LIB_PATH"
 echo "LAPACK_TEST_DIR = $LAPACK_TEST_DIR"
 echo
 echo
 echo "**********************************"
 echo
 
-if [[ $BLAS_LIB_PATH  == "" || $LAPACK_LIB_PATH == "" ]]
+if [[ $BLAS_LIB_PATH  == "" || $LAPACK_LIB_PATH == "" || $AOCLUTILS_LIB_PATH == "" ]]
 then
 	echo "Error in calling script"
         echo "----------------------------------"
@@ -53,12 +57,12 @@ then
 	echo "Usage :"
 	echo
 	echo "$ sh run-netlib-test.sh BLAS_LIB_PATH=<blas library path> LAPACK_LIB_PATH=<lapack library path> "
-	echo "     [BLAS_LIB=<blas library] [LAPACK_LIB=<lapack library>] [ILP64=<0/1>] "
-	echo "     [LAPACK_TEST_DIR=<netlib lapack test directory name>]"
+	echo "     AOCLUTILS_LIB_PATH=<aocl-utils library path> [BLAS_LIB=<blas library] [LAPACK_LIB=<lapack library>] "
+	echo "     [ILP64=<0/1>] [LAPACK_TEST_DIR=<netlib lapack test directory name>]"
 	echo "     [GCOV=<0/1>]"
 	echo "[] indicates optional argument"
 	echo 
-	echo "Example: $ sh run-netlib-test.sh BLAS_LIB_PATH=\"/home/user/blis/lib\" LAPACK_LIB_PATH=\"/home/user/libflame/lib\" BLAS_LIB=\"libblis.a\" LAPACK_LIB=\"libflame.a\""
+	echo "Example: $ sh run-netlib-test.sh BLAS_LIB_PATH=\"/home/user/blis/install/lib\" LAPACK_LIB_PATH=\"/home/user/libflame/install/lib\" AOCLUTILS_LIB_PATH=\"/home/user/aoclutils/install/lib\" BLAS_LIB=\"libblis.a\" LAPACK_LIB=\"libflame.a\""
   	echo
   	echo "BLAS_LIB : blas library to use. Default=libblist-mt.a"
 	echo "LAPACK_LIB : lapac library to use. Default=libflame.a"
@@ -67,6 +71,7 @@ then
 	echo "ILP64 : LP64 or ILP64 mode. Default=0(Use LP64)"
 	echo "BLAS_LIB_PATH : path of blas library chosen in BLAS_LIB"
 	echo "LAPACK_LIB_PATH : path to lapack library chosen in LAPACK_LIB"
+	echo "AOCLUTILS_LIB_PATH : path to aocl-utils library"
   	echo "DTL_LIB_PATH : path to DTL library chosen in DTL_LIB (if DTL is enabled)"
 	echo "LAPACK_TEST_DIR : netlib lapack test directory name. Default=lapack-3.10.0"
 	echo "GCOV : Enable(1) or disable(0) Code Coverage. Only Enable if Code Coverage is enabled on the library. Default=0"
@@ -107,7 +112,7 @@ fi
 ulimit -s unlimited
 
 FORTRAN_FLAGS="gfortran -fopenmp"
-TESTLAPACKLIB="$PWD/liblapack.a"
+TESTLAPACKLIB="$PWD/liblapack.a $AOCLUTILS_LIB_PATH/$AOCLUTILS_LIB"
 
 if [[ $ILP64 =~ ("1"|"ON") ]]
 then

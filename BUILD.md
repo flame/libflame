@@ -51,25 +51,43 @@ The path specified in AOCL_ROOT must have "include" directory and a "lib" direct
 
 Linking with AOCL Utilities library
 ------------------------------------
-AOCL-LAPACK requires AOCL Utilities library "libaoclutils" for certain functions including CPU architecture detection at runtime. The libflame CMake build system, by default, automatically links with libaoclutils library by downloading the source of libaoclutils from AMD GitHub, compiling it and linking/merging with libflame library. However, user can provide an external path for libaoclutils binary and header files via separate flags, 'LIBAOCLUTILS_LIBRARY_PATH' and 'LIBAOCLUTILS_INCLUDE_PATH' respectively. In this scenario, CMake will use the user provided library and does not download libaoclutils source. Following is a sample command for the same
+AOCL-LAPACK depends on AOCL Utilities library, AOCL-Utils for certain functions including CPU architecture detection at runtime. The default build of AOCL-LAPACK requires path to AOCL-Utils header files to be set as follows  
+
+- For CMake based build, ensure header file path of AOCL-Utils is  set using LIBAOCLUTILS_INCLUDE_PATH option.
+  $ cmake ../ -DENABLE_AMD_FLAGS=ON -DLIBAOCLUTILS_INCLUDE_PATH=<path/to/libaoclutils/header/files>
+
+- For autoconfigure makefile based build, ensure header file path of  AOCL-Utils is set in CFLAGS before running make command.
+  $ export CFLAGS="-I<path to libaoclutils include directory>"
+  $ configure --enable-amd-flags 
+  $ make -j
+
+In the default build mode, applications using AOCL-LAPACK must link with AOCL-Utils explicitly.
  
-$ cmake ../ -DENABLE_AMD_FLAGS=ON -DCMAKE_INSTALL_PREFIX=<path> -DLIBAOCLUTILS_LIBRARY_PATH=<path/to/libaoclutils/library> -DLIBAOCLUTILS_INCLUDE_PATH=<path/to/libaoclutils/header/files>
+User has an option to merge the AOCL-Utils library with AOCL-LAPACK library. This can be done using "ENABLE_EMBED_AOCLUTILS" option for both CMake and autoconfigure tools build mode. With this option, AOCL-LAPACK can automatically link with libaoclutils library by downloading the source of libaoclutils from AMD GitHub, compiling it and linking/merging with AOCL-LAPACK library. Following is sample command
+CMake Build:  $ cmake ../ -DENABLE_AMD_FLAGS=ON -DENABLE_EMBED_AOCLUTILS=ON
+Autoconfigure :   $ configure --enable-amd-flags
+                  $ make ENABLE_EMBED_AOCLUTILS=1 -j
+
+With embed AOCL-Utils build, if user provides an external path for libaoclutils binary and header files via separate flags, 'LIBAOCLUTILS_LIBRARY_PATH' and 'LIBAOCLUTILS_INCLUDE_PATH' respectively, user provided library is used instead of downloading from GitHub. Following is a sample command for the same
+CMake Build:  $ cmake ../ -DENABLE_AMD_FLAGS=ON -DENABLE_EMBED_AOCLUTILS=ON DLIBAOCLUTILS_LIBRARY_PATH=<path/to/libaoclutils/library> -DLIBAOCLUTILS_INCLUDE_PATH=<path/to/libaoclutils/header/files>
+Autoconfigure :   $ configure --enable-amd-flags
+                  $ make ENABLE_EMBED_AOCLUTILS=1 LIBAOCLUTILS_LIBRARY_PATH=<path/to/libaoclutils/library> LIBAOCLUTILS_INCLUDE_PATH=<path/to/libaoclutils/header/files> -j
 
 
 ## 2. Building main Test and AOCL_FLA_PROGRESS Test Suite
-    In order to build tests an an additional flag can be set to ON
+In order to build tests an additional flag, BUILD_TEST, must be set ON
         -DBUILD_TEST=ON -DCMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH=/path/to/blas/library -DEXT_BLAS_LIBNAME=blas_lib_name
         -DBLAS_HEADER_PATH="<path to BLIS header file blis.h>"
     
-    This will enable aocl progress feature tests, main test suite. It will generate test_libFLAME_aocl , test_lapack.x executables in the respective directories.
-    Note: Building tests require path to an external blas library. Refer to Readme in respective test suite directory for more details
-    Recomended to use blis sharedlib with libflame sharedlib
+This will enable aocl progress feature tests and main test suite. It will generate test_libFLAME_aocl , test_lapack.x executables in the respective directories.
+Note: Building tests require path to an external blas library. Refer to Readme in respective test suite directory for more details
+Recomended to use AOCL-BLAS sharedlib with AOCL-LAPACK sharedlib
 
 ## 3 Building Legacy test and Netlib test
     # 1. To build Legacy test suite use 
      -DBUILD_LEGACY_TEST=ON -DCMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH=/path/to/blas/library -DEXT_BLAS_LIBNAME=blas_lib_name
     -DBLAS_HEADER_PATH="<path to BLIS header file blis.h>" 
-    Note: On Windows, to build and run legacy test suite, a separate macro flag is enabled during libflame library build because of certain constraints in legacy test suite.
+    Note: On Windows, to build and run legacy test suite, a separate macro flag is enabled during AOCL-LAPACK library build because of certain constraints in legacy test suite.
     # 2. To Build Netlib-test add -DBUILD_NETLIB_TEST=ON along with cmake commands.
         note: Windows requires running create_new_testdir.bat script before running netlib test
 
@@ -89,7 +107,7 @@ $ cmake ../ -DENABLE_AMD_FLAGS=ON -DCMAKE_INSTALL_PREFIX=<path> -DLIBAOCLUTILS_L
 ## 5. Using an external Lapack library to run tests
     In order to run tests on an external lapack library an additional option 
     -DEXT_LAPACK_LIBRARY_PATH="path/to/external/lapack/library" and -DEXT_LAPACK_LIBNAME="NAME_OF_THE_LAPACK_LIB" can be passed. 
-    if the above options are left blank libflame library will be used
+    if the above options are left blank AOCL-LAPACK library will be used
 
 ## 6. Linking with an external openmp library
     In Order to link with an external openmp library user can pass 
@@ -128,6 +146,6 @@ $ cmake ../ -DENABLE_AMD_FLAGS=ON -DCMAKE_INSTALL_PREFIX=<path> -DLIBAOCLUTILS_L
         bash generate_code_coverage_html.sh. 
     It will give you a prompt to view the code coverage of that particular application.
 
-## 9. Installing LibFlame library
-    Use the following command to install the libflame library
+## 9. Installing AOCL-LAPACK library
+    Use the following command to install the AOCL-LAPACK library
         make DESTDIR=<Install Path> install.

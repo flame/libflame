@@ -28,6 +28,11 @@ LIBBLAS           :=
 BLAS_HEADER_PATH  :=
 
 #
+# ----- AOCL-Utils library path
+#
+LIBAOCLUTILS_LIBRARY_PATH := 
+
+#
 # --- Uncomment the four lines below and set MKLROOT & LDFLAGS -----------------
 #     appropriately to link to MKL libs
 #
@@ -112,7 +117,7 @@ $(TEST_OBJ_PATH)/%.o: $(TEST_SRC_PATH)/%.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
 test_$(FNAME): $(TEST_VALIDATE_OBJS) $(TEST_OBJS)
-	$(LINKER) $(TEST_VALIDATE_OBJS) $(TEST_OBJS) $(LIBFLAME) $(LIBBLAS) \
+	$(LINKER) $(TEST_VALIDATE_OBJS) $(TEST_OBJS) $(LIBFLAME) $(LIBBLAS) $(LIBAOCLUTILS_LIBRARY_PATH) \
 	$(LDFLAGS) -o $(TEST_BIN)
 
 clean:

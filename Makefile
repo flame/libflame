@@ -390,8 +390,10 @@ INCLUDE_PATHS   += $(strip $(patsubst %, -I%, $(L2F_HEADER_DIR_PATHS)))
 endif
 
 INCLUDE_PATHS += $(strip $(patsubst %, -I%, $(LAPACKE_HEADERS_DIR)))
+ifeq ($(ENABLE_EMBED_AOCLUTILS),1)
 ifeq ($(strip $(LIBAOCLUTILS_LIBRARY_PATH)),)
 INCLUDE_PATHS += "-I$(LIBAOCLUTILS_DIR)/$(LIBAOCLUTILS_REPO)/include"
+endif
 endif
 
 $(info MK_EXC_HEADER_PATHS is $(MK_EXC_HEADER_PATHS))
@@ -483,6 +485,7 @@ MK_ALL_FLAMEC_OBJS        := $(MK_FLABLAS_F2C_OBJS) \
                              $(MK_ALL_FLAMEC_OBJS)
 endif
 
+ifeq ($(ENABLE_EMBED_AOCLUTILS),1)
 ifeq ($(strip $(LIBAOCLUTILS_LIBRARY_PATH)),)
 LIBAOCLUTILS_OBJS         := 
 else
@@ -492,6 +495,7 @@ LIBAOCLUTILS_OBJS         := $(shell mkdir -p $(LIBAOCLUTILS_OBJ_DIR); \
                                 cd ..)
 MK_ALL_FLAMEC_OBJS        := $(LIBAOCLUTILS_OBJS) \
                              $(MK_ALL_FLAMEC_OBJS)
+endif
 endif
 
 ### Kyungjoo 2015.10.21
@@ -504,8 +508,10 @@ AR_CHUNK_SIZE=1024
 
 # --- Primary targets ---
 
+ifeq ($(ENABLE_EMBED_AOCLUTILS),1)
 ifeq ($(strip $(LIBAOCLUTILS_LIBRARY_PATH)),)
 all: aoclutillib libs
+endif
 else
 all: libs
 endif
@@ -665,7 +671,11 @@ ifeq ($(OS_NAME),Darwin)
 #	$(CAT) $(AR_OBJ_LIST_FILE) >> $(AR_ARG_LIST_FILE)
 #	$(AR) @$(AR_ARG_LIST_FILE)
 else
+ifeq ($(ENABLE_EMBED_AOCLUTILS),1)
 	$(file > $@.in,$^ $(shell ls $(LIBAOCLUTILS_OBJ_DIR)/*.o))
+else
+	$(file > $@.in,$^)
+endif
 	$(AR) $(ARFLAGS) $@ @$@.in
 	$(RM_F) $@.in
 endif 
@@ -688,7 +698,11 @@ ifeq ($(OS_NAME),Darwin)
 #	@$(CAT) $(AR_OBJ_LIST_FILE) >> $(AR_ARG_LIST_FILE)
 #	@$(AR) @$(AR_ARG_LIST_FILE)
 else
+ifeq ($(ENABLE_EMBED_AOCLUTILS),1)
 	@$(file > $@.in,$^ $(shell ls $(LIBAOCLUTILS_OBJ_DIR)/*.o))
+else	
+	@$(file > $@.in,$^)
+endif
 	@$(AR) $(ARFLAGS) $@ @$@.in
 	@$(RM_F) $@.in
 endif
@@ -712,7 +726,11 @@ ifeq ($(OS_NAME),Darwin)
 	$(CAT) $(AR_OBJ_LIST_FILE) | xargs -n$(AR_CHUNK_SIZE) $(AR) $(ARFLAGS) $(LIBFLAME_A)
 	$(LINKER) $(SOFLAGS) -o $@ -Wl,-force_load,$(LIBFLAME_A) $(LDFLAGS)
 else
+ifeq ($(ENABLE_EMBED_AOCLUTILS),1)
 	$(file > $@.in,$^ $(shell ls $(LIBAOCLUTILS_OBJ_DIR)/*.o))
+else
+	@$(file > $@.in,$^)
+endif
 	$(LINKER) $(SOFLAGS) -o $(LIBFLAME_SO_OUTPUT_NAME) @$@.in $(LDFLAGS)
 	$(RM_F) $@.in
 endif
@@ -728,7 +746,11 @@ ifeq ($(OS_NAME),Darwin)
 	@$(CAT) $(AR_OBJ_LIST_FILE) | xargs -n$(AR_CHUNK_SIZE) $(AR) $(ARFLAGS) $(LIBFLAME_A)
 	@$(LINKER) $(SOFLAGS) -o $@ -Wl,-force_load,$(LIBFLAME_A) $(LDFLAGS)
 else
+ifeq ($(ENABLE_EMBED_AOCLUTILS),1)
 	@$(file > $@.in,$^ $(shell ls $(LIBAOCLUTILS_OBJ_DIR)/*.o))
+else
+	@$(file > $@.in,$^)
+endif
 	@$(LINKER) $(SOFLAGS) -o $(LIBFLAME_SO_OUTPUT_NAME) @$@.in $(LDFLAGS)
 	@$(RM_F) $@.in
 endif
@@ -974,8 +996,10 @@ ifeq ($(ENABLE_VERBOSE),yes)
 	- $(RM_F) $(AOCLDTL_obj_PATH)
 	- $(RM_F) $(AOCLDTL_gch_PATH)
 	- $(RM_F) $(BASE_LIB_PATH)/*
+ifeq ($(ENABLE_EMBED_AOCLUTILS),1)
 	- $(RM_F) -r $(LIBAOCLUTILS_DIR)
 	- $(RM_F) -r $(LIBAOCLUTILS_OBJ_DIR)
+endif
 else
 	@echo "Removing object files from $(BASE_OBJ_PATH)"
 	@$(FIND) $(BASE_OBJ_PATH) -name "*.o" | $(XARGS) $(RM_F)
@@ -987,8 +1011,10 @@ else
 	@$(RM_F) $(AOCLDTL_obj_PATH)
 	@$(RM_F) $(AOCLDTL_gch_PATH)
 	@$(RM_F) $(BASE_LIB_PATH)/*
+ifeq ($(ENABLE_EMBED_AOCLUTILS),1)
 	@$(RM_F) -r $(LIBAOCLUTILS_DIR)
 	@$(RM_F) -r $(LIBAOCLUTILS_OBJ_DIR)
+endif
 endif
 endif
 
