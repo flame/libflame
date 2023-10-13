@@ -171,11 +171,15 @@ void fla_test_rot_experiment(test_params_t *params,
     copy_vector(datatype, 1 + (n - 1)*abs(incx), cx, i_one, cx_test, i_one);
     copy_vector(datatype, 1 + (n - 1)*abs(incy), cy, i_one, cy_test, i_one);
     /* call to API */
-    prepare_rot_run(datatype, n, cx, incx, cy, incy, c, s, n_repeats, &time_min); 
+    prepare_rot_run(datatype, n, cx, incx, cy, incy, c, s, n_repeats, &time_min);
 
     /* execution time */
     *t = time_min;
-
+    if(time_min == d_zero)
+    {
+        time_min = 1e-9;
+        *t = time_min;
+    }
     /* Compute the performance of the best experiment repeat */
     /* 4*n */
     *perf = (double)(4.0 * n ) / time_min / FLOPS_PER_UNIT_PERF;

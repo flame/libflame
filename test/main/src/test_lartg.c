@@ -16,13 +16,43 @@ void fla_test_lartg(integer argc, char ** argv, test_params_t *params)
     char* op_str = "Auxilary routines";
     char* front_str = "LARTG";
     integer tests_not_run = 1, invalid_dtype = 0, einfo = 0;
+    integer i, num_types;
+    integer datatype, n_repeats;
+    double perf, time_min, residual;
+    char stype, type_flag[4] = {0};
+    char *endptr;
 
     if(argc == 1)
     {
         fla_test_output_info("--- %s ---\n", op_str);
         fla_test_output_info("\n");
-        fla_test_op_driver(front_str, SQUARE_INPUT, params, AUX, fla_test_lartg_experiment);
-        tests_not_run = 0;
+        num_types = params->aux_paramslist[0].num_data_types;
+        n_repeats = params->aux_paramslist[0].num_repeats;
+
+        if (n_repeats > 0)
+        {
+            /* Loop over the requested datatypes. */
+            for ( i = 0; i < num_types; ++i )
+            {
+                datatype = params->datatype[i];
+                stype    = params->datatype_char[i];
+
+                /* Call the test code */
+                fla_test_lartg_experiment(params, datatype,
+                                          2, i_one,
+                                          0,
+                                          n_repeats, einfo,
+                                          &perf, &time_min, &residual);
+                /* Print the results */
+                fla_test_print_status(front_str,
+                                     stype,
+                                     RECT_INPUT,
+                                     2, i_one,
+                                     residual, params->aux_paramslist[0].aux_threshold,
+                                     time_min, perf);
+                tests_not_run = 0;
+            }
+        }
     }
     if (argc == 5)
     {
@@ -32,12 +62,6 @@ void fla_test_lartg(integer argc, char ** argv, test_params_t *params)
     if (argc >= 4 && argc <= 5)
     {
         /* Test with parameters from commandline */
-        integer i, num_types;
-        integer datatype, n_repeats;
-        double perf, time_min, residual;
-        char stype, type_flag[4] = {0};
-        char *endptr;
-
         /* Parse the arguments */
         num_types = strlen(argv[2]);
         
@@ -66,15 +90,15 @@ void fla_test_lartg(integer argc, char ** argv, test_params_t *params)
 
                 /* Call the test code */
                 fla_test_lartg_experiment(params, datatype,
-                                          i_one, i_one,
+                                          2, i_one,
                                           0,
                                           n_repeats, einfo,
                                           &perf, &time_min, &residual);
                 /* Print the results */
                 fla_test_print_status(front_str,
                                       stype,
-                                      SQUARE_INPUT,
-                                      i_one, i_one,
+                                      RECT_INPUT,
+                                      2, i_one,
                                       residual, params->aux_paramslist[0].aux_threshold,
                                       time_min, perf);
                 tests_not_run = 0;
@@ -139,12 +163,18 @@ void fla_test_lartg_experiment(test_params_t *params,
         rand_vector(datatype, g, 1, 1);
     } 
     /* call to API */
-    prepare_lartg_run(datatype, f, g, r, c, s, n_repeats, &time_min); 
+    prepare_lartg_run(datatype, f, g, r, c, s, n_repeats, &time_min);
 
     /* execution time */
     *t = time_min;
+    if(time_min == d_zero)
+    {
+        time_min = 1e-9;
+        *t = time_min;
+    }
     /* Compute the performance of the best experiment repeat */
     *perf = (double)(6.0) / time_min / FLOPS_PER_UNIT_PERF;
+    
     /* output validation */
     validate_lartg(datatype, f, g, r, c, s, residual);
 

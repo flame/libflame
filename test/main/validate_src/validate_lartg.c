@@ -153,6 +153,7 @@ void validate_lartg(integer datatype, void *f, void *g, void *r, void *c, void *
             /*r-f*/
             zaxpy_(&i_one, &z_n_one, f, &i_one, r, &i_one);
             zaxpy_(&i_one, &z_n_one, g, &i_one, out_zero, &i_one);
+            norm_f = dznrm2_(&i_one, r, &i_one);
             resid2 = (norm_f/ norm_r/ eps);
 
             *residual = (double)fla_max(resid1, resid2);

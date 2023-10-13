@@ -2399,22 +2399,22 @@ void fla_test_get_time_unit(char * scale , double * time)
         return ;
     }
 
-    if ((*time < 1) && (*time > 0.001))
+    if ((*time < 1) && (*time >= 0.001))
     {
         scale[0]='m';
         *time *= 1000;
     }
-    else if ((*time <0.001) && (*time > 0.000001))
+    else if ((*time <0.001) && (*time >= 0.000001))
     {
         scale[0]='u';
         *time *= 1000000;
     }
-    else if ((*time < 0.000001) && (*time > 0.000000001))
+    else if ((*time < 0.000001) && (*time >= 0.000000001))
     {
         scale[0]='n';
         *time *= 1000000000;
     }
-    else if ((*time < 0.000000001) && (*time > 0.000000000001))
+    else if ((*time < 0.000000001) && (*time >= 0.000000000001))
     {
         scale[0]='p';
         *time *= 1000000000000;
