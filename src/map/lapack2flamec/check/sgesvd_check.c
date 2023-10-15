@@ -41,16 +41,16 @@ int sgesvd_check(char *jobu, char *jobvt, integer *m, integer *n, float *a, inte
     /* Function Body */
     *info = 0;
     minmn = fla_min(*m,*n);
-    wntua = lsame_(jobu, "A");
-    wntus = lsame_(jobu, "S");
+    wntua = lsame_(jobu, "A", 1, 1);
+    wntus = lsame_(jobu, "S", 1, 1);
     wntuas = wntua || wntus;
-    wntuo = lsame_(jobu, "O");
-    wntun = lsame_(jobu, "N");
-    wntva = lsame_(jobvt, "A");
-    wntvs = lsame_(jobvt, "S");
+    wntuo = lsame_(jobu, "O", 1, 1);
+    wntun = lsame_(jobu, "N", 1, 1);
+    wntva = lsame_(jobvt, "A", 1, 1);
+    wntvs = lsame_(jobvt, "S", 1, 1);
     wntvas = wntva || wntvs;
-    wntvo = lsame_(jobvt, "O");
-    wntvn = lsame_(jobvt, "N");
+    wntvo = lsame_(jobvt, "O", 1, 1);
+    wntvn = lsame_(jobvt, "N", 1, 1);
     lquery = *lwork == -1;
     if (! (wntua || wntus || wntuo || wntun))
     {

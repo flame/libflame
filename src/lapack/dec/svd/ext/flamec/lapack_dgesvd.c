@@ -1,6 +1,12 @@
 /* dgesvd.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
- #include "FLAME.h"
+/*
+ *     Modifications Copyright (c) 2021-2023 Advanced Micro Devices, Inc.  All rights reserved.
+ */
+#include "FLAME.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
  #include "FLA_f2c.h" /* Table of constant values */
  #include "fla_lapack_x86_common.h"
 
@@ -241,7 +247,9 @@
  doublereal anrm;
  integer ierr, itau, ncvt, nrvt, lwork_dgebrd, lwork_dgelqf, lwork_dgeqrf;
  
- extern logical lsame_(char *, char *);
+#ifndef FLA_ENABLE_AOCL_BLAS
+ extern logical lsame_(char *, char *, integer a, integer b);
+#endif
  integer chunk, minmn, wrkbl, itaup, itauq, mnthr, iwork;
  logical wntua, wntva, wntun, wntuo, wntvn, wntvo, wntus, wntvs;
  extern /* Subroutine */
@@ -296,16 +304,16 @@
  /* Function Body */
  *info = 0;
  minmn = fla_min(*m,*n);
- wntua = lsame_(jobu, "A");
- wntus = lsame_(jobu, "S");
+ wntua = lsame_(jobu, "A", 1, 1);
+ wntus = lsame_(jobu, "S", 1, 1);
  wntuas = wntua || wntus;
- wntuo = lsame_(jobu, "O");
- wntun = lsame_(jobu, "N");
- wntva = lsame_(jobvt, "A");
- wntvs = lsame_(jobvt, "S");
+ wntuo = lsame_(jobu, "O", 1, 1);
+ wntun = lsame_(jobu, "N", 1, 1);
+ wntva = lsame_(jobvt, "A", 1, 1);
+ wntvs = lsame_(jobvt, "S", 1, 1);
  wntvas = wntva || wntvs;
- wntvo = lsame_(jobvt, "O");
- wntvn = lsame_(jobvt, "N");
+ wntvo = lsame_(jobvt, "O", 1, 1);
+ wntvn = lsame_(jobvt, "N", 1, 1);
  lquery = *lwork == -1;
  ie = 0;
  bdspac = 0;

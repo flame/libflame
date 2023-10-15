@@ -8,15 +8,15 @@
 
 #define LAPACK_ormbr_op_check(prefix, srname)                           \
   int _lquery = (*lwork == -1), _nb,                                    \
-    left = lsame_(side, "L"), _applyq = lsame_(vect, "Q"),               \
+    left = lsame_(side, "L", 1, 1), _applyq = lsame_(vect, "Q", 1, 1),               \
     nq, nw;                                                             \
   *info = 0;                                                            \
   if      (left )     {      nq = *m;      nw = *n;    }                \
   else /* (right) */  {      nq = *n;      nw = *m;    }                \
                                                                         \
-  if      (! _applyq && ! lsame_(vect, "P"))                  *info = -1; \
-  else if (! lsame_(side, "L") && ! lsame_(side, "R"))       *info = -2; \
-  else if (! lsame_(trans, "N") && ! lsame_(trans, "T"))     *info = -3; \
+  if      (! _applyq && ! lsame_(vect, "P", 1, 1))                  *info = -1; \
+  else if (! lsame_(side, "L", 1, 1) && ! lsame_(side, "R", 1, 1))       *info = -2; \
+  else if (! lsame_(trans, "N", 1, 1) && ! lsame_(trans, "T", 1, 1))     *info = -3; \
   else if (*m < 0)                                           *info = -4; \
   else if (*n < 0)                                           *info = -5; \
   else if (*k < 0)                                           *info = -6; \

@@ -1,10 +1,13 @@
 /*
-    Copyright (c) 2021-2022 Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (c) 2021-2023 Advanced Micro Devices, Inc. All rights reserved.
 */
 
 /* dpotrf.f -- translated by f2c and slightly modified */
 
 #include "FLAME.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
 
 /* Table of constant values */
 static integer c__1 = 1;
@@ -21,8 +24,10 @@ static doublereal c_b14 = 1.;
     integer j, jb, nb;
     logical upper;
 
-	logical lsame_(char *ca, char *cb);
+#ifndef FLA_ENABLE_AOCL_BLAS
+	logical lsame_(char *ca, char *cb, integer a, integer b);
 	int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
+#endif
 	int lapack_dpotf2(char *uplo, integer *n, doublereal *a, integer *lda, integer *info);
 
 /*  DPOTRF computes the Cholesky factorization of a real symmetric */
@@ -84,9 +89,9 @@ static doublereal c_b14 = 1.;
     #endif
     /* Function Body */
     *info = 0;
-    upper = lsame_(uplo, "U");
-    if (! upper && ! lsame_(uplo, "L")) {
-	*info = -1;
+    upper = lsame_(uplo, "U", 1, 1);
+    if (! upper && ! lsame_(uplo, "L", 1, 1)) {
+        *info = -1;
     } else if (*n < 0) {
 	*info = -2;
     } else if (*lda < fla_max(1,*n)) {

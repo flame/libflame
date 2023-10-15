@@ -8,7 +8,13 @@
 
 */
 
+/*
+*     Modifications Copyright (c) 2023 Advanced Micro Devices, Inc.  All rights reserved.
+*/
 #include "blis1.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
 
 void bl1_ssymm( side1_t side, uplo1_t uplo, integer m, integer n, float* alpha, float* a, integer a_rs, integer a_cs, float* b, integer b_rs, integer b_cs, float* beta, float* c, integer c_rs, integer c_cs )
 {

@@ -1,8 +1,11 @@
 /*
-    Copyright (c) 2021 Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (c) 2021-2023 Advanced Micro Devices, Inc. All rights reserved.
 */
 
 #include "FLAME.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
 
 /* Table of constant values */
 
@@ -19,9 +22,10 @@ static real c_b12 = 1.f;
 
     /* Builtin functions */
     double sqrt(doublereal);
+#ifndef FLA_ENABLE_AOCL_BLAS
 	int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
-	logical lsame_(char *ca, char *cb);
-
+	logical lsame_(char *ca, char *cb, integer a, integer b);
+#endif
     /* Local variables */
     integer j;
     real ajj;
@@ -80,9 +84,9 @@ static real c_b12 = 1.f;
 
     /* Function Body */
     *info = 0;
-    upper = lsame_(uplo, "U");
-    if (! upper && ! lsame_(uplo, "L")) {
-	*info = -1;
+    upper = lsame_(uplo, "U", 1, 1);
+    if (! upper && ! lsame_(uplo, "L", 1, 1)) {
+        *info = -1;
     } else if (*n < 0) {
 	*info = -2;
     } else if (*lda < fla_max(1,*n)) {

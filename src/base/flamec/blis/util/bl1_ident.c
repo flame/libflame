@@ -8,7 +8,13 @@
 
 */
 
+/*
+*     Modifications Copyright (c) 2023 Advanced Micro Devices, Inc.  All rights reserved.
+*/
 #include "blis1.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
 
 void bl1_sident( integer m, float* a, integer a_rs, integer a_cs )
 {

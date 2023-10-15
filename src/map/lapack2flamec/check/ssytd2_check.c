@@ -17,8 +17,8 @@ int ssytd2_check(char *uplo, integer *n, float *a, integer *lda, float *d__, flo
     --tau;
     /* Function Body */
     *info = 0;
-    upper = lsame_(uplo, "U");
-    if (! upper && ! lsame_(uplo, "L"))
+    upper = lsame_(uplo, "U", 1, 1);
+    if (! upper && ! lsame_(uplo, "L", 1, 1))
     {
         *info = -1;
     }

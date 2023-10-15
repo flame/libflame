@@ -21,8 +21,8 @@ int dorm2r_check(char *side, char *trans, integer *m, integer *n, integer *k, do
     --work;
     /* Function Body */
     *info = 0;
-    left = lsame_(side, "L");
-    notran = lsame_(trans, "N");
+    left = lsame_(side, "L", 1, 1);
+    notran = lsame_(trans, "N", 1, 1);
     /* NQ is the order of Q */
     if (left)
     {
@@ -32,11 +32,11 @@ int dorm2r_check(char *side, char *trans, integer *m, integer *n, integer *k, do
     {
         nq = *n;
     }
-    if (! left && ! lsame_(side, "R"))
+    if (! left && ! lsame_(side, "R", 1, 1))
     {
         *info = -1;
     }
-    else if (! notran && ! lsame_(trans, "T"))
+    else if (! notran && ! lsame_(trans, "T", 1, 1))
     {
         *info = -2;
     }

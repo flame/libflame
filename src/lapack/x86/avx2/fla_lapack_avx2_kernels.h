@@ -8,6 +8,9 @@
 
 #include "immintrin.h"
 #include "FLAME.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
 #include "fla_dgeqrf_small_avx2.h"
 
 #if FLA_ENABLE_AMD_OPT

@@ -3,6 +3,9 @@
 */
 
 #include "FLAME.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
 
 /* Subroutine */ integer lapack_zgetrf(integer *m, integer *n, dcomplex *a,
 	integer *lda, integer *ipiv, integer *info)

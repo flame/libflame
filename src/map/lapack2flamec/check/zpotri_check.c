@@ -18,7 +18,7 @@ int zpotri_check(char *uplo, integer *n, dcomplex *a, integer *lda, integer *inf
     a -= a_offset;
     /* Function Body */
     *info = 0;
-    if (! lsame_(uplo, "U") && ! lsame_(uplo, "L"))
+    if (! lsame_(uplo, "U", 1, 1) && ! lsame_(uplo, "L", 1, 1))
     {
         *info = -1;
     }

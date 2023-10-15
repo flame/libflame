@@ -27,8 +27,8 @@ int zunmlq_check(char *side, char *trans, integer *m, integer *n, integer *k, dc
     --work;
     /* Function Body */
     *info = 0;
-    left = lsame_(side, "L");
-    notran = lsame_(trans, "N");
+    left = lsame_(side, "L", 1, 1);
+    notran = lsame_(trans, "N", 1, 1);
     lquery = *lwork == -1;
     /* NQ is the order of Q and NW is the minimum dimension of WORK */
     if (left)
@@ -41,11 +41,11 @@ int zunmlq_check(char *side, char *trans, integer *m, integer *n, integer *k, dc
         nq = *n;
         nw = *m;
     }
-    if (! left && ! lsame_(side, "R"))
+    if (! left && ! lsame_(side, "R", 1, 1))
     {
         *info = -1;
     }
-    else if (! notran && ! lsame_(trans, "C"))
+    else if (! notran && ! lsame_(trans, "C", 1, 1))
     {
         *info = -2;
     }

@@ -29,8 +29,8 @@ int dormtr_check(char *side, char *uplo, char *trans, integer *m, integer *n, do
     --work;
     /* Function Body */
     *info = 0;
-    left = lsame_(side, "L");
-    upper = lsame_(uplo, "U");
+    left = lsame_(side, "L", 1, 1);
+    upper = lsame_(uplo, "U", 1, 1);
     lquery = *lwork == -1;
     /* NQ is the order of Q and NW is the minimum dimension of WORK */
     if (left)
@@ -43,15 +43,15 @@ int dormtr_check(char *side, char *uplo, char *trans, integer *m, integer *n, do
         nq = *n;
         nw = *m;
     }
-    if (! left && ! lsame_(side, "R"))
+    if (! left && ! lsame_(side, "R", 1, 1))
     {
         *info = -1;
     }
-    else if (! upper && ! lsame_(uplo, "L"))
+    else if (! upper && ! lsame_(uplo, "L", 1, 1))
     {
         *info = -2;
     }
-    else if (! lsame_(trans, "N") && ! lsame_(trans, "T"))
+    else if (! lsame_(trans, "N", 1, 1) && ! lsame_(trans, "T", 1, 1))
     {
         *info = -3;
     }

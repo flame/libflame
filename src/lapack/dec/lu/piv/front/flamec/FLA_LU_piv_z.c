@@ -3,6 +3,9 @@
 */
 
 #include "FLAME.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
 #include "FLA_f2c.h"
 #include "fla_lapack_x86_common.h"
 

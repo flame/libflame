@@ -41,7 +41,7 @@ AOCL-LAPACK can be linked with any Netlib BLAS compliant library when compiled w
 $ cmake -DENABLE_AMD_AOCC_FLAGS=ON -DENABLE_AOCL_BLAS=ON ...
 
 The path of AOCL-BLAS library can be provided in one of the following methods
-1. Set "AOCL_ROOT" environment variable to the root path where AOCL-BLAS library is located. 
+1. Set "AOCL_ROOT" environment variable to the root path where AOCL-BLAS library($AOCL_ROOT/lib) and header files($AOCL_ROOT/include) are located. 
 $ export AOCL_ROOT=<path to AOCL-BLAS>
 
 2. Specify root path of AOCL-BLAS library through cmake option "AOCL_ROOT"

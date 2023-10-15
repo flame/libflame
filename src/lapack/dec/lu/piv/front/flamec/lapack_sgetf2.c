@@ -1,8 +1,11 @@
 /*
-    Copyright (c) 2021-2022 Advanced Micro Devices, Inc.  All rights reserved.
+    Copyright (c) 2021-2023 Advanced Micro Devices, Inc.  All rights reserved.
 */
 
 #include "FLAME.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
 
 /* Subroutine */ integer lapack_sgetf2(integer *m, integer *n, real *a, integer *lda,
 	integer *ipiv, integer *info)
@@ -69,7 +72,6 @@
 	static TLS_CLASS_SPEC integer j;
     static TLS_CLASS_SPEC integer jp;
     extern /* Subroutine */ int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
-    extern integer isamax_(integer *, real *, integer *);
     int kn;
     float safmin;
     float a_piv;

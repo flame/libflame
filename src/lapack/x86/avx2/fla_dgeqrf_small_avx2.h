@@ -8,6 +8,7 @@
 
 #if FLA_ENABLE_AMD_OPT
 
+
 /* Declaration of local variables for QR Small */
 #define FLA_GEQRF_INIT_DSMALL()                                           \
     integer i, j, k;                                                      \

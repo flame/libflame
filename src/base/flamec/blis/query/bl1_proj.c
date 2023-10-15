@@ -8,7 +8,13 @@
 
 */
 
+/*
+*     Modifications Copyright (c) 2023 Advanced Micro Devices, Inc.  All rights reserved.
+*/
 #include "blis1.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
 
 conj1_t bl1_proj_trans1_to_conj( trans1_t trans )
 {

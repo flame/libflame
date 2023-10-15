@@ -33,8 +33,8 @@ int zbdsqr_check(char *uplo, integer *n, integer *ncvt, integer * nru, integer *
     --rwork;
     /* Function Body */
     *info = 0;
-    lower = lsame_(uplo, "L");
-    if (! lsame_(uplo, "U") && ! lower)
+    lower = lsame_(uplo, "L", 1, 1);
+    if (! lsame_(uplo, "U", 1, 1) && ! lower)
     {
         *info = -1;
     }

@@ -124,10 +124,11 @@ int dgetrs_(char *trans, integer *n, integer *nrhs, doublereal *a, integer *lda,
     integer a_dim1, a_offset, b_dim1, b_offset, i__1;
     /* Local variables */
 #ifndef FLA_ENABLE_AOCL_BLAS
-    extern logical lsame_(char *, char *);
+    extern logical lsame_(char *, char *, integer a, integer b);
     extern /* Subroutine */
-    int dtrsm_(char *, char *, char *, char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), dlaswp_(integer *, doublereal *, integer *, integer *, integer *, integer *, integer *);
+    int dtrsm_(char *, char *, char *, char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len); 
 #endif
+    extern int dlaswp_(integer *, doublereal *, integer *, integer *, integer *, integer *, integer *);
     logical notran;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -161,15 +162,9 @@ int dgetrs_(char *trans, integer *n, integer *nrhs, doublereal *a, integer *lda,
     /* Function Body */
     *info = 0;
 
-#if FLA_ENABLE_AOCL_BLAS
     notran = lsame_(trans, "N", 1, 1);
 
     if (! notran && ! lsame_(trans, "T", 1, 1) && ! lsame_( trans, "C", 1, 1))
-#else
-    notran = lsame_(trans, "N");
-
-    if (! notran && ! lsame_(trans, "T") && ! lsame_( trans, "C"))
-#endif
     {
         *info = -1;
     }

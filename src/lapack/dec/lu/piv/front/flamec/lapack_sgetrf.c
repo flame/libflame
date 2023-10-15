@@ -1,8 +1,12 @@
 /*
-    Copyright (c) 2021-2022 Advanced Micro Devices, Inc.  All rights reserved.
+    Copyright (c) 2021-2023 Advanced Micro Devices, Inc.  All rights reserved.
 */
 
 #include "FLAME.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
+
 /* Table of constant values */
 
 static TLS_CLASS_SPEC integer c__1 = 1;

@@ -8,7 +8,13 @@
 
 */
 
+/*
+*     Modifications Copyright (c) 2023 Advanced Micro Devices, Inc.  All rights reserved.
+*/
 #include "blis1.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
 
 void bl1_set_dims_with_trans( trans1_t trans, integer m, integer n, integer* m_new, integer* n_new )
 {

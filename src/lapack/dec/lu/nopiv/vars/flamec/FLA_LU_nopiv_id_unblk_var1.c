@@ -1,8 +1,11 @@
 /*
- *  Copyright (c) 2021 Advanced Micro Devices, Inc. All rights reserved.
+ *  Copyright (c) 2021-2023 Advanced Micro Devices, Inc. All rights reserved.
  * */
 
 #include "FLAME.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
 
 /**************************************************************************************
  This method uses nonrecursive ger based method to calculate ATL,ABL,ATR,ABR implicitly

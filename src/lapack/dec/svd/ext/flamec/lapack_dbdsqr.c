@@ -1,6 +1,12 @@
 /* dbdsqr.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
- #include "FLAME.h"
+/*
+ *     Modifications Copyright (c) 2021-2023 Advanced Micro Devices, Inc.  All rights reserved.
+ */
+#include "FLAME.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
  #include "FLA_f2c.h" /* Table of constant values */
  static doublereal c_b15 = -.125;
  static integer c__1 = 1;
@@ -258,9 +264,11 @@
  doublereal cosl;
  integer isub, iter;
  doublereal unfl, sinl, cosr, smin, smax, sinr;
+#ifndef FLA_ENABLE_AOCL_BLAS
  extern /* Subroutine */
  int drot_(integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *), dlas2_( doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
- extern logical lsame_(char *, char *);
+ extern logical lsame_(char *, char *, integer a, integer b);
+#endif
  doublereal oldcs;
  extern /* Subroutine */
  int dlasr_(char *, char *, char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *);
@@ -312,8 +320,8 @@
  --work;
  /* Function Body */
  *info = 0;
- lower = lsame_(uplo, "L");
- if (! lsame_(uplo, "U") && ! lower) {
+ lower = lsame_(uplo, "L", 1, 1);
+ if (! lsame_(uplo, "U", 1, 1) && ! lower) {
  *info = -1;
  }
  else if (*n < 0) {

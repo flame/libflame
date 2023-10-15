@@ -12,7 +12,7 @@ int dpotri_check(char *uplo, integer *n, double *a, integer * lda, integer *info
     a -= a_offset;
     /* Function Body */
     *info = 0;
-    if (! lsame_(uplo, "U") && ! lsame_(uplo, "L"))
+    if (! lsame_(uplo, "U", 1, 1) && ! lsame_(uplo, "L", 1, 1))
     {
         *info = -1;
     }

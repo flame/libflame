@@ -26,10 +26,10 @@ int cungbr_check(char *vect, integer *m, integer *n, integer *k, scomplex *a, in
     --work;
     /* Function Body */
     *info = 0;
-    wantq = lsame_(vect, "Q");
+    wantq = lsame_(vect, "Q", 1, 1);
     mn = fla_min(*m,*n);
     lquery = *lwork == -1;
-    if (! wantq && ! lsame_(vect, "P"))
+    if (! wantq && ! lsame_(vect, "P", 1, 1))
     {
         *info = -1;
     }
