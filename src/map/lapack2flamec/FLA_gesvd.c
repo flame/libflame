@@ -141,7 +141,7 @@ LAPACK_gesvd_real(s)
   int fla_error = LAPACK_SUCCESS;
   AOCL_DTL_TRACE_LOG_INIT
   AOCL_DTL_SNPRINTF("sgesvd inputs: jobu %c, jobvt %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS "", *jobu, *jobv, *m, *n, *ldim_A, *ldim_U, *ldim_Vh);
-#if FLA_AMD_OPT
+#if FLA_ENABLE_AMD_OPT
     {
       lapack_sgesvd ( jobu, jobv, m, n, buff_A, ldim_A, buff_s, buff_U, ldim_U,buff_Vh , ldim_Vh, buff_w, lwork,info );
       /** fla_error set to *info on LAPACK_SUCCESS */
@@ -176,7 +176,7 @@ LAPACK_gesvd_real(d)
   int fla_error = LAPACK_SUCCESS;
   AOCL_DTL_TRACE_LOG_INIT
   AOCL_DTL_SNPRINTF("dgesvd inputs: jobu %c, jobvt %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS "", *jobu, *jobv, *m, *n, *ldim_A, *ldim_U, *ldim_Vh);
-#if FLA_AMD_OPT
+#if FLA_ENABLE_AMD_OPT
     {
       /* Initialize global context data */
       aocl_fla_init();

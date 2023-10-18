@@ -83,7 +83,7 @@ LAPACK_orglq(s, org)
 
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("sorglq inputs: m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS "", *m, *n, *k, *ldim_A);
-#if !FLA_AMD_OPT
+#if !FLA_ENABLE_AMD_OPT
     int fla_error = LAPACK_SUCCESS;
     {
         LAPACK_RETURN_CHECK_VAR1( sorglq_check( m, n, k,
@@ -116,7 +116,7 @@ LAPACK_orglq(d, org)
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("dorglq inputs: m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS "", *m, *n, *k, *ldim_A);
-#if !FLA_AMD_OPT
+#if !FLA_ENABLE_AMD_OPT
     int fla_error = LAPACK_SUCCESS;
     {
         LAPACK_RETURN_CHECK_VAR1( dorglq_check( m, n, k,

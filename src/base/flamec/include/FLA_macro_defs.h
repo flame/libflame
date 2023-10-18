@@ -21,10 +21,6 @@
 #undef  NULL
 #define NULL 0
 
-/* Enable AMD specific optimizations */
-#ifdef FLA_ENABLE_AMD_OPT
-#define FLA_AMD_OPT 1
-#endif
 #ifdef FLA_ENABLE_WINDOWS_BUILD
   #define restrict  __restrict
 #endif

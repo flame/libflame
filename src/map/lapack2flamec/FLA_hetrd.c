@@ -182,8 +182,7 @@ LAPACK_hetrd(d,sy)
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("hetrd-dsytrd inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "", *uplo, *m, *ldim_A);
     {
-         
-    #if !FLA_AMD_OPT
+    #if !FLA_ENABLE_AMD_OPT
       if ( *uplo == 'U' || *uplo == 'u' )
     #endif
       {

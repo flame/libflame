@@ -85,7 +85,7 @@ LAPACK_geqrf(s)
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("sgeqrf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", lwork %" FLA_IS "", *m, *n, *ldim_A, *lwork);
-#if !FLA_AMD_OPT
+#if !FLA_ENABLE_AMD_OPT
     int fla_error = LAPACK_SUCCESS;
     {
         LAPACK_RETURN_CHECK_VAR1( sgeqrf_check( m, n,
@@ -114,7 +114,7 @@ LAPACK_geqrf(d)
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("dgeqrf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", lwork %" FLA_IS "", *m, *n, *ldim_A, *lwork);
-#if !FLA_AMD_OPT
+#if !FLA_ENABLE_AMD_OPT
     int fla_error = LAPACK_SUCCESS;
     {
         LAPACK_RETURN_CHECK_VAR1(dgeqrf_check(m, n,
@@ -298,7 +298,7 @@ LAPACK_geqrfp(s)
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("sgeqrfp inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
-#if !FLA_AMD_OPT
+#if !FLA_ENABLE_AMD_OPT
     int fla_error = LAPACK_SUCCESS;
     {
         LAPACK_RETURN_CHECK_VAR1( sgeqrfp_check( m, n,
@@ -331,7 +331,7 @@ LAPACK_geqrfp(d)
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("dgeqrfp inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
-#if !FLA_AMD_OPT
+#if !FLA_ENABLE_AMD_OPT
     int fla_error = LAPACK_SUCCESS;
     {
         LAPACK_RETURN_CHECK_VAR1(dgeqrfp_check(m, n,
@@ -418,7 +418,7 @@ LAPACK_geqr2p(s)
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("sgeqr2p inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
-#if !FLA_AMD_OPT
+#if !FLA_ENABLE_AMD_OPT
     int fla_error = LAPACK_SUCCESS;
     {
         LAPACK_RETURN_CHECK_VAR1( sgeqr2p_check( m, n,
@@ -451,7 +451,7 @@ LAPACK_geqr2p(d)
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("dgeqr2p inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
-#if !FLA_AMD_OPT
+#if !FLA_ENABLE_AMD_OPT
     int fla_error = LAPACK_SUCCESS;
     {
         LAPACK_RETURN_CHECK_VAR1(dgeqr2p_check(m, n,

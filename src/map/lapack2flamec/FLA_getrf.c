@@ -52,8 +52,8 @@ extern void DTL_Trace(
 
 #ifndef FLA_ENABLE_SUPERMATRIX
 
-#if FLA_AMD_OPT /* FLA_AMD_OPT */
-/* FLA_AMD_OPT enables the code which selects algorithm variants based on size */
+#if FLA_ENABLE_AMD_OPT /* FLA_ENABLE_AMD_OPT */
+/* FLA_ENABLE_AMD_OPT enables the code which selects algorithm variants based on size */
 #define LAPACK_getrf_body_d(prefix)                                                    \
 extern fla_context global_context;                                                     \
   if(*m <= FLA_DGETRF_SMALL_THRESH0 && *n <= FLA_DGETRF_SMALL_THRESH0)                 \
@@ -134,7 +134,7 @@ extern fla_context global_context;                                              
     sgetrf2_( m, n, (float *)buff_A, ldim_A, buff_p, info);                                               \
   }
 
-#else /* FLA_AMD_OPT */
+#else /* FLA_ENABLE_AMD_OPT */
 
 #define LAPACK_getrf_body_z LAPACK_getrf_body
 
@@ -167,7 +167,7 @@ extern fla_context global_context;                                              
                                                                                        \
   if ( e_val != FLA_SUCCESS ) *info = e_val + 1;
 
-#endif /* FLA_AMD_OPT */
+#endif /* FLA_ENABLE_AMD_OPT */
 
 // Note that p should be set zero.
 #define LAPACK_getrf_body(prefix)                               \

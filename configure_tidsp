@@ -1600,7 +1600,8 @@ Optional Features:
   --enable-tidsp          Enable code required for libflame to run under Texas
                           Instruments' DSP. Note that this option is
                           experimental. (Disabled by default.)
-  --enable-amd-opt        Enable code to take AMD optimized path by enabling the FLA_AMD_OPT macro. (Disabled by default.)
+  --enable-amd-opt        Enable code to take AMD optimized path by enabling
+                          the FLA_ENABLE_AMD_OPT macro. (Disabled by default.)
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]

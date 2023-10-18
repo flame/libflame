@@ -341,7 +341,7 @@ int lapack_sgebrd(integer *m, integer *n, real *a, integer *lda, real *d__, real
 /* Current blocked algorithm has accuracy issue, so unblocked algorithm is enabled by default
 Todo: This is a temporary workaround until the issue in the blocked algorithm is fixed.
 */
-#if !FLA_AMD_OPT
+#if !FLA_ENABLE_AMD_OPT
     integer ldwrkx, ldwrky, j, i__4, i__3;
     static real c_b22 = 1.f;
     static real c_b21 = -1.f;

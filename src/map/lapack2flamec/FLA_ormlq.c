@@ -99,7 +99,7 @@ LAPACK_ormlq(s, orm)
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("sormlq inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS ", ldc %" FLA_IS "", *side, *trans, *m, *n, *k, *ldim_A, *ldim_B);
-#if !FLA_AMD_OPT
+#if !FLA_ENABLE_AMD_OPT
     int fla_error = LAPACK_SUCCESS;
     {
         LAPACK_RETURN_CHECK_VAR1( sormlq_check( side, trans,
@@ -136,7 +136,7 @@ LAPACK_ormlq(d, orm)
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("dormlq inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS ", ldc %" FLA_IS "", *side, *trans, *m, *n, *k, *ldim_A, *ldim_B);
-#if !FLA_AMD_OPT
+#if !FLA_ENABLE_AMD_OPT
     int fla_error = LAPACK_SUCCESS;
     {
         LAPACK_RETURN_CHECK_VAR1(dormlq_check(side, trans,
