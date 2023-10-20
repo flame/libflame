@@ -39,4 +39,10 @@ storev C C R R
 tsize -1 -2 -1 -2
 ilo 2 1 500 1500
 ihi 7 100 750 1750
+range_x  A A V I
+il 01 10 30 40
+iu 05 20 65 76
+vl 0.1 0.6 0.7 0.0
+vu 0.5 3.0 4.9 0.8
+abstol -1 -1 -1 -1
 threshold_value 20 20 20 20

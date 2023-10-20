@@ -36,3 +36,4 @@
 1   rot     ROT  applies a plane rotation                 (0 = disable; 1 = enable; 2 = enable only this)
 1   lartg   Generates Plane rotation with cos and sin     (0 = disable; 1 = enable; 2 = enable only this)
 1   org2r   QR factorization                              (0 = disable; 1 = enable; 2 = enable only this)
+1   syevx   Eigen Values and Vectors                      (0 = disable; 1 = enable; 2 = enable only this)

@@ -232,6 +232,12 @@ typedef struct EIG_paramlist_t
     integer tsize;
     integer ilo;
     integer ihi;
+    char range_x; // range must be 'A', 'V' or 'I'
+    integer IL;
+    integer IU;
+    real VL;
+    real VU;
+    real abstol;
     integer threshold_value; // threshold value for EIG
 }EIG_paramlist;
 

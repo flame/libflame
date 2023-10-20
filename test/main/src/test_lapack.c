@@ -1083,6 +1083,49 @@ void fla_test_read_sym_eig_params( const char *file_name , test_params_t* params
         CHECK_LINE_SKIP ();
     }
 
+    /* Range is used to select the range of eigen values to be generated */
+    fscanf(fp, "%s", &line[0]);
+    for (i = 0; i < NUM_SUB_TESTS; i++) {
+        fscanf(fp, "%s", str);
+        params->eig_sym_paramslist[i].range_x = *str;
+        CHECK_LINE_SKIP();
+    }
+
+    /* Index of the smallest eigen value to be returned */
+    fscanf(fp, "%s", &line[0]);
+    for (i = 0; i < NUM_SUB_TESTS; i++) {
+        fscanf(fp, "%"FT_IS"", &(params->eig_sym_paramslist[i].IL));
+        CHECK_LINE_SKIP();
+    }
+
+    /* Index of the largest eigen value to be returned */
+    fscanf(fp, "%s", &line[0]);
+    for (i = 0; i < NUM_SUB_TESTS; i++) {
+        fscanf(fp, "%"FT_IS"", &(params->eig_sym_paramslist[i].IU));
+        CHECK_LINE_SKIP();
+    }
+
+    /* Lower bound of the interval to be searched for eigen values */
+    fscanf(fp, "%s", &line[0]);
+    for (i = 0; i < NUM_SUB_TESTS; i++) {
+        fscanf(fp, "%f", &(params->eig_sym_paramslist[i].VL));
+        CHECK_LINE_SKIP();
+    }
+
+    /* Upper bound of the interval to be searched for eigen values */
+    fscanf(fp, "%s", &line[0]);
+    for (i = 0; i < NUM_SUB_TESTS; i++) {
+        fscanf(fp, "%f", &(params->eig_sym_paramslist[i].VU));
+        CHECK_LINE_SKIP();
+    }
+
+    /* The absolute error tolerance for the eigen values */
+    fscanf(fp, "%s", &line[0]);
+    for (i = 0; i < NUM_SUB_TESTS; i++) {
+        fscanf(fp, "%f", &(params->eig_sym_paramslist[i].abstol));
+        CHECK_LINE_SKIP();
+    }
+
     fscanf(fp, "%s", &line[0]);
     for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%"FT_IS"", &(params->eig_sym_paramslist[i].threshold_value) );
