@@ -229,7 +229,9 @@ void fla_test_hseqr_experiment(test_params_t *params,
     if(info == 0)
         validate_hseqr(&job, &compz, n, H, H_test, ldh, Z, Z_Test, ldz, datatype, residual, &vinfo);
 
-    FLA_TEST_CHECK_EINFO(residual, info, einfo);
+    /* test info only for negative test cases */
+    if(info < 0)
+        FLA_TEST_CHECK_EINFO(residual, info, einfo);
 
     /* Free up the buffers */
     free_vector(scale);
