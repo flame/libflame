@@ -237,11 +237,11 @@ void prepare_gehrd_run(integer n, integer* ilo, integer* ihi, void* A, integer l
 
         /* Free up the output buffers */
         free_vector(work);
+        free_vector(tau_test);
     }
     *time_min_ = time_min;
 
     free_matrix(A_save);
-    free_vector(tau_test);
 }
 
 void invoke_gehrd(integer datatype, integer* n, integer* ilo, integer* ihi, void* A, integer* lda, void *tau, void* work, integer* lwork, integer* info)

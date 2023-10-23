@@ -303,6 +303,12 @@ void fla_test_hgeqz_experiment(test_params_t *params,
     free_matrix(Z);
     free_matrix(H_test);
     free_matrix(T_test);
+    free_matrix(Q_test);
+    free_matrix(Z_test);
+    free_matrix(A);
+    free_matrix(B);
+    free_matrix(Q_A);
+    free_matrix(Z_A);
     if (datatype == FLOAT || datatype == DOUBLE)
     {
         free_vector(alphar);
