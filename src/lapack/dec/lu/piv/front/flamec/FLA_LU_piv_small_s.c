@@ -8,6 +8,8 @@
 #endif
 #include "fla_lapack_x86_common.h"
 
+
+#if FLA_ENABLE_AMD_OPT
 /*
  * LU with partial pivoting for tiny matrices
  *
@@ -171,3 +173,4 @@ integer FLA_LU_piv_small_s_var1( integer *m, integer *n,
     }
     return *info;
 }
+#endif
