@@ -30,6 +30,16 @@ int fla_sger(integer *m, integer *n, real *alpha,
 int fla_zgetrf_small_simd(integer *m, integer *n,
                      dcomplex *a, integer *lda,
                      integer *ipiv, integer *info);
+void fla_dgesvd_nn_small10(integer *m, integer *n,
+                           doublereal *a, integer *lda,
+                           doublereal *s,
+                           doublereal *work,
+                           integer *info);
+void fla_dgesvd_nn_small1T(integer *m, integer *n,
+                           doublereal *a, integer *lda,
+                           doublereal *s,
+                           doublereal *work,
+                           integer *info);
 void fla_dgesvd_small6T(integer *m, integer *n,
                         doublereal *a, integer *lda,
                         doublereal *ql, integer *ldql,
@@ -38,9 +48,4 @@ void fla_dgesvd_small6T(integer *m, integer *n,
                         doublereal *vt, integer *ldvt,
                         doublereal *work,
                         integer *info);
-void fla_dgesvd_nn_small10(integer *m, integer *n,
-                           doublereal *a, integer *lda,
-                           doublereal *s,
-                           doublereal *work,
-                           integer *info);
 #endif

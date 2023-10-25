@@ -14,8 +14,9 @@ ${CMAKE_CURRENT_SOURCE_DIR}/fla_zgetrf_avx2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_zrot_avx2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_zscal_ix1_avx2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_lu_piv_small_d_update_tr_matrix_avx2.c
-${CMAKE_CURRENT_SOURCE_DIR}/fla_dgesvd_small6T_avx2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_dgesvd_nn_small10_avx2.c
+${CMAKE_CURRENT_SOURCE_DIR}/fla_dgesvd_small6T_avx2.c
+${CMAKE_CURRENT_SOURCE_DIR}/fla_dgesvd_nn_small1T_avx2.c
 )
 
 if(WIN32)

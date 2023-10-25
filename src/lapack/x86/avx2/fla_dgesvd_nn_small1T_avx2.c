@@ -2,18 +2,18 @@
 * Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
 *******************************************************************************/
 
-/*! @file fla_dgesvd_nn_small10_avx2.c
- *  @brief DGESVD Small path (path 10)
+/*! @file fla_dgesvd_nn_small1T_avx2_.c
+ *  @brief DGESVD Small path (path 1T)
  *  */
 
 #include "FLAME.h"
 #include "fla_lapack_avx2_kernels.h"
 
-#if FLA_ENABLE_AMD_OPT
+#ifdef FLA_ENABLE_AMD_OPT
 
 double d_sign(doublereal *, doublereal *);
 
-void fla_dgesvd_nn_small10_avx2(integer *m, integer *n,
+void fla_dgesvd_nn_small1T_avx2(integer *m, integer *n,
                                 doublereal *a, integer *lda,
                                 doublereal *s,
                                 doublereal *work,
@@ -56,10 +56,10 @@ void fla_dgesvd_nn_small10_avx2(integer *m, integer *n,
     taup = &work[itaup - 1];
 
     /* Upper Bidiagonalization */
-    FLA_BIDIAGONALIZE_SMALL(m, n);
+    FLA_BIDIAGONALIZE_SMALL(m, m);
 
     /* Compute Singular Values */
-    lapack_dbdsqr("U", n, &c__0, &c__0, &c__0, &s[1], &e[1],
+    lapack_dbdsqr("U", m, &c__0, &c__0, &c__0, &s[1], &e[1],
                   NULL, &c__1,
                   NULL, &c__1,
                   dum, &c__1,
@@ -68,3 +68,4 @@ void fla_dgesvd_nn_small10_avx2(integer *m, integer *n,
     return;
 }
 #endif
+

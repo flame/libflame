@@ -2451,9 +2451,9 @@
  i__3 = *m - 1;
  dlaset_("U", &i__2, &i__3, &c_b57, &c_b57, &a[(a_dim1 << 1) + 1], lda);
 #if FLA_ENABLE_AMD_OPT
- if (!(wntuo & wntuas) && (*m < 128) && global_context.is_avx2)
+ if ((wntun && wntvn) && (*m < 128) && global_context.is_avx2)
  {
-     fla_dgesvd_nn_small10(m, n, &a[a_offset], lda, &s[1], &work[1], info);
+     fla_dgesvd_nn_small1T(m, n, &a[a_offset], lda, &s[1], &work[1], info);
  }
  else
 #endif

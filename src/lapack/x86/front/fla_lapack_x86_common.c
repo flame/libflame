@@ -132,6 +132,9 @@ int fla_dgetrf_small_simd(integer *m, integer *n,
     return 0;
 }
 
+/* Double Complex LU for small sizes,
+ * Optimized for AVX2 and AVX512 ISAs
+ */
 int fla_zgetrf_small_simd(integer *m, integer *n,
                      dcomplex *a, integer *lda,
                      integer *ipiv, integer *info)
@@ -151,6 +154,36 @@ int fla_zgetrf_small_simd(integer *m, integer *n,
     return 0;
 }
 
+/* SVD for small tall-matrices in DGESVD
+ */
+void fla_dgesvd_nn_small10(integer *m, integer *n,
+                           doublereal *a, integer *lda,
+                           doublereal *s,
+                           doublereal *work,
+                           integer *info)
+{
+    if(global_context.is_avx2)
+    {
+        fla_dgesvd_nn_small10_avx2(m, n, a, lda, s, work, info);
+    }
+    return;
+}
+
+/* SVD for small fat-matrices for path 1T in DGESVD
+ */
+void fla_dgesvd_nn_small1T(integer *m, integer *n,
+                           doublereal *a, integer *lda,
+                           doublereal *s,
+                           doublereal *work,
+                           integer *info)
+{
+    if(global_context.is_avx2)
+    {
+        fla_dgesvd_nn_small1T_avx2(m, n, a, lda, s, work, info);
+    }
+    return;
+}
+
 /* SVD for small fat-matrices with LQ factorization
  * already computed
  */
@@ -167,21 +200,6 @@ void fla_dgesvd_small6T(integer *m, integer *n,
     {
         fla_dgesvd_small6T_avx2(m, n, a, lda, ql, ldql, s,
                                 u, ldu, vt, ldvt, work, info);
-    }
-    return;
-}
-
-/* SVD for small tall-matrices in DGESVD
- */
-void fla_dgesvd_nn_small10(integer *m, integer *n,
-                           doublereal *a, integer *lda,
-                           doublereal *s,
-                           doublereal *work,
-                           integer *info)
-{
-    if(global_context.is_avx2)
-    {
-        fla_dgesvd_nn_small10_avx2(m, n, a, lda, s, work, info);
     }
     return;
 }

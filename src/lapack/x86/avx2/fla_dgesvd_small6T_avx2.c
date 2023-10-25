@@ -66,7 +66,7 @@ void fla_dgesvd_small6T_avx2(integer *m, integer *n,
     taup = &work[itaup - 1];
 
     /* Upper Bidiagonalization */
-    FLA_BIDIAGONALIZE_SMALL();
+    FLA_BIDIAGONALIZE_SMALL(m, m);
 
     for (i = 1; i <= *m; i++)
         for (j = 1; j <= *n; j++)
