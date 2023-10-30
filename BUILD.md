@@ -94,7 +94,14 @@ $ cmake ../ -DENABLE_AMD_FLAGS=ON -DCMAKE_INSTALL_PREFIX=<path> -DLIBAOCLUTILS_L
 ## 6. Linking with an external openmp library
     In Order to link with an external openmp library user can pass 
         -DEXT_OPENMP_PATH=<openmp lib path> -DEXT_OPENMP_LIB=<openmp lib name>
-    Note: In order to use openmp from the system -DEXT_OPENMP_PATH is to be left blank
+    Note:   1. In order to use openmp from the system -DEXT_OPENMP_PATH is to be left blank
+            2. To link Intel OpenMP library,libiomp5.so when compiling with 
+                gcc
+                    -DCMAKE_C_FLAG="-fopenmp" 
+                aocc 
+                    -DCMAKE_C_FLAG="-fopenmp=libiomp5"
+            when linking with AOCC cmake standards have to be set to -std=c11 instead of gnu99. 
+            
 
 ## 7. Using ctest
     Ctest is enabled when -DBUILD_TEST=ON OR -DBUILD_LEGACY_TEST=ON OR -DBUILD_NETLIB_TEST=ON

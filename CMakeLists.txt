@@ -154,14 +154,6 @@ if (ENABLE_AOCL_BLAS)
        include(cmake/find_aocl-blas.cmake)
 endif()
 
-#Adding PIC flag and other flags
-if(UNIX)
-	SET(COMPILER_DEBUG_FLAG "-g0")
-	set(GCC_WARNING_FLAGS "-Wall -Wno-comment")
-	set(COMPILER_LANGUAGE_FLAGS "-std=gnu99 -Wno-unused-function -Wno-parentheses -Wfatal-errors ")
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COMPILER_DEBUG_FLAG} ${GCC_WARNING_FLAGS} ${COMPILER_LANGUAGE_FLAGS}")
-	add_compile_options(-fPIC)
-endif()
 
 message(STATUS "checking SIMD  ")
 if(WIN32)
@@ -190,16 +182,16 @@ if(ENABLE_GCOV)
 	set(CMAKE_CXX_OUTPUT_EXTENSION_REPLACE ON)
 	add_definitions(--coverage)
 	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
-	set(CMAKE_GCOV_FLAGS "-fprofile-arcs -ftest-coverage")
-else()
-	set(CMAKE_GCOV_FLAGS "")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fprofile-arcs -ftest-coverage")
 endif()
+
 #Adding PIC flag and other flags
 if(UNIX)
 	SET(COMPILER_DEBUG_FLAG "-g0")
 	set(GCC_WARNING_FLAGS "-Wall -Wno-comment")
 	set(COMPILER_LANGUAGE_FLAGS "-std=gnu99 -Wno-unused-function -Wno-parentheses -Wfatal-errors ")
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COMPILER_DEBUG_FLAG} ${GCC_WARNING_FLAGS} ${COMPILER_LANGUAGE_FLAGS} ${CMAKE_GCOV_FLAGS} ")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COMPILER_DEBUG_FLAG} ${GCC_WARNING_FLAGS} ${COMPILER_LANGUAGE_FLAGS}")
+	add_compile_options(-fPIC)
 endif()
 
 #Temporary hack for Clang. Enable -Wno-error=implicit-function-declaration
