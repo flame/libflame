@@ -56,6 +56,8 @@ const integer* const total_threads
 			exit(0);\
          }\
 
+#if FLA_OPENMP_MULTITHREADING
+
 #define AOCL_FLA_PROGRESS_VAR \
         aocl_fla_progress_callback aocl_fla_progress_ptr = aocl_fla_progress_glb_ptr;\
         static TLS_CLASS_SPEC integer progress_step_count = 0;\
@@ -63,3 +65,15 @@ const integer* const total_threads
         static TLS_CLASS_SPEC integer progress_total_threads = 1;\
         progress_thread_id = omp_get_thread_num();\
         progress_total_threads = omp_get_num_threads();\
+
+#else
+
+#define AOCL_FLA_PROGRESS_VAR \
+        aocl_fla_progress_callback aocl_fla_progress_ptr = aocl_fla_progress_glb_ptr;\
+        static TLS_CLASS_SPEC integer progress_step_count = 0;\
+        static TLS_CLASS_SPEC integer progress_thread_id = 0;\
+        static TLS_CLASS_SPEC integer progress_total_threads = 1;\
+        progress_thread_id = 0;\
+        progress_total_threads = 1;\
+
+#endif

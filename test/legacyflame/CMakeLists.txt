@@ -4,7 +4,7 @@
 add_executable(test_libFLAME "")
 
 if(UNIX)
-    set(Legacy_Flame_FLAGS "-lm")
+    set(Legacy_Flame_FLAGS "-lm -lpthread")
 endif()
 add_definitions(-DBLIS1_FROM_LIBFLAME)
 target_link_libraries(test_libFLAME debug "${CMAKE_PROJECT_NAME}" "${Legacy_Flame_FLAGS}" blas)
