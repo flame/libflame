@@ -42,12 +42,12 @@ int fla_dgeqrf_small_avx2(integer *m, integer *n,
         else if (slen < 4)
         {
             FLA_ELEM_REFLECTOR_GENERATE_DSMALL(i, m, n, tau);
-            FLA_ELEM_REFLECTOR_APPLY_DSMALL(i, m, n, tau);
+            FLA_ELEM_REFLECTOR_APPLY_DSMALL(i, m, n, a, tau);
         }
         else
         {
             FLA_ELEM_REFLECTOR_GENERATE_DLARGE(i, m, n, tau);
-            FLA_ELEM_REFLECTOR_APPLY_DLARGE(i, m, n, tau);
+            FLA_ELEM_REFLECTOR_APPLY_DLARGE(i, m, n, a, lda, tau);
         }
     }
     return 0;

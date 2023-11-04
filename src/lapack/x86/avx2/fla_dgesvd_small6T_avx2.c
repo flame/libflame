@@ -32,7 +32,7 @@ void fla_dgesvd_small6T_avx2(integer *m, integer *n,
     /* Declare and init local variables */
     FLA_GEQRF_INIT_DSMALL();
 
-    integer iu, ie, iwork, min_m_n;
+    integer iu, ie, iwork;
     integer itau, itauq, itaup;
     integer i__1, rlen, knt;
 
@@ -43,7 +43,7 @@ void fla_dgesvd_small6T_avx2(integer *m, integer *n,
 
     /* indices for partitioning work buffer */
     iu = 1;
-    itau = iu + *m * *ldu;
+    itau = iu + *m * *lda;
     ie = itau + *m;
     itauq = ie + *m;
     itaup = itauq + *m;
@@ -57,22 +57,17 @@ void fla_dgesvd_small6T_avx2(integer *m, integer *n,
     --s;
     --work;
 
-    min_m_n = fla_min(*m, *n);
-    tau = &work[itau - 1];
-
     /* work buffer distribution */
     e = &work[ie - 1];
     tauq = &work[itauq - 1];
     taup = &work[itaup - 1];
 
     /* Upper Bidiagonalization */
-    FLA_BIDIAGONALIZE_SMALL(m, m);
+    FLA_BIDIAGONALIZE_SMALL(*m, *m);
 
     for (i = 1; i <= *m; i++)
         for (j = 1; j <= *n; j++)
             vt[i + j * *ldvt] = 0.;
-    for (i = 1; i <= min_m_n; i++)
-        vt[i + i * *ldvt] = 1.0;
     /* Generate Qr (from bidiag) in vt from work[iu] (a here) */
     if (*m > 2)
     {

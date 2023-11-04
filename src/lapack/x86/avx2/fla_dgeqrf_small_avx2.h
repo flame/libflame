@@ -8,7 +8,6 @@
 
 #if FLA_ENABLE_AMD_OPT
 
-
 /* Declaration of local variables for QR Small */
 #define FLA_GEQRF_INIT_DSMALL()                                           \
     integer i, j, k;                                                      \
@@ -200,7 +199,6 @@
         /* Part 1: Compute Householder vector 'v' and tau */                 \
                                                                              \
         v = &a[i + i * *lda - 1];                                            \
-        A = &a[i + (i + 1) * *lda];                                          \
         alpha = v[1];                                                        \
         /* check for not a number */                                         \
         if (alpha != alpha || xnorm != xnorm)                                \
@@ -254,7 +252,7 @@
         }                                                                    \
     }
 
-#define FLA_ELEM_REFLECTOR_APPLY_DSMALL(i, m, n, tau)                        \
+#define FLA_ELEM_REFLECTOR_APPLY_DSMALL(i, m, n, r, tau)                     \
     if (xnorm != 0.) /* Sub-diagonal elements are already zero */            \
     {                                                                        \
         /* Part 2: Apply the Householder rotation              */            \
@@ -262,6 +260,7 @@
         /*    A = A - tau * v * v**T * A                       */            \
         /*      = A - v * tau * (A**T * v)**T                  */            \
                                                                              \
+        A = &r[i + (i + 1) * *lda];                                          \
         arows = *m - i + 1;                                                  \
         acols = *n - i;                                                      \
         v[1] = 1.;                                                           \
@@ -381,7 +380,6 @@
         /* Part 1: Compute Householder vector 'v' and tau */                 \
                                                                              \
         v = &a[i + i * *lda - 1];                                            \
-        A = &a[i + (i + 1) * *lda];                                          \
         alpha = v[1];                                                        \
                                                                              \
         /* Compute Householder rotated vector */                             \
@@ -447,7 +445,7 @@
         }                                                                    \
     }
 
-#define FLA_ELEM_REFLECTOR_APPLY_DLARGE(i, m, n, tau)                        \
+#define FLA_ELEM_REFLECTOR_APPLY_DLARGE(i, m, n, r, ldr, tau)                \
     if (xnorm != 0.) /* Sub-diagonal elements are already zero */            \
     {                                                                        \
         /* Part 2: Apply the Householder rotation              */            \
@@ -455,6 +453,7 @@
         /*    A = A - tau * v * v**T * A                       */            \
         /*      = A - v * tau * (A**T * v)**T                  */            \
                                                                              \
+        A = &r[i + (i + 1) * *ldr];                                          \
         arows = *m - i + 1;                                                  \
         acols = *n - i;                                                      \
         v[1] = 1.;                                                           \
@@ -464,7 +463,7 @@
         /* work = A**T * v */                                                \
         for (j = 1; j <= acols; j++) /* for every column c_A of A */         \
         {                                                                    \
-            ac = &A[(j - 1) * *lda - 1];                                     \
+            ac = &A[(j - 1) * *ldr - 1];                                     \
             vd2_dtmp = _mm_setzero_pd();                                     \
             vd4_dtmp = _mm256_setzero_pd();                                  \
                                                                              \
@@ -552,9 +551,9 @@
     }
 
 #define FLA_BIDIAGONALIZE_SMALL(nr, nc)                                            \
-    for (i = 1; i <= *nr; i++)                                                     \
+    for (i = 1; i <= nr; i++)                                                      \
     {                                                                              \
-        slen = *nr - i;                                                            \
+        slen = nr - i;                                                             \
         /* input address */                                                        \
         doublereal *iptr;                                                          \
         integer has_outliers = 0;                                                  \
@@ -569,24 +568,24 @@
         else if (slen < 4)                                                         \
         {                                                                          \
             /* Generate elementary reflector to annihilate                         \
-             * elements below diagonal A(i+1:m,i) */                               \
-            FLA_ELEM_REFLECTOR_GENERATE_DSMALL(i, nr, nc, tauq);                   \
-            /* Apply the reflector on A(i:m,i+1:m) from the left */                \
-            FLA_ELEM_REFLECTOR_APPLY_DSMALL(i, nr, nc, tauq);                      \
+             * elements below diagonal A(i+1:nr,i) */                              \
+            FLA_ELEM_REFLECTOR_GENERATE_DSMALL(i, &nr, &nc, tauq);                 \
+            /* Apply the reflector on A(i:nr,i+1:nc) from the left */              \
+            FLA_ELEM_REFLECTOR_APPLY_DSMALL(i, &nr, &nc, a, tauq);                 \
         }                                                                          \
         else                                                                       \
         {                                                                          \
             /* Generate elementary reflector to annihilate                         \
-             * elements below diagonal A(i+1:m,i) */                               \
-            FLA_ELEM_REFLECTOR_GENERATE_DLARGE(i, nr, nc, tauq);                   \
-            /* Apply the reflector on A(i:m,i+1:m) from the left */                \
-            FLA_ELEM_REFLECTOR_APPLY_DLARGE(i, nr, nc, tauq);                      \
+             * elements below diagonal A(i+1:nr,i) */                              \
+            FLA_ELEM_REFLECTOR_GENERATE_DLARGE(i, &nr, &nc, tauq);                 \
+            /* Apply the reflector on A(i:nr,i+1:nc) from the left */              \
+            FLA_ELEM_REFLECTOR_APPLY_DLARGE(i, &nr, &nc, a, lda, tauq);            \
         }                                                                          \
         s[i] = *iptr;                                                              \
                                                                                    \
         /* Annihilate elements in current row */                                   \
         beta = 0.;                                                                 \
-        rlen = *nc - i - 1;                                                        \
+        rlen = nc - i - 1;                                                         \
         tau = taup;                                                                \
         if (rlen <= 0)                                                             \
         {                                                                          \
@@ -595,7 +594,7 @@
         else                                                                       \
         {                                                                          \
             /* Generate elementary reflector to annihilate */                      \
-            /* elements A(i,i+2:n) */                                              \
+            /* elements A(i,i+2:nr) */                                             \
                                                                                    \
             /* Compute norm2 */                                                    \
             xnorm = dnrm2_(&rlen, &iptr[2 * *lda], lda);                           \
@@ -614,26 +613,29 @@
                 {                                                                  \
                     for (knt = 0; f2c_abs(beta) < safmin && knt < 20; knt++)       \
                     {                                                              \
-                        dscal_(&rlen, &rsafmin, &v[2 * *lda], lda);                \
+                        i__1 = *n - 1;                                             \
+                        dscal_(&i__1, &rsafmin, &v[2 * *lda], lda);                \
                         beta *= rsafmin;                                           \
                         alpha *= rsafmin;                                          \
                     }                                                              \
                     /* New BETA is at most 1, at least SAFMIN */                   \
-                    xnorm = dnrm2_(&rlen, &v[2 * *lda], lda);                      \
+                    i__1 = rlen;                                                   \
+                    xnorm = dnrm2_(&i__1, &v[2 * *lda], lda);                      \
                     d__1 = dlapy2_(&alpha, &xnorm);                                \
                     beta = -d_sign(&d__1, &alpha);                                 \
                 }                                                                  \
                 tau[i] = (beta - alpha) / beta;                                    \
+                i__1 = rlen;                                                       \
                 d__1 = 1. / (alpha - beta);                                        \
-                dscal_(&rlen, &d__1, &v[2 * *lda], lda);                           \
+                dscal_(&i__1, &d__1, &v[2 * *lda], lda);                           \
                 for (j = 1; j <= knt; ++j)                                         \
                 {                                                                  \
                     beta *= safmin;                                                \
                 }                                                                  \
                                                                                    \
-                /* Apply the reflector on A(i+1:m,i+1:n) from the right */         \
+                /* Apply the reflector on A(i+1:nr,i+1:nc) from the right */       \
                                                                                    \
-                /* for every row ac of A(i+1:m,i+1:n) */                           \
+                /* for every row ac of A(i+1:nr,i+1:nc) */                         \
                 ac = iptr;                                                         \
                 v[*lda] = 1;                                                       \
                 for (j = 1; j <= slen; j++)                                        \

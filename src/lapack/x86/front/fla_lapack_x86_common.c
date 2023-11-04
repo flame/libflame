@@ -169,6 +169,26 @@ void fla_dgesvd_nn_small10(integer *m, integer *n,
     return;
 }
 
+/* SVD for small fat-matrices with LQ factorization
+ * already computed
+ */
+void fla_dgesvd_small6(integer *m, integer *n,
+                        doublereal *a, integer *lda,
+                        doublereal *qr, integer *ldqr,
+                        doublereal *s,
+                        doublereal *u, integer *ldu,
+                        doublereal *vt, integer *ldvt,
+                        doublereal *work,
+                        integer *info)
+{
+    if(global_context.is_avx2)
+    {
+        fla_dgesvd_small6_avx2(m, n, a, lda, qr, ldqr, s,
+                                u, ldu, vt, ldvt, work, info);
+    }
+    return;
+}
+
 /* SVD for small fat-matrices for path 1T in DGESVD
  */
 void fla_dgesvd_nn_small1T(integer *m, integer *n,

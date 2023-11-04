@@ -56,7 +56,7 @@ void fla_dgesvd_nn_small10_avx2(integer *m, integer *n,
     taup = &work[itaup - 1];
 
     /* Upper Bidiagonalization */
-    FLA_BIDIAGONALIZE_SMALL(m, n);
+    FLA_BIDIAGONALIZE_SMALL(*m, *n);
 
     /* Compute Singular Values */
     lapack_dbdsqr("U", n, &c__0, &c__0, &c__0, &s[1], &e[1],
