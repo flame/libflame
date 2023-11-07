@@ -20,7 +20,7 @@ endif()
 
 message(STATUS "External blas library Path : ${CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH}")
 message(STATUS "External blas library name : ${EXT_BLAS_LIBNAME}")
-SET(LF_ISA_CONFIG "none" CACHE STRING "LibFlame Instruction set architecture Configuration")
+SET(LF_ISA_CONFIG "AVX2" CACHE STRING "LibFlame Instruction set architecture Configuration")
 
 #gccopenmp
 if(WIN32)
@@ -922,7 +922,7 @@ else ()
 endif ()
 
 if(WIN32)
-	set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/libflame_install" CACHE STRING " " FORCE)
+	set(CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}" CACHE STRING "AOCL-LAPACK lib/ include/ installation path")
 endif()
 message(STATUS "CMAKE_INSTALL_PREFIX : ${CMAKE_INSTALL_PREFIX}")
 
