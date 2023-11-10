@@ -20,7 +20,7 @@ void invoke_syevx(integer datatype, char* jobz, char* range, char* uplo,
                   integer* n, void* a, integer* lda, void* vl, void* vu,
                   integer* il, integer* iu, void* abstol, integer* m, void* w,
                   void* z, integer* ldz, void* work, integer* lwork,
-                  void* rwork, integer* iwork, integer* ifail, integer* info);
+                  void* rwork, void* iwork, void* ifail, integer* info);
 
 void fla_test_syevx(integer argc, char ** argv, test_params_t *params)
 {
@@ -153,7 +153,7 @@ void fla_test_syevx_experiment(test_params_t *params,
                                double *time_min,
                                double* residual)
 {
-    integer n, m, lda, ldz, il, iu, info = 0, vinfo = 0;
+    integer n, lda, ldz, il, iu, info = 0, vinfo = 0;
     char jobz, uplo, range;
     void *A = NULL, *w = NULL, *A_test = NULL;
     void *vl, *vu, *abstol;
@@ -286,7 +286,7 @@ void prepare_syevx_run(char* jobz, char* range, char* uplo, integer n, void* A,
     void *w_test = NULL, *z__ = NULL;
     integer i, m, lwork;
     double time_min = 1e9, exe_time;
-    integer *iwork = NULL, *ifail = NULL;
+    void *iwork = NULL, *ifail = NULL;
 
     if(*range == 'I')
         m = iu - il + 1;
@@ -310,7 +310,7 @@ void prepare_syevx_run(char* jobz, char* range, char* uplo, integer n, void* A,
     if(g_lwork <= 0)
     {
         lwork = -1;
-        create_realtype_vector(datatype, &work, 1);
+        create_vector(datatype, &work, 1);
         /* call to  syevx API */
         invoke_syevx(datatype, jobz, range, uplo, &n, NULL, &lda, vl, vu,
                      &il, &iu, abstol, &m, NULL, NULL, &ldz, work, &lwork,
@@ -379,7 +379,7 @@ void invoke_syevx(integer datatype, char* jobz, char* range, char* uplo,
                   integer* n, void* a, integer* lda, void* vl, void* vu,
                   integer* il, integer* iu, void* abstol, integer* m, void* w,
                   void* z, integer* ldz, void* work, integer* lwork,
-                  void* rwork, integer* iwork, integer* ifail, integer* info)
+                  void* rwork, void* iwork, void* ifail, integer* info)
 {
     switch(datatype)
     {
