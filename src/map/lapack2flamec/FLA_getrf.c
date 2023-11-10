@@ -84,7 +84,7 @@ extern fla_context global_context;                                              
   }                                                                                             \
   else                                                                                          \
   {                                                                                             \
-    FLA_LU_piv_z_var1_parallel( m, n, buff_A, ldim_A, buff_p, info);                            \
+    FLA_LU_piv_z_parallel( m, n, buff_A, ldim_A, buff_p, info);                                 \
   }
 
 #else
