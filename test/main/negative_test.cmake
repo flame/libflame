@@ -164,16 +164,16 @@ set(NEGATIVE_TEST_CASES "ggevx sdcz A V V B 10 10 10 10 10 -1 1 --einfo=-1"
             "hgeqz cz S V V 10 2 4 10 10 10 10 1 1 --einfo=-18"
             "org2r sdcz 10 -10 10 1 --einfo=-2"
             "org2r sdcz 10 10 -10 1 --einfo=-5"
-            "syevx sdcz B A U 10 12 1.0 20.0 1 3 12 -1 1 --einfo=-1"
-            "syevx sdcz V B U 10 12 1.0 20.0 1 3 12 -1 1 --einfo=-2"
-            "syevx sdcz V A X 10 12 1.0 20.0 1 3 12 -1 1 --einfo=-3"
-            "syevx sdcz V A U -1 12 1.0 20.0 1 3 12 -1 1 --einfo=-4"
-            "syevx sdcz V A U 10 5 1.0 20.0 1 3 12 -1 1 --einfo=-6"
-            "syevx sdcz V V U 10 15 10 -1 1 3 15 -1 1 --einfo=-8"
-            "syevx sdcz V I U 10 15 10 20 -1 1 15 -1 1 --einfo=-9"
-            "syevx sdcz V I U 10 15 10 20 1 -1 15 -1 1 --einfo=-10"
-            "syevx sdcz V A U 10 15 100.0 20.0 1 3 5 -1 1 --einfo=-15"
-            "syevx sdcz V A U 10 15 100.0 20.0 1 3 12 10 1 --einfo=-17")
+            "syevx sdcz B A U 10 12 1.0 20.0 1 3 -1 12 -1 1 --einfo=-1"
+            "syevx sdcz V B U 10 12 1.0 20.0 1 3 -1 12 -1 1 --einfo=-2"
+            "syevx sdcz V A X 10 12 1.0 20.0 1 3 -1 12 -1 1 --einfo=-3"
+            "syevx sdcz V A U -1 12 1.0 20.0 1 3 -1 12 -1 1 --einfo=-4"
+            "syevx sdcz V A U 10 5 1.0 20.0 1 3 -1 12 -1 1 --einfo=-6"
+            "syevx sdcz V V U 10 15 10 -1 1 3 -1 15 -1 1 --einfo=-8"
+            "syevx sdcz V I U 10 15 10 20 -1 1 -1 15 -1 1 --einfo=-9"
+            "syevx sdcz V I U 10 15 10 20 1 -1 -1 15 -1 1 --einfo=-10"
+            "syevx sdcz V A U 10 15 100.0 20.0 1 3 -1 5 -1 1 --einfo=-15"
+            "syevx sdcz V A U 10 15 100.0 20.0 1 3 -1 12 10 1 --einfo=-17")
 
 set(TEST_NUM 1)
 foreach(neg_test_cases IN LISTS NEGATIVE_TEST_CASES)

@@ -22,7 +22,7 @@ script can be used for both Linux and Windows platforms.
         cmake . -DEXT_BLAS_LIBRARY_DEPENDENCY_PATH=../../lib/ -DEXT_LAPACK_LIBRARY_PATH=../../lib 
         -DAOCLUTILS_LIBRARY_PATH=/home/usr/aoclutils-install/lib 
 	-DEXT_BLAS_LIBNAME=libblis-mt.a -DEXT_LAPACK_LIBNAME=libflame.a
-        --DEXT_FLAME_HEADER_PATH=../../include/
+        -DEXT_FLAME_HEADER_PATH=../../include/
         ```
 
 3. Compile the sample application
