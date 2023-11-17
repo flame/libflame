@@ -31,8 +31,11 @@
     Shared library is turned on by default. To generate Static library provide additional option
         -DBUILD_SHARED_LIBS=OFF
 
-    compile library using following command. This will generate libflame.a/libflame.so library in the lib directory
+    Compile library using following command. This will generate libflame.a/libflame.so library in the lib directory
         cmake --build . -j OR make -j
+
+    Install the library
+        make install
 
 Linking with AOCL-BLAS
 ------------------------------------
@@ -76,17 +79,20 @@ Autoconfigure :   $ configure --enable-amd-flags
 
 ## 2. Building main Test and AOCL_FLA_PROGRESS Test Suite
 In order to build tests an additional flag, BUILD_TEST, must be set ON
-        -DBUILD_TEST=ON -DCMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH=/path/to/blas/library -DEXT_BLAS_LIBNAME=blas_lib_name
-        -DBLAS_HEADER_PATH="<path to BLIS header file blis.h>"
+        -DBUILD_TEST=ON -DCMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH="<path to blas library>" -DEXT_BLAS_LIBNAME=blas_lib_name
+        -DBLAS_HEADER_PATH="<path to BLIS header file blis.h>" 
+        -DLIBAOCLUTILS_LIBRARY_PATH="<full path to AOCL-Utils library including library file>"
     
 This will enable aocl progress feature tests and main test suite. It will generate test_libFLAME_aocl , test_lapack.x executables in the respective directories.
-Note: Building tests require path to an external blas library. Refer to Readme in respective test suite directory for more details
+Note: Building tests require path to AOCL-Utils library and an external blas library. Refer to Readme in respective test suite directory for more details
 Recomended to use AOCL-BLAS sharedlib with AOCL-LAPACK sharedlib
 
 ## 3 Building Legacy test and Netlib test
     # 1. To build Legacy test suite use 
-     -DBUILD_LEGACY_TEST=ON -DCMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH=/path/to/blas/library -DEXT_BLAS_LIBNAME=blas_lib_name
+     -DBUILD_LEGACY_TEST=ON -DCMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH=<"path to blas library" -DEXT_BLAS_LIBNAME=blas_lib_name
     -DBLAS_HEADER_PATH="<path to BLIS header file blis.h>" 
+    -DLIBAOCLUTILS_LIBRARY_PATH="<full path to AOCL-Utils library including library file>" 
+
     Note: On Windows, to build and run legacy test suite, a separate macro flag is enabled during AOCL-LAPACK library build because of certain constraints in legacy test suite.
     # 2. To Build Netlib-test add -DBUILD_NETLIB_TEST=ON along with cmake commands.
         note: Windows requires running create_new_testdir.bat script before running netlib test
@@ -96,7 +102,7 @@ Recomended to use AOCL-BLAS sharedlib with AOCL-LAPACK sharedlib
         -DENABLE_AOCL_DTL=[OPTION]
     along with setting the value of Macros AOCL_DTL_TRACE_ENABLE and AOCL_DTL_LOG_ENABLE to 1 in file libflame/src/aocl_dtl/aocldtlcf.h 
     e.g.
-        cmake ../ -DENABLE_ILP64=OFF -DENABLE_AMD_FLAGS=ON -DBUILD_TEST=ON -DENABLE_AOCL_DTL=[DTL_OPTION] -DCMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH=path/to/blas/lib -DEXT_BLAS_LIBNAME=<BLAS_lib_name> -DCMAKE_INSTALL_PREFIX=<path> -DBLAS_HEADER_PATH="<path to BLIS header file blis.h>"
+        cmake ../ -DENABLE_ILP64=OFF -DENABLE_AMD_FLAGS=ON -DBUILD_TEST=ON -DENABLE_AOCL_DTL=[DTL_OPTION] -DCMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH="<path to blas library>" -DEXT_BLAS_LIBNAME=<BLAS_lib_name> -DCMAKE_INSTALL_PREFIX=<path> -DBLAS_HEADER_PATH="<path to BLIS header file blis.h>" -DLIBAOCLUTILS_LIBRARY_PATH="<full path to AOCL-Utils library including library file>"
         
     DTL_OPTION
     1. "ALL" to ENABLE TRACE and LOG
@@ -146,6 +152,3 @@ Recomended to use AOCL-BLAS sharedlib with AOCL-LAPACK sharedlib
         bash generate_code_coverage_html.sh. 
     It will give you a prompt to view the code coverage of that particular application.
 
-## 9. Installing AOCL-LAPACK library
-    Use the following command to install the AOCL-LAPACK library
-        make DESTDIR=<Install Path> install.

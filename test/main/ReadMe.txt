@@ -19,7 +19,14 @@ The test suite directory has (test/main) the following contents,
 
 ## Compiling
 
-Before running the test suite, we must set BLAS and LAPACK library paths in Makefile.
+Before running the test suite, we must set BLAS, LAPACK and AOCL-Utils library paths.
+
+BLAS library and header paths has to be set using 'LIBBLAS' and 'BLAS_HEADER_PATH' flags
+respectively. AOCL-Utils library path has to be set using LIBAOCLUTILS_LIBRARY_PATH flag.
+   $ make BLAS_HEADER_PATH=<path to BLAS API prototypes header file> 
+          LIBBLAS=<full path to BLAS library including library file>
+          LIBAOCLUTILS_LIBRARY_PATH=<full path to AOCL-Utils library including library file>
+ 
 By default, the make file is programmed to look for libflame.a in `../../lib/
 x86_64-unknown-linux-gnu` directory for LAPACK library. However, if the users
 wish to link different LAPACK library, they must set the envrionment variable `LIB_PATH`
@@ -27,18 +34,14 @@ to the install path and `LIBFLAME` to the LAPACK library name like the example g
 below.
 
    $ export LIBFLAME=lapack.a LIB_PATH=/usr/local
-   $ make
 
 Alternatively, you may set the `make` variable `LIB_PATH` on the command line as you
 execute `make`:
 
-   $ make LIBFLAME=lapack.a LIB_PATH=/usr/local
-
-Similarly, user has to provide the path for BLAS library and header by setting the 
-environment varaiable 'LIBBLAS' and 'BLAS_HEADER_PATH' respectively.
-
-   $ make BLAS_HEADER_PATH=<path to BLAS API prototypes header file> 
+   $ make LIBFLAME=lapack.a LIB_PATH=/usr/local 
+	  BLAS_HEADER_PATH=<path to BLAS API prototypes header file>
           LIBBLAS=<full path to BLAS library including library file>
+          LIBAOCLUTILS_LIBRARY_PATH=<full path to AOCL-Utils library including library file>
 
 When you are ready to compile, simply run `make` from the current directory.
 After `make` is complete, an executable named `test_lapack.x` is created.
