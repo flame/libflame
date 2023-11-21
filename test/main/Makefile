@@ -10,7 +10,7 @@ LINKER         := $(CC)
 RM_RF          := rm -rf
 OMP_LIB        := -fopenmp
 CPPFLAGS       :=
-CFLAGS         := -O2 -Wall -Wno-comment ${OMP_LIB}
+CFLAGS         := -std=c11 -D_GNU_SOURCE -O2 -Wall -Wno-comment ${OMP_LIB}
 LDFLAGS        := -lstdc++ -lm -lpthread $(OMP_LIB)
 
 #
