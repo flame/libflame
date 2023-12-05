@@ -957,11 +957,17 @@ if(ENABLE_OPENMP)
 	if(EXT_OPENMP_PATH)
 		if(NOT EXISTS ${EXT_OPENMP_PATH}/${EXT_OPENMP_LIB})
 			message(FATAL_ERROR "\n Invalid path to openmp Library \n \
-	${EXT_OPENMP_PATH}/${EXT_OPENMP_LIB} \
-	Does not exist.\n Please check the path again")
+		${EXT_OPENMP_PATH}/${EXT_OPENMP_LIB} \
+		Does not exist.\n Please check the path again")
 		endif()
-	find_library(LIBIOMP ${EXT_OPENMP_LIB} ${EXT_OPENMP_PATH} )
-	target_link_libraries(${PROJECT_NAME}  ${LIBIOMP})
+
+		find_library(LIBIOMP ${EXT_OPENMP_LIB} ${EXT_OPENMP_PATH} NO_DEFAULT_PATH)
+        	message("User provided OpenMP library path ${LIBIOMP}")
+
+		target_link_libraries(${PROJECT_NAME}  ${LIBIOMP})
+		if(UNIX)
+	        	target_link_libraries(${PROJECT_NAME} -Wl,--as-needed -ldl)
+		endif()
 	else()
 		target_link_libraries(${PROJECT_NAME}  OpenMP::OpenMP_CXX)
 	endif()

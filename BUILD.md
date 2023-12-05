@@ -1,5 +1,5 @@
-# STEPS TO COMPILE LIBFLAME USING CMAKE
-## 1. Generating Libflame library  
+# STEPS TO COMPILE AOCL-LAPACK USING CMAKE
+## 1. Generating AOCL-LAPACK library  
     Create a new build directory e.g. build1 
         mkdir build1;
         cd build1;
@@ -80,7 +80,7 @@ Autoconfigure :   $ configure --enable-amd-flags
 ## 2. Building main Test and AOCL_FLA_PROGRESS Test Suite
 In order to build tests an additional flag, BUILD_TEST, must be set ON
         -DBUILD_TEST=ON -DCMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH="<path to blas library>" -DEXT_BLAS_LIBNAME=blas_lib_name
-        -DBLAS_HEADER_PATH="<path to BLIS header file blis.h>" 
+        -DBLAS_HEADER_PATH="<path to AOCL-BLAS header file blis.h>" 
         -DLIBAOCLUTILS_LIBRARY_PATH="<full path to AOCL-Utils library including library file>"
     
 This will enable aocl progress feature tests and main test suite. It will generate test_libFLAME_aocl , test_lapack.x executables in the respective directories.
@@ -90,7 +90,7 @@ Recomended to use AOCL-BLAS sharedlib with AOCL-LAPACK sharedlib
 ## 3 Building Legacy test and Netlib test
     # 1. To build Legacy test suite use 
      -DBUILD_LEGACY_TEST=ON -DCMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH=<"path to blas library" -DEXT_BLAS_LIBNAME=blas_lib_name
-    -DBLAS_HEADER_PATH="<path to BLIS header file blis.h>" 
+    -DBLAS_HEADER_PATH="<path to AOCL-BLAS header file blis.h>" 
     -DLIBAOCLUTILS_LIBRARY_PATH="<full path to AOCL-Utils library including library file>" 
 
     Note: On Windows, to build and run legacy test suite, a separate macro flag is enabled during AOCL-LAPACK library build because of certain constraints in legacy test suite.
@@ -102,7 +102,7 @@ Recomended to use AOCL-BLAS sharedlib with AOCL-LAPACK sharedlib
         -DENABLE_AOCL_DTL=[OPTION]
     along with setting the value of Macros AOCL_DTL_TRACE_ENABLE and AOCL_DTL_LOG_ENABLE to 1 in file libflame/src/aocl_dtl/aocldtlcf.h 
     e.g.
-        cmake ../ -DENABLE_ILP64=OFF -DENABLE_AMD_FLAGS=ON -DBUILD_TEST=ON -DENABLE_AOCL_DTL=[DTL_OPTION] -DCMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH="<path to blas library>" -DEXT_BLAS_LIBNAME=<BLAS_lib_name> -DCMAKE_INSTALL_PREFIX=<path> -DBLAS_HEADER_PATH="<path to BLIS header file blis.h>" -DLIBAOCLUTILS_LIBRARY_PATH="<full path to AOCL-Utils library including library file>"
+        cmake ../ -DENABLE_ILP64=OFF -DENABLE_AMD_FLAGS=ON -DBUILD_TEST=ON -DENABLE_AOCL_DTL=[DTL_OPTION] -DCMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH="<path to blas library>" -DEXT_BLAS_LIBNAME=<BLAS_lib_name> -DCMAKE_INSTALL_PREFIX=<path> -DBLAS_HEADER_PATH="<path to AOCL-BLAS header file blis.h>" -DLIBAOCLUTILS_LIBRARY_PATH="<full path to AOCL-Utils library including library file>"
         
     DTL_OPTION
     1. "ALL" to ENABLE TRACE and LOG
@@ -119,12 +119,11 @@ Recomended to use AOCL-BLAS sharedlib with AOCL-LAPACK sharedlib
     In Order to link with an external openmp library user can pass 
         -DEXT_OPENMP_PATH=<openmp lib path> -DEXT_OPENMP_LIB=<openmp lib name>
     Note:   1. In order to use openmp from the system -DEXT_OPENMP_PATH is to be left blank
-            2. To link Intel OpenMP library,libiomp5.so when compiling with 
+            2. To link Intel OpenMP library,libiomp5.so, set following flag addtionally 
                 gcc
                     -DCMAKE_C_FLAG="-fopenmp" 
                 aocc 
                     -DCMAKE_C_FLAG="-fopenmp=libiomp5"
-            when linking with AOCC cmake standards have to be set to -std=c11 instead of gnu99. 
             
 
 ## 7. Using ctest

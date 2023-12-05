@@ -213,8 +213,8 @@ NOTE:
    This option is available only through command line execution.
 
    Example:
-    ./test_lapack.x GETRF 10 10 10 1 --imatrix=N
-    ./test_lapack.x GETRF 10 10 10 1 --imatrix=I
+    ./test_lapack.x GETRF d 10 10 10 1 --imatrix=N
+    ./test_lapack.x GETRF d 10 10 10 1 --imatrix=I
    
    In the above example passing the value of --imatrix as 'N' will intialize the matrix with NAN values
    and if the value is 'I' then matrix will be intialized with the INFINITY.
