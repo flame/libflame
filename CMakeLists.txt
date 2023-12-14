@@ -1085,12 +1085,12 @@ if(ENABLE_EMBED_AOCLUTILS)
 	target_link_libraries(${PROJECT_NAME} "libstdc++.so")
   endif ()
 
-elseif(WIN32 AND BUILD_SHARED_LIBS) 
+elseif(BUILD_SHARED_LIBS) 
 	if(LIBAOCLUTILS_LIBRARY_PATH AND LIBAOCLUTILS_INCLUDE_PATH)
 		target_include_directories(${PROJECT_NAME} PUBLIC ${LIBAOCLUTILS_INCLUDE_PATH})	
 		target_link_libraries(${PROJECT_NAME} ${LIBAOCLUTILS_LIBRARY_PATH})
 	else()
-		message(FATAL_ERROR "Windows Shared Library build requires AOCL-Utils library and header path to be set! Please set the same using LIBAOCLUTILS_LIBRARY_PATH and LIBAOCLUTILS_INCLUDE_PATH options respectively")
+		message(FATAL_ERROR "Shared Library build requires AOCL-Utils library and header path to be set! Please set the same using LIBAOCLUTILS_LIBRARY_PATH and LIBAOCLUTILS_INCLUDE_PATH options respectively")
 
 	endif()
 
