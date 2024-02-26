@@ -174,7 +174,7 @@ int dsycon_3_(char *uplo, integer *n, doublereal *a, integer *lda, doublereal *e
     integer isave[3];
     logical upper;
     extern /* Subroutine */
-    int dlacn2_(integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *), xerbla_(char *, integer *);
+    int dlacn2_(integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal ainvnm;
     /* -- LAPACK computational routine (version 3.7.1) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -229,7 +229,7 @@ int dsycon_3_(char *uplo, integer *n, doublereal *a, integer *lda, doublereal *e
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSYCON_3", &i__1);
+        xerbla_("DSYCON_3", &i__1, (ftnlen)8);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

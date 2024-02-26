@@ -455,7 +455,7 @@ int ztgsen_(integer *ijob, logical *wantq, logical *wantz, logical *select, inte
     extern doublereal dlamch_(char *);
     doublereal dscale, rdscal, safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer liwmin;
     extern /* Subroutine */
     int zlacpy_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), ztgexc_(logical *, logical *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *, integer *, integer *), zlassq_(integer *, doublecomplex *, integer *, doublereal *, doublereal *);
@@ -534,7 +534,7 @@ int ztgsen_(integer *ijob, logical *wantq, logical *wantz, logical *select, inte
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZTGSEN", &i__1);
+        xerbla_("ZTGSEN", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -620,7 +620,7 @@ int ztgsen_(integer *ijob, logical *wantq, logical *wantz, logical *select, inte
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZTGSEN", &i__1);
+        xerbla_("ZTGSEN", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

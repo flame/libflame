@@ -173,7 +173,7 @@ int dsytrf_aa_2stage_(char *uplo, integer *n, doublereal *a, integer *lda, doubl
     int dcopy_(integer *, doublereal *, integer *, doublereal *, integer *), dswap_(integer *, doublereal *, integer *, doublereal *, integer *), dtrsm_(char *, char *, char *, char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *);
     logical upper;
     extern /* Subroutine */
-    int dgbtrf_(integer *, integer *, integer *, integer *, doublereal *, integer *, integer *, integer *), dgetrf_(integer *, integer *, doublereal *, integer *, integer *, integer *), dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dgbtrf_(integer *, integer *, integer *, integer *, doublereal *, integer *, integer *, integer *), dgetrf_(integer *, integer *, doublereal *, integer *, integer *, integer *), dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), dsygst_(integer *, char *, integer *, doublereal *, integer *, doublereal *, integer *, integer *);
@@ -234,7 +234,7 @@ int dsytrf_aa_2stage_(char *uplo, integer *n, doublereal *a, integer *lda, doubl
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSYTRF_AA_2STAGE", &i__1);
+        xerbla_("DSYTRF_AA_2STAGE", &i__1, (ftnlen)16);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -241,18 +241,16 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
     int dcopy_(integer *, doublereal *, integer *, doublereal *, integer *);
     integer itaup1, itaup2, itauq1;
     logical wantu1, wantu2;
-    extern /* Subroutine */
-    int dbbcsd_();
     integer ibbcsd, lbbcsd, iorbdb, lorbdb;
     extern /* Subroutine */
-    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(char *, integer *), dlapmr_(logical *, integer *, integer *, doublereal *, integer *, integer *), dlapmt_(logical *, integer *, integer *, doublereal *, integer *, integer *);
+    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), dlapmr_(logical *, integer *, integer *, doublereal *, integer *, integer *), dlapmt_(logical *, integer *, integer *, doublereal *, integer *, integer *);
     integer iorglq;
     extern int /* Subroutine */
       dorglq_fla(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *),
       lapack_dorgqr(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
     integer lorglq, iorgqr, lorgqr;
     extern /* Subroutine */
-    int dorbdb1_(), dorbdb2_(), dorbdb3_(), dorbdb4_() ;
+    int dbbcsd_(char *, char *, char *, char *, char *, integer *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, integer *), dorbdb1_(integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, integer *), dorbdb2_(integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, integer *), dorbdb3_( integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, integer *), dorbdb4_(integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, integer *);
     logical lquery, wantv1t;
     /* -- LAPACK computational routine (3.5.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -300,6 +298,21 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
     wantu2 = lsame_(jobu2, "Y");
     wantv1t = lsame_(jobv1t, "Y");
     lquery = *lwork == -1;
+    iorgqr = 0;
+    iorglq = 0;
+    iorbdb = 0;
+    ibbcsd = 0;
+    itauq1 = 0;
+    itaup2 = 0;
+    itaup1 = 0;
+    ib22e = 0;
+    ib22d = 0;
+    ib21e = 0;
+    ib21d = 0;
+    ib12e = 0;
+    ib12d = 0;
+    ib11e = 0;
+    ib11d = 0;
     if (*m < 0)
     {
         *info = -4;
@@ -401,7 +414,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
         iorglq = itauq1 + fla_max(1,*q);
         if (r__ == *q)
         {
-            dorbdb1_(m, p, q, &x11[x11_offset], ldx11, &x21[x21_offset], ldx21, &theta[1], &c__0, &c__0, &c__0, &c__0, &work[1], & c_n1, &childinfo);
+            dorbdb1_(m, p, q, &x11[x11_offset], ldx11, &x21[x21_offset], ldx21, &theta[1], (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, &work[1], & c_n1, &childinfo);
             lorbdb = (integer) work[1];
             if (*p >= *m - *p)
             {
@@ -438,12 +451,12 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             i__2 = *q - 1; // , expr subst
             lorglqmin = fla_max(i__1,i__2);
             lorglqopt = (integer) work[1];
-            dbbcsd_(jobu1, jobu2, jobv1t, "N", "N", m, p, q, &theta[1], &c__0, &u1[u1_offset], ldu1, &u2[u2_offset], ldu2, &v1t[ v1t_offset], ldv1t, &c__0, &c__1, &c__0, &c__0, &c__0, & c__0, &c__0, &c__0, &c__0, &c__0, &work[1], &c_n1, & childinfo);
+            dbbcsd_(jobu1, jobu2, jobv1t, "N", "N", m, p, q, &theta[1], (doublereal*)&c__0, &u1[u1_offset], ldu1, &u2[u2_offset], ldu2, &v1t[ v1t_offset], ldv1t, (doublereal*)&c__0, &c__1, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, &work[1], &c_n1, & childinfo);
             lbbcsd = (integer) work[1];
         }
         else if (r__ == *p)
         {
-            dorbdb2_(m, p, q, &x11[x11_offset], ldx11, &x21[x21_offset], ldx21, &theta[1], &c__0, &c__0, &c__0, &c__0, &work[1], & c_n1, &childinfo);
+            dorbdb2_(m, p, q, &x11[x11_offset], ldx11, &x21[x21_offset], ldx21, &theta[1], (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, &work[1], & c_n1, &childinfo);
             lorbdb = (integer) work[1];
             if (*p - 1 >= *m - *p)
             {
@@ -471,12 +484,12 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             dorglq_fla(q, q, &r__, &v1t[v1t_offset], ldv1t, (doublereal*)&c__0, &work[1], & c_n1, &childinfo);
             lorglqmin = fla_max(1,*q);
             lorglqopt = (integer) work[1];
-            dbbcsd_(jobv1t, "N", jobu1, jobu2, "T", m, q, p, &theta[1], &c__0, &v1t[v1t_offset], ldv1t, &c__0, &c__1, &u1[u1_offset], ldu1, &u2[u2_offset], ldu2, &c__0, &c__0, &c__0, &c__0, & c__0, &c__0, &c__0, &c__0, &work[1], &c_n1, &childinfo);
+            dbbcsd_(jobv1t, "N", jobu1, jobu2, "T", m, q, p, &theta[1], (doublereal*)&c__0, &v1t[v1t_offset], ldv1t, (doublereal*)&c__0, &c__1, &u1[u1_offset], ldu1, &u2[u2_offset], ldu2, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, &work[1], &c_n1, &childinfo);
             lbbcsd = (integer) work[1];
         }
         else if (r__ == *m - *p)
         {
-            dorbdb3_(m, p, q, &x11[x11_offset], ldx11, &x21[x21_offset], ldx21, &theta[1], &c__0, &c__0, &c__0, &c__0, &work[1], & c_n1, &childinfo);
+            dorbdb3_(m, p, q, &x11[x11_offset], ldx11, &x21[x21_offset], ldx21, &theta[1], (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, &work[1], & c_n1, &childinfo);
             lorbdb = (integer) work[1];
             if (*p >= *m - *p - 1)
             {
@@ -501,12 +514,12 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             lorglqopt = (integer) work[1];
             i__1 = *m - *q;
             i__2 = *m - *p;
-            dbbcsd_("N", jobv1t, jobu2, jobu1, "T", m, &i__1, &i__2, &theta[1] , &c__0, &c__0, &c__1, &v1t[v1t_offset], ldv1t, &u2[ u2_offset], ldu2, &u1[u1_offset], ldu1, &c__0, &c__0, & c__0, &c__0, &c__0, &c__0, &c__0, &c__0, &work[1], &c_n1, &childinfo);
+            dbbcsd_("N", jobv1t, jobu2, jobu1, "T", m, &i__1, &i__2, &theta[1] , (doublereal*)&c__0, (doublereal*)&c__0, &c__1, &v1t[v1t_offset], ldv1t, &u2[ u2_offset], ldu2, &u1[u1_offset], ldu1, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, &work[1], &c_n1, &childinfo);
             lbbcsd = (integer) work[1];
         }
         else
         {
-            dorbdb4_(m, p, q, &x11[x11_offset], ldx11, &x21[x21_offset], ldx21, &theta[1], &c__0, &c__0, &c__0, &c__0, &c__0, & work[1], &c_n1, &childinfo);
+            dorbdb4_(m, p, q, &x11[x11_offset], ldx11, &x21[x21_offset], ldx21, &theta[1], (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, & work[1], &c_n1, &childinfo);
             lorbdb = *m + (integer) work[1];
             if (*p >= *m - *p)
             {
@@ -532,7 +545,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             lorglqopt = (integer) work[1];
             i__1 = *m - *p;
             i__2 = *m - *q;
-            dbbcsd_(jobu2, jobu1, "N", jobv1t, "N", m, &i__1, &i__2, &theta[1] , &c__0, &u2[u2_offset], ldu2, &u1[u1_offset], ldu1, & c__0, &c__1, &v1t[v1t_offset], ldv1t, &c__0, &c__0, &c__0, &c__0, &c__0, &c__0, &c__0, &c__0, &work[1], &c_n1, & childinfo);
+            dbbcsd_(jobu2, jobu1, "N", jobv1t, "N", m, &i__1, &i__2, &theta[1] , (doublereal*)&c__0, &u2[u2_offset], ldu2, &u1[u1_offset], ldu1, (doublereal*)&c__0, &c__1, &v1t[v1t_offset], ldv1t, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, (doublereal*)&c__0, &work[1], &c_n1, & childinfo);
             lbbcsd = (integer) work[1];
         }
         /* Computing MAX */
@@ -554,7 +567,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DORCSD2BY1", &i__1);
+        xerbla_("DORCSD2BY1", &i__1, (ftnlen)10);
         return 0;
     }
     else if (lquery)
@@ -604,7 +617,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             dorglq_fla(&i__1, &i__2, &i__3, &v1t[(v1t_dim1 << 1) + 2], ldv1t, & work[itauq1], &work[iorglq], &lorglq, &childinfo);
         }
         /* Simultaneously diagonalize X11 and X21. */
-        dbbcsd_(jobu1, jobu2, jobv1t, "N", "N", m, p, q, &theta[1], &work[ iphi], &u1[u1_offset], ldu1, &u2[u2_offset], ldu2, &v1t[ v1t_offset], ldv1t, &c__0, &c__1, &work[ib11d], &work[ib11e], &work[ib12d], &work[ib12e], &work[ib21d], &work[ib21e], &work[ ib22d], &work[ib22e], &work[ibbcsd], &lbbcsd, &childinfo);
+        dbbcsd_(jobu1, jobu2, jobv1t, "N", "N", m, p, q, &theta[1], &work[ iphi], &u1[u1_offset], ldu1, &u2[u2_offset], ldu2, &v1t[ v1t_offset], ldv1t, (doublereal*)&c__0, &c__1, &work[ib11d], &work[ib11e], &work[ib12d], &work[ib12e], &work[ib21d], &work[ib21e], &work[ ib22d], &work[ib22e], &work[ibbcsd], &lbbcsd, &childinfo);
         /* Permute rows and columns to place zero submatrices in */
         /* preferred positions */
         if (*q > 0 && wantu2)
@@ -667,7 +680,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             dorglq_fla(q, q, &r__, &v1t[v1t_offset], ldv1t, &work[itauq1], &work[ iorglq], &lorglq, &childinfo);
         }
         /* Simultaneously diagonalize X11 and X21. */
-        dbbcsd_(jobv1t, "N", jobu1, jobu2, "T", m, q, p, &theta[1], &work[ iphi], &v1t[v1t_offset], ldv1t, &c__0, &c__1, &u1[u1_offset], ldu1, &u2[u2_offset], ldu2, &work[ib11d], &work[ib11e], &work[ ib12d], &work[ib12e], &work[ib21d], &work[ib21e], &work[ib22d] , &work[ib22e], &work[ibbcsd], &lbbcsd, &childinfo);
+        dbbcsd_(jobv1t, "N", jobu1, jobu2, "T", m, q, p, &theta[1], &work[ iphi], &v1t[v1t_offset], ldv1t, (doublereal*)&c__0, &c__1, &u1[u1_offset], ldu1, &u2[u2_offset], ldu2, &work[ib11d], &work[ib11e], &work[ ib12d], &work[ib12e], &work[ib21d], &work[ib21e], &work[ib22d] , &work[ib22e], &work[ibbcsd], &lbbcsd, &childinfo);
         /* Permute rows and columns to place identity submatrices in */
         /* preferred positions */
         if (*q > 0 && wantu2)
@@ -730,7 +743,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
         /* Simultaneously diagonalize X11 and X21. */
         i__1 = *m - *q;
         i__2 = *m - *p;
-        dbbcsd_("N", jobv1t, jobu2, jobu1, "T", m, &i__1, &i__2, &theta[1], & work[iphi], &c__0, &c__1, &v1t[v1t_offset], ldv1t, &u2[ u2_offset], ldu2, &u1[u1_offset], ldu1, &work[ib11d], &work[ ib11e], &work[ib12d], &work[ib12e], &work[ib21d], &work[ib21e] , &work[ib22d], &work[ib22e], &work[ibbcsd], &lbbcsd, & childinfo);
+        dbbcsd_("N", jobv1t, jobu2, jobu1, "T", m, &i__1, &i__2, &theta[1], & work[iphi], (doublereal*)&c__0, &c__1, &v1t[v1t_offset], ldv1t, &u2[ u2_offset], ldu2, &u1[u1_offset], ldu1, &work[ib11d], &work[ ib11e], &work[ib12d], &work[ib12e], &work[ib21d], &work[ib21e] , &work[ib22d], &work[ib22e], &work[ibbcsd], &lbbcsd, & childinfo);
         /* Permute rows and columns to place identity submatrices in */
         /* preferred positions */
         if (*q > r__)
@@ -816,7 +829,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
         /* Simultaneously diagonalize X11 and X21. */
         i__1 = *m - *p;
         i__2 = *m - *q;
-        dbbcsd_(jobu2, jobu1, "N", jobv1t, "N", m, &i__1, &i__2, &theta[1], & work[iphi], &u2[u2_offset], ldu2, &u1[u1_offset], ldu1, &c__0, &c__1, &v1t[v1t_offset], ldv1t, &work[ib11d], &work[ib11e], & work[ib12d], &work[ib12e], &work[ib21d], &work[ib21e], &work[ ib22d], &work[ib22e], &work[ibbcsd], &lbbcsd, &childinfo);
+        dbbcsd_(jobu2, jobu1, "N", jobv1t, "N", m, &i__1, &i__2, &theta[1], & work[iphi], &u2[u2_offset], ldu2, &u1[u1_offset], ldu1, (doublereal*)&c__0, &c__1, &v1t[v1t_offset], ldv1t, &work[ib11d], &work[ib11e], & work[ib12d], &work[ib12e], &work[ib21d], &work[ib21e], &work[ ib22d], &work[ib22e], &work[ibbcsd], &lbbcsd, &childinfo);
         /* Permute rows and columns to place identity submatrices in */
         /* preferred positions */
         if (*p > r__)

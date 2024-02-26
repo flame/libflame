@@ -13,7 +13,6 @@ static complex c_b2 =
 ;
 static integer c__1 = 1;
 static integer c__12 = 12;
-static integer c__2 = 2;
 static integer c__49 = 49;
 /* > \brief \b CHSEQR */
 /* =========== DOCUMENTATION =========== */
@@ -303,8 +302,7 @@ int chseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, comp
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("chseqr inputs: job %c, compz %c, n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", ldh %" FLA_IS ", ldz %" FLA_IS "",*job, *compz, *n, *ilo, *ihi, *ldh, *ldz);
     /* System generated locals */
-    address a__1[2];
-    integer h_dim1, h_offset, z_dim1, z_offset, i__1, i__2, i__3[2];
+    integer h_dim1, h_offset, z_dim1, z_offset, i__1, i__2;
     real r__1, r__2, r__3;
     complex q__1;
     char ch__1[2];
@@ -322,7 +320,7 @@ int chseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, comp
     complex workl[49];
     logical wantt, wantz;
     extern /* Subroutine */
-    int claqr0_(logical *, logical *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, integer *, complex *, integer *, complex *, integer *, integer *), clahqr_(logical *, logical *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, integer *, complex *, integer *, integer *), clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(char *, integer *);
+    int claqr0_(logical *, logical *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, integer *, complex *, integer *, complex *, integer *, integer *), clahqr_(logical *, logical *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, integer *, complex *, integer *, integer *), clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     logical lquery;
     /* -- LAPACK computational routine -- */
@@ -412,7 +410,7 @@ int chseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, comp
     {
         /* ==== Quick return in case of invalid argument. ==== */
         i__1 = -(*info);
-        xerbla_("CHSEQR", &i__1);
+        xerbla_("CHSEQR", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

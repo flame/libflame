@@ -167,8 +167,7 @@ int dormrq_(char *side, char *trans, integer *m, integer *n, integer *k, doubler
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("dormrq inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS ", ldc %" FLA_IS ", lwork %" FLA_IS "",*side, *trans, *m, *n, *k, *lda, *ldc, *lwork);
     /* System generated locals */
-    address a__1[2];
-    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__3[2], i__4, i__5;
+    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__4, i__5;
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */
@@ -179,7 +178,7 @@ int dormrq_(char *side, char *trans, integer *m, integer *n, integer *k, doubler
     extern logical lsame_(char *, char *);
     integer nbmin, iinfo;
     extern /* Subroutine */
-    int dormr2_(char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *), dlarfb_(char *, char *, char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), dlarft_(char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dormr2_(char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *), dlarfb_(char *, char *, char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), dlarft_(char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     logical notran;
     integer ldwork;
@@ -218,6 +217,7 @@ int dormrq_(char *side, char *trans, integer *m, integer *n, integer *k, doubler
     --work;
     /* Function Body */
     *info = 0;
+    nb = 0;
     left = lsame_(side, "L");
     notran = lsame_(trans, "N");
     lquery = *lwork == -1;
@@ -284,7 +284,7 @@ int dormrq_(char *side, char *trans, integer *m, integer *n, integer *k, doubler
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DORMRQ", &i__1);
+        xerbla_("DORMRQ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

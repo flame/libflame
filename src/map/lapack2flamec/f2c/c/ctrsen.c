@@ -290,7 +290,7 @@ int ctrsen_(char *job, char *compq, logical *select, integer *n, complex *t, int
     real rwork[1];
     extern real clange_(char *, integer *, integer *, complex *, integer *, real *);
     extern /* Subroutine */
-    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *);
+    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical wantbh;
     extern /* Subroutine */
     int ctrexc_(char *, integer *, complex *, integer *, complex *, integer *, integer *, integer *, integer *);
@@ -336,6 +336,7 @@ int ctrsen_(char *job, char *compq, logical *select, integer *n, complex *t, int
     wants = lsame_(job, "E") || wantbh;
     wantsp = lsame_(job, "V") || wantbh;
     wantq = lsame_(compq, "V");
+    lwmin = 0;
     /* Set M to the number of selected eigenvalues. */
     *m = 0;
     i__1 = *n;
@@ -401,7 +402,7 @@ int ctrsen_(char *job, char *compq, logical *select, integer *n, complex *t, int
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTRSEN", &i__1);
+        xerbla_("CTRSEN", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -18,7 +18,7 @@ int zherk_(char *uplo, char *trans, integer *n, integer *k, doublereal *alpha, d
     doublereal rtemp;
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -163,7 +163,7 @@ int zherk_(char *uplo, char *trans, integer *n, integer *k, doublereal *alpha, d
     }
     if (info != 0)
     {
-        xerbla_("ZHERK ", &info);
+        xerbla_("ZHERK ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

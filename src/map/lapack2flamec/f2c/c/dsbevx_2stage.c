@@ -368,7 +368,7 @@ int dsbevx_2stage_(char *jobz, char *range, char *uplo, integer *n, integer *kd,
     int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *);
     doublereal safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal abstll, bignum;
     integer indisp;
     extern /* Subroutine */
@@ -505,7 +505,7 @@ int dsbevx_2stage_(char *jobz, char *range, char *uplo, integer *n, integer *kd,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSBEVX_2STAGE ", &i__1);
+        xerbla_("DSBEVX_2STAGE ", &i__1, (ftnlen)14);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

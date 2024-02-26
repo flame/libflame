@@ -145,7 +145,7 @@ real cla_porcond_c_(char *uplo, integer *n, complex *a, integer *lda, complex *a
     real anorm;
     logical upper;
     extern /* Subroutine */
-    int clacn2_(integer *, complex *, complex *, real *, integer *, integer *), xerbla_(char *, integer *);
+    int clacn2_(integer *, complex *, complex *, real *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real ainvnm;
     extern /* Subroutine */
     int cpotrs_(char *, integer *, integer *, complex *, integer *, complex *, integer *, integer *);
@@ -206,7 +206,7 @@ real cla_porcond_c_(char *uplo, integer *n, complex *a, integer *lda, complex *a
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CLA_PORCOND_C", &i__1);
+        xerbla_("CLA_PORCOND_C", &i__1, (ftnlen)13);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return ret_val;
     }

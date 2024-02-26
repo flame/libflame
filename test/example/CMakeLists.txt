@@ -22,16 +22,16 @@ set(TEST_LAPACK_LIBNAME "${EXT_LAPACK_LIBNAME}" CACHE STRING "lapack library nam
 set(TEST_FLAME_HEADER_PATH "${EXT_FLAME_HEADER_PATH}" CACHE STRING "Flame header path")
 
 include_directories("${EXT_FLAME_HEADER_PATH}")
-link_directories("${EXT_BLAS_LIBRARY_DEPENDENCY_PATH}" "${EXT_LAPACK_LIBRARY_PATH}")
+link_directories("${EXT_BLAS_LIBRARY_DEPENDENCY_PATH}" "${EXT_LAPACK_LIBRARY_PATH}" "${AOCLUTILS_LIBRARY_PATH}")
 
 add_executable(${PROJECT_NAME} "")
 
 if(WIN32)
-    target_link_libraries(${PROJECT_NAME} debug "${TEST_FLAGS}" "${EXT_LAPACK_LIBNAME}" "${EXT_BLAS_LIBNAME}")
-    target_link_libraries(${PROJECT_NAME} optimized "${TEST_FLAGS}" "${EXT_LAPACK_LIBNAME}" "${EXT_BLAS_LIBNAME}")
+    target_link_libraries(${PROJECT_NAME} debug "${TEST_FLAGS}" "${EXT_LAPACK_LIBNAME}" "${EXT_BLAS_LIBNAME}" "libaoclutils.lib")
+    target_link_libraries(${PROJECT_NAME} optimized "${TEST_FLAGS}" "${EXT_LAPACK_LIBNAME}" "${EXT_BLAS_LIBNAME}" "libaoclutils.lib")
 elseif(UNIX)
-    target_link_libraries(${PROJECT_NAME} debug "${TEST_FLAGS}" "${EXT_LAPACK_LIBNAME}" "-lstdc++" "${EXT_BLAS_LIBNAME}")
-    target_link_libraries(${PROJECT_NAME} optimized "${TEST_FLAGS}" "${EXT_LAPACK_LIBNAME}" "-lstdc++" "${EXT_BLAS_LIBNAME}")
+    target_link_libraries(${PROJECT_NAME} debug "${TEST_FLAGS}" "${EXT_LAPACK_LIBNAME}" "-lstdc++ -laoclutils" "${EXT_BLAS_LIBNAME}")
+    target_link_libraries(${PROJECT_NAME} optimized "${TEST_FLAGS}" "${EXT_LAPACK_LIBNAME}" "-lstdc++ -laoclutils" "${EXT_BLAS_LIBNAME}")
 endif()
 
 target_sources(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/sample_dgetrf.c)

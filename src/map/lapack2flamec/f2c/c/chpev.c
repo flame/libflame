@@ -163,7 +163,7 @@ int chpev_(char *jobz, char *uplo, integer *n, complex *ap, real *w, complex *z_
     int csscal_(integer *, real *, complex *, integer *);
     real safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     integer indtau;
     extern /* Subroutine */
@@ -223,7 +223,7 @@ int chpev_(char *jobz, char *uplo, integer *n, complex *ap, real *w, complex *z_
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHPEV ", &i__1);
+        xerbla_("CHPEV ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

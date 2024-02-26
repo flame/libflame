@@ -446,7 +446,7 @@ int cla_herfsx_extended_(integer *prec_type__, char *uplo, integer *n, integer *
     real normx, normy;
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), chetrs_( char *, integer *, integer *, complex *, integer *, integer *, complex *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), chetrs_( char *, integer *, integer *, complex *, integer *, integer *, complex *, integer *, integer *);
     real normdx, hugeval;
     extern integer ilauplo_(char *);
     integer x_state__, z_state__;
@@ -534,7 +534,7 @@ int cla_herfsx_extended_(integer *prec_type__, char *uplo, integer *n, integer *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CLA_HERFSX_EXTENDED", &i__1);
+        xerbla_("CLA_HERFSX_EXTENDED", &i__1, (ftnlen)19);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

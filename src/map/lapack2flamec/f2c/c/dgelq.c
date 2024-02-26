@@ -178,7 +178,7 @@ int dgelq_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *t, 
     logical mint, minw;
     integer nblcks;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int dgelqt_(integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *);
@@ -346,7 +346,7 @@ int dgelq_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *t, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGELQ", &i__1);
+        xerbla_("DGELQ", &i__1, (ftnlen)5);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

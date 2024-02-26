@@ -139,6 +139,7 @@ real slangt_(char *norm, integer *n, real *dl, real *d__, real *du)
     --d__;
     --dl;
     /* Function Body */
+    anorm = 0.f;
     if (*n <= 0)
     {
         anorm = 0.f;

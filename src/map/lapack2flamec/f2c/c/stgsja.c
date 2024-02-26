@@ -406,7 +406,7 @@ int stgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
     int scopy_(integer *, real *, integer *, real *, integer *), slags2_(logical *, real *, real *, real *, real *, real *, real *, real *, real *, real *, real *, real *, real *);
     integer kcycle;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), slapll_( integer *, real *, integer *, real *, integer *, real *), slartg_( real *, real *, real *, real *, real *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), slapll_( integer *, real *, integer *, real *, integer *, real *), slartg_( real *, real *, real *, real *, real *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
     real hugenum;
     /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -503,7 +503,7 @@ int stgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("STGSJA", &i__1);
+        xerbla_("STGSJA", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

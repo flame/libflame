@@ -237,7 +237,7 @@ int cgghrd_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, c
     extern logical lsame_(char *, char *);
     complex ctemp;
     extern /* Subroutine */
-    int claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), clartg_(complex *, complex *, real *, complex *, complex *), xerbla_(char *, integer *);
+    int claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), clartg_(complex *, complex *, real *, complex *, complex *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer icompq, icompz;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -354,7 +354,7 @@ int cgghrd_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, c
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGGHRD", &i__1);
+        xerbla_("CGGHRD", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

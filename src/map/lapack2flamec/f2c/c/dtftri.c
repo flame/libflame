@@ -211,7 +211,7 @@ int dtftri_(char *transr, char *uplo, char *diag, integer *n, doublereal *a, int
     int dtrmm_(char *, char *, char *, char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *);
     logical lower;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical nisodd;
     extern /* Subroutine */
     int dtrtri_(char *, char *, integer *, doublereal *, integer *, integer *);
@@ -258,7 +258,7 @@ int dtftri_(char *transr, char *uplo, char *diag, integer *n, doublereal *a, int
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DTFTRI", &i__1);
+        xerbla_("DTFTRI", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

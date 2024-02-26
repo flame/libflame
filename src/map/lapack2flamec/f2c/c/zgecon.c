@@ -134,7 +134,7 @@ int zgecon_(char *norm, integer *n, doublecomplex *a, integer *lda, doublereal *
     int zlacn2_(integer *, doublecomplex *, doublecomplex *, doublereal *, integer *, integer *);
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal ainvnm;
     extern integer izamax_(integer *, doublecomplex *, integer *);
     logical onenrm;
@@ -199,7 +199,7 @@ int zgecon_(char *norm, integer *n, doublecomplex *a, integer *lda, doublereal *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGECON", &i__1);
+        xerbla_("ZGECON", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

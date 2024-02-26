@@ -245,7 +245,7 @@ int zgsvj0_(char *jobv, integer *m, integer *n, doublecomplex *a, integer *lda, 
     extern doublereal dznrm2_(integer *, doublecomplex *, integer *);
     extern integer idamax_(integer *, doublereal *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer ijblsk, swband, blskip;
     doublereal mxaapq;
     extern /* Subroutine */
@@ -340,7 +340,7 @@ int zgsvj0_(char *jobv, integer *m, integer *n, doublecomplex *a, integer *lda, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGSVJ0", &i__1);
+        xerbla_("ZGSVJ0", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

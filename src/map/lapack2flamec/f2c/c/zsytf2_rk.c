@@ -267,7 +267,7 @@ int zsytf2_rk_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecom
     extern doublereal dlamch_(char *);
     doublereal absakk;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal colmax;
     extern integer izamax_(integer *, doublecomplex *, integer *);
     doublereal rowmax;
@@ -305,6 +305,8 @@ int zsytf2_rk_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecom
     /* Function Body */
     *info = 0;
     upper = lsame_(uplo, "U");
+    jmax = 0;
+    imax = 0;
     if (! upper && ! lsame_(uplo, "L"))
     {
         *info = -1;
@@ -320,7 +322,7 @@ int zsytf2_rk_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecom
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZSYTF2_RK", &i__1);
+        xerbla_("ZSYTF2_RK", &i__1, (ftnlen)9);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

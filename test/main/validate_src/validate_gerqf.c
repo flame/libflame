@@ -18,6 +18,8 @@ void validate_gerqf(integer m_A,
     double* residual,
     integer* info)
 {
+    if(m_A == 0 || n_A == 0)
+      return;
     void *R, *Q, *work;
     integer min_A, diff_A;
     integer lwork = -1;

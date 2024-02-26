@@ -120,7 +120,7 @@ int sgerq2_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
     integer i__, k;
     real aii;
     extern /* Subroutine */
-    int slarf_(char *, integer *, integer *, real *, integer *, real *, real *, integer *, real *), xerbla_( char *, integer *), slarfg_(integer *, real *, real *, integer *, real *);
+    int slarf_(char *, integer *, integer *, real *, integer *, real *, real *, integer *, real *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), slarfg_(integer *, real *, real *, integer *, real *);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -163,7 +163,7 @@ int sgerq2_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGERQ2", &i__1);
+        xerbla_("SGERQ2", &i__1, (ftnlen)6);
         return 0;
     }
     k = fla_min(*m,*n);

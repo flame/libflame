@@ -30,7 +30,7 @@ int cgeqpf_check(integer *m, integer *n, scomplex *a, integer *lda, integer *jpv
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGEQPF", &i__1);
+        xerbla_("CGEQPF", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */

@@ -138,7 +138,7 @@ int dsytri2x_(char *uplo, integer *n, doublereal *a, integer *lda, integer *ipiv
     logical upper;
     doublereal u01_i_j__, u11_i_j__;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), dtrtri_( char *, char *, integer *, doublereal *, integer *, integer *), dsyconv_(char *, char *, integer *, doublereal *, integer *, integer *, doublereal *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), dtrtri_( char *, char *, integer *, doublereal *, integer *, integer *), dsyconv_(char *, char *, integer *, doublereal *, integer *, integer *, doublereal *, integer *);
     doublereal u01_ip1_j__, u11_ip1_j__;
     /* -- LAPACK computational routine (version 3.7.1) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -188,7 +188,7 @@ int dsytri2x_(char *uplo, integer *n, doublereal *a, integer *lda, integer *ipiv
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSYTRI2X", &i__1);
+        xerbla_("DSYTRI2X", &i__1, (ftnlen)8);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

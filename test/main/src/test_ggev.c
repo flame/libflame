@@ -7,27 +7,21 @@
 
 
 /* Local prototypes */
-void fla_test_ggev_experiment(test_params_t *params, integer datatype, integer p_cur, integer  q_cur, integer pci, integer n_repeats, double* perf, double* t, double* residual);
+void fla_test_ggev_experiment(test_params_t *params, integer datatype, integer p_cur, integer  q_cur, integer pci, integer n_repeats, integer einfo, double* perf, double* t, double* residual);
 void prepare_ggev_run(char *jobvl, char *jobvr, integer n, void *a, integer lda, void *b, integer ldb, void* alpha, void * alphar, void * alphai, void *beta,	void *vl, integer ldvl, 
                       void *vr, integer ldvr,	integer datatype, integer n_repeats, double* time_min_, integer* info);
 void invoke_ggev(integer datatype, char* jobvl, char* jobvr, integer* n, void* a, integer* lda, void* b, integer* ldb, integer* alpha, integer* alphar,
     integer* alphai, integer* beta, void* vl, integer* ldvl, void* vr, integer* ldvr, void* work, integer* lwork, void* rwork, integer* info);
 
-/* Flag to indicate lwork availability status
- * <= 0 - To be calculated
- * > 0  - Use the value
- * */
-static integer g_lwork; 
-static FILE* g_ext_fptr = NULL;
-
 void fla_test_ggev(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Computing Eigen value and Eigen vectors";
     char* front_str = "GGEV";
-    integer tests_not_run = 1, invalid_dtype = 0;
+    integer tests_not_run = 1, invalid_dtype = 0, einfo = 0;
 
     if(argc == 1)
     {
+        config_data = 1;
         fla_test_output_info("--- %s ---\n", op_str);
         fla_test_output_info("\n");
         fla_test_op_driver(front_str, SQUARE_INPUT, params, EIG_NSYM, fla_test_ggev_experiment);
@@ -35,13 +29,7 @@ void fla_test_ggev(integer argc, char ** argv, test_params_t *params)
     }
     if (argc == 13)
     {
-        /* Read matrix input data from a file */
-        g_ext_fptr = fopen(argv[12], "r");
-        if (g_ext_fptr == NULL)
-        {
-            printf("\n Invalid input file argument \n");
-            return;
-        }
+        FLA_TEST_PARSE_LAST_ARG(argv[12]);
     }
     if (argc >= 12 && argc <= 13)
     {
@@ -90,7 +78,7 @@ void fla_test_ggev(integer argc, char ** argv, test_params_t *params)
                 fla_test_ggev_experiment(params, datatype,
                                           N, N,
                                           0,
-                                          n_repeats,
+                                          n_repeats, einfo,
                                           &perf, &time_min, &residual);
                 /* Print the results */
                 fla_test_print_status(front_str,
@@ -117,6 +105,7 @@ void fla_test_ggev(integer argc, char ** argv, test_params_t *params)
     if (g_ext_fptr != NULL)
     {
         fclose(g_ext_fptr);
+        g_ext_fptr = NULL;
     }
     return;
 }
@@ -128,6 +117,7 @@ void fla_test_ggev_experiment(test_params_t *params,
     integer  q_cur,
     integer  pci,
     integer  n_repeats,
+    integer  einfo,
     double   *perf,
     double   *t,
     double   *residual)
@@ -151,10 +141,44 @@ void fla_test_ggev_experiment(test_params_t *params,
     ldvl = params->eig_non_sym_paramslist[pci].ldvl;
     ldvr = params->eig_non_sym_paramslist[pci].ldvr;
 
-    if(lda < m || ldb < m || ldvl < m || ldvr < m)
+   /* If leading dimensions = -1, set them to default value
+       when inputs are from config files */
+    if (config_data)
     {
-        *residual = DBL_MIN;
-        return;
+        if (lda == -1)
+        {
+            lda = fla_max(1,m);
+        }
+        if (ldb == -1)
+        {
+            ldb = fla_max(1,m);
+        }
+        /* LDVL >= 1, and
+           if JOBVL = 'V', LDVL >= M */
+        if (ldvl == -1)
+        {
+            if (JOBVL == 'V')
+            {
+                ldvl = m;
+            }
+            else
+            {
+                ldvl = 1;
+            }
+        }
+        /* LDVR >= 1, and
+           if JOBVR = 'V', LDVR >= M */
+        if (ldvr == -1)
+        {
+            if (JOBVR == 'V')
+            {
+                ldvr = m;
+            }
+            else
+            {
+                ldvr = 1;
+            }
+        }
     }
 
     /* Create input matrix parameters */
@@ -173,18 +197,8 @@ void fla_test_ggev_experiment(test_params_t *params,
     }
     create_vector(datatype, &beta, m);
 
-    if (g_ext_fptr != NULL)
-    {
-        /* Initialize input matrix with custom data */
-        init_matrix_from_file(datatype, A, m, m, lda, g_ext_fptr);
-        init_matrix_from_file(datatype, B, m, m, lda, g_ext_fptr);
-    }
-    else
-    {
-        /* Initialize input matrix with random numbers */
-        rand_matrix(datatype, A, m, m, lda);
-        rand_matrix(datatype, B, m, m, lda);
-    }
+    init_matrix(datatype, A, m, m, lda, g_ext_fptr, params->imatrix_char);
+    init_matrix(datatype, B, m, m, lda, g_ext_fptr, params->imatrix_char);
 
     /* Make a copy of input matrix A. This is required to validate the API functionality */
     create_matrix(datatype, &A_test, lda, m);
@@ -206,10 +220,8 @@ void fla_test_ggev_experiment(test_params_t *params,
     /* output validation */
     if ((JOBVL == 'V' && JOBVR == 'V') && info == 0)
         validate_ggev(&JOBVL, &JOBVR, m, A, lda, B, ldb, alpha, alphar, alphai, beta, VL, ldvl, VR, ldvr, datatype, residual, &vinfo);
-    
-    /* Assigning bigger value to residual as execution fails */
-    if(info < 0 || vinfo < 0)
-        *residual = DBL_MAX;
+
+    FLA_TEST_CHECK_EINFO(residual, info, einfo);
 
     /* Free up the buffers */
     free_matrix(A);
@@ -258,16 +270,11 @@ void prepare_ggev_run(char *jobvl, char *jobvr, integer n_A, void *A, integer ld
 
         /* call to  ggev API to get work query */
         invoke_ggev(datatype, jobvl, jobvr, &n_A, NULL, &lda, NULL, &ldb, NULL, NULL, NULL, NULL, NULL, &ldvl, NULL, &ldvr, work, &lwork, rwork, info);
-        if(*info < 0)
+        if(*info == 0)
         {
-            free_matrix(A_save);
-            free_matrix(B_save);
-            free_vector(work);
-            return;
+            /* Get work size */
+            lwork = get_work_value( datatype, work);
         }
-
-        /* Get work size */
-        lwork = get_work_value( datatype, work);
 
         /* Output buffers will be freshly allocated for each iterations, free up 
         the current output buffers.*/ 
@@ -278,6 +285,7 @@ void prepare_ggev_run(char *jobvl, char *jobvr, integer n_A, void *A, integer ld
         lwork = g_lwork;
     }
 
+    *info = 0;
     for (i = 0; i < n_repeats && *info == 0; ++i)
     {
         /* Restore input matrix A value and allocate memory to output buffers for each iteration */

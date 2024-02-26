@@ -111,7 +111,7 @@ int sopgtr_(char *uplo, integer *n, real *ap, real *tau, real *q, integer *ldq, 
     integer iinfo;
     logical upper;
     extern /* Subroutine */
-    int sorg2l_(integer *, integer *, integer *, real *, integer *, real *, real *, integer *), sorg2r_fla(integer *, integer *, integer *, real *, integer *, real *, real *, integer * ), xerbla_(char *, integer *);
+    int sorg2l_(integer *, integer *, integer *, real *, integer *, real *, real *, integer *), sorg2r_fla(integer *, integer *, integer *, real *, integer *, real *, real *, integer * ), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -158,7 +158,7 @@ int sopgtr_(char *uplo, integer *n, real *ap, real *tau, real *q, integer *ldq, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SOPGTR", &i__1);
+        xerbla_("SOPGTR", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

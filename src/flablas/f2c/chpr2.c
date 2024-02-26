@@ -16,7 +16,7 @@ int chpr2_(char *uplo, integer *n, complex *alpha, complex * x, integer *incx, c
     extern logical lsame_(char *, char *);
     integer kk, ix, iy, jx, jy, kx, ky;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
     /* .. */
@@ -119,7 +119,7 @@ int chpr2_(char *uplo, integer *n, complex *alpha, complex * x, integer *incx, c
     }
     if (info != 0)
     {
-        xerbla_("CHPR2 ", &info);
+        xerbla_("CHPR2 ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

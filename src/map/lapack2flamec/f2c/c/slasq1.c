@@ -124,7 +124,7 @@ int slasq1_(integer *n, real *d__, real *e, real *work, integer *info)
     extern real slamch_(char *);
     real safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), slascl_( char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *), slasrt_(char *, integer *, real *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), slascl_( char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *), slasrt_(char *, integer *, real *, integer *);
     /* -- LAPACK computational routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -155,7 +155,7 @@ int slasq1_(integer *n, real *d__, real *e, real *work, integer *info)
     {
         *info = -1;
         i__1 = -(*info);
-        xerbla_("SLASQ1", &i__1);
+        xerbla_("SLASQ1", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

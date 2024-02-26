@@ -36,6 +36,13 @@
   Note that the routine returns V**T, not V.
 */
 
+extern int lapack_sgesvd(char *jobu, char *jobvt, integer *m, integer *n, real *a, integer *lda, real *s, real *u, integer *ldu, real *vt, integer *ldvt, real *work, integer *lwork, integer *info);
+extern int lapack_dgesvd(char *jobu, char *jobvt, integer *m, integer *n, doublereal *a, integer *lda, doublereal *s, doublereal *u, integer * ldu, doublereal *vt, integer *ldvt, doublereal *work, integer *lwork, integer *info);
+extern int sgesvd_check(char *jobu, char *jobvt, integer *m, integer *n, float *a, integer *lda, float *s, float *u, integer *ldu, float *vt, integer *ldvt, float *work, integer *lwork, integer *info);
+extern int dgesvd_check(char *jobu, char *jobvt, integer *m, integer *n, double *a, integer *lda, double *s, double *u, integer * ldu, double *vt, integer *ldvt, double *work, integer *lwork, integer *info);
+extern int cgesvd_check(char *jobu, char *jobvt, integer *m, integer *n, scomplex *a, integer *lda, float *s, scomplex *u, integer *ldu, scomplex * vt, integer *ldvt, scomplex *work, integer *lwork, float *rwork, integer *info);
+extern int zgesvd_check(char *jobu, char *jobvt, integer *m, integer *n, dcomplex *a, integer *lda, double *s, dcomplex *u, integer *ldu, dcomplex *vt, integer *ldvt, dcomplex *work, integer *lwork, double *rwork, integer *info);
+
 #define LAPACK_gesvd_real(prefix)                                       \
   int F77_ ## prefix ## gesvd( char* jobu,                              \
                                char* jobv,                              \
@@ -134,7 +141,7 @@ LAPACK_gesvd_real(s)
   int fla_error = LAPACK_SUCCESS;
   AOCL_DTL_TRACE_LOG_INIT
   AOCL_DTL_SNPRINTF("sgesvd inputs: jobu %c, jobvt %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS "", *jobu, *jobv, *m, *n, *ldim_A, *ldim_U, *ldim_Vh);
-#if FLA_AMD_OPT
+#if FLA_ENABLE_AMD_OPT
     {
       lapack_sgesvd ( jobu, jobv, m, n, buff_A, ldim_A, buff_s, buff_U, ldim_U,buff_Vh , ldim_Vh, buff_w, lwork,info );
       /** fla_error set to *info on LAPACK_SUCCESS */
@@ -169,7 +176,7 @@ LAPACK_gesvd_real(d)
   int fla_error = LAPACK_SUCCESS;
   AOCL_DTL_TRACE_LOG_INIT
   AOCL_DTL_SNPRINTF("dgesvd inputs: jobu %c, jobvt %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS "", *jobu, *jobv, *m, *n, *ldim_A, *ldim_U, *ldim_Vh);
-#if FLA_AMD_OPT
+#if FLA_ENABLE_AMD_OPT
     {
       /* Initialize global context data */
       aocl_fla_init();

@@ -511,7 +511,7 @@ int sgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
     extern real slamch_(char *);
     real aatmax;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical noscal;
     extern /* Subroutine */
     int sgelqf_(integer *, integer *, real *, integer *, real *, real *, integer *, integer *);
@@ -660,7 +660,7 @@ int sgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
     {
         /* #:( */
         i__1 = -(*info);
-        xerbla_("SGEJSV", &i__1);
+        xerbla_("SGEJSV", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return for void matrix (Y3K safe) */
@@ -718,7 +718,7 @@ int sgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
         {
             *info = -9;
             i__2 = -(*info);
-            xerbla_("SGEJSV", &i__2);
+            xerbla_("SGEJSV", &i__2, (ftnlen)6);
             return 0;
         }
         aaqq = sqrt(aaqq);

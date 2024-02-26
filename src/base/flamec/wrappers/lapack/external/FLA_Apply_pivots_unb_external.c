@@ -48,7 +48,7 @@ FLA_Error FLA_Apply_pivots_unb_external( FLA_Side side, FLA_Trans trans, FLA_Obj
 #ifdef FLA_ENABLE_WINDOWS_BUILD
   pivots_lapack = ( integer * ) _alloca( m_p * sizeof( integer ) );
 #else
-  pivots_lapack = ( integer * )  alloca( m_p * sizeof( integer ) );
+  pivots_lapack = ( integer * ) malloc( m_p * sizeof( integer ) );
 #endif
 
   for ( i = 0; i < m_p; i++ )

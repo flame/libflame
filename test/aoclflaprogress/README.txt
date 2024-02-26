@@ -38,9 +38,12 @@ parameters           |        Purpose
 ---------------------------------------------------------------------
 api                  |   Name of the API which is currently running
 lapi                 |   Length of API/Operation string
-progress	     |   Linear progress made in current thread so far
+progress	           |   Linear progress made in current thread so far
 current_thread	     |   Current thread id
-total_threads	     |   Total number of threads used to performance the operation
+total_threads	       |   Total number of threads in current team
+
+Note: In case of single-threaded AOCL-LAPACK, the values of "current_thread" and "total_threads" are set to 0 and 1 respectively.
+As a result, the callback function cannot be used to monitor the thread ID and thread count of the application.
 
 Callback Registration: 
 

@@ -237,7 +237,7 @@ int dsbgvd_(char *jobz, char *uplo, integer *n, integer *ka, integer *kb, double
     logical upper, wantz;
     integer indwk2, llwrk2;
     extern /* Subroutine */
-    int dstedc_(char *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *, integer *, integer *), dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(char *, integer *), dpbstf_(char *, integer *, integer *, doublereal *, integer *, integer *), dsbtrd_(char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *), dsbgst_(char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), dsterf_(integer *, doublereal *, doublereal *, integer *);
+    int dstedc_(char *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *, integer *, integer *), dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), dpbstf_(char *, integer *, integer *, doublereal *, integer *, integer *), dsbtrd_(char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *), dsbgst_(char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), dsterf_(integer *, doublereal *, doublereal *, integer *);
     integer indwrk, liwmin;
     logical lquery;
     /* -- LAPACK driver routine (version 3.7.0) -- */
@@ -342,7 +342,7 @@ int dsbgvd_(char *jobz, char *uplo, integer *n, integer *ka, integer *kb, double
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSBGVD", &i__1);
+        xerbla_("DSBGVD", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

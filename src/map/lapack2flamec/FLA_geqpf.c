@@ -102,8 +102,9 @@ extern int dgeqpf_fla(integer *m, integer *n, doublereal *a, integer * lda, inte
                                                                         \
 
 /* 
-    LAPACK path is enabled for both {S,D}GEQPF when FLA_AMD_OPT is set to to 
-    fix the incorrect results and NANs observed while testing xGEQPF.
+    LAPACK path is enabled for both {S,D}GEQPF when FLA_ENABLE_AMD_OPT
+    is set to to fix the incorrect results and NANs observed while
+    testing xGEQPF.
  */
 
 LAPACK_geqpf(s)
@@ -111,7 +112,7 @@ LAPACK_geqpf(s)
     int fla_error = LAPACK_SUCCESS;
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("sgeqpf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
-#if !FLA_AMD_OPT
+#if !FLA_ENABLE_AMD_OPT
     {
         for ( int i=0; i<*n; ++i) buff_p[i] = (i+1);
     }
@@ -150,7 +151,7 @@ LAPACK_geqpf(d)
     int fla_error = LAPACK_SUCCESS;
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("dgeqpf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);    
-#if !FLA_AMD_OPT
+#if !FLA_ENABLE_AMD_OPT
     {
         for ( int i=0; i<*n; ++i) buff_p[i] = (i+1);
     }
@@ -262,7 +263,7 @@ LAPACK_geqp3(s)
     AOCL_DTL_SNPRINTF("sgeqp3 inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
     extern int sgeqp3_fla(integer *m, integer *n, real *a, integer *lda, integer *jpvt, real *tau, real *work, integer *lwork, integer *info);
 
-#if !FLA_AMD_OPT
+#if !FLA_ENABLE_AMD_OPT
     int fla_error = LAPACK_SUCCESS;
     {
         LAPACK_RETURN_CHECK_VAR1(sgeqp3_check(m, n,
@@ -312,7 +313,7 @@ LAPACK_geqp3(d)
     AOCL_DTL_SNPRINTF("dgeqp3 inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
     extern int dgeqp3_fla(integer *m, integer *n, doublereal *a, integer * lda, integer *jpvt, doublereal *tau, doublereal *work, integer *lwork, integer *info);
 
-#if !FLA_AMD_OPT
+#if !FLA_ENABLE_AMD_OPT
     int fla_error = LAPACK_SUCCESS;
     {
         LAPACK_RETURN_CHECK_VAR1( dgeqp3_check( m, n,

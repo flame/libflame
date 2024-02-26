@@ -1,5 +1,10 @@
 /* dhgeqz.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
+
+/*
+    Modifications Copyright (c) 2023 Advanced Micro Devices, Inc.  All rights reserved.
+*/
+
 #include "FLA_f2c.h" /* Table of constant values */
 static doublereal c_b12 = 0.;
 static doublereal c_b13 = 1.;
@@ -314,7 +319,7 @@ int dhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     aocl_fla_init();
 
     int retval = 0;
-#ifdef FLA_ENABLE_AMD_OPT
+#if FLA_ENABLE_AMD_OPT
     if (global_context.is_avx2)
     {
       retval = fla_dhgeqz_opt(job, compq, compz, n, ilo, ihi, h__, ldh, t, ldt, alphar, alphai, beta, q, ldq, z__, ldz, work, lwork, info);
@@ -331,6 +336,7 @@ int dhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     return retval;
 }
 
+#if FLA_ENABLE_AMD_OPT
 int fla_dhgeqz_opt(char *job, char *compq, char *compz, integer *n, integer *ilo, integer *ihi, doublereal *h__, integer *ldh, doublereal *t, integer *ldt, doublereal *alphar, doublereal *alphai, doublereal * beta, doublereal *q, integer *ldq, doublereal *z__, integer *ldz, doublereal *work, integer *lwork, integer *info)
 {
     /* System generated locals */
@@ -378,7 +384,7 @@ int fla_dhgeqz_opt(char *job, char *compq, char *compz, integer *n, integer *ilo
     int dlartg_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
     doublereal safmax;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal eshift;
     logical ilschr;
     integer icompq, ilastm, ischur;
@@ -430,6 +436,9 @@ int fla_dhgeqz_opt(char *job, char *compq, char *compz, integer *n, integer *ilo
     z__ -= z_offset;
     --work;
     /* Function Body */
+    ilz = FALSE_;
+    ilq = FALSE_;
+    ilschr = FALSE_;
     if (lsame_(job, "E"))
     {
         ilschr = FALSE_;
@@ -533,7 +542,7 @@ int fla_dhgeqz_opt(char *job, char *compq, char *compz, integer *n, integer *ilo
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DHGEQZ", &i__1);
+        xerbla_("DHGEQZ", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)
@@ -1582,6 +1591,7 @@ L420:
     return 0;
     /* End of DHGEQZ */
 }
+#endif
 
 int fla_dhgeqz_native(char *job, char *compq, char *compz, integer *n, integer *ilo, integer *ihi, doublereal *h__, integer *ldh, doublereal *t, integer *ldt, doublereal *alphar, doublereal *alphai, doublereal * beta, doublereal *q, integer *ldq, doublereal *z__, integer *ldz, doublereal *work, integer *lwork, integer *info)
 {
@@ -1631,7 +1641,7 @@ int fla_dhgeqz_native(char *job, char *compq, char *compz, integer *n, integer *
     int dlartg_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
     doublereal safmax;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal eshift;
     logical ilschr;
     integer icompq, ilastm, ischur;
@@ -1681,6 +1691,9 @@ int fla_dhgeqz_native(char *job, char *compq, char *compz, integer *n, integer *
     z__ -= z_offset;
     --work;
     /* Function Body */
+    ilz = FALSE_;
+    ilq = FALSE_;
+    ilschr = FALSE_;
     if (lsame_(job, "E"))
     {
         ilschr = FALSE_;
@@ -1784,7 +1797,7 @@ int fla_dhgeqz_native(char *job, char *compq, char *compz, integer *n, integer *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DHGEQZ", &i__1);
+        xerbla_("DHGEQZ", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

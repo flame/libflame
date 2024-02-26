@@ -17,7 +17,7 @@ int cher2k_(char *uplo, char *trans, integer *n, integer *k, complex *alpha, com
     integer nrowa;
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
     /* .. */
@@ -181,7 +181,7 @@ int cher2k_(char *uplo, char *trans, integer *n, integer *k, complex *alpha, com
     }
     if (info != 0)
     {
-        xerbla_("CHER2K", &info);
+        xerbla_("CHER2K", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

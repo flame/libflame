@@ -18,6 +18,8 @@ void validate_getrf(integer m_A,
     double* residual,
     integer* info)
 {
+    if(m_A == 0 || n_A == 0)
+        return;
     /* System generated locals */
     integer m_n_vector, min_A;
     integer m_L, n_L, m_U, n_U, k;

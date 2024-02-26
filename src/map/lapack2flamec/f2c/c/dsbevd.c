@@ -217,7 +217,7 @@ int dsbevd_(char *jobz, char *uplo, integer *n, integer *kd, doublereal *ab, int
     int dstedc_(char *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *, integer *, integer *), dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *);
     doublereal safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal bignum;
     extern /* Subroutine */
     int dsbtrd_(char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *), dsterf_( integer *, doublereal *, doublereal *, integer *);
@@ -320,7 +320,7 @@ int dsbevd_(char *jobz, char *uplo, integer *n, integer *kd, doublereal *ab, int
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSBEVD", &i__1);
+        xerbla_("DSBEVD", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

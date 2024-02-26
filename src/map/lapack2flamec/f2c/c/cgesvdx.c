@@ -8,7 +8,6 @@ static complex c_b1 =
 ;
 static integer c__6 = 6;
 static integer c__0 = 0;
-static integer c__2 = 2;
 static integer c__1 = 1;
 static integer c_n1 = -1;
 /* > \brief <b> CGESVDX computes the singular value decomposition (SVD) for GE matrices</b> */
@@ -289,8 +288,7 @@ int cgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, comp
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */
-    address a__1[2];
-    integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1[2], i__2, i__3, i__4, i__5;
+    integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__2, i__3, i__4, i__5;
     real r__1;
     complex q__1;
     char ch__1[2];
@@ -318,12 +316,11 @@ int cgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, comp
     int cgelqf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *), clascl_( char *, integer *, integer *, real *, real *, integer *, integer *, complex *, integer *, integer *), cgeqrf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *);
+    int claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     real bignum;
     extern /* Subroutine */
     int slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *);
-    real abstol;
     extern /* Subroutine */
     int cunmbr_(char *, char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *, integer *, integer *);
     char rngtgk[1];
@@ -377,11 +374,11 @@ int cgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, comp
     /* Function Body */
     *ns = 0;
     *info = 0;
-    abstol = slamch_("S") * 2;
     lquery = *lwork == -1;
     minmn = fla_min(*m,*n);
     wantu = lsame_(jobu, "V");
     wantvt = lsame_(jobvt, "V");
+    mnthr = 0;
     if (wantu || wantvt)
     {
         *(unsigned char *)jobz = 'V';
@@ -559,7 +556,7 @@ int cgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, comp
     if (*info != 0)
     {
         i__2 = -(*info);
-        xerbla_("CGESVDX", &i__2);
+        xerbla_("CGESVDX", &i__2, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

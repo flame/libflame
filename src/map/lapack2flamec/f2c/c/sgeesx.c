@@ -283,7 +283,7 @@ if */
 /* > \ingroup realGEeigen */
 /* ===================================================================== */
 /* Subroutine */
-int sgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, real *a, integer *lda, integer *sdim, real *wr, real *wi, real *vs, integer *ldvs, real *rconde, real *rcondv, real * work, integer *lwork, integer *iwork, integer *liwork, logical *bwork, integer *info)
+int sgeesx_(char *jobvs, char *sort, L_fps2 select, char * sense, integer *n, real *a, integer *lda, integer *sdim, real *wr, real *wi, real *vs, integer *ldvs, real *rconde, real *rcondv, real * work, integer *lwork, integer *iwork, integer *liwork, logical *bwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("sgeesx inputs: jobvs %c, sort %c, sense %c, n %" FLA_IS ", lda %" FLA_IS ", sdim %" FLA_IS ", ldvs %" FLA_IS "",*jobvs, *sort, *sense, *n, *lda, *sdim, *ldvs);
@@ -311,7 +311,7 @@ int sgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, real
     int sgebak_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, integer *), sgebal_(char *, integer *, real *, integer *, integer *, integer *, real *, integer *);
     extern real slamch_(char *), slange_(char *, integer *, integer *, real *, integer *, real *);
     extern /* Subroutine */
-    int sgehrd_(integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *), xerbla_(char *, integer *);
+    int sgehrd_(integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     real bignum;
     extern /* Subroutine */
@@ -371,6 +371,7 @@ int sgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, real
     wantsv = lsame_(sense, "V");
     wantsb = lsame_(sense, "B");
     lquery = *lwork == -1 || *liwork == -1;
+    maxwrk = 0;
     if (! wantvs && ! lsame_(jobvs, "N"))
     {
         *info = -1;
@@ -467,7 +468,7 @@ int sgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, real
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGEESX", &i__1);
+        xerbla_("SGEESX", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

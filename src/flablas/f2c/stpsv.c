@@ -12,7 +12,7 @@ int stpsv_(char *uplo, char *trans, char *diag, integer *n, real *ap, real *x, i
     extern logical lsame_(char *, char *);
     integer kk, ix, jx, kx;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical nounit;
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
@@ -115,7 +115,7 @@ int stpsv_(char *uplo, char *trans, char *diag, integer *n, real *ap, real *x, i
     }
     if (info != 0)
     {
-        xerbla_("STPSV ", &info);
+        xerbla_("STPSV ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

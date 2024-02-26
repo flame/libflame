@@ -181,9 +181,9 @@ extern int CGELSS(integer* m, integer* n, integer* nrhs, scomplex* a, integer* l
 extern int cgelss(integer* m, integer* n, integer* nrhs, scomplex* a, integer* lda, scomplex* b, integer* ldb, float* s, float* rcond, integer* rank, scomplex* work, integer* lwork, float* rwork, integer* info);
 extern int CGELSS_(integer* m, integer* n, integer* nrhs, scomplex* a, integer* lda, scomplex* b, integer* ldb, float* s, float* rcond, integer* rank, scomplex* work, integer* lwork, float* rwork, integer* info);
 
-extern int CGELST(char *trans, integer *m, integer *n, integer * nrhs, complex *a, integer *lda, complex *b, integer *ldb, complex * work, integer *lwork, integer *info);
-extern int cgelst(char *trans, integer *m, integer *n, integer * nrhs, complex *a, integer *lda, complex *b, integer *ldb, complex * work, integer *lwork, integer *info);
-extern int CGELST_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, integer *lda, complex *b, integer *ldb, complex * work, integer *lwork, integer *info);
+extern int CGELST(char *trans, integer *m, integer *n, integer * nrhs, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex * work, integer *lwork, integer *info);
+extern int cgelst(char *trans, integer *m, integer *n, integer * nrhs, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex * work, integer *lwork, integer *info);
+extern int CGELST_(char *trans, integer *m, integer *n, integer * nrhs, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex * work, integer *lwork, integer *info);
 
 extern int CGELSX(integer* m, integer* n, integer* nrhs, scomplex* a, integer* lda, scomplex* b, integer* ldb, integer* jpvt, float* rcond, integer* rank, scomplex* work, float* rwork, integer* info);
 extern int cgelsx(integer* m, integer* n, integer* nrhs, scomplex* a, integer* lda, scomplex* b, integer* ldb, integer* jpvt, float* rcond, integer* rank, scomplex* work, float* rwork, integer* info);
@@ -1121,9 +1121,9 @@ extern int CLATRS(char* uplo, char* trans, char* diag, char* normin, integer* n,
 extern int clatrs(char* uplo, char* trans, char* diag, char* normin, integer* n, scomplex* a, integer* lda, scomplex* x, float* scale, float* cnorm, integer* info);
 extern int CLATRS_(char* uplo, char* trans, char* diag, char* normin, integer* n, scomplex* a, integer* lda, scomplex* x, float* scale, float* cnorm, integer* info);
 
-extern int CLATRS3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, complex *a, integer *lda, complex * x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info);
-extern int clatrs3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, complex *a, integer *lda, complex * x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info);
-extern int CLATRS3_(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, complex *a, integer *lda, complex * x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info);
+extern int CLATRS3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, scomplex *a, integer *lda, scomplex * x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info);
+extern int clatrs3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, scomplex *a, integer *lda, scomplex * x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info);
+extern int CLATRS3_(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, scomplex *a, integer *lda, scomplex * x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info);
 
 extern int CLATRZ(integer* m, integer* n, integer* l, scomplex* a, integer* lda, scomplex* tau, scomplex* work);
 extern int clatrz(integer* m, integer* n, integer* l, scomplex* a, integer* lda, scomplex* tau, scomplex* work);
@@ -1677,9 +1677,9 @@ extern int CTRSYL(char* trana, char* tranb, integer* isgn, integer* m, integer* 
 extern int ctrsyl(char* trana, char* tranb, integer* isgn, integer* m, integer* n, scomplex* a, integer* lda, scomplex* b, integer* ldb, scomplex* c, integer* ldc, float* scale, integer* info);
 extern int CTRSYL_(char* trana, char* tranb, integer* isgn, integer* m, integer* n, scomplex* a, integer* lda, scomplex* b, integer* ldb, scomplex* c, integer* ldc, float* scale, integer* info);
 
-extern int CTRSYL3_(char* trana, char* tranb, integer* isgn, integer* m, integer* n, complex* a, integer* lda, complex* b, integer* ldb, complex* c__, integer* ldc, real* scale, real* swork, integer* ldswork, integer* info);
-extern int ctrsyl3(char* trana, char* tranb, integer* isgn, integer* m, integer* n, complex* a, integer* lda, complex* b, integer* ldb, complex* c__, integer* ldc, real* scale, real* swork, integer* ldswork, integer* info);
-extern int CTRSYL3_(char* trana, char* tranb, integer* isgn, integer* m, integer* n, complex* a, integer* lda, complex* b, integer* ldb, complex* c__, integer* ldc, real* scale, real* swork, integer* ldswork, integer* info);
+extern int CTRSYL3_(char* trana, char* tranb, integer* isgn, integer* m, integer* n, scomplex* a, integer* lda, scomplex* b, integer* ldb, scomplex* c__, integer* ldc, real* scale, real* swork, integer* ldswork, integer* info);
+extern int ctrsyl3(char* trana, char* tranb, integer* isgn, integer* m, integer* n, scomplex* a, integer* lda, scomplex* b, integer* ldb, scomplex* c__, integer* ldc, real* scale, real* swork, integer* ldswork, integer* info);
+extern int CTRSYL3_(char* trana, char* tranb, integer* isgn, integer* m, integer* n, scomplex* a, integer* lda, scomplex* b, integer* ldb, scomplex* c__, integer* ldc, real* scale, real* swork, integer* ldswork, integer* info);
 
 extern int CTRTI2(char* uplo, char* diag, integer* n, scomplex* a, integer* lda, integer* info);
 extern int ctrti2(char* uplo, char* diag, integer* n, scomplex* a, integer* lda, integer* info);
@@ -5769,9 +5769,9 @@ extern int ZGELSS(integer* m, integer* n, integer* nrhs, dcomplex* a, integer* l
 extern int zgelss(integer* m, integer* n, integer* nrhs, dcomplex* a, integer* lda, dcomplex* b, integer* ldb, double* s, double* rcond, integer* rank, dcomplex* work, integer* lwork, double* rwork, integer* info);
 extern int ZGELSS_(integer* m, integer* n, integer* nrhs, dcomplex* a, integer* lda, dcomplex* b, integer* ldb, double* s, double* rcond, integer* rank, dcomplex* work, integer* lwork, double* rwork, integer* info);
 
-extern int ZGELST_(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer *lwork, integer *info);
-extern int zgelst(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer *lwork, integer *info);
-extern int ZGELST_(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer *lwork, integer *info);
+extern int ZGELST_(char *trans, integer *m, integer *n, integer * nrhs, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *work, integer *lwork, integer *info);
+extern int zgelst(char *trans, integer *m, integer *n, integer * nrhs, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *work, integer *lwork, integer *info);
+extern int ZGELST_(char *trans, integer *m, integer *n, integer * nrhs, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *work, integer *lwork, integer *info);
 
 extern int ZGELSX(integer* m, integer* n, integer* nrhs, dcomplex* a, integer* lda, dcomplex* b, integer* ldb, integer* jpvt, double* rcond, integer* rank, dcomplex* work, double* rwork, integer* info);
 extern int zgelsx(integer* m, integer* n, integer* nrhs, dcomplex* a, integer* lda, dcomplex* b, integer* ldb, integer* jpvt, double* rcond, integer* rank, dcomplex* work, double* rwork, integer* info);
@@ -6713,9 +6713,9 @@ extern int ZLATRS(char* uplo, char* trans, char* diag, char* normin, integer* n,
 extern int zlatrs(char* uplo, char* trans, char* diag, char* normin, integer* n, dcomplex* a, integer* lda, dcomplex* x, double* scale, double* cnorm, integer* info);
 extern int ZLATRS_(char* uplo, char* trans, char* diag, char* normin, integer* n, dcomplex* a, integer* lda, dcomplex* x, double* scale, double* cnorm, integer* info);
 
-extern int zlatrs3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info);
-extern int zlatrs3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info);
-extern int ZLATRS3_(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info);
+extern int zlatrs3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, dcomplex *a, integer *lda, dcomplex *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info);
+extern int zlatrs3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, dcomplex *a, integer *lda, dcomplex *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info);
+extern int ZLATRS3_(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, dcomplex *a, integer *lda, dcomplex *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info);
 
 extern int ZLATRZ(integer* m, integer* n, integer* l, dcomplex* a, integer* lda, dcomplex* tau, dcomplex* work);
 extern int zlatrz(integer* m, integer* n, integer* l, dcomplex* a, integer* lda, dcomplex* tau, dcomplex* work);
@@ -7265,9 +7265,9 @@ extern int ZTRSYL(char* trana, char* tranb, integer* isgn, integer* m, integer* 
 extern int ztrsyl(char* trana, char* tranb, integer* isgn, integer* m, integer* n, dcomplex* a, integer* lda, dcomplex* b, integer* ldb, dcomplex* c, integer* ldc, double* scale, integer* info);
 extern int ZTRSYL_(char* trana, char* tranb, integer* isgn, integer* m, integer* n, dcomplex* a, integer* lda, dcomplex* b, integer* ldb, dcomplex* c, integer* ldc, double* scale, integer* info);
 
-extern int ZTRSYL3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *c__, integer *ldc, doublereal *scale, doublereal *swork, integer *ldswork, integer *info);
-extern int ztrsyl3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *c__, integer *ldc, doublereal *scale, doublereal *swork, integer *ldswork, integer *info);
-extern int ZTRSYL3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *c__, integer *ldc, doublereal *scale, doublereal *swork, integer *ldswork, integer *info);
+extern int ZTRSYL3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *c__, integer *ldc, doublereal *scale, doublereal *swork, integer *ldswork, integer *info);
+extern int ztrsyl3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *c__, integer *ldc, doublereal *scale, doublereal *swork, integer *ldswork, integer *info);
+extern int ZTRSYL3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *c__, integer *ldc, doublereal *scale, doublereal *swork, integer *ldswork, integer *info);
 
 extern int ZTRTI2(char* uplo, char* diag, integer* n, dcomplex* a, integer* lda, integer* info);
 extern int ztrti2(char* uplo, char* diag, integer* n, dcomplex* a, integer* lda, integer* info);
@@ -7453,13 +7453,13 @@ extern float SLAMCH(char *cmach);
 extern float slamch(char *cmach);
 extern float SLAMCH_(char *cmach);
 
- extern float SLAMC3( float  *a, float  *b);
- extern float slamc3( float  *a, float  *b);
- extern float SLAMC3_( float  *a, float  *b);
+extern float SLAMC3( float  *a, float  *b);
+extern float slamc3( float  *a, float  *b);
+extern float SLAMC3_( float  *a, float  *b);
 
- extern int SISNAN(const float  *sin);
-extern int sisnan(const float  *sin);
-extern int SISNAN_(const float  *sin);
+extern int SISNAN(float  *sin);
+extern int sisnan(float  *sin);
+extern int SISNAN_(float  *sin);
 
 extern int LSAMEN(const integer *n,const char   *ca,const char   *cb,integer ca_len,integer cb_len);
 extern int lsamen(const integer *n,const char   *ca,const char   *cb,integer ca_len,integer cb_len);
@@ -8045,33 +8045,33 @@ extern int LZSPR( char *uplo, integer *n, dcomplex *alpha, dcomplex *x, integer 
 extern int lzspr( char *uplo, integer *n, dcomplex *alpha, dcomplex *x, integer *incx, dcomplex *ap, dcomplex *work );
 extern int LZSPR_( char *uplo, integer *n, dcomplex *alpha, dcomplex *x, integer *incx, dcomplex *ap, dcomplex *work );
 
-extern int CGETSQRHRT(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, complex *a, integer *lda, complex *t, integer *ldt, complex *work, integer *lwork, integer *info);
-extern int cgetsqrhrt(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, complex *a, integer *lda, complex *t, integer *ldt, complex *work, integer *lwork, integer *info);
-extern int CGETSQRHRT_(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, complex *a, integer *lda, complex *t, integer *ldt, complex *work, integer *lwork, integer *info);
+extern int CGETSQRHRT(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, scomplex *a, integer *lda, scomplex *t, integer *ldt, scomplex *work, integer *lwork, integer *info);
+extern int cgetsqrhrt(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, scomplex *a, integer *lda, scomplex *t, integer *ldt, scomplex *work, integer *lwork, integer *info);
+extern int CGETSQRHRT_(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, scomplex *a, integer *lda, scomplex *t, integer *ldt, scomplex *work, integer *lwork, integer *info);
 
-extern int CLAQZ0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, complex *a, integer *lda, complex *b, integer *ldb, complex *alpha, complex *beta, complex *q, integer *ldq, complex *z__, integer *ldz, complex *work, integer *lwork, real * rwork, integer *rec, integer *info);
-extern int claqz0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, complex *a, integer *lda, complex *b, integer *ldb, complex *alpha, complex *beta, complex *q, integer *ldq, complex *z__, integer *ldz, complex *work, integer *lwork, real * rwork, integer *rec, integer *info);
-extern int CLAQZ0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, complex *a, integer *lda, complex *b, integer *ldb, complex *alpha, complex *beta, complex *q, integer *ldq, complex *z__, integer *ldz, complex *work, integer *lwork, real * rwork, integer *rec, integer *info);
+extern int CLAQZ0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex *alpha, scomplex *beta, scomplex *q, integer *ldq, scomplex *z__, integer *ldz, scomplex *work, integer *lwork, real * rwork, integer *rec, integer *info);
+extern int claqz0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex *alpha, scomplex *beta, scomplex *q, integer *ldq, scomplex *z__, integer *ldz, scomplex *work, integer *lwork, real * rwork, integer *rec, integer *info);
+extern int CLAQZ0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex *alpha, scomplex *beta, scomplex *q, integer *ldq, scomplex *z__, integer *ldz, scomplex *work, integer *lwork, real * rwork, integer *rec, integer *info);
 
-extern int CLAQZ1(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, complex *a, integer *lda, complex *b, integer *ldb, integer *nq, integer *qstart, complex *q, integer *ldq, integer *nz, integer *zstart, complex *z__, integer * ldz);
-extern int claqz1(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, complex *a, integer *lda, complex *b, integer *ldb, integer *nq, integer *qstart, complex *q, integer *ldq, integer *nz, integer *zstart, complex *z__, integer * ldz);
-extern int CLAQZ1_(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, complex *a, integer *lda, complex *b, integer *ldb, integer *nq, integer *qstart, complex *q, integer *ldq, integer *nz, integer *zstart, complex *z__, integer * ldz);
+extern int CLAQZ1(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, scomplex *a, integer *lda, scomplex *b, integer *ldb, integer *nq, integer *qstart, scomplex *q, integer *ldq, integer *nz, integer *zstart, scomplex *z__, integer * ldz);
+extern int claqz1(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, scomplex *a, integer *lda, scomplex *b, integer *ldb, integer *nq, integer *qstart, scomplex *q, integer *ldq, integer *nz, integer *zstart, scomplex *z__, integer * ldz);
+extern int CLAQZ1_(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, scomplex *a, integer *lda, scomplex *b, integer *ldb, integer *nq, integer *qstart, scomplex *q, integer *ldq, integer *nz, integer *zstart, scomplex *z__, integer * ldz);
 
-extern int CLAQZ2(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, complex *a, integer *lda, complex *b, integer *ldb, complex *q, integer *ldq, complex *z__, integer *ldz, integer *ns, integer *nd, complex *alpha, complex *beta, complex *qc, integer *ldqc, complex *zc, integer *ldzc, complex *work, integer *lwork, real *rwork, integer *rec, integer * info);
-extern int claqz2(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, complex *a, integer *lda, complex *b, integer *ldb, complex *q, integer *ldq, complex *z__, integer *ldz, integer *ns, integer *nd, complex *alpha, complex *beta, complex *qc, integer *ldqc, complex *zc, integer *ldzc, complex *work, integer *lwork, real *rwork, integer *rec, integer * info);
-extern int CLAQZ2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, complex *a, integer *lda, complex *b, integer *ldb, complex *q, integer *ldq, complex *z__, integer *ldz, integer *ns, integer *nd, complex *alpha, complex *beta, complex *qc, integer *ldqc, complex *zc, integer *ldzc, complex *work, integer *lwork, real *rwork, integer *rec, integer * info);
+extern int CLAQZ2(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex *q, integer *ldq, scomplex *z__, integer *ldz, integer *ns, integer *nd, scomplex *alpha, scomplex *beta, scomplex *qc, integer *ldqc, scomplex *zc, integer *ldzc, scomplex *work, integer *lwork, real *rwork, integer *rec, integer * info);
+extern int claqz2(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex *q, integer *ldq, scomplex *z__, integer *ldz, integer *ns, integer *nd, scomplex *alpha, scomplex *beta, scomplex *qc, integer *ldqc, scomplex *zc, integer *ldzc, scomplex *work, integer *lwork, real *rwork, integer *rec, integer * info);
+extern int CLAQZ2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex *q, integer *ldq, scomplex *z__, integer *ldz, integer *ns, integer *nd, scomplex *alpha, scomplex *beta, scomplex *qc, integer *ldqc, scomplex *zc, integer *ldzc, scomplex *work, integer *lwork, real *rwork, integer *rec, integer * info);
 
-extern int CLAQZ3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, complex *alpha, complex *beta, complex *a, integer * lda, complex *b, integer *ldb, complex *q, integer *ldq, complex *z__, integer *ldz, complex *qc, integer *ldqc, complex *zc, integer *ldzc, complex *work, integer *lwork, integer *info);
-extern int claqz3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, complex *alpha, complex *beta, complex *a, integer * lda, complex *b, integer *ldb, complex *q, integer *ldq, complex *z__, integer *ldz, complex *qc, integer *ldqc, complex *zc, integer *ldzc, complex *work, integer *lwork, integer *info);
-extern int CLAQZ3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, complex *alpha, complex *beta, complex *a, integer * lda, complex *b, integer *ldb, complex *q, integer *ldq, complex *z__, integer *ldz, complex *qc, integer *ldqc, complex *zc, integer *ldzc, complex *work, integer *lwork, integer *info);
+extern int CLAQZ3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, scomplex *alpha, scomplex *beta, scomplex *a, integer * lda, scomplex *b, integer *ldb, scomplex *q, integer *ldq, scomplex *z__, integer *ldz, scomplex *qc, integer *ldqc, scomplex *zc, integer *ldzc, scomplex *work, integer *lwork, integer *info);
+extern int claqz3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, scomplex *alpha, scomplex *beta, scomplex *a, integer * lda, scomplex *b, integer *ldb, scomplex *q, integer *ldq, scomplex *z__, integer *ldz, scomplex *qc, integer *ldqc, scomplex *zc, integer *ldzc, scomplex *work, integer *lwork, integer *info);
+extern int CLAQZ3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, scomplex *alpha, scomplex *beta, scomplex *a, integer * lda, scomplex *b, integer *ldb, scomplex *q, integer *ldq, scomplex *z__, integer *ldz, scomplex *qc, integer *ldqc, scomplex *zc, integer *ldzc, scomplex *work, integer *lwork, integer *info);
 
-extern int CLARFB_GETT(char *ident, integer *m, integer *n, integer *k, complex *t, integer *ldt, complex *a, integer *lda, complex *b, integer *ldb, complex *work, integer *ldwork);
-extern int clarfb_gett(char *ident, integer *m, integer *n, integer *k, complex *t, integer *ldt, complex *a, integer *lda, complex *b, integer *ldb, complex *work, integer *ldwork);
-extern int CLARFB_GETT_(char *ident, integer *m, integer *n, integer *k, complex *t, integer *ldt, complex *a, integer *lda, complex *b, integer *ldb, complex *work, integer *ldwork);
+extern int CLARFB_GETT(char *ident, integer *m, integer *n, integer *k, scomplex *t, integer *ldt, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex *work, integer *ldwork);
+extern int clarfb_gett(char *ident, integer *m, integer *n, integer *k, scomplex *t, integer *ldt, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex *work, integer *ldwork);
+extern int CLARFB_GETT_(char *ident, integer *m, integer *n, integer *k, scomplex *t, integer *ldt, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex *work, integer *ldwork);
 
-extern int CUNGTSQR_ROW(integer *m, integer *n, integer *mb, integer *nb, complex *a, integer *lda, complex *t, integer *ldt, complex *work, integer *lwork, integer *info);
-extern int cungtsqr_row(integer *m, integer *n, integer *mb, integer *nb, complex *a, integer *lda, complex *t, integer *ldt, complex *work, integer *lwork, integer *info);
-extern int CUNGTSQR_ROW_(integer *m, integer *n, integer *mb, integer *nb, complex *a, integer *lda, complex *t, integer *ldt, complex *work, integer *lwork, integer *info);
+extern int CUNGTSQR_ROW(integer *m, integer *n, integer *mb, integer *nb, scomplex *a, integer *lda, scomplex *t, integer *ldt, scomplex *work, integer *lwork, integer *info);
+extern int cungtsqr_row(integer *m, integer *n, integer *mb, integer *nb, scomplex *a, integer *lda, scomplex *t, integer *ldt, scomplex *work, integer *lwork, integer *info);
+extern int CUNGTSQR_ROW_(integer *m, integer *n, integer *mb, integer *nb, scomplex *a, integer *lda, scomplex *t, integer *ldt, scomplex *work, integer *lwork, integer *info);
 
 extern int DGETSQRHRT(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, doublereal *a, integer *lda, doublereal * t, integer *ldt, doublereal *work, integer *lwork, integer *info);
 extern int dgetsqrhrt(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, doublereal *a, integer *lda, doublereal * t, integer *ldt, doublereal *work, integer *lwork, integer *info);
@@ -8145,33 +8145,33 @@ extern int SORGTSQR_ROW(integer *m, integer *n, integer *mb, integer *nb, real *
 extern int sorgtsqr_row(integer *m, integer *n, integer *mb, integer *nb, real *a, integer *lda, real *t, integer *ldt, real *work, integer *lwork, integer *info);
 extern int SORGTSQR_ROW_(integer *m, integer *n, integer *mb, integer *nb, real *a, integer *lda, real *t, integer *ldt, real *work, integer *lwork, integer *info);
 
-extern int ZGETSQRHRT(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, doublecomplex *a, integer *lda, doublecomplex *t, integer *ldt, doublecomplex *work, integer *lwork, integer *info);
-extern int zgetsqrhrt(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, doublecomplex *a, integer *lda, doublecomplex *t, integer *ldt, doublecomplex *work, integer *lwork, integer *info);
-extern int ZGETSQRHRT_(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, doublecomplex *a, integer *lda, doublecomplex *t, integer *ldt, doublecomplex *work, integer *lwork, integer *info);
+extern int ZGETSQRHRT(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, dcomplex *a, integer *lda, dcomplex *t, integer *ldt, dcomplex *work, integer *lwork, integer *info);
+extern int zgetsqrhrt(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, dcomplex *a, integer *lda, dcomplex *t, integer *ldt, dcomplex *work, integer *lwork, integer *info);
+extern int ZGETSQRHRT_(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, dcomplex *a, integer *lda, dcomplex *t, integer *ldt, dcomplex *work, integer *lwork, integer *info);
 
-extern int ZLAQZ0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *alpha, doublecomplex * beta, doublecomplex *q, integer *ldq, doublecomplex *z__, integer * ldz, doublecomplex *work, integer *lwork, doublereal *rwork, integer * rec, integer *info);
-extern int zlaqz0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *alpha, doublecomplex * beta, doublecomplex *q, integer *ldq, doublecomplex *z__, integer * ldz, doublecomplex *work, integer *lwork, doublereal *rwork, integer * rec, integer *info);
-extern int ZLAQZ0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *alpha, doublecomplex * beta, doublecomplex *q, integer *ldq, doublecomplex *z__, integer * ldz, doublecomplex *work, integer *lwork, doublereal *rwork, integer * rec, integer *info);
+extern int ZLAQZ0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *alpha, dcomplex * beta, dcomplex *q, integer *ldq, dcomplex *z__, integer * ldz, dcomplex *work, integer *lwork, doublereal *rwork, integer * rec, integer *info);
+extern int zlaqz0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *alpha, dcomplex * beta, dcomplex *q, integer *ldq, dcomplex *z__, integer * ldz, dcomplex *work, integer *lwork, doublereal *rwork, integer * rec, integer *info);
+extern int ZLAQZ0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *alpha, dcomplex * beta, dcomplex *q, integer *ldq, dcomplex *z__, integer * ldz, dcomplex *work, integer *lwork, doublereal *rwork, integer * rec, integer *info);
 
-extern int ZLAQZ1(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, doublecomplex *a, integer * lda, doublecomplex *b, integer *ldb, integer *nq, integer *qstart, doublecomplex *q, integer *ldq, integer *nz, integer *zstart, doublecomplex *z__, integer *ldz);
-extern int zlaqz1(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, doublecomplex *a, integer * lda, doublecomplex *b, integer *ldb, integer *nq, integer *qstart, doublecomplex *q, integer *ldq, integer *nz, integer *zstart, doublecomplex *z__, integer *ldz);
-extern int ZLAQZ1_(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, doublecomplex *a, integer * lda, doublecomplex *b, integer *ldb, integer *nq, integer *qstart, doublecomplex *q, integer *ldq, integer *nz, integer *zstart, doublecomplex *z__, integer *ldz);
+extern int ZLAQZ1(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, dcomplex *a, integer * lda, dcomplex *b, integer *ldb, integer *nq, integer *qstart, dcomplex *q, integer *ldq, integer *nz, integer *zstart, dcomplex *z__, integer *ldz);
+extern int zlaqz1(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, dcomplex *a, integer * lda, dcomplex *b, integer *ldb, integer *nq, integer *qstart, dcomplex *q, integer *ldq, integer *nz, integer *zstart, dcomplex *z__, integer *ldz);
+extern int ZLAQZ1_(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, dcomplex *a, integer * lda, dcomplex *b, integer *ldb, integer *nq, integer *qstart, dcomplex *q, integer *ldq, integer *nz, integer *zstart, dcomplex *z__, integer *ldz);
 
-extern int ZLAQZ2(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *q, integer *ldq, doublecomplex *z__, integer *ldz, integer *ns, integer * nd, doublecomplex *alpha, doublecomplex *beta, doublecomplex *qc, integer *ldqc, doublecomplex *zc, integer *ldzc, doublecomplex *work, integer *lwork, doublereal *rwork, integer *rec, integer *info);
-extern int zlaqz2(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *q, integer *ldq, doublecomplex *z__, integer *ldz, integer *ns, integer * nd, doublecomplex *alpha, doublecomplex *beta, doublecomplex *qc, integer *ldqc, doublecomplex *zc, integer *ldzc, doublecomplex *work, integer *lwork, doublereal *rwork, integer *rec, integer *info);
-extern int ZLAQZ2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *q, integer *ldq, doublecomplex *z__, integer *ldz, integer *ns, integer * nd, doublecomplex *alpha, doublecomplex *beta, doublecomplex *qc, integer *ldqc, doublecomplex *zc, integer *ldzc, doublecomplex *work, integer *lwork, doublereal *rwork, integer *rec, integer *info);
+extern int ZLAQZ2(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *q, integer *ldq, dcomplex *z__, integer *ldz, integer *ns, integer * nd, dcomplex *alpha, dcomplex *beta, dcomplex *qc, integer *ldqc, dcomplex *zc, integer *ldzc, dcomplex *work, integer *lwork, doublereal *rwork, integer *rec, integer *info);
+extern int zlaqz2(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *q, integer *ldq, dcomplex *z__, integer *ldz, integer *ns, integer * nd, dcomplex *alpha, dcomplex *beta, dcomplex *qc, integer *ldqc, dcomplex *zc, integer *ldzc, dcomplex *work, integer *lwork, doublereal *rwork, integer *rec, integer *info);
+extern int ZLAQZ2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *q, integer *ldq, dcomplex *z__, integer *ldz, integer *ns, integer * nd, dcomplex *alpha, dcomplex *beta, dcomplex *qc, integer *ldqc, dcomplex *zc, integer *ldzc, dcomplex *work, integer *lwork, doublereal *rwork, integer *rec, integer *info);
 
-extern int ZLAQZ3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, doublecomplex *alpha, doublecomplex *beta, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *q, integer *ldq, doublecomplex *z__, integer *ldz, doublecomplex *qc, integer *ldqc, doublecomplex *zc, integer *ldzc, doublecomplex *work, integer *lwork, integer *info);
-extern int zlaqz3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, doublecomplex *alpha, doublecomplex *beta, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *q, integer *ldq, doublecomplex *z__, integer *ldz, doublecomplex *qc, integer *ldqc, doublecomplex *zc, integer *ldzc, doublecomplex *work, integer *lwork, integer *info);
-extern int ZLAQZ3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, doublecomplex *alpha, doublecomplex *beta, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *q, integer *ldq, doublecomplex *z__, integer *ldz, doublecomplex *qc, integer *ldqc, doublecomplex *zc, integer *ldzc, doublecomplex *work, integer *lwork, integer *info);
+extern int ZLAQZ3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, dcomplex *alpha, dcomplex *beta, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *q, integer *ldq, dcomplex *z__, integer *ldz, dcomplex *qc, integer *ldqc, dcomplex *zc, integer *ldzc, dcomplex *work, integer *lwork, integer *info);
+extern int zlaqz3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, dcomplex *alpha, dcomplex *beta, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *q, integer *ldq, dcomplex *z__, integer *ldz, dcomplex *qc, integer *ldqc, dcomplex *zc, integer *ldzc, dcomplex *work, integer *lwork, integer *info);
+extern int ZLAQZ3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, dcomplex *alpha, dcomplex *beta, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *q, integer *ldq, dcomplex *z__, integer *ldz, dcomplex *qc, integer *ldqc, dcomplex *zc, integer *ldzc, dcomplex *work, integer *lwork, integer *info);
 
-extern int ZLARFB_GETT(char *ident, integer *m, integer *n, integer *k, doublecomplex *t, integer *ldt, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer * ldwork);
-extern int zlarfb_gett(char *ident, integer *m, integer *n, integer *k, doublecomplex *t, integer *ldt, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer * ldwork);
-extern int ZLARFB_GETT_(char *ident, integer *m, integer *n, integer *k, doublecomplex *t, integer *ldt, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer * ldwork);
+extern int ZLARFB_GETT(char *ident, integer *m, integer *n, integer *k, dcomplex *t, integer *ldt, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *work, integer * ldwork);
+extern int zlarfb_gett(char *ident, integer *m, integer *n, integer *k, dcomplex *t, integer *ldt, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *work, integer * ldwork);
+extern int ZLARFB_GETT_(char *ident, integer *m, integer *n, integer *k, dcomplex *t, integer *ldt, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *work, integer * ldwork);
 
-extern int ZUNGTSQR_ROW(integer *m, integer *n, integer *mb, integer *nb, doublecomplex *a, integer *lda, doublecomplex *t, integer *ldt, doublecomplex *work, integer *lwork, integer *info);
-extern int zungtsqr_row(integer *m, integer *n, integer *mb, integer *nb, doublecomplex *a, integer *lda, doublecomplex *t, integer *ldt, doublecomplex *work, integer *lwork, integer *info);
-extern int ZUNGTSQR_ROW_(integer *m, integer *n, integer *mb, integer *nb, doublecomplex *a, integer *lda, doublecomplex *t, integer *ldt, doublecomplex *work, integer *lwork, integer *info);
+extern int ZUNGTSQR_ROW(integer *m, integer *n, integer *mb, integer *nb, dcomplex *a, integer *lda, dcomplex *t, integer *ldt, dcomplex *work, integer *lwork, integer *info);
+extern int zungtsqr_row(integer *m, integer *n, integer *mb, integer *nb, dcomplex *a, integer *lda, dcomplex *t, integer *ldt, dcomplex *work, integer *lwork, integer *info);
+extern int ZUNGTSQR_ROW_(integer *m, integer *n, integer *mb, integer *nb, dcomplex *a, integer *lda, dcomplex *t, integer *ldt, dcomplex *work, integer *lwork, integer *info);
 
 extern int DLADIV1(doublereal *a, doublereal *b, doublereal *c__, doublereal *d__, doublereal *p, doublereal *q);
 extern int dladiv1(doublereal *a, doublereal *b, doublereal *c__, doublereal *d__, doublereal *p, doublereal *q);

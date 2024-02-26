@@ -161,7 +161,7 @@ int cungbr_(char *vect, integer *m, integer *n, integer *k, complex *a, integer 
     integer iinfo;
     logical wantq;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), cunglq_( integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *), cungqr_(integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), cunglq_( integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *), cungqr_(integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *);
     integer lwkopt;
     logical lquery;
     /* -- LAPACK computational routine -- */
@@ -263,7 +263,7 @@ int cungbr_(char *vect, integer *m, integer *n, integer *k, complex *a, integer 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CUNGBR", &i__1);
+        xerbla_("CUNGBR", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

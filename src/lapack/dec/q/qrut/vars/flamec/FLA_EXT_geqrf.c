@@ -1,9 +1,12 @@
 /*
-    Copyright (c) 2021 Advanced Micro Devices, Inc.  All rights reserved.
+    Copyright (c) 2021-2023 Advanced Micro Devices, Inc.  All rights reserved.
     May 09, 2021
 */
 
 #include "FLAME.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
 
 #define ssign( x ) ( (x) < 0.0F ? -1.0F : 1.0F )
 #define dsign( x ) ( (x) < 0.0  ? -1.0  : 1.0  )

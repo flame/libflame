@@ -32,10 +32,15 @@ void fla_test_spffrtx(integer argc, char ** argv, test_params_t* params);
 void fla_test_gehrd(integer argc, char ** argv, test_params_t *params);
 void fla_test_hgeqz(integer argc, char ** argv, test_params_t *params);
 void fla_test_gghrd(integer argc, char ** argv, test_params_t* params);
+void fla_test_rot(integer argc, char ** argv, test_params_t* params);
+void fla_test_lartg(integer argc, char ** argv, test_params_t* params);
+void fla_test_org2r(integer argc, char ** argv, test_params_t* params);
+void fla_test_syevx(integer argc, char ** argv, test_params_t *params);
 
 #define LIN_ID 0
 #define EIG_ID 1
 #define SVD_ID 2
+#define AUX_ID 3
 
 /* Add test api function call entry below */
 OPERATIONS API_test_functions[] =
@@ -68,7 +73,11 @@ OPERATIONS API_test_functions[] =
     {LIN_ID,    "spffrtx"             , fla_test_spffrtx},
     {LIN_ID,    "gehrd"               , fla_test_gehrd},
     {LIN_ID,    "gghrd"               , fla_test_gghrd},
-    {EIG_ID,    "hgeqz"               , fla_test_hgeqz}
+    {EIG_ID,    "hgeqz"               , fla_test_hgeqz},
+    {AUX_ID,    "rot"                 , fla_test_rot},
+    {AUX_ID,    "lartg"               , fla_test_lartg},
+    {LIN_ID,    "org2r"               , fla_test_org2r},
+    {EIG_ID,    "syevx"               , fla_test_syevx}
 };
 
 /* Add test API's group entry below */
@@ -76,5 +85,6 @@ char *API_test_group[] =
 {
     "LIN",
     "EIG",
-    "SVD"
+    "SVD",
+    "AUX"
 };

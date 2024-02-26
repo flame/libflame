@@ -159,7 +159,7 @@
  integer iinfo;
  logical wantq;
  extern /* Subroutine */
- int xerbla_(char *, integer *), lapack_dorglq( integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), lapack_dorgqr( integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
+ int xerbla_(const char *srname, const integer *info, ftnlen srname_len), lapack_dorglq( integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), lapack_dorgqr( integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
  integer lwkopt;
  logical lquery;
  /* -- LAPACK computational routine -- */
@@ -244,7 +244,7 @@
  }
  if (*info != 0) {
  i__1 = -(*info);
- xerbla_("DORGBR", &i__1);
+ xerbla_("DORGBR", &i__1, (ftnlen)6);
  return 0;
  }
  else if (lquery) {

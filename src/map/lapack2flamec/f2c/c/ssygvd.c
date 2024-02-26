@@ -243,7 +243,7 @@ int ssygvd_(integer *itype, char *jobz, char *uplo, integer * n, real *a, intege
     int strmm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * );
     logical wantz;
     extern /* Subroutine */
-    int strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), xerbla_(char *, integer *);
+    int strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer liwmin;
     extern /* Subroutine */
     int spotrf_(char *, integer *, real *, integer *, integer *), ssyevd_(char *, char *, integer *, real *, integer *, real *, real *, integer *, integer *, integer *, integer *);
@@ -345,7 +345,7 @@ int ssygvd_(integer *itype, char *jobz, char *uplo, integer * n, real *a, intege
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSYGVD", &i__1);
+        xerbla_("SSYGVD", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

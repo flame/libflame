@@ -44,7 +44,7 @@ int zgeqrfp_check(integer *m, integer *n, dcomplex *a, integer *lda, dcomplex *t
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGEQRFP", &i__1);
+        xerbla_("ZGEQRFP", &i__1, (ftnlen)7);
         return LAPACK_FAILURE;
     }
     else if (lquery)

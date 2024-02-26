@@ -177,7 +177,7 @@ int dlasd8_(integer *icompq, integer *k, doublereal *d__, doublereal *z__, doubl
     int dcopy_(integer *, doublereal *, integer *, doublereal *, integer *);
     extern doublereal dlamc3_(doublereal *, doublereal *);
     extern /* Subroutine */
-    int dlasd4_(integer *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *), dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dlasd4_(integer *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *), dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal dsigjp;
     /* -- LAPACK auxiliary routine (version 3.7.1) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -213,6 +213,7 @@ int dlasd8_(integer *icompq, integer *k, doublereal *d__, doublereal *z__, doubl
     --work;
     /* Function Body */
     *info = 0;
+    difrj = 0.;
     if (*icompq < 0 || *icompq > 1)
     {
         *info = -1;
@@ -228,7 +229,7 @@ int dlasd8_(integer *icompq, integer *k, doublereal *d__, doublereal *z__, doubl
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DLASD8", &i__1);
+        xerbla_("DLASD8", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

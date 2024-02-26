@@ -290,7 +290,7 @@ int dstebz_(char *range, char *order, integer *n, doublereal *vl, doublereal *vu
     doublereal safemn;
     integer idumma[1];
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer idiscu, iorder;
     logical ncnvrg;
@@ -328,6 +328,8 @@ int dstebz_(char *range, char *order, integer *n, doublereal *vl, doublereal *vu
     --d__;
     /* Function Body */
     *info = 0;
+    wlu = 0;
+    wul = 0;
     /* Decode RANGE */
     if (lsame_(range, "A"))
     {
@@ -389,7 +391,7 @@ int dstebz_(char *range, char *order, integer *n, doublereal *vl, doublereal *vu
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSTEBZ", &i__1);
+        xerbla_("DSTEBZ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

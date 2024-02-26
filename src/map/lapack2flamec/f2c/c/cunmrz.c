@@ -183,8 +183,10 @@ the routine */
 int cunmrz_(char *side, char *trans, integer *m, integer *n, integer *k, integer *l, complex *a, integer *lda, complex *tau, complex *c__, integer *ldc, complex *work, integer *lwork, integer * info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    address a__1[2];
-    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__3[2], i__4, i__5;
+    AOCL_DTL_SNPRINTF(buffer, 256,"cunmrz inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", l %" FLA_IS ", lda %" FLA_IS ", ldc %" FLA_IS ", lwork %" FLA_IS "",*side, *trans, *m, *n, *k, *l, *lda, *ldc, *lwork);
+
+    /* System generated locals */
+    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__4, i__5;
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */
@@ -198,7 +200,7 @@ int cunmrz_(char *side, char *trans, integer *m, integer *n, integer *k, integer
     int cunmr3_(char *, char *, integer *, integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *, integer *), clarzb_(char *, char *, char *, char *, integer *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), clarzt_( char *, char *, integer *, integer *, complex *, integer *, complex *, complex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), clarzt_( char *, char *, integer *, integer *, complex *, integer *, complex *, complex *, integer *);
     logical notran;
     integer ldwork;
     char transt[1];
@@ -306,7 +308,7 @@ int cunmrz_(char *side, char *trans, integer *m, integer *n, integer *k, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CUNMRZ", &i__1);
+        xerbla_("CUNMRZ", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

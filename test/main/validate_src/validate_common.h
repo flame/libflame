@@ -10,8 +10,6 @@
 #ifndef VALIDATE_COMMON_H
 #define VALIDATE_COMMON_H
 
-#include "test_common.h"
-
 void validate_geqrf(integer m_A,
     integer n_A,
     void *A,
@@ -350,5 +348,25 @@ void validate_gehrd(integer n,
     integer datatype,
     double* residual,
     integer *info);
+
+void validate_rot(integer datatype,
+    integer n,
+    void *cx,
+    void *cx_test,
+    integer incx,
+    void *cy,
+    void *cy_test,
+    integer incy,
+    void *c,
+    void *s,
+    double* residual);
+
+void validate_lartg(integer datatype,
+    void *f,
+    void *g,
+    void *r,
+    void *c,
+    void *s,
+    double* residual);
 
 #endif // VALIDATE_COMMON_H

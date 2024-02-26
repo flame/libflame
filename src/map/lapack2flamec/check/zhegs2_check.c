@@ -16,12 +16,12 @@ int zhegs2_check(integer *itype, char *uplo, integer *n, dcomplex *a, integer *l
     b -= b_offset;
     /* Function Body */
     *info = 0;
-    upper = lsame_(uplo, "U");
+    upper = lsame_(uplo, "U", 1, 1);
     if (*itype < 1 || *itype > 3)
     {
         *info = -1;
     }
-    else if (! upper && ! lsame_(uplo, "L"))
+    else if (! upper && ! lsame_(uplo, "L", 1, 1))
     {
         *info = -2;
     }
@@ -40,7 +40,7 @@ int zhegs2_check(integer *itype, char *uplo, integer *n, dcomplex *a, integer *l
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHEGS2", &i__1);
+        xerbla_("ZHEGS2", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     return LAPACK_SUCCESS;

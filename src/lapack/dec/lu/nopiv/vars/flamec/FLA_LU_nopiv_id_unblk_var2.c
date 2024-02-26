@@ -1,8 +1,11 @@
 /*
- *  Copyright (c) 2021 Advanced Micro Devices, Inc. All rights reserved.
+ *  Copyright (c) 2021-2023 Advanced Micro Devices, Inc. All rights reserved.
  * */
 
 #include "FLAME.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
 
 /*******************************************************************************************
  This algorithm uses noncrecursive nonpivot based LU factorization using same logic as getrf
@@ -18,9 +21,6 @@ FLA_Error FLA_LU_nopiv_id_unblk_var2( integer m_A, integer n_A, double* A, integ
 {
   double rminusone = bl1_dm1();
   double *Minusone = &rminusone;
-  double rone = bl1_d1();
-  double *One = &rone;
-  double rzero = bl1_d0();
   integer inc_x, inc_y, i, mdiff, ndiff;
   double alpha_inv;
   double *alpha;

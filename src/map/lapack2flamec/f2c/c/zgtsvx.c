@@ -298,7 +298,7 @@ int zgtsvx_(char *fact, char *trans, integer *n, integer * nrhs, doublecomplex *
     extern doublereal dlamch_(char *);
     logical nofact;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern doublereal zlangt_(char *, integer *, doublecomplex *, doublecomplex *, doublecomplex *);
     logical notran;
     extern /* Subroutine */
@@ -373,7 +373,7 @@ int zgtsvx_(char *fact, char *trans, integer *n, integer * nrhs, doublecomplex *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGTSVX", &i__1);
+        xerbla_("ZGTSVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

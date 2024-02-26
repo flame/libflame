@@ -221,7 +221,7 @@ int slaed2_(integer *k, integer *n, integer *n1, real *d__, real *q, integer *ld
     int srot_(integer *, real *, integer *, real *, integer *, real *, real *), sscal_(integer *, real *, real *, integer *), scopy_(integer *, real *, integer *, real *, integer * );
     extern real slapy2_(real *, real *), slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer isamax_(integer *, real *, integer *);
     extern /* Subroutine */
     int slamrg_(integer *, integer *, real *, integer *, integer *, integer *), slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *);
@@ -264,6 +264,7 @@ int slaed2_(integer *k, integer *n, integer *n1, real *d__, real *q, integer *ld
     --coltyp;
     /* Function Body */
     *info = 0;
+    pj = 0;
     if (*n < 0)
     {
         *info = -2;
@@ -285,7 +286,7 @@ int slaed2_(integer *k, integer *n, integer *n1, real *d__, real *q, integer *ld
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLAED2", &i__1);
+        xerbla_("SLAED2", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

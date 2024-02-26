@@ -22,8 +22,8 @@ int sorgtr_check(char *uplo, integer *n, float *a, integer *lda, float *tau, flo
     /* Function Body */
     *info = 0;
     lquery = *lwork == -1;
-    upper = lsame_(uplo, "U");
-    if (! upper && ! lsame_(uplo, "L"))
+    upper = lsame_(uplo, "U", 1, 1);
+    if (! upper && ! lsame_(uplo, "L", 1, 1))
     {
         *info = -1;
     }
@@ -70,7 +70,7 @@ int sorgtr_check(char *uplo, integer *n, float *a, integer *lda, float *tau, flo
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SORGTR", &i__1);
+        xerbla_("SORGTR", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

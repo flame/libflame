@@ -27,7 +27,7 @@ int cgelq2_check(integer *m, integer *n, scomplex *a, integer *lda, scomplex *ta
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGELQ2", &i__1);
+        xerbla_("CGELQ2", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
 

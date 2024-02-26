@@ -193,7 +193,7 @@ int stfttr_(char *transr, char *uplo, integer *n, real *arf, real *a, integer *l
     extern logical lsame_(char *, char *);
     logical lower;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical nisodd;
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -242,7 +242,7 @@ int stfttr_(char *transr, char *uplo, integer *n, real *arf, real *a, integer *l
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("STFTTR", &i__1);
+        xerbla_("STFTTR", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

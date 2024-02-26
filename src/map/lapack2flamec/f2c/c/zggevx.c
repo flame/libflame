@@ -410,7 +410,7 @@ int zggevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, do
     int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), zggbak_(char *, char *, integer *, integer *, integer *, doublereal *, doublereal *, integer *, doublecomplex *, integer *, integer *), zggbal_( char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *);
     logical ilascl, ilbscl;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     logical ldumma[1];
     char chtemp[1];
@@ -615,7 +615,7 @@ int zggevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, do
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGGEVX", &i__1);
+        xerbla_("ZGGEVX", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

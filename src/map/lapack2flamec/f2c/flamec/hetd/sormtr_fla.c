@@ -182,7 +182,7 @@ int sormtr_fla(char *side, char *uplo, char *trans, integer *m, integer *n, real
     integer iinfo;
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int sormql_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *, integer *);
@@ -304,7 +304,7 @@ int sormtr_fla(char *side, char *uplo, char *trans, integer *m, integer *n, real
     if (*info != 0)
     {
         i__2 = -(*info);
-        xerbla_("SORMTR", &i__2);
+        xerbla_("SORMTR", &i__2, (ftnlen)6);
         return 0;
     }
     else if (lquery)

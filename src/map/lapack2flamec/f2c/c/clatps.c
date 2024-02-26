@@ -271,10 +271,10 @@ int clatps_(char *uplo, char *trans, char *diag, char * normin, integer *n, comp
     int ctpsv_(char *, char *, char *, integer *, complex *, complex *, integer *), slabad_( real *, real *);
     extern integer icamax_(integer *, complex *, integer *);
     extern /* Complex */
-    VOID cladiv_(complex *, complex *, complex *);
+    void cladiv_f2c_(complex *, complex *, complex *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int csscal_(integer *, real *, complex *, integer *), xerbla_(char *, integer *);
+    int csscal_(integer *, real *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     extern integer isamax_(integer *, real *, integer *);
     extern real scasum_(integer *, complex *, integer *);
@@ -339,7 +339,7 @@ int clatps_(char *uplo, char *trans, char *diag, char * normin, integer *n, comp
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CLATPS", &i__1);
+        xerbla_("CLATPS", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

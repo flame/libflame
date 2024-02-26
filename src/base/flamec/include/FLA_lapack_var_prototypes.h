@@ -47,10 +47,6 @@
 #include "FLA_UDdate_UT.h"
 #include "FLA_UDdate_UT_inc.h"
 
-// SIMD Optimized kernels
-#include "fla_lapack_x86_common.h"
-#include "fla_lapack_avx2_kernels.h"
-
 // BLAS kernels
 #include "fla_lapack_fblas_common.h"
 #include "fla_lapack_fblas_kernels.h"

@@ -241,7 +241,7 @@ int dstevx_(char *jobz, char *range, integer *n, doublereal * d__, doublereal *e
     logical valeig;
     doublereal safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal bignum;
     extern doublereal dlanst_(char *, integer *, doublereal *, doublereal *);
     integer indisp;
@@ -335,7 +335,7 @@ int dstevx_(char *jobz, char *range, integer *n, doublereal * d__, doublereal *e
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSTEVX", &i__1);
+        xerbla_("DSTEVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -236,9 +236,9 @@ int dsytrd_2stage_(char *vect, char *uplo, integer *n, doublereal *a, integer *l
     int dsytrd_sy2sb_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
     extern logical lsame_(char *, char *);
     integer abpos, lhmin, lwmin;
-    logical wantq, upper;
+    logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical lquery;
     /* -- LAPACK computational routine (version 3.8.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -269,7 +269,6 @@ int dsytrd_2stage_(char *vect, char *uplo, integer *n, doublereal *a, integer *l
     --work;
     /* Function Body */
     *info = 0;
-    wantq = lsame_(vect, "V");
     upper = lsame_(uplo, "U");
     lquery = *lwork == -1 || *lhous2 == -1;
     /* Determine the block size, the workspace size and the hous size. */
@@ -311,7 +310,7 @@ int dsytrd_2stage_(char *vect, char *uplo, integer *n, doublereal *a, integer *l
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSYTRD_2STAGE", &i__1);
+        xerbla_("DSYTRD_2STAGE", &i__1, (ftnlen)13);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -336,7 +335,7 @@ int dsytrd_2stage_(char *vect, char *uplo, integer *n, doublereal *a, integer *l
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSYTRD_SY2SB", &i__1);
+        xerbla_("DSYTRD_SY2SB", &i__1, (ftnlen)12);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -344,7 +343,7 @@ int dsytrd_2stage_(char *vect, char *uplo, integer *n, doublereal *a, integer *l
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSYTRD_SB2ST", &i__1);
+        xerbla_("DSYTRD_SB2ST", &i__1, (ftnlen)12);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

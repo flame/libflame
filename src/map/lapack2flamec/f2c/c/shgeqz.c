@@ -345,7 +345,7 @@ int shgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     int slarfg_(integer *, real *, real *, integer *, real *);
     real safmax;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real eshift;
     logical ilschr;
     integer icompq, ilastm;
@@ -399,6 +399,9 @@ int shgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     z__ -= z_offset;
     --work;
     /* Function Body */
+    ilz = 0;
+    ilq = 0;
+    ilschr = 0;
     if (lsame_(job, "E"))
     {
         ilschr = FALSE_;
@@ -502,7 +505,7 @@ int shgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SHGEQZ", &i__1);
+        xerbla_("SHGEQZ", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -204,7 +204,7 @@ int dpbrfs_(char *uplo, integer *n, integer *kd, integer * nrhs, doublereal *ab,
     extern doublereal dlamch_(char *);
     doublereal safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), dpbtrs_( char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), dpbtrs_( char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, integer *);
     doublereal lstres;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -284,7 +284,7 @@ int dpbrfs_(char *uplo, integer *n, integer *kd, integer * nrhs, doublereal *ab,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DPBRFS", &i__1);
+        xerbla_("DPBRFS", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

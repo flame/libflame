@@ -110,7 +110,7 @@ int spoequb_(integer *n, real *a, integer *lda, real *s, real *scond, real *amax
     real tmp, base, smin;
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -151,7 +151,7 @@ int spoequb_(integer *n, real *a, integer *lda, real *s, real *scond, real *amax
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SPOEQUB", &i__1);
+        xerbla_("SPOEQUB", &i__1, (ftnlen)7);
         return 0;
     }
     /* Quick return if possible. */

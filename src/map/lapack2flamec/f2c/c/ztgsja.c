@@ -420,7 +420,7 @@ int ztgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
     int zcopy_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), zlags2_(logical *, doublereal *, doublecomplex *, doublereal *, doublereal *, doublecomplex *, doublereal *, doublereal *, doublecomplex *, doublereal *, doublecomplex *, doublereal *, doublecomplex *);
     integer kcycle;
     extern /* Subroutine */
-    int dlartg_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *), xerbla_(char *, integer *), zdscal_(integer *, doublereal *, doublecomplex *, integer *), zlapll_(integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *), zlaset_( char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *);
+    int dlartg_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), zdscal_(integer *, doublereal *, doublecomplex *, integer *), zlapll_(integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *), zlaset_( char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *);
     doublereal hugenum;
     /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -517,7 +517,7 @@ int ztgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZTGSJA", &i__1);
+        xerbla_("ZTGSJA", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

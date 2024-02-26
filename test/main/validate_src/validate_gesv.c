@@ -19,6 +19,8 @@ void validate_gesv(integer n,
     double* residual,
     integer* info)
 {
+    if(n == 0 || nrhs == 0)
+        return;
     void* work = NULL;
     integer ldx;
     *info = 0;

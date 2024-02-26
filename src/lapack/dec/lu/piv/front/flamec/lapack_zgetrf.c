@@ -3,6 +3,9 @@
 */
 
 #include "FLAME.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
 
 /* Subroutine */ integer lapack_zgetrf(integer *m, integer *n, dcomplex *a,
 	integer *lda, integer *ipiv, integer *info)
@@ -70,7 +73,7 @@
     /* Local variables */
     static TLS_CLASS_SPEC integer i__, j, iinfo;
     static TLS_CLASS_SPEC integer jb, nb;
-    extern /* Subroutine */ int xerbla_(char *, integer *);
+    extern /* Subroutine */ int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *,integer *, integer *);
 #define a_subscr(a_1,a_2) (a_2)*a_dim1 + a_1
 #define a_ref(a_1,a_2) a[a_subscr(a_1,a_2)]
@@ -95,7 +98,7 @@
     }
     if (*info != 0) {
 	i__1 = -(*info);
-	xerbla_("LAPACK_ZGETRF", &i__1);
+	xerbla_("LAPACK_ZGETRF", &i__1, (ftnlen)13);
 	return 0;
     }
 
@@ -114,13 +117,12 @@
                 #if AOCL_FLA_PROGRESS_H
 
                     #ifndef FLA_ENABLE_WINDOWS_BUILD
-	    		if(!aocl_fla_progress_ptr)
+	    		        if(!aocl_fla_progress_ptr)
                                 aocl_fla_progress_ptr=aocl_fla_progress;
-		    #endif
-
+		            #endif
                         if(aocl_fla_progress_ptr){
-                                step_count= fla_min(*m,*n);
-                                AOCL_FLA_PROGRESS_FUNC_PTR("ZGETRF",6,&step_count,&thread_id,&total_threads);
+                                progress_step_count= fla_min(*m,*n);
+                                AOCL_FLA_PROGRESS_FUNC_PTR("ZGETRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
                         }
                 #endif
 
@@ -130,8 +132,8 @@
 /*        Use blocked code. */
 
 	#if AOCL_FLA_PROGRESS_H
-                step_count =0;
-        #endif
+                progress_step_count =0;
+    #endif
     
 	i__1 = fla_min(*m,*n);
 	i__2 = nb;
@@ -141,17 +143,16 @@
 	    jb = fla_min(i__3,nb);
 
 
-            #if AOCL_FLA_PROGRESS_H
+    #if AOCL_FLA_PROGRESS_H
 		#ifndef FLA_ENABLE_WINDOWS_BUILD
-	    	    if(!aocl_fla_progress_ptr)
-                        aocl_fla_progress_ptr=aocl_fla_progress;
+	    	if(!aocl_fla_progress_ptr)
+                    aocl_fla_progress_ptr=aocl_fla_progress;
 		#endif
-
-                    if(aocl_fla_progress_ptr){
-                        step_count+=jb;
-                        AOCL_FLA_PROGRESS_FUNC_PTR("ZGETRF",6,&step_count,&thread_id,&total_threads);
-                    }
-            #endif
+            if(aocl_fla_progress_ptr){
+                progress_step_count+=jb;
+                AOCL_FLA_PROGRESS_FUNC_PTR("ZGETRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
+            }
+    #endif
 
 
 /*           Factor diagonal and subdiagonal blocks and test for exact

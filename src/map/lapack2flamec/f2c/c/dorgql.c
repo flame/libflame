@@ -129,7 +129,7 @@ int dorgql_(integer *m, integer *n, integer *k, doublereal * a, integer *lda, do
     /* Local variables */
     integer i__, j, l, ib, nb, kk, nx, iws, nbmin, iinfo;
     extern /* Subroutine */
-    int dorg2l_(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), dlarfb_(char *, char *, char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), dlarft_(char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dorg2l_(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), dlarfb_(char *, char *, char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), dlarft_(char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer ldwork, lwkopt;
     logical lquery;
@@ -162,6 +162,7 @@ int dorgql_(integer *m, integer *n, integer *k, doublereal * a, integer *lda, do
     --work;
     /* Function Body */
     *info = 0;
+    nb = 0;
     lquery = *lwork == -1;
     if (*m < 0)
     {
@@ -199,7 +200,7 @@ int dorgql_(integer *m, integer *n, integer *k, doublereal * a, integer *lda, do
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DORGQL", &i__1);
+        xerbla_("DORGQL", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

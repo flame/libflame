@@ -365,7 +365,7 @@ int dggsvd3_(char *jobu, char *jobv, char *jobq, integer *m, integer *n, integer
     int dtgsja_(char *, char *, char *, integer *, integer *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *);
     integer ncycle;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer lwkopt;
     logical lquery;
     extern /* Subroutine */
@@ -479,7 +479,7 @@ int dggsvd3_(char *jobu, char *jobv, char *jobq, integer *m, integer *n, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGGSVD3", &i__1);
+        xerbla_("DGGSVD3", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

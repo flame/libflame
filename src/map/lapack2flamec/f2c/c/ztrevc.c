@@ -248,7 +248,7 @@ int ztrevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex
     int zcopy_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), dlabad_(doublereal *, doublereal *);
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zdscal_( integer *, doublereal *, doublecomplex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zdscal_( integer *, doublereal *, doublecomplex *, integer *);
     extern integer izamax_(integer *, doublecomplex *, integer *);
     logical rightv;
     extern doublereal dzasum_(integer *, doublecomplex *, integer *);
@@ -353,7 +353,7 @@ int ztrevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZTREVC", &i__1);
+        xerbla_("ZTREVC", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -182,7 +182,7 @@ int cunmr3_(char *side, char *trans, integer *m, integer *n, integer *k, integer
     complex taui;
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int clarz_(char *, integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex * ), xerbla_(char *, integer *);
+    int clarz_(char *, integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex * ), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical notran;
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -260,7 +260,7 @@ int cunmr3_(char *side, char *trans, integer *m, integer *n, integer *k, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CUNMR3", &i__1);
+        xerbla_("CUNMR3", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

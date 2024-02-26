@@ -171,7 +171,7 @@ int ssfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *
     integer nrowa;
     logical lower;
     extern /* Subroutine */
-    int ssyrk_(char *, char *, integer *, integer *, real *, real *, integer *, real *, real *, integer *), xerbla_(char *, integer *);
+    int ssyrk_(char *, char *, integer *, integer *, real *, real *, integer *, real *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical nisodd, notrans;
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -239,7 +239,7 @@ int ssfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *
     if (info != 0)
     {
         i__1 = -info;
-        xerbla_("SSFRK ", &i__1);
+        xerbla_("SSFRK ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

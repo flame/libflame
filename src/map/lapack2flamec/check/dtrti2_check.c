@@ -15,13 +15,13 @@ int dtrti2_check(char *uplo, char *diag, integer *n, double * a, integer *lda, i
     a -= a_offset;
     /* Function Body */
     *info = 0;
-    upper = lsame_(uplo, "U");
-    nounit = lsame_(diag, "N");
-    if (! upper && ! lsame_(uplo, "L"))
+    upper = lsame_(uplo, "U", 1, 1);
+    nounit = lsame_(diag, "N", 1, 1);
+    if (! upper && ! lsame_(uplo, "L", 1, 1))
     {
         *info = -1;
     }
-    else if (! nounit && ! lsame_(diag, "U"))
+    else if (! nounit && ! lsame_(diag, "U", 1, 1))
     {
         *info = -2;
     }
@@ -36,7 +36,7 @@ int dtrti2_check(char *uplo, char *diag, integer *n, double * a, integer *lda, i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DTRTI2", &i__1);
+        xerbla_("DTRTI2", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     return LAPACK_SUCCESS;

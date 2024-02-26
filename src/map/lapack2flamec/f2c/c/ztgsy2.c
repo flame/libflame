@@ -265,7 +265,7 @@ int ztgsy2_(char *trans, integer *ijob, integer *m, integer * n, doublecomplex *
     int zscal_(integer *, doublecomplex *, doublecomplex *, integer *), zaxpy_(integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), zgesc2_( integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *, doublereal *), zgetc2_(integer *, doublecomplex *, integer *, integer *, integer *, integer *);
     doublereal scaloc;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zlatdf_( integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublereal *, doublereal *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zlatdf_( integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublereal *, doublereal *, integer *, integer *);
     logical notran;
     /* -- LAPACK auxiliary routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -362,7 +362,7 @@ int ztgsy2_(char *trans, integer *ijob, integer *m, integer * n, doublecomplex *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZTGSY2", &i__1);
+        xerbla_("ZTGSY2", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

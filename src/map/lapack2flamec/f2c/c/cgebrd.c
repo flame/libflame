@@ -235,7 +235,7 @@ int cgebrd_(integer *m, integer *n, complex *a, integer *lda, real *d__, real *e
     int cgemm_(char *, char *, integer *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer *);
     integer nbmin, iinfo, minmn;
     extern /* Subroutine */
-    int cgebd2_(integer *, integer *, complex *, integer *, real *, real *, complex *, complex *, complex *, integer *), clabrd_(integer *, integer *, integer *, complex *, integer *, real *, real *, complex *, complex *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *);
+    int cgebd2_(integer *, integer *, complex *, integer *, real *, real *, complex *, complex *, complex *, integer *), clabrd_(integer *, integer *, integer *, complex *, integer *, real *, real *, complex *, complex *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer ldwrkx, ldwrky, lwkopt;
     logical lquery;
@@ -304,7 +304,7 @@ int cgebrd_(integer *m, integer *n, complex *a, integer *lda, real *d__, real *e
     if (*info < 0)
     {
         i__1 = -(*info);
-        xerbla_("CGEBRD", &i__1);
+        xerbla_("CGEBRD", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

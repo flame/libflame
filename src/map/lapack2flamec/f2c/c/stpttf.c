@@ -180,12 +180,12 @@ int stpttf_(char *transr, char *uplo, integer *n, real *ap, real *arf, integer *
     /* System generated locals */
     integer i__1, i__2, i__3;
     /* Local variables */
-    integer i__, j, k, n1, n2, ij, jp, js, nt, lda, ijp;
+    integer i__, j, k, n1, n2, ij, jp, js, lda, ijp;
     logical normaltransr;
     extern logical lsame_(char *, char *);
     logical lower;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical nisodd;
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -225,7 +225,7 @@ int stpttf_(char *transr, char *uplo, integer *n, real *ap, real *arf, integer *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("STPTTF", &i__1);
+        xerbla_("STPTTF", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */
@@ -246,7 +246,6 @@ int stpttf_(char *transr, char *uplo, integer *n, real *ap, real *arf, integer *
         return 0;
     }
     /* Size of array ARF(0:NT-1) */
-    nt = *n * (*n + 1) / 2;
     /* Set N1 and N2 depending on LOWER */
     if (lower)
     {

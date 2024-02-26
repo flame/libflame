@@ -9,26 +9,20 @@
 
 /* Local prototypes.*/
 void fla_test_gesdd_experiment(test_params_t *params, integer datatype, integer p_cur, integer  q_cur, integer pci,
-integer n_repeats, double* perf, double* t, double* residual);
+integer n_repeats, integer einfo, double* perf, double* t, double* residual);
 void prepare_gesdd_run(char *jobz, integer m_A, integer n_A, void *A, integer lda, void *s, void *U, integer ldu, void *V, integer ldvt, integer datatype, integer n_repeats, double* time_min_, integer *info);
 void invoke_gesdd(integer datatype, char* jobz, integer* m, integer* n, void* a, integer* lda, void* s, void* u, integer* ldu, void* vt, integer* ldvt, void* work, integer* lwork, void* rwork, integer* iwork, integer* info);
-
-/* Flag to indicate lwork availability status
- * <= 0 - To be calculated
- * > 0  - Use the value
- * */
-static integer g_lwork;
-static FILE* g_ext_fptr = NULL;
 
 void fla_test_gesdd(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Singular value decomposition";
     char* front_str = "GESDD";
-    integer tests_not_run = 1, invalid_dtype = 0;
+    integer tests_not_run = 1, invalid_dtype = 0, einfo = 0;
 
     if(argc == 1)
     {
         g_lwork = -1;
+        config_data = 1;
         fla_test_output_info("--- %s ---\n", op_str);
         fla_test_output_info("\n");
         fla_test_op_driver(front_str, RECT_INPUT, params, SVD, fla_test_gesdd_experiment);
@@ -36,13 +30,7 @@ void fla_test_gesdd(integer argc, char ** argv, test_params_t *params)
     }
     if (argc == 12)
     {
-        /* Read matrix input data from a file */
-        g_ext_fptr = fopen(argv[11], "r");
-        if (g_ext_fptr == NULL)
-        {
-            printf("\n Invalid input file argument \n");
-            return;
-        }
+        FLA_TEST_PARSE_LAST_ARG(argv[11]);
     }
     if (argc >= 11 && argc <= 12)
     {
@@ -90,7 +78,7 @@ void fla_test_gesdd(integer argc, char ** argv, test_params_t *params)
                 fla_test_gesdd_experiment(params, datatype,
                                           M, N,
                                           0,
-                                          n_repeats,
+                                          n_repeats, einfo,
                                           &perf, &time_min, &residual);
                 /* Print the results */
                 fla_test_print_status(front_str,
@@ -117,6 +105,7 @@ void fla_test_gesdd(integer argc, char ** argv, test_params_t *params)
     if (g_ext_fptr != NULL)
     {
         fclose(g_ext_fptr);
+        g_ext_fptr = NULL;
     }
     return;
 }
@@ -127,6 +116,7 @@ void fla_test_gesdd_experiment(test_params_t *params,
                                integer  q_cur,
                                integer pci,
                                integer n_repeats,
+                               integer einfo,
                                double* perf,
                                double *time_min,
                                double* residual)
@@ -155,10 +145,45 @@ void fla_test_gesdd_experiment(test_params_t *params,
     ldu = params->svd_paramslist[pci].ldu;
     ldvt = params->svd_paramslist[pci].ldvt;
 
-    if(lda < m || ldu < m || ldvt < n)
+    /* If leading dimensions = -1, set them to default value
+       when inputs are from config files */
+    if (config_data)
     {
-        *residual = DBL_MIN;
-        return;
+        if (lda == -1)
+        {
+            lda = fla_max(1,m);
+        }
+        /* LDU >= 1;
+           if JOBZ = 'S' or 'A' or JOBZ = 'O' and M < N, LDU >= M. */
+        if (ldu == -1)
+        {
+            if (((jobz == 'S') || (jobz == 'A')) || ((jobz == 'O') && (m < n)))
+            {
+                ldu = m;
+            }
+            else
+            {
+                ldu = 1;
+            }
+        }
+        /* LDVT >= 1;
+           if JOBZ = 'A' or JOBZ = 'O' and M >= N, LDVT >= N;
+           if JOBZ = 'S', LDVT >= min(M,N). */
+        if (ldvt == -1)
+        {
+            if ((jobz == 'A') || ((jobz == 'O') && (m >= n)))
+            {
+                ldvt = n;
+            }
+            else if (jobz == 'S')
+            {
+                ldvt = fla_min(m,n);
+            }
+            else
+            {
+                ldvt = 1;
+            }
+        }
     }
 
     /* Create input matrix parameters */
@@ -167,16 +192,7 @@ void fla_test_gesdd_experiment(test_params_t *params,
     create_matrix(datatype, &V, ldvt, n);
     create_realtype_vector(datatype, &s, fla_min(m, n));
 
-    if (g_ext_fptr != NULL)
-    {
-        /* Initialize input matrix with custom data */
-        init_matrix_from_file(datatype, A, m, n, lda, g_ext_fptr);
-    }
-    else
-    {
-        /* Initialize input matrix with random numbers */
-        rand_matrix(datatype, A, m, n, lda);
-    }
+    init_matrix(datatype, A, m, n, lda, g_ext_fptr, params->imatrix_char);
 
     /* Make a copy of input matrix A. This is required to validate the API functionality.*/
     create_matrix(datatype, &A_test, lda, n);
@@ -197,9 +213,7 @@ void fla_test_gesdd_experiment(test_params_t *params,
     if((jobz == 'A' || jobz == 'S' || jobz == 'O') && info == 0)
         validate_gesdd(&jobz, m, n, A, A_test, lda, s, U, ldu, V, ldvt, datatype, residual, &vinfo);
 
-    /* Assigning bigger value to residual as execution fails */
-    if (info < 0 || vinfo < 0)
-        *residual = DBL_MAX;
+    FLA_TEST_CHECK_EINFO(residual, info, einfo);
 
     /* Free up the buffers */
     free_matrix(A);
@@ -252,15 +266,11 @@ void prepare_gesdd_run(char *jobz,
 
         /* call to  gesdd API */
         invoke_gesdd(datatype, jobz, &m_A, &n_A, NULL, &lda, NULL, NULL, &ldu, NULL, &ldvt, work, &lwork, NULL, NULL, info);
-        if (*info < 0)
+        if (*info == 0)
         {
-            free_matrix(A_save);
-            free_vector(work);
-            return;
+            /* Get work size */
+            lwork = get_work_value( datatype, work );
         }
-
-        /* Get work size */
-        lwork = get_work_value( datatype, work );
 
         /* Output buffers will be freshly allocated for each iterations, free up
         the current output buffers.*/
@@ -271,6 +281,7 @@ void prepare_gesdd_run(char *jobz,
          lwork = g_lwork;
     }
 
+    *info = 0;
     for (i = 0; i < n_repeats && *info == 0; ++i)
     {
         /* Restore input matrix A value and allocate memory to output buffers

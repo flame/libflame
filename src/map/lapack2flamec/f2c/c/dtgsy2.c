@@ -287,7 +287,7 @@ int dtgsy2_(char *trans, integer *ijob, integer *m, integer * n, doublereal *a, 
     int dgemv_(char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), dcopy_(integer *, doublereal *, integer *, doublereal *, integer *), daxpy_(integer *, doublereal *, doublereal *, integer *, doublereal *, integer *), dgesc2_(integer *, doublereal *, integer *, doublereal *, integer *, integer *, doublereal *), dgetc2_(integer *, doublereal *, integer *, integer *, integer *, integer *), dlatdf_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, integer *);
     doublereal scaloc;
     extern /* Subroutine */
-    int dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical notran;
     /* -- LAPACK auxiliary routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -387,7 +387,7 @@ int dtgsy2_(char *trans, integer *ijob, integer *m, integer * n, doublereal *a, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DTGSY2", &i__1);
+        xerbla_("DTGSY2", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

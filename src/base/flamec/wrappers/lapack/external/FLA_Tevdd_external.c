@@ -12,10 +12,9 @@
 
 FLA_Error FLA_Tevdd_external( FLA_Evd_type jobz, FLA_Obj d, FLA_Obj e, FLA_Obj A )
 {
-  int          info = 0;
+  integer      info = 0;
 #ifdef FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
   FLA_Datatype datatype;
-  FLA_Datatype dt_real;
   integer          n_A, cs_A;
   integer          lwork, lrwork, liwork;
   FLA_Obj      work, rwork, iwork;
@@ -28,7 +27,6 @@ FLA_Error FLA_Tevdd_external( FLA_Evd_type jobz, FLA_Obj d, FLA_Obj e, FLA_Obj A
   if ( FLA_Obj_has_zero_dim( A ) ) return FLA_SUCCESS;
 
   datatype = FLA_Obj_datatype( A );
-  dt_real  = FLA_Obj_datatype_proj_to_real( A );
 
   n_A      = FLA_Obj_width( A );
   cs_A     = FLA_Obj_col_stride( A );

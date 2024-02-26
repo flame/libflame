@@ -12,7 +12,7 @@ int ssbmv_(char *uplo, integer *n, integer *k, real *alpha, real *a, integer *ld
     extern logical lsame_(char *, char *);
     integer kplus1, ix, iy, jx, jy, kx, ky;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
     /* .. */
@@ -151,7 +151,7 @@ int ssbmv_(char *uplo, integer *n, integer *k, real *alpha, real *a, integer *ld
     }
     if (info != 0)
     {
-        xerbla_("SSBMV ", &info);
+        xerbla_("SSBMV ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

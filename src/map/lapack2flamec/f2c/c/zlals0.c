@@ -283,7 +283,7 @@ int zlals0_(integer *icompq, integer *nl, integer *nr, integer *sqre, integer *n
     int dgemv_(char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), zdrot_(integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublereal *);
     extern doublereal dlamc3_(doublereal *, doublereal *);
     extern /* Subroutine */
-    int zcopy_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(char *, integer *);
+    int zcopy_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal dsigjp;
     extern /* Subroutine */
     int zdscal_(integer *, doublereal *, doublecomplex *, integer *), zlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublecomplex *, integer *, integer *), zlacpy_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *);
@@ -334,6 +334,7 @@ int zlals0_(integer *icompq, integer *nl, integer *nr, integer *sqre, integer *n
     /* Function Body */
     *info = 0;
     n = *nl + *nr + 1;
+    difrj = 0.;
     if (*icompq < 0 || *icompq > 1)
     {
         *info = -1;
@@ -381,7 +382,7 @@ int zlals0_(integer *icompq, integer *nl, integer *nr, integer *sqre, integer *n
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZLALS0", &i__1);
+        xerbla_("ZLALS0", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

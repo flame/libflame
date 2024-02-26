@@ -206,7 +206,7 @@ int ctrrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, comp
     extern real slamch_(char *);
     real safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical notran;
     char transn[1], transt[1];
     logical nounit;
@@ -292,7 +292,7 @@ int ctrrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, comp
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTRRFS", &i__1);
+        xerbla_("CTRRFS", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -184,7 +184,7 @@ int sgetsls_(char *trans, integer *m, integer *n, integer * nrhs, real *a, integ
     int slabad_(real *, real *);
     extern real slamch_(char *), slange_(char *, integer *, integer *, real *, integer *, real *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer scllen;
     real bignum;
     extern /* Subroutine */
@@ -310,7 +310,7 @@ int sgetsls_(char *trans, integer *m, integer *n, integer * nrhs, real *a, integ
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGETSLS", &i__1);
+        xerbla_("SGETSLS", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

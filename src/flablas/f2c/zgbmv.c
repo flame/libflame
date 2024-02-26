@@ -15,7 +15,7 @@ int zgbmv_(char *trans, integer *m, integer *n, integer *kl, integer *ku, double
     extern logical lsame_(char *, char *);
     integer ix, iy, jx, jy, kx, ky;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical noconj;
     integer kup1;
     /* .. Scalar Arguments .. */
@@ -161,7 +161,7 @@ int zgbmv_(char *trans, integer *m, integer *n, integer *kl, integer *ku, double
     }
     if (info != 0)
     {
-        xerbla_("ZGBMV ", &info);
+        xerbla_("ZGBMV ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

@@ -380,7 +380,7 @@ int zhbevx_2stage_(char *jobz, char *range, char *uplo, integer *n, integer *kd,
     doublereal safmin;
     extern doublereal zlanhb_(char *, char *, integer *, integer *, doublecomplex *, integer *, doublereal *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal abstll, bignum;
     integer indiwk, indisp;
     extern /* Subroutine */
@@ -521,7 +521,7 @@ int zhbevx_2stage_(char *jobz, char *range, char *uplo, integer *n, integer *kd,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHBEVX_2STAGE", &i__1);
+        xerbla_("ZHBEVX_2STAGE", &i__1, (ftnlen)13);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

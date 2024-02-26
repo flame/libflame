@@ -1,8 +1,11 @@
 /*
-    Copyright (c) 2021-2022 Advanced Micro Devices, Inc.  All rights reserved.
+    Copyright (c) 2021-2023 Advanced Micro Devices, Inc.  All rights reserved.
 */
 
 #include "FLAME.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
 
 /* Subroutine */ integer lapack_cgetrf(integer *m, integer *n, scomplex *a, integer *lda,
 	 integer *ipiv, integer *info)
@@ -60,18 +63,18 @@
 
        Parameter adjustments */
     /* Table of constant values */
-    static TLS_CLASS_SPEC complex c_b1 = {1.f,0.f};
+    static TLS_CLASS_SPEC scomplex c_b1 = {1.f,0.f};
     static TLS_CLASS_SPEC integer c__1 = 1;
     static TLS_CLASS_SPEC integer c_n1 = -1;
 
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;
-    complex q__1;
+    scomplex q__1;
     /* Local variables */
     static TLS_CLASS_SPEC integer i__, j;
     static TLS_CLASS_SPEC integer iinfo;
     static TLS_CLASS_SPEC integer jb, nb;
-    extern /* Subroutine */ int xerbla_(char *, integer *);
+    extern /* Subroutine */ int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *,integer *, integer *);
 #define a_subscr(a_1,a_2) (a_2)*a_dim1 + a_1
 #define a_ref(a_1,a_2) a[a_subscr(a_1,a_2)]
@@ -96,7 +99,7 @@
     }
     if (*info != 0) {
 	i__1 = -(*info);
-	xerbla_("LAPACK_CGETRF", &i__1);
+	xerbla_("LAPACK_CGETRF", &i__1, (ftnlen)13);
 	return 0;
     }
 
@@ -120,8 +123,8 @@
                         	aocl_fla_progress_ptr=aocl_fla_progress;
                     #endif
                     	if(aocl_fla_progress_ptr){
-                        	step_count= fla_min(*m,*n);
-                        	AOCL_FLA_PROGRESS_FUNC_PTR("CGETRF",6,&step_count,&thread_id,&total_threads);
+                        	progress_step_count= fla_min(*m,*n);
+                        	AOCL_FLA_PROGRESS_FUNC_PTR("CGETRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
                     	}
          	#endif
 
@@ -130,7 +133,7 @@
 
 /*        Use blocked code. */
 	#if AOCL_FLA_PROGRESS_H
-                step_count =0;
+                progress_step_count =0;
         #endif
 
 
@@ -148,8 +151,8 @@
                         aocl_fla_progress_ptr=aocl_fla_progress;
                 #endif
                     if(aocl_fla_progress_ptr){
-                        step_count+=jb;
-                        AOCL_FLA_PROGRESS_FUNC_PTR("CGETRF",6,&step_count,&thread_id,&total_threads);
+                        progress_step_count+=jb;
+                        AOCL_FLA_PROGRESS_FUNC_PTR("CGETRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
                     }
             #endif
 
@@ -199,7 +202,7 @@
 
 		    i__3 = *m - j - jb + 1;
 		    i__4 = *n - j - jb + 1;
-		    q__1.r = -1.f, q__1.i = 0.f;
+		    q__1.real = -1.f, q__1.imag = 0.f;
 		    cgemm_("No transpose", "No transpose", &i__3, &i__4, &jb,
 			    &q__1, &a_ref(j + jb, j), lda, &a_ref(j, j + jb),
 			    lda, &c_b1, &a_ref(j + jb, j + jb), lda);

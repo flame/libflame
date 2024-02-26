@@ -339,7 +339,7 @@ int cuncsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
     int cunbdb_(char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, real *, real *, complex *, complex *, complex *, complex *, complex *, integer *, integer *);
     integer iorbdb, lorglqworkmin, lorgqrworkmin;
     extern /* Subroutine */
-    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *), clapmr_(logical *, integer *, integer *, complex *, integer *, integer *), clapmt_(logical *, integer *, integer *, complex *, integer *, integer *);
+    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), clapmr_(logical *, integer *, integer *, complex *, integer *, integer *), clapmt_(logical *, integer *, integer *, complex *, integer *, integer *);
     integer lorglqworkopt;
     extern /* Subroutine */
     int cunglq_(integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *);
@@ -409,6 +409,21 @@ int cuncsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
     defaultsigns = ! lsame_(signs, "O");
     lquery = *lwork == -1;
     lrquery = *lrwork == -1;
+    iorgqr = 0;
+    iorglq = 0;
+    iorbdb = 0;
+    ibbcsd = 0;
+    itauq2 = 0;
+    itauq1 = 0;
+    itaup2 = 0;
+    ib22e = 0;
+    ib22d = 0;
+    ib21e = 0;
+    ib21d = 0;
+    ib12e = 0;
+    ib12d = 0;
+    ib11e = 0;
+    ib11d = 0;
     if (*m < 0)
     {
         *info = -7;
@@ -659,7 +674,7 @@ int cuncsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CUNCSD", &i__1);
+        xerbla_("CUNCSD", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

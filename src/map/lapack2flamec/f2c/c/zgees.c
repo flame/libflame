@@ -192,7 +192,7 @@ elements 1:ILO-1 and i+1:N of W */
 /* > \ingroup complex16GEeigen */
 /* ===================================================================== */
 /* Subroutine */
-int zgees_(char *jobvs, char *sort, L_fp select, integer *n, doublecomplex *a, integer *lda, integer *sdim, doublecomplex *w, doublecomplex *vs, integer *ldvs, doublecomplex *work, integer *lwork, doublereal *rwork, logical *bwork, integer *info)
+int zgees_(char *jobvs, char *sort, L_fpz1 select, integer *n, doublecomplex *a, integer *lda, integer *sdim, doublecomplex *w, doublecomplex *vs, integer *ldvs, doublecomplex *work, integer *lwork, doublereal *rwork, logical *bwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("zgees inputs: jobvs %c, sort %c, n %" FLA_IS ", lda %" FLA_IS ", sdim %" FLA_IS ", ldvs %" FLA_IS "",*jobvs, *sort, *n, *lda, *sdim, *ldvs);
@@ -215,7 +215,7 @@ int zgees_(char *jobvs, char *sort, L_fp select, integer *n, doublecomplex *a, i
     extern doublereal dlamch_(char *);
     doublereal cscale;
     extern /* Subroutine */
-    int zgebak_(char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublecomplex *, integer *, integer *), zgebal_(char *, integer *, doublecomplex *, integer *, integer *, integer *, doublereal *, integer *), xerbla_(char *, integer *);
+    int zgebak_(char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublecomplex *, integer *, integer *), zgebal_(char *, integer *, doublecomplex *, integer *, integer *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern doublereal zlange_(char *, integer *, integer *, doublecomplex *, integer *, doublereal *);
     doublereal bignum;
@@ -338,7 +338,7 @@ int zgees_(char *jobvs, char *sort, L_fp select, integer *n, doublecomplex *a, i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGEES ", &i__1);
+        xerbla_("ZGEES ", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

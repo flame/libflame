@@ -218,7 +218,7 @@ int sgghrd_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, r
     int srot_(integer *, real *, integer *, real *, integer *, real *, real *);
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer icompq;
     extern /* Subroutine */
     int slaset_(char *, integer *, integer *, real *, real *, real *, integer *), slartg_(real *, real *, real *, real *, real *);
@@ -338,7 +338,7 @@ int sgghrd_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, r
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGGHRD", &i__1);
+        xerbla_("SGGHRD", &i__1, (ftnlen)6);
         return 0;
     }
     /* Initialize Q and Z if desired. */

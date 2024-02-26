@@ -162,6 +162,9 @@ int cgetc2_(integer *n, complex *a, integer *lda, integer * ipiv, integer *jpiv,
     --jpiv;
     /* Function Body */
     *info = 0;
+    smin = 0;
+    jpv = 0;
+    ipv = 0;
     /* Quick return if possible */
     if (*n == 0)
     {

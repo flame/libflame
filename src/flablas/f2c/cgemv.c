@@ -15,7 +15,7 @@ int cgemv_(char *trans, integer *m, integer *n, complex * alpha, complex *a, int
     extern logical lsame_(char *, char *);
     integer ix, iy, jx, jy, kx, ky;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical noconj;
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
@@ -130,7 +130,7 @@ int cgemv_(char *trans, integer *m, integer *n, complex * alpha, complex *a, int
     }
     if (info != 0)
     {
-        xerbla_("CGEMV ", &info);
+        xerbla_("CGEMV ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

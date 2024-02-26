@@ -237,7 +237,7 @@ int slasd3_(integer *nl, integer *nr, integer *sqre, integer *k, real *d__, real
     int scopy_(integer *, real *, integer *, real *, integer *);
     extern real slamc3_(real *, real *);
     extern /* Subroutine */
-    int slasd4_(integer *, integer *, real *, real *, real *, real *, real *, real *, integer *), xerbla_(char *, integer *), slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *), slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *);
+    int slasd4_(integer *, integer *, real *, real *, real *, real *, real *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *), slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *);
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -325,7 +325,7 @@ int slasd3_(integer *nl, integer *nr, integer *sqre, integer *k, real *d__, real
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLASD3", &i__1);
+        xerbla_("SLASD3", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

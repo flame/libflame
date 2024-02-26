@@ -4,7 +4,6 @@
 static real c_b11 = 0.f;
 static real c_b12 = 1.f;
 static integer c__12 = 12;
-static integer c__2 = 2;
 static integer c__49 = 49;
 /* > \brief \b SHSEQR */
 /* =========== DOCUMENTATION =========== */
@@ -312,8 +311,7 @@ int shseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, real
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("shseqr inputs: job %c, compz %c, n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", ldh %" FLA_IS ", ldz %" FLA_IS "",*job, *compz, *n, *ilo, *ihi, *ldh, *ldz);
     /* System generated locals */
-    address a__1[2];
-    integer h_dim1, h_offset, z_dim1, z_offset, i__1, i__2[2], i__3;
+    integer h_dim1, h_offset, z_dim1, z_offset, i__1, i__3;
     real r__1;
     char ch__1[2];
     /* Builtin functions */
@@ -329,7 +327,7 @@ int shseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, real
     real workl[49];
     logical wantt, wantz;
     extern /* Subroutine */
-    int slaqr0_(logical *, logical *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *, real *, integer *, real *, integer *, integer *), xerbla_(char *, integer *);
+    int slaqr0_(logical *, logical *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *, real *, integer *, real *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int slahqr_(logical *, logical *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *), slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
@@ -418,7 +416,7 @@ int shseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, real
     {
         /* ==== Quick return in case of invalid argument. ==== */
         i__1 = -(*info);
-        xerbla_("SHSEQR", &i__1);
+        xerbla_("SHSEQR", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

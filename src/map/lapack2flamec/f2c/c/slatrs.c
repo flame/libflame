@@ -255,7 +255,7 @@ int slatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, real
     int saxpy_(integer *, real *, real *, integer *, real *, integer *), strsv_(char *, char *, char *, integer *, real *, integer *, real *, integer *);
     extern real slamch_(char *), slange_(char *, integer *, integer *, real *, integer *, real *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     extern integer isamax_(integer *, real *, integer *);
     logical notran;
@@ -292,6 +292,7 @@ int slatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, real
     upper = lsame_(uplo, "U");
     notran = lsame_(trans, "N");
     nounit = lsame_(diag, "N");
+    tjjs = 0.f;
     /* Test the input parameters. */
     if (! upper && ! lsame_(uplo, "L"))
     {
@@ -320,7 +321,7 @@ int slatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, real
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLATRS", &i__1);
+        xerbla_("SLATRS", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

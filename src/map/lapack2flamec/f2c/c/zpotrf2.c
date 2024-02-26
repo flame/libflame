@@ -123,7 +123,7 @@ int zpotrf2_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *in
     int ztrsm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *);
     extern logical disnan_(doublereal *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -167,7 +167,7 @@ int zpotrf2_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZPOTRF2", &i__1);
+        xerbla_("ZPOTRF2", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

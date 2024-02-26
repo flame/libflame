@@ -265,7 +265,7 @@ int zlaqz2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     extern doublereal dlamch_(char *);
     doublereal safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal safmax;
     extern /* Subroutine */
     int zlacpy_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), zlaset_(char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *), ztgexc_( logical *, logical *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *, integer *, integer *), zlartg_(doublecomplex *, doublecomplex *, doublereal *, doublecomplex *, doublecomplex *);
@@ -348,7 +348,7 @@ int zlaqz2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZLAQZ2", &i__1);
+        xerbla_("ZLAQZ2", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

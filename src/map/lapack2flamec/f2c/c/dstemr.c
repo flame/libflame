@@ -361,7 +361,7 @@ int dstemr_(char *jobz, char *range, integer *n, doublereal * d__, doublereal *e
     integer wbegin;
     doublereal safmin;
     extern /* Subroutine */
-    int dlarrj_(integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dlarrj_(integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal bignum;
     integer inderr, iindwk, indgrs, offset;
     extern doublereal dlanst_(char *, integer *, doublereal *, doublereal *);
@@ -525,7 +525,7 @@ int dstemr_(char *jobz, char *range, integer *n, doublereal * d__, doublereal *e
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSTEMR", &i__1);
+        xerbla_("DSTEMR", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

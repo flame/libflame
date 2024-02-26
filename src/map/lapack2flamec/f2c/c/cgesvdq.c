@@ -481,7 +481,7 @@ int cgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
     int cgeqrf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *), csscal_( integer *, real *, complex *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int cgesvd_(char *, char *, integer *, integer *, complex *, integer *, real *, complex *, integer *, complex *, integer *, complex *, integer *, real *, integer *), clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(char *, integer *), clapmt_(logical *, integer *, integer *, complex *, integer *, integer *), slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *), cpocon_(char *, integer *, complex *, integer *, real *, real *, complex *, real *, integer * );
+    int cgesvd_(char *, char *, integer *, integer *, complex *, integer *, real *, complex *, integer *, complex *, integer *, complex *, integer *, real *, integer *), clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), clapmt_(logical *, integer *, integer *, complex *, integer *, integer *), slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *), cpocon_(char *, integer *, complex *, integer *, real *, real *, complex *, real *, integer * );
     extern integer isamax_(integer *, real *, integer *);
     extern /* Subroutine */
     int claswp_(integer *, complex *, integer *, integer *, integer *, integer *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
@@ -547,6 +547,10 @@ int cgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
     acclh = lsame_(joba, "H") || conda;
     rowprm = lsame_(jobp, "P");
     rtrans = lsame_(jobr, "T");
+    sconda = 0.f;
+    lwunq = 0;
+    lwrk_cunmqr__ = 0;
+    lwrk_cgeqp3__ = 0;
     if (rowprm)
     {
         /* Computing MAX */
@@ -942,7 +946,7 @@ int cgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGESVDQ", &i__1);
+        xerbla_("CGESVDQ", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
@@ -985,7 +989,7 @@ int cgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
             {
                 *info = -8;
                 i__2 = -(*info);
-                xerbla_("CGESVDQ", &i__2);
+                xerbla_("CGESVDQ", &i__2, (ftnlen)7);
                 AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
@@ -1078,7 +1082,7 @@ int cgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
         {
             *info = -8;
             i__1 = -(*info);
-            xerbla_("CGESVDQ", &i__1);
+            xerbla_("CGESVDQ", &i__1, (ftnlen)7);
             AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }

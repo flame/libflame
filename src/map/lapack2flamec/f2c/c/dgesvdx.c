@@ -3,7 +3,6 @@
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__6 = 6;
 static integer c__0 = 0;
-static integer c__2 = 2;
 static integer c__1 = 1;
 static integer c_n1 = -1;
 static doublereal c_b109 = 0.;
@@ -270,8 +269,7 @@ int dgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, doub
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("dgesvdx inputs: jobu %c, jobvt %c, range %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS ", lwork %" FLA_IS "",*jobu, *jobvt, *range, *m, *n, *lda, *il, *iu, *ldu, *ldvt, *lwork);
     /* System generated locals */
-    address a__1[2];
-    integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1[2], i__2, i__3;
+    integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__2, i__3;
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */
@@ -297,9 +295,9 @@ int dgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, doub
     int dgebrd_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, integer *);
     extern doublereal dlamch_(char *), dlange_(char *, integer *, integer *, doublereal *, integer *, doublereal *);
     extern /* Subroutine */
-    int dgelqf_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), dgeqrf_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dgelqf_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), dgeqrf_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
-    doublereal bignum, abstol;
+    doublereal bignum;
     extern /* Subroutine */
     int dormbr_(char *, char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *);
     char rngtgk[1];
@@ -349,11 +347,11 @@ int dgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, doub
     /* Function Body */
     *ns = 0;
     *info = 0;
-    abstol = dlamch_("S") * 2;
     lquery = *lwork == -1;
     minmn = fla_min(*m,*n);
     wantu = lsame_(jobu, "V");
     wantvt = lsame_(jobvt, "V");
+    mnthr = 0;
     if (wantu || wantvt)
     {
         *(unsigned char *)jobz = 'V';
@@ -561,7 +559,7 @@ int dgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, doub
     if (*info != 0)
     {
         i__2 = -(*info);
-        xerbla_("DGESVDX", &i__2);
+        xerbla_("DGESVDX", &i__2, (ftnlen)7);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -205,7 +205,7 @@ int zgelsx_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     int ztrsm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), zlaic1_(integer *, integer *, doublecomplex *, doublereal *, doublecomplex *, doublecomplex *, doublereal *, doublecomplex *, doublecomplex *), dlabad_(doublereal *, doublereal *);
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int zunm2r_(char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(char *, integer *);
+    int zunm2r_(char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern doublereal zlange_(char *, integer *, integer *, doublecomplex *, integer *, doublereal *);
     doublereal bignum;
     extern /* Subroutine */
@@ -277,7 +277,7 @@ int zgelsx_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGELSX", &i__1);
+        xerbla_("ZGELSX", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

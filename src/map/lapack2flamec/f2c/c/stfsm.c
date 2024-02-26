@@ -279,7 +279,7 @@ int stfsm_(char *transr, char *side, char *uplo, char *trans, char *diag, intege
     int sgemm_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *);
     logical lower;
     extern /* Subroutine */
-    int strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), xerbla_(char *, integer *);
+    int strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical misodd, nisodd, notrans;
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -348,7 +348,7 @@ int stfsm_(char *transr, char *side, char *uplo, char *trans, char *diag, intege
     if (info != 0)
     {
         i__1 = -info;
-        xerbla_("STFSM ", &i__1);
+        xerbla_("STFSM ", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return when ( (N.EQ.0).OR.(M.EQ.0) ) */

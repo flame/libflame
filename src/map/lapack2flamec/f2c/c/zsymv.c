@@ -156,7 +156,7 @@ int zsymv_(char *uplo, integer *n, doublecomplex *alpha, doublecomplex *a, integ
     doublecomplex temp1, temp2;
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -208,7 +208,7 @@ int zsymv_(char *uplo, integer *n, doublecomplex *alpha, doublecomplex *a, integ
     }
     if (info != 0)
     {
-        xerbla_("ZSYMV ", &info);
+        xerbla_("ZSYMV ", &info, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

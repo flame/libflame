@@ -170,6 +170,7 @@ int dlasq4_(integer *i0, integer *n0, doublereal *z__, integer *pp, integer *n0i
     /* Parameter adjustments */
     --z__;
     /* Function Body */
+    s = 0.;
     if (*dmin__ <= 0.)
     {
         *tau = -(*dmin__);

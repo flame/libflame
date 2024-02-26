@@ -12,11 +12,11 @@
 
 FLA_Error FLA_Bidiag_blk_external( FLA_Obj A, FLA_Obj tu, FLA_Obj tv )
 {
-  int          info = 0;
+  integer          info = 0;
 #ifdef FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
   FLA_Datatype datatype;
   integer          m_A, n_A, cs_A;
-  integer          min_m_n, max_m_n;
+  integer          min_m_n;
   integer          lwork;
   FLA_Obj      d, e, work_obj;
 
@@ -30,7 +30,6 @@ FLA_Error FLA_Bidiag_blk_external( FLA_Obj A, FLA_Obj tu, FLA_Obj tv )
   m_A      = FLA_Obj_length( A );
   n_A      = FLA_Obj_width( A );
   min_m_n  = FLA_Obj_min_dim( A );
-  max_m_n  = FLA_Obj_max_dim( A );
   cs_A     = FLA_Obj_col_stride( A );
 
   FLA_Obj_create( FLA_Obj_datatype_proj_to_real( A ), min_m_n,     1, 0, 0, &d );

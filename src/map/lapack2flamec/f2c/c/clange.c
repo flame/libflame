@@ -152,6 +152,7 @@ real clange_(char *norm, integer *m, integer *n, complex *a, integer *lda, real 
     a -= a_offset;
     --work;
     /* Function Body */
+    value = 0.f;
     if (fla_min(*m,*n) == 0)
     {
         value = 0.f;

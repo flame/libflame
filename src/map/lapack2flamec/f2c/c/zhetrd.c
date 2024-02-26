@@ -202,7 +202,7 @@ int zhetrd_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublereal *
     integer nbmin, iinfo;
     logical upper;
     extern /* Subroutine */
-    int zhetd2_(char *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, integer *), zher2k_(char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublecomplex *, integer *), xerbla_(char *, integer *);
+    int zhetd2_(char *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, integer *), zher2k_(char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int zlatrd_(char *, integer *, integer *, doublecomplex *, integer *, doublereal *, doublecomplex *, doublecomplex *, integer *);
@@ -268,7 +268,7 @@ int zhetrd_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublereal *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHETRD", &i__1);
+        xerbla_("ZHETRD", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

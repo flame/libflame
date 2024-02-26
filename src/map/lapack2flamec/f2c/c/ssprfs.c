@@ -197,7 +197,7 @@ int ssprfs_(char *uplo, integer *n, integer *nrhs, real *ap, real *afp, integer 
     extern real slamch_(char *);
     real safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real lstres;
     extern /* Subroutine */
     int ssptrs_(char *, integer *, integer *, real *, integer *, real *, integer *, integer *);
@@ -264,7 +264,7 @@ int ssprfs_(char *uplo, integer *n, integer *nrhs, real *ap, real *afp, integer 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSPRFS", &i__1);
+        xerbla_("SSPRFS", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

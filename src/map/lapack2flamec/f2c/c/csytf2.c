@@ -220,7 +220,7 @@ int csytf2_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv, int
     real absakk;
     extern integer icamax_(integer *, complex *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real colmax;
     extern logical sisnan_(real *);
     real rowmax;
@@ -256,6 +256,8 @@ int csytf2_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv, int
     --ipiv;
     /* Function Body */
     *info = 0;
+    imax = 0;
+    jmax = 0;
     upper = lsame_(uplo, "U");
     if (! upper && ! lsame_(uplo, "L"))
     {
@@ -272,7 +274,7 @@ int csytf2_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv, int
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CSYTF2", &i__1);
+        xerbla_("CSYTF2", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

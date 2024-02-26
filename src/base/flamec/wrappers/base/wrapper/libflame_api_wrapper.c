@@ -31,6 +31,8 @@
 #include "FLAME.h"
 #include "libflame_api_wrapper.h"
 
+extern int xerbla_array_(char *srname_array__, integer *srname_len__, integer *info);
+
 double DLAMCH( char   *cmach)
 {
 	return dlamch_( cmach);
@@ -602,17 +604,17 @@ int CGELSS_(integer* m, integer* n, integer* nrhs, scomplex* a, integer* lda, sc
 	return cgelss_( m, n, nrhs, a, lda, b, ldb, s, rcond, rank, work, lwork, rwork, info);
 }
 
-int CGELST(char *trans, integer *m, integer *n, integer * nrhs, complex *a, integer *lda, complex *b, integer *ldb, complex * work, integer *lwork, integer *info)
+int CGELST(char *trans, integer *m, integer *n, integer * nrhs, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex * work, integer *lwork, integer *info)
 {
 	return cgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
 }
 
-int cgelst(char *trans, integer *m, integer *n, integer * nrhs, complex *a, integer *lda, complex *b, integer *ldb, complex * work, integer *lwork, integer *info)
+int cgelst(char *trans, integer *m, integer *n, integer * nrhs, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex * work, integer *lwork, integer *info)
 {
 	return cgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
 }
 
-int CGELST_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, integer *lda, complex *b, integer *ldb, complex * work, integer *lwork, integer *info)
+int CGELST_(char *trans, integer *m, integer *n, integer * nrhs, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex * work, integer *lwork, integer *info)
 {
 	return cgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
 }
@@ -4133,17 +4135,17 @@ int CLATRS_(char* uplo, char* trans, char* diag, char* normin, integer* n, scomp
 	return clatrs_( uplo, trans, diag, normin, n, a, lda, x, scale, cnorm, info);
 }
 
-int CLATRS3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, complex *a, integer *lda, complex * x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info)
+int CLATRS3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, scomplex *a, integer *lda, scomplex * x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info)
 {
 	return clatrs3_(uplo, trans, diag, normin, n, nrhs, a, lda, x, ldx, scale, cnorm, work, lwork, info);
 }
 
-int clatrs3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, complex *a, integer *lda, complex * x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info)
+int clatrs3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, scomplex *a, integer *lda, scomplex * x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info)
 {
 	return clatrs3_(uplo, trans, diag, normin, n, nrhs, a, lda, x, ldx, scale, cnorm, work, lwork, info);
 }
 
-int CLATRS3_(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, complex *a, integer *lda, complex * x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info)
+int CLATRS3_(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, scomplex *a, integer *lda, scomplex * x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info)
 {
 	return clatrs3_(uplo, trans, diag, normin, n, nrhs, a, lda, x, ldx, scale, cnorm, work, lwork, info);
 }
@@ -6221,17 +6223,17 @@ int CTRSYL_(char* trana, char* tranb, integer* isgn, integer* m, integer* n, sco
 	return ctrsyl_( trana, tranb, isgn, m, n, a, lda, b, ldb, c, ldc, scale, info);
 }
 
-int CTRSYL3(char* trana, char* tranb, integer* isgn, integer* m, integer* n, complex* a, integer* lda, complex* b, integer* ldb, complex* c__, integer* ldc, real* scale, real* swork, integer* ldswork, integer* info)
+int CTRSYL3(char* trana, char* tranb, integer* isgn, integer* m, integer* n, scomplex* a, integer* lda, scomplex* b, integer* ldb, scomplex* c__, integer* ldc, real* scale, real* swork, integer* ldswork, integer* info)
 {
 	return ctrsyl3_(trana, tranb, isgn, m, n, a, lda, b, ldb, c__, ldc, scale, swork, ldswork, info);
 }
 
-int ctrsyl3(char* trana, char* tranb, integer* isgn, integer* m, integer* n, complex* a, integer* lda, complex* b, integer* ldb, complex* c__, integer* ldc, real* scale, real* swork, integer* ldswork, integer* info)
+int ctrsyl3(char* trana, char* tranb, integer* isgn, integer* m, integer* n, scomplex* a, integer* lda, scomplex* b, integer* ldb, scomplex* c__, integer* ldc, real* scale, real* swork, integer* ldswork, integer* info)
 {
 	return ctrsyl3_(trana, tranb, isgn, m, n, a, lda, b, ldb, c__, ldc, scale, swork, ldswork, info);
 }
 
-int CTRSYL3_(char* trana, char* tranb, integer* isgn, integer* m, integer* n, complex* a, integer* lda, complex* b, integer* ldb, complex* c__, integer* ldc, real* scale, real* swork, integer* ldswork, integer* info)
+int CTRSYL3_(char* trana, char* tranb, integer* isgn, integer* m, integer* n, scomplex* a, integer* lda, scomplex* b, integer* ldb, scomplex* c__, integer* ldc, real* scale, real* swork, integer* ldswork, integer* info)
 {
 	return ctrsyl3_(trana, tranb, isgn, m, n, a, lda, b, ldb, c__, ldc, scale, swork, ldswork, info);
 }
@@ -14719,17 +14721,17 @@ int SGELSS_(integer* m, integer* n, integer* nrhs, float* a, integer* lda, float
 
 int SGELST(char *trans, integer *m, integer *n, integer * nrhs, real *a, integer *lda, real *b, integer *ldb, real *work, integer *lwork, integer *info)
 {
-	sgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
+	return sgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
 }
 
 int sgelst(char *trans, integer *m, integer *n, integer * nrhs, real *a, integer *lda, real *b, integer *ldb, real *work, integer *lwork, integer *info)
 {
-	sgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
+	return sgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
 }
 
 int SGELST_(char *trans, integer *m, integer *n, integer * nrhs, real *a, integer *lda, real *b, integer *ldb, real *work, integer *lwork, integer *info)
 {
-	sgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
+	return sgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
 }
 
 int SGELSX(integer* m, integer* n, integer* nrhs, float* a, integer* lda, float* b, integer* ldb, integer* jpvt, float* rcond, integer* rank, float* work, integer* info)
@@ -21594,19 +21596,19 @@ int ZGELSS_(integer* m, integer* n, integer* nrhs, dcomplex* a, integer* lda, dc
 	return zgelss_( m, n, nrhs, a, lda, b, ldb, s, rcond, rank, work, lwork, rwork, info);
 }
 
-int ZGELST(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer *lwork, integer *info)
+int ZGELST(char *trans, integer *m, integer *n, integer * nrhs, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *work, integer *lwork, integer *info)
 {
-	zgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
+	return zgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
 }
 
-int zgelst(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer *lwork, integer *info)
+int zgelst(char *trans, integer *m, integer *n, integer * nrhs, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *work, integer *lwork, integer *info)
 {
-	zgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
+	return zgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
 }
 
-int ZGELST_(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer *lwork, integer *info)
+int ZGELST_(char *trans, integer *m, integer *n, integer * nrhs, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *work, integer *lwork, integer *info)
 {
-	zgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
+	return zgelst_(trans, m, n, nrhs, a, lda, b, ldb, work, lwork, info);
 }
 
 int ZGELSX(integer* m, integer* n, integer* nrhs, dcomplex* a, integer* lda, dcomplex* b, integer* ldb, integer* jpvt, double* rcond, integer* rank, dcomplex* work, double* rwork, integer* info)
@@ -25139,17 +25141,17 @@ int ZLATRS_(char* uplo, char* trans, char* diag, char* normin, integer* n, dcomp
 	return zlatrs_( uplo, trans, diag, normin, n, a, lda, x, scale, cnorm, info);
 }
 
-int ZLATRS3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info)
+int ZLATRS3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, dcomplex *a, integer *lda, dcomplex *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info)
 {
 	return zlatrs3_(uplo, trans, diag, normin, n, nrhs, a, lda, x, ldx, scale, cnorm, work, lwork, info);
 }
 
-int zlatrs3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info)
+int zlatrs3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, dcomplex *a, integer *lda, dcomplex *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info)
 {
 	return zlatrs3_(uplo, trans, diag, normin, n, nrhs, a, lda, x, ldx, scale, cnorm, work, lwork, info);
 }
 
-int ZLATRS3_(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info)
+int ZLATRS3_(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, dcomplex *a, integer *lda, dcomplex *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info)
 {
 	return zlatrs3_(uplo, trans, diag, normin, n, nrhs, a, lda, x, ldx, scale, cnorm, work, lwork, info);
 }
@@ -27211,17 +27213,17 @@ int ZTRSYL_(char* trana, char* tranb, integer* isgn, integer* m, integer* n, dco
 	return ztrsyl_( trana, tranb, isgn, m, n, a, lda, b, ldb, c, ldc, scale, info);
 }
 
-int ZTRSYL3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *c__, integer *ldc, doublereal *scale, doublereal *swork, integer *ldswork, integer *info)
+int ZTRSYL3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *c__, integer *ldc, doublereal *scale, doublereal *swork, integer *ldswork, integer *info)
 {
 	return ztrsyl3_( trana,  tranb, isgn, m,  n, a,  lda, b,  ldb, c__,  ldc, scale, swork,  ldswork,  info);
 }
 
-int ztrsyl3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *c__, integer *ldc, doublereal *scale, doublereal *swork, integer *ldswork, integer *info)
+int ztrsyl3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *c__, integer *ldc, doublereal *scale, doublereal *swork, integer *ldswork, integer *info)
 {
 	return ztrsyl3_( trana,  tranb, isgn, m,  n, a,  lda, b,  ldb, c__,  ldc, scale, swork,  ldswork,  info);
 }
 
-int ZTRSYL3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *c__, integer *ldc, doublereal *scale, doublereal *swork, integer *ldswork, integer *info)
+int ZTRSYL3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *c__, integer *ldc, doublereal *scale, doublereal *swork, integer *ldswork, integer *info)
 {
 	return ztrsyl3_( trana,  tranb, isgn, m,  n, a,  lda, b,  ldb, c__,  ldc, scale, swork,  ldswork,  info);
 }
@@ -27931,17 +27933,17 @@ float SLAMC3_( float  *a, float  *b)
 	return slamc3_( a, b);
 }
 
-int SISNAN(const float  *sin)
+int SISNAN(float  *sin)
 {
 	return sisnan_( sin);
 }
 
-int sisnan(const float  *sin)
+int sisnan(float  *sin)
 {
 	return sisnan_( sin);
 }
 
-int SISNAN_(const float  *sin)
+int SISNAN_(float  *sin)
 {
 	return sisnan_( sin);
 }
@@ -30124,107 +30126,107 @@ int LZSPR_( char *uplo, integer *n, dcomplex *alpha, dcomplex *x, integer *incx,
 
 }
 
-int CGETSQRHRT(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, complex *a, integer *lda, complex *t, integer *ldt, complex *work, integer *lwork, integer *info)
+int CGETSQRHRT(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, scomplex *a, integer *lda, scomplex *t, integer *ldt, scomplex *work, integer *lwork, integer *info)
 {
 	return cgetsqrhrt_( m, n, mb1, nb1, nb2, a, lda, t, ldt, work, lwork, info);
 }
 
-int cgetsqrhrt(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, complex *a, integer *lda, complex *t, integer *ldt, complex *work, integer *lwork, integer *info)
+int cgetsqrhrt(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, scomplex *a, integer *lda, scomplex *t, integer *ldt, scomplex *work, integer *lwork, integer *info)
 {
 	return cgetsqrhrt_( m, n, mb1, nb1, nb2, a, lda, t, ldt, work, lwork, info);
 }
 
-int CGETSQRHRT_(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, complex *a, integer *lda, complex *t, integer *ldt, complex *work, integer *lwork, integer *info)
+int CGETSQRHRT_(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, scomplex *a, integer *lda, scomplex *t, integer *ldt, scomplex *work, integer *lwork, integer *info)
 {
 	return cgetsqrhrt_( m, n, mb1, nb1, nb2, a, lda, t, ldt, work, lwork, info);
 }
 
-int CLAQZ0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, complex *a, integer *lda, complex *b, integer *ldb, complex *alpha, complex *beta, complex *q, integer *ldq, complex *z__, integer *ldz, complex *work, integer *lwork, real * rwork, integer *rec, integer *info)
+int CLAQZ0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex *alpha, scomplex *beta, scomplex *q, integer *ldq, scomplex *z__, integer *ldz, scomplex *work, integer *lwork, real * rwork, integer *rec, integer *info)
 {
 	return claqz0_( wants, wantq, wantz, n, ilo, ihi, a, lda, b, ldb, alpha, beta, q, ldq, z__, ldz, work, lwork, rwork, rec, info);
 }
 
-int claqz0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, complex *a, integer *lda, complex *b, integer *ldb, complex *alpha, complex *beta, complex *q, integer *ldq, complex *z__, integer *ldz, complex *work, integer *lwork, real * rwork, integer *rec, integer *info)
+int claqz0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex *alpha, scomplex *beta, scomplex *q, integer *ldq, scomplex *z__, integer *ldz, scomplex *work, integer *lwork, real * rwork, integer *rec, integer *info)
 {
 	return claqz0_( wants, wantq, wantz, n, ilo, ihi, a, lda, b, ldb, alpha, beta, q, ldq, z__, ldz, work, lwork, rwork, rec, info);
 }
 
-int CLAQZ0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, complex *a, integer *lda, complex *b, integer *ldb, complex *alpha, complex *beta, complex *q, integer *ldq, complex *z__, integer *ldz, complex *work, integer *lwork, real * rwork, integer *rec, integer *info)
+int CLAQZ0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex *alpha, scomplex *beta, scomplex *q, integer *ldq, scomplex *z__, integer *ldz, scomplex *work, integer *lwork, real * rwork, integer *rec, integer *info)
 {
 	return claqz0_( wants, wantq, wantz, n, ilo, ihi, a, lda, b, ldb, alpha, beta, q, ldq, z__, ldz, work, lwork, rwork, rec, info);
 }
 
-int CLAQZ1(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, complex *a, integer *lda, complex *b, integer *ldb, integer *nq, integer *qstart, complex *q, integer *ldq, integer *nz, integer *zstart, complex *z__, integer * ldz)
+int CLAQZ1(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, scomplex *a, integer *lda, scomplex *b, integer *ldb, integer *nq, integer *qstart, scomplex *q, integer *ldq, integer *nz, integer *zstart, scomplex *z__, integer * ldz)
 {
 	return claqz1_( ilq, ilz, k, istartm, istopm, ihi, a, lda, b, ldb, nq, qstart, q, ldq, nz, zstart, z__, ldz);
 }
 
-int claqz1(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, complex *a, integer *lda, complex *b, integer *ldb, integer *nq, integer *qstart, complex *q, integer *ldq, integer *nz, integer *zstart, complex *z__, integer * ldz)
+int claqz1(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, scomplex *a, integer *lda, scomplex *b, integer *ldb, integer *nq, integer *qstart, scomplex *q, integer *ldq, integer *nz, integer *zstart, scomplex *z__, integer * ldz)
 {
 	return claqz1_( ilq, ilz, k, istartm, istopm, ihi, a, lda, b, ldb, nq, qstart, q, ldq, nz, zstart, z__, ldz);
 }
 
-int CLAQZ1_(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, complex *a, integer *lda, complex *b, integer *ldb, integer *nq, integer *qstart, complex *q, integer *ldq, integer *nz, integer *zstart, complex *z__, integer * ldz)
+int CLAQZ1_(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, scomplex *a, integer *lda, scomplex *b, integer *ldb, integer *nq, integer *qstart, scomplex *q, integer *ldq, integer *nz, integer *zstart, scomplex *z__, integer * ldz)
 {
 	return claqz1_( ilq, ilz, k, istartm, istopm, ihi, a, lda, b, ldb, nq, qstart, q, ldq, nz, zstart, z__, ldz);
 }
 
-int CLAQZ2(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, complex *a, integer *lda, complex *b, integer *ldb, complex *q, integer *ldq, complex *z__, integer *ldz, integer *ns, integer *nd, complex *alpha, complex *beta, complex *qc, integer *ldqc, complex *zc, integer *ldzc, complex *work, integer *lwork, real *rwork, integer *rec, integer * info)
+int CLAQZ2(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex *q, integer *ldq, scomplex *z__, integer *ldz, integer *ns, integer *nd, scomplex *alpha, scomplex *beta, scomplex *qc, integer *ldqc, scomplex *zc, integer *ldzc, scomplex *work, integer *lwork, real *rwork, integer *rec, integer * info)
 {
 	return claqz2_( ilschur, ilq, ilz, n, ilo, ihi, nw, a, lda, b, ldb, q, ldq, z__, ldz, ns, nd, alpha, beta, qc, ldqc, zc, ldzc, work, lwork, rwork, rec, info);
 }
 
-int claqz2(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, complex *a, integer *lda, complex *b, integer *ldb, complex *q, integer *ldq, complex *z__, integer *ldz, integer *ns, integer *nd, complex *alpha, complex *beta, complex *qc, integer *ldqc, complex *zc, integer *ldzc, complex *work, integer *lwork, real *rwork, integer *rec, integer * info)
+int claqz2(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex *q, integer *ldq, scomplex *z__, integer *ldz, integer *ns, integer *nd, scomplex *alpha, scomplex *beta, scomplex *qc, integer *ldqc, scomplex *zc, integer *ldzc, scomplex *work, integer *lwork, real *rwork, integer *rec, integer * info)
 {
 	return claqz2_( ilschur, ilq, ilz, n, ilo, ihi, nw, a, lda, b, ldb, q, ldq, z__, ldz, ns, nd, alpha, beta, qc, ldqc, zc, ldzc, work, lwork, rwork, rec, info);
 }
 
-int CLAQZ2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, complex *a, integer *lda, complex *b, integer *ldb, complex *q, integer *ldq, complex *z__, integer *ldz, integer *ns, integer *nd, complex *alpha, complex *beta, complex *qc, integer *ldqc, complex *zc, integer *ldzc, complex *work, integer *lwork, real *rwork, integer *rec, integer * info)
+int CLAQZ2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex *q, integer *ldq, scomplex *z__, integer *ldz, integer *ns, integer *nd, scomplex *alpha, scomplex *beta, scomplex *qc, integer *ldqc, scomplex *zc, integer *ldzc, scomplex *work, integer *lwork, real *rwork, integer *rec, integer * info)
 {
 	return claqz2_( ilschur, ilq, ilz, n, ilo, ihi, nw, a, lda, b, ldb, q, ldq, z__, ldz, ns, nd, alpha, beta, qc, ldqc, zc, ldzc, work, lwork, rwork, rec, info);
 }
 
-int CLAQZ3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, complex *alpha, complex *beta, complex *a, integer * lda, complex *b, integer *ldb, complex *q, integer *ldq, complex *z__, integer *ldz, complex *qc, integer *ldqc, complex *zc, integer *ldzc, complex *work, integer *lwork, integer *info)
+int CLAQZ3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, scomplex *alpha, scomplex *beta, scomplex *a, integer * lda, scomplex *b, integer *ldb, scomplex *q, integer *ldq, scomplex *z__, integer *ldz, scomplex *qc, integer *ldqc, scomplex *zc, integer *ldzc, scomplex *work, integer *lwork, integer *info)
 {
 	return claqz3_( ilschur, ilq, ilz, n, ilo, ihi, nshifts, nblock_desired__, alpha, beta, a, lda, b, ldb, q, ldq, z__, ldz, qc, ldqc, zc, ldzc, work, lwork, info);
 }
 
-int claqz3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, complex *alpha, complex *beta, complex *a, integer * lda, complex *b, integer *ldb, complex *q, integer *ldq, complex *z__, integer *ldz, complex *qc, integer *ldqc, complex *zc, integer *ldzc, complex *work, integer *lwork, integer *info)
+int claqz3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, scomplex *alpha, scomplex *beta, scomplex *a, integer * lda, scomplex *b, integer *ldb, scomplex *q, integer *ldq, scomplex *z__, integer *ldz, scomplex *qc, integer *ldqc, scomplex *zc, integer *ldzc, scomplex *work, integer *lwork, integer *info)
 {
 	return claqz3_( ilschur, ilq, ilz, n, ilo, ihi, nshifts, nblock_desired__, alpha, beta, a, lda, b, ldb, q, ldq, z__, ldz, qc, ldqc, zc, ldzc, work, lwork, info);
 }
 
-int CLAQZ3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, complex *alpha, complex *beta, complex *a, integer * lda, complex *b, integer *ldb, complex *q, integer *ldq, complex *z__, integer *ldz, complex *qc, integer *ldqc, complex *zc, integer *ldzc, complex *work, integer *lwork, integer *info)
+int CLAQZ3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, scomplex *alpha, scomplex *beta, scomplex *a, integer * lda, scomplex *b, integer *ldb, scomplex *q, integer *ldq, scomplex *z__, integer *ldz, scomplex *qc, integer *ldqc, scomplex *zc, integer *ldzc, scomplex *work, integer *lwork, integer *info)
 {
 	return claqz3_( ilschur, ilq, ilz, n, ilo, ihi, nshifts, nblock_desired__, alpha, beta, a, lda, b, ldb, q, ldq, z__, ldz, qc, ldqc, zc, ldzc, work, lwork, info);
 }
 
-int CLARFB_GETT(char *ident, integer *m, integer *n, integer *k, complex *t, integer *ldt, complex *a, integer *lda, complex *b, integer *ldb, complex *work, integer *ldwork)
+int CLARFB_GETT(char *ident, integer *m, integer *n, integer *k, scomplex *t, integer *ldt, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex *work, integer *ldwork)
 {
 	return clarfb_gett_( ident, m, n, k, t, ldt, a, lda, b, ldb, work, ldwork);
 }
 
-int clarfb_gett(char *ident, integer *m, integer *n, integer *k, complex *t, integer *ldt, complex *a, integer *lda, complex *b, integer *ldb, complex *work, integer *ldwork)
+int clarfb_gett(char *ident, integer *m, integer *n, integer *k, scomplex *t, integer *ldt, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex *work, integer *ldwork)
 {
 	return clarfb_gett_( ident, m, n, k, t, ldt, a, lda, b, ldb, work, ldwork);
 }
 
-int CLARFB_GETT_(char *ident, integer *m, integer *n, integer *k, complex *t, integer *ldt, complex *a, integer *lda, complex *b, integer *ldb, complex *work, integer *ldwork)
+int CLARFB_GETT_(char *ident, integer *m, integer *n, integer *k, scomplex *t, integer *ldt, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex *work, integer *ldwork)
 {
 	return clarfb_gett_( ident, m, n, k, t, ldt, a, lda, b, ldb, work, ldwork);
 }
 
-int CUNGTSQR_ROW(integer *m, integer *n, integer *mb, integer *nb, complex *a, integer *lda, complex *t, integer *ldt, complex *work, integer *lwork, integer *info)
+int CUNGTSQR_ROW(integer *m, integer *n, integer *mb, integer *nb, scomplex *a, integer *lda, scomplex *t, integer *ldt, scomplex *work, integer *lwork, integer *info)
 {
 	return cungtsqr_row_( m, n, mb, nb, a, lda, t, ldt, work, lwork, info);
 }
 
-int cungtsqr_row(integer *m, integer *n, integer *mb, integer *nb, complex *a, integer *lda, complex *t, integer *ldt, complex *work, integer *lwork, integer *info)
+int cungtsqr_row(integer *m, integer *n, integer *mb, integer *nb, scomplex *a, integer *lda, scomplex *t, integer *ldt, scomplex *work, integer *lwork, integer *info)
 {
 	return cungtsqr_row_( m, n, mb, nb, a, lda, t, ldt, work, lwork, info);
 }
 
-int CUNGTSQR_ROW_(integer *m, integer *n, integer *mb, integer *nb, complex *a, integer *lda, complex *t, integer *ldt, complex *work, integer *lwork, integer *info)
+int CUNGTSQR_ROW_(integer *m, integer *n, integer *mb, integer *nb, scomplex *a, integer *lda, scomplex *t, integer *ldt, scomplex *work, integer *lwork, integer *info)
 {
 	return cungtsqr_row_( m, n, mb, nb, a, lda, t, ldt, work, lwork, info);
 }
@@ -30486,7 +30488,7 @@ int SORGTSQR_ROW_(integer *m, integer *n, integer *mb, integer *nb, real *a, int
 
 int XERBLA_ARRAY(char *srname_array__, integer *srname_len__, integer *info)
 {
-		return xerbla_array_( srname_array__, srname_len__, info);
+	return xerbla_array_( srname_array__, srname_len__, info);
 }
 
 int xerbla_array(char *srname_array__, integer *srname_len__, integer *info)
@@ -30499,107 +30501,107 @@ int XERBLA_ARRAY_(char *srname_array__, integer *srname_len__, integer *info)
 	return xerbla_array_( srname_array__, srname_len__, info);
 }
 
-int ZGETSQRHRT(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, doublecomplex *a, integer *lda, doublecomplex *t, integer *ldt, doublecomplex *work, integer *lwork, integer *info)
+int ZGETSQRHRT(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, dcomplex *a, integer *lda, dcomplex *t, integer *ldt, dcomplex *work, integer *lwork, integer *info)
 {
 	return zgetsqrhrt_( m, n, mb1, nb1, nb2, a, lda, t, ldt, work, lwork, info);
 }
 
-int zgetsqrhrt(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, doublecomplex *a, integer *lda, doublecomplex *t, integer *ldt, doublecomplex *work, integer *lwork, integer *info)
+int zgetsqrhrt(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, dcomplex *a, integer *lda, dcomplex *t, integer *ldt, dcomplex *work, integer *lwork, integer *info)
 {
 	return zgetsqrhrt_( m, n, mb1, nb1, nb2, a, lda, t, ldt, work, lwork, info);
 }
 
-int ZGETSQRHRT_(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, doublecomplex *a, integer *lda, doublecomplex *t, integer *ldt, doublecomplex *work, integer *lwork, integer *info)
+int ZGETSQRHRT_(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, dcomplex *a, integer *lda, dcomplex *t, integer *ldt, dcomplex *work, integer *lwork, integer *info)
 {
 	return zgetsqrhrt_( m, n, mb1, nb1, nb2, a, lda, t, ldt, work, lwork, info);
 }
 
-int ZLAQZ0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *alpha, doublecomplex * beta, doublecomplex *q, integer *ldq, doublecomplex *z__, integer * ldz, doublecomplex *work, integer *lwork, doublereal *rwork, integer * rec, integer *info)
+int ZLAQZ0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *alpha, dcomplex * beta, dcomplex *q, integer *ldq, dcomplex *z__, integer * ldz, dcomplex *work, integer *lwork, doublereal *rwork, integer * rec, integer *info)
 {
 	return zlaqz0_( wants, wantq, wantz, n, ilo, ihi, a, lda, b, ldb, alpha, beta, q, ldq, z__, ldz, work, lwork, rwork, rec, info);
 }
 
-int zlaqz0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *alpha, doublecomplex * beta, doublecomplex *q, integer *ldq, doublecomplex *z__, integer * ldz, doublecomplex *work, integer *lwork, doublereal *rwork, integer * rec, integer *info)
+int zlaqz0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *alpha, dcomplex * beta, dcomplex *q, integer *ldq, dcomplex *z__, integer * ldz, dcomplex *work, integer *lwork, doublereal *rwork, integer * rec, integer *info)
 {
 	return zlaqz0_( wants, wantq, wantz, n, ilo, ihi, a, lda, b, ldb, alpha, beta, q, ldq, z__, ldz, work, lwork, rwork, rec, info);
 }
 
-int ZLAQZ0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *alpha, doublecomplex * beta, doublecomplex *q, integer *ldq, doublecomplex *z__, integer * ldz, doublecomplex *work, integer *lwork, doublereal *rwork, integer * rec, integer *info)
+int ZLAQZ0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *alpha, dcomplex * beta, dcomplex *q, integer *ldq, dcomplex *z__, integer * ldz, dcomplex *work, integer *lwork, doublereal *rwork, integer * rec, integer *info)
 {
 	return zlaqz0_( wants, wantq, wantz, n, ilo, ihi, a, lda, b, ldb, alpha, beta, q, ldq, z__, ldz, work, lwork, rwork, rec, info);
 }
 
-int ZLAQZ1(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, doublecomplex *a, integer * lda, doublecomplex *b, integer *ldb, integer *nq, integer *qstart, doublecomplex *q, integer *ldq, integer *nz, integer *zstart, doublecomplex *z__, integer *ldz)
+int ZLAQZ1(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, dcomplex *a, integer * lda, dcomplex *b, integer *ldb, integer *nq, integer *qstart, dcomplex *q, integer *ldq, integer *nz, integer *zstart, dcomplex *z__, integer *ldz)
 {
 	return zlaqz1_( ilq, ilz, k, istartm, istopm, ihi, a, lda, b, ldb, nq, qstart, q, ldq, nz, zstart, z__, ldz);
 }
 
-int zlaqz1(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, doublecomplex *a, integer * lda, doublecomplex *b, integer *ldb, integer *nq, integer *qstart, doublecomplex *q, integer *ldq, integer *nz, integer *zstart, doublecomplex *z__, integer *ldz)
+int zlaqz1(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, dcomplex *a, integer * lda, dcomplex *b, integer *ldb, integer *nq, integer *qstart, dcomplex *q, integer *ldq, integer *nz, integer *zstart, dcomplex *z__, integer *ldz)
 {
 	return zlaqz1_( ilq, ilz, k, istartm, istopm, ihi, a, lda, b, ldb, nq, qstart, q, ldq, nz, zstart, z__, ldz);
 }
 
-int ZLAQZ1_(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, doublecomplex *a, integer * lda, doublecomplex *b, integer *ldb, integer *nq, integer *qstart, doublecomplex *q, integer *ldq, integer *nz, integer *zstart, doublecomplex *z__, integer *ldz)
+int ZLAQZ1_(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, dcomplex *a, integer * lda, dcomplex *b, integer *ldb, integer *nq, integer *qstart, dcomplex *q, integer *ldq, integer *nz, integer *zstart, dcomplex *z__, integer *ldz)
 {
 	return zlaqz1_( ilq, ilz, k, istartm, istopm, ihi, a, lda, b, ldb, nq, qstart, q, ldq, nz, zstart, z__, ldz);
 }
 
-int ZLAQZ2(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *q, integer *ldq, doublecomplex *z__, integer *ldz, integer *ns, integer * nd, doublecomplex *alpha, doublecomplex *beta, doublecomplex *qc, integer *ldqc, doublecomplex *zc, integer *ldzc, doublecomplex *work, integer *lwork, doublereal *rwork, integer *rec, integer *info)
+int ZLAQZ2(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *q, integer *ldq, dcomplex *z__, integer *ldz, integer *ns, integer * nd, dcomplex *alpha, dcomplex *beta, dcomplex *qc, integer *ldqc, dcomplex *zc, integer *ldzc, dcomplex *work, integer *lwork, doublereal *rwork, integer *rec, integer *info)
 {
 	return zlaqz2_( ilschur, ilq, ilz, n, ilo, ihi, nw, a, lda, b, ldb, q, ldq, z__, ldz, ns, nd, alpha, beta, qc, ldqc, zc, ldzc, work, lwork, rwork, rec, info);
 }
 
-int zlaqz2(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *q, integer *ldq, doublecomplex *z__, integer *ldz, integer *ns, integer * nd, doublecomplex *alpha, doublecomplex *beta, doublecomplex *qc, integer *ldqc, doublecomplex *zc, integer *ldzc, doublecomplex *work, integer *lwork, doublereal *rwork, integer *rec, integer *info)
+int zlaqz2(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *q, integer *ldq, dcomplex *z__, integer *ldz, integer *ns, integer * nd, dcomplex *alpha, dcomplex *beta, dcomplex *qc, integer *ldqc, dcomplex *zc, integer *ldzc, dcomplex *work, integer *lwork, doublereal *rwork, integer *rec, integer *info)
 {
 	return zlaqz2_( ilschur, ilq, ilz, n, ilo, ihi, nw, a, lda, b, ldb, q, ldq, z__, ldz, ns, nd, alpha, beta, qc, ldqc, zc, ldzc, work, lwork, rwork, rec, info);
 }
 
-int ZLAQZ2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *q, integer *ldq, doublecomplex *z__, integer *ldz, integer *ns, integer * nd, doublecomplex *alpha, doublecomplex *beta, doublecomplex *qc, integer *ldqc, doublecomplex *zc, integer *ldzc, doublecomplex *work, integer *lwork, doublereal *rwork, integer *rec, integer *info)
+int ZLAQZ2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *q, integer *ldq, dcomplex *z__, integer *ldz, integer *ns, integer * nd, dcomplex *alpha, dcomplex *beta, dcomplex *qc, integer *ldqc, dcomplex *zc, integer *ldzc, dcomplex *work, integer *lwork, doublereal *rwork, integer *rec, integer *info)
 {
 	return zlaqz2_( ilschur, ilq, ilz, n, ilo, ihi, nw, a, lda, b, ldb, q, ldq, z__, ldz, ns, nd, alpha, beta, qc, ldqc, zc, ldzc, work, lwork, rwork, rec, info);
 }
 
-int ZLAQZ3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, doublecomplex *alpha, doublecomplex *beta, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *q, integer *ldq, doublecomplex *z__, integer *ldz, doublecomplex *qc, integer *ldqc, doublecomplex *zc, integer *ldzc, doublecomplex *work, integer *lwork, integer *info)
+int ZLAQZ3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, dcomplex *alpha, dcomplex *beta, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *q, integer *ldq, dcomplex *z__, integer *ldz, dcomplex *qc, integer *ldqc, dcomplex *zc, integer *ldzc, dcomplex *work, integer *lwork, integer *info)
 {
 	return zlaqz3_( ilschur, ilq, ilz, n, ilo, ihi, nshifts, nblock_desired__, alpha, beta, a, lda, b, ldb, q, ldq, z__, ldz, qc, ldqc, zc, ldzc, work, lwork, info);
 }
 
-int zlaqz3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, doublecomplex *alpha, doublecomplex *beta, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *q, integer *ldq, doublecomplex *z__, integer *ldz, doublecomplex *qc, integer *ldqc, doublecomplex *zc, integer *ldzc, doublecomplex *work, integer *lwork, integer *info)
+int zlaqz3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, dcomplex *alpha, dcomplex *beta, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *q, integer *ldq, dcomplex *z__, integer *ldz, dcomplex *qc, integer *ldqc, dcomplex *zc, integer *ldzc, dcomplex *work, integer *lwork, integer *info)
 {
 	return zlaqz3_( ilschur, ilq, ilz, n, ilo, ihi, nshifts, nblock_desired__, alpha, beta, a, lda, b, ldb, q, ldq, z__, ldz, qc, ldqc, zc, ldzc, work, lwork, info);
 }
 
-int ZLAQZ3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, doublecomplex *alpha, doublecomplex *beta, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *q, integer *ldq, doublecomplex *z__, integer *ldz, doublecomplex *qc, integer *ldqc, doublecomplex *zc, integer *ldzc, doublecomplex *work, integer *lwork, integer *info)
+int ZLAQZ3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, dcomplex *alpha, dcomplex *beta, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *q, integer *ldq, dcomplex *z__, integer *ldz, dcomplex *qc, integer *ldqc, dcomplex *zc, integer *ldzc, dcomplex *work, integer *lwork, integer *info)
 {
 	return zlaqz3_( ilschur, ilq, ilz, n, ilo, ihi, nshifts, nblock_desired__, alpha, beta, a, lda, b, ldb, q, ldq, z__, ldz, qc, ldqc, zc, ldzc, work, lwork, info);
 }
 
-int ZLARFB_GETT(char *ident, integer *m, integer *n, integer *k, doublecomplex *t, integer *ldt, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer * ldwork)
+int ZLARFB_GETT(char *ident, integer *m, integer *n, integer *k, dcomplex *t, integer *ldt, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *work, integer * ldwork)
 {
 	return zlarfb_gett_( ident, m, n, k, t, ldt, a, lda, b, ldb, work, ldwork);
 }
 
-int zlarfb_gett(char *ident, integer *m, integer *n, integer *k, doublecomplex *t, integer *ldt, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer * ldwork)
+int zlarfb_gett(char *ident, integer *m, integer *n, integer *k, dcomplex *t, integer *ldt, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *work, integer * ldwork)
 {
 	return zlarfb_gett_( ident, m, n, k, t, ldt, a, lda, b, ldb, work, ldwork);
 }
 
-int ZLARFB_GETT_(char *ident, integer *m, integer *n, integer *k, doublecomplex *t, integer *ldt, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer * ldwork)
+int ZLARFB_GETT_(char *ident, integer *m, integer *n, integer *k, dcomplex *t, integer *ldt, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *work, integer * ldwork)
 {
 	return zlarfb_gett_( ident, m, n, k, t, ldt, a, lda, b, ldb, work, ldwork);
 }
 
-int ZUNGTSQR_ROW(integer *m, integer *n, integer *mb, integer *nb, doublecomplex *a, integer *lda, doublecomplex *t, integer *ldt, doublecomplex *work, integer *lwork, integer *info)
+int ZUNGTSQR_ROW(integer *m, integer *n, integer *mb, integer *nb, dcomplex *a, integer *lda, dcomplex *t, integer *ldt, dcomplex *work, integer *lwork, integer *info)
 {
 	return zungtsqr_row_( m, n, mb, nb, a, lda, t, ldt, work, lwork, info);
 }
 
-int zungtsqr_row(integer *m, integer *n, integer *mb, integer *nb, doublecomplex *a, integer *lda, doublecomplex *t, integer *ldt, doublecomplex *work, integer *lwork, integer *info)
+int zungtsqr_row(integer *m, integer *n, integer *mb, integer *nb, dcomplex *a, integer *lda, dcomplex *t, integer *ldt, dcomplex *work, integer *lwork, integer *info)
 {
 	return zungtsqr_row_( m, n, mb, nb, a, lda, t, ldt, work, lwork, info);
 }
 
-int ZUNGTSQR_ROW_(integer *m, integer *n, integer *mb, integer *nb, doublecomplex *a, integer *lda, doublecomplex *t, integer *ldt, doublecomplex *work, integer *lwork, integer *info)
+int ZUNGTSQR_ROW_(integer *m, integer *n, integer *mb, integer *nb, dcomplex *a, integer *lda, dcomplex *t, integer *ldt, dcomplex *work, integer *lwork, integer *info)
 {
 	return zungtsqr_row_( m, n, mb, nb, a, lda, t, ldt, work, lwork, info);
 }

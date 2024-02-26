@@ -281,7 +281,7 @@ int sbdsqr_(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, 
     int sswap_(integer *, real *, integer *, real *, integer *), slasq1_(integer *, real *, real *, real *, integer *), slasv2_(real *, real *, real *, real *, real *, real *, real *, real *, real *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real sminoa;
     extern /* Subroutine */
     int slartg_(real *, real *, real *, real *, real * );
@@ -360,7 +360,7 @@ int sbdsqr_(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SBDSQR", &i__1);
+        xerbla_("SBDSQR", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

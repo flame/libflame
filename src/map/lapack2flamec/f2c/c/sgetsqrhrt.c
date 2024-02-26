@@ -177,7 +177,7 @@ int sgetsqrhrt_(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2
     int sorhr_col_(integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *);
     integer lw1, lw2, num_all_row_blocks__, lwt, ldwt, iinfo;
     extern /* Subroutine */
-    int sorgtsqr_row_(integer *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *), scopy_(integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *);
+    int sorgtsqr_row_(integer *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *), scopy_(integer *, real *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical lquery;
     extern /* Subroutine */
     int slatsqr_(integer *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *);
@@ -296,7 +296,7 @@ int sgetsqrhrt_(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGETSQRHRT", &i__1);
+        xerbla_("SGETSQRHRT", &i__1, (ftnlen)10);
         return 0;
     }
     else if (lquery)

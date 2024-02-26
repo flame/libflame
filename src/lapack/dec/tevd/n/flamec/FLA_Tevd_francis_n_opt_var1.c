@@ -186,14 +186,14 @@ FLA_Error FLA_Tevd_francis_n_opd_var1( integer       m_A,
 				printf( "FLA_Tevd_francis_n_opt_var1: bulge disappeared!\n" );
 				if ( MAC_Tevd_eigval_converged2_opd( eps2, safmin, *alpha11, *alpha21, *alpha22 ) )
 				{
-					printf( "FLA_Tevd_francis_n_opt_var1: deflation detected (col %d)\n", i );
+					printf( "FLA_Tevd_francis_n_opt_var1: deflation detected (col %d)\n", (int) i );
 					printf( "FLA_Tevd_francis_n_opt_var1: alpha11         = %23.19e\n", *alpha11 );
 					printf( "FLA_Tevd_francis_n_opt_var1: alpha21 alpha22 = %23.19e %23.19e\n", *alpha21, *alpha22 );
 					return i;
 				}
 				else
 				{
-					printf( "FLA_Tevd_francis_n_opt_var1: but NO deflation detected! (col %d)\n", i );
+					printf( "FLA_Tevd_francis_n_opt_var1: but NO deflation detected! (col %d)\n", (int) i );
 					printf( "FLA_Tevd_francis_n_opt_var1: alpha11         = %23.19e\n", *alpha11 );
 					printf( "FLA_Tevd_francis_n_opt_var1: alpha21 alpha22 = %23.19e %23.19e\n", *alpha21, *alpha22 );
 					FLA_Abort();

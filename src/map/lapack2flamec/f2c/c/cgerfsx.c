@@ -446,7 +446,7 @@ int cgerfsx_(char *trans, char *equed, integer *n, integer * nrhs, complex *a, i
     int cgecon_(char *, integer *, complex *, integer *, real *, real *, complex *, real *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical colequ, notran, rowequ;
     extern integer ilaprec_(char *);
     integer ithresh, n_norms__;
@@ -599,7 +599,7 @@ int cgerfsx_(char *trans, char *equed, integer *n, integer * nrhs, complex *a, i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGERFSX", &i__1);
+        xerbla_("CGERFSX", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

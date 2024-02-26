@@ -238,7 +238,7 @@ if */
 /* > \ingroup complex16GEeigen */
 /* ===================================================================== */
 /* Subroutine */
-int zgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, doublecomplex *a, integer *lda, integer *sdim, doublecomplex *w, doublecomplex *vs, integer *ldvs, doublereal * rconde, doublereal *rcondv, doublecomplex *work, integer *lwork, doublereal *rwork, logical *bwork, integer *info)
+int zgeesx_(char *jobvs, char *sort, L_fpz1 select, char * sense, integer *n, doublecomplex *a, integer *lda, integer *sdim, doublecomplex *w, doublecomplex *vs, integer *ldvs, doublereal * rconde, doublereal *rcondv, doublecomplex *work, integer *lwork, doublereal *rwork, logical *bwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("zgeesx inputs: jobvs %c, sort %c, sense %c, n %" FLA_IS ", lda %" FLA_IS ", sdim %" FLA_IS ", ldvs %" FLA_IS "",*jobvs, *sort, *sense, *n, *lda, *sdim, *ldvs);
@@ -259,7 +259,7 @@ int zgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, doub
     extern doublereal dlamch_(char *);
     doublereal cscale;
     extern /* Subroutine */
-    int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), zgebak_(char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublecomplex *, integer *, integer *), zgebal_(char *, integer *, doublecomplex *, integer *, integer *, integer *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), zgebak_(char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublecomplex *, integer *, integer *), zgebal_(char *, integer *, doublecomplex *, integer *, integer *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern doublereal zlange_(char *, integer *, integer *, doublecomplex *, integer *, doublereal *);
     doublereal bignum;
@@ -361,6 +361,7 @@ int zgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, doub
     /* If SENSE = 'E', 'V' or 'B', then the amount of workspace needed */
     /* depends on SDIM, which is computed by the routine ZTRSEN later */
     /* in the code.) */
+    maxwrk = 0;
     if (*info == 0)
     {
         if (*n == 0)
@@ -405,7 +406,7 @@ int zgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, doub
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGEESX", &i__1);
+        xerbla_("ZGEESX", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

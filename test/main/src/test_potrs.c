@@ -5,19 +5,19 @@
 #include "test_lapack.h"
 
 // Local prototypes.
-void fla_test_potrs_experiment(test_params_t *params, integer datatype, integer  p_cur, integer  q_cur, integer  pci, integer  n_repeats,double* perf, double* time_min,double* residual);
+void fla_test_potrs_experiment(test_params_t *params, integer datatype, integer  p_cur, integer  q_cur, integer  pci, integer  n_repeats, integer einfo, double* perf, double* time_min,double* residual);
 void prepare_potrs_run(char* uplo, integer m, integer nrhs, void *A, integer lda, integer datatype, void *b, integer ldb, integer n_repeats, double* time_min_, integer *info);
 void invoke_potrs(char* uplo, integer datatype, integer* m, void* A, integer* lda, integer *nrhs, void* b, integer* ldb, integer* info);
-static FILE* g_ext_fptr = NULL;
 
 void fla_test_potrs(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Cholesky factorization";
     char* front_str = "POTRS";
-    integer tests_not_run = 1, invalid_dtype = 0;
+    integer tests_not_run = 1, invalid_dtype = 0, einfo = 0;
 
     if(argc == 1)
     {
+        config_data = 1;
         fla_test_output_info("--- %s ---\n", op_str);
         fla_test_output_info("\n");
         fla_test_op_driver(front_str, SQUARE_INPUT, params, LIN, fla_test_potrs_experiment);
@@ -25,13 +25,7 @@ void fla_test_potrs(integer argc, char ** argv, test_params_t *params)
     }
     if (argc == 10)
     {
-        /* Read matrix input data from a file */
-        g_ext_fptr = fopen(argv[7], "r");
-        if (g_ext_fptr == NULL)
-        {
-            printf("\n Invalid input file argument \n");
-            return;
-        }
+        FLA_TEST_PARSE_LAST_ARG(argv[9]);
     }
     if (argc >= 9 && argc <= 10)
     {
@@ -77,7 +71,7 @@ void fla_test_potrs(integer argc, char ** argv, test_params_t *params)
                 fla_test_potrs_experiment(params, datatype,
                                           N, N,
                                           0,
-                                          n_repeats,
+                                          n_repeats, einfo,
                                           &perf, &time_min, &residual);
                 /* Print the results */
                 fla_test_print_status(front_str,
@@ -104,6 +98,7 @@ void fla_test_potrs(integer argc, char ** argv, test_params_t *params)
     if (g_ext_fptr != NULL)
     {
         fclose(g_ext_fptr);
+        g_ext_fptr = NULL;
     }
     return;
 
@@ -115,6 +110,7 @@ void fla_test_potrs_experiment(test_params_t *params,
     integer  q_cur,
     integer  pci,
     integer  n_repeats,
+    integer  einfo,
     double* perf,
     double* t,
     double* residual)
@@ -132,10 +128,18 @@ void fla_test_potrs_experiment(test_params_t *params,
     lda = params->lin_solver_paramslist[pci].lda;
     ldb = params->lin_solver_paramslist[pci].ldb;
 
-    if(lda < n || ldb < n)
+    /* If leading dimensions = -1, set them to default value
+       when inputs are from config files */
+    if (config_data)
     {
-        *residual = DBL_MIN;
-        return;
+        if (lda == -1)
+        {
+            lda = fla_max(1,n);
+        }
+        if (ldb == -1)
+        {
+            ldb = fla_max(1,n);
+        }
     }
 
     /* Create input matrix parameters */
@@ -162,16 +166,7 @@ void fla_test_potrs_experiment(test_params_t *params,
     copy_matrix(datatype, "full", n, n, A, lda, A_test, lda);
     /* cholesky factorisation of A as input to potrs */
     invoke_potrf(&uplo, datatype, &n, A, &lda, &info);
-    if(info < 0)
-    {
-        *residual = DBL_MAX;
-        free_matrix(A);
-        free_matrix(A_test);
-        free_matrix(B_test);
-        free_matrix(B);
-        free_matrix(X);    
-        return;
-    }
+
     copy_matrix(datatype, "full", n, nrhs, B, ldb, B_test, ldb);
 
     /* Invoke potrs API to find x using Ax-b */
@@ -189,10 +184,8 @@ void fla_test_potrs_experiment(test_params_t *params,
     if(info == 0)
         validate_potrs(n, nrhs, A_test, lda, X, B, ldb, datatype, residual, &vinfo);
 
-    /* Assigning bigger value to residual as execution fails */
-    if (info < 0 || vinfo < 0)
-        *residual = DBL_MAX;
-        
+    FLA_TEST_CHECK_EINFO(residual, info, einfo);
+
     free_matrix(A);
     free_matrix(A_test);
     free_matrix(B_test);
@@ -222,6 +215,7 @@ void prepare_potrs_run(char* uplo,
     create_matrix(datatype, &A_save, lda, n);
     create_matrix(datatype, &B_test, ldb, nrhs);
 
+    *info = 0;
     for (i = 0; i < n_repeats && *info == 0; ++i)
     {
         /* Restore input matrix A value and allocate memory to output buffers

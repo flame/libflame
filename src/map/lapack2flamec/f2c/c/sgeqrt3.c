@@ -131,7 +131,7 @@ int sgeqrt3_(integer *m, integer *n, real *a, integer *lda, real *t, integer *ld
     /* Local variables */
     integer i__, j, i1, j1, n1, n2, iinfo;
     extern /* Subroutine */
-    int sgemm_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), strmm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer *), xerbla_(char *, integer *), slarfg_(integer *, real *, real *, integer *, real *);
+    int sgemm_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), strmm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), slarfg_(integer *, real *, real *, integer *, real *);
     /* -- LAPACK computational routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -176,7 +176,7 @@ int sgeqrt3_(integer *m, integer *n, real *a, integer *lda, real *t, integer *ld
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGEQRT3", &i__1);
+        xerbla_("SGEQRT3", &i__1, (ftnlen)7);
         return 0;
     }
     if (*n == 1)

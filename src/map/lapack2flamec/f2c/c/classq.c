@@ -130,7 +130,7 @@ int classq_(integer *n, complex *x, integer *incx, real *scl, real *sumsq) {
     integer i__;
     real ax;
     integer ix;
-    real sbi, abig, amed, sbig, tbig, asml, ymin, ssml, tsml, ymax;
+    real abig, amed, sbig, tbig, asml, ymin, ssml, tsml, ymax;
     logical notbig;
     /* ...Translated by Pacific-Sierra Research vf90 Personal 3.4N3 09:17:33 8/30/21 */
     /* ...Switches: */

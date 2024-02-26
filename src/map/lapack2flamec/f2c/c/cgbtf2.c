@@ -164,7 +164,7 @@ int cgbtf2_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
     int cscal_(integer *, complex *, complex *, integer *), cgeru_(integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, integer *), cswap_( integer *, complex *, integer *, complex *, integer *);
     extern integer icamax_(integer *, complex *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -223,7 +223,7 @@ int cgbtf2_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGBTF2", &i__1);
+        xerbla_("CGBTF2", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
@@ -234,7 +234,7 @@ int cgbtf2_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
         return 0;
     }
     #if AOCL_FLA_PROGRESS_H
-        step_count =0;
+        progress_step_count =0;
          #ifndef FLA_ENABLE_WINDOWS_BUILD
                 if(!aocl_fla_progress_ptr)
                     aocl_fla_progress_ptr=aocl_fla_progress;
@@ -271,11 +271,11 @@ int cgbtf2_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
 	#if AOCL_FLA_PROGRESS_H
             if(aocl_fla_progress_ptr){
                 if(j%32==0 || j==i__1){
-                        step_count=j;
-                        AOCL_FLA_PROGRESS_FUNC_PTR("CGBTF2",6,&step_count,&thread_id,&total_threads);
+                        progress_step_count = j;
+                        AOCL_FLA_PROGRESS_FUNC_PTR("CGBTF2",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
                 }
             }
-        #endif
+    #endif
 
         /* Set fill-in elements in column J+KV to zero. */
         if (j + kv <= *n)

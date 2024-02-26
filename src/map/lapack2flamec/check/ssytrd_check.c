@@ -23,9 +23,9 @@ int ssytrd_check(char *uplo, integer *n, float *a, integer *lda, float *d__, flo
     --work;
     /* Function Body */
     *info = 0;
-    upper = lsame_(uplo, "U");
+    upper = lsame_(uplo, "U", 1, 1);
     lquery = *lwork == -1;
-    if (! upper && ! lsame_(uplo, "L"))
+    if (! upper && ! lsame_(uplo, "L", 1, 1))
     {
         *info = -1;
     }
@@ -51,7 +51,7 @@ int ssytrd_check(char *uplo, integer *n, float *a, integer *lda, float *d__, flo
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSYTRD", &i__1);
+        xerbla_("SSYTRD", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

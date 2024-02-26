@@ -157,7 +157,7 @@ int ctrcon_(char *norm, char *uplo, char *diag, integer *n, complex *a, integer 
     extern integer icamax_(integer *, complex *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern real clantr_(char *, char *, char *, integer *, integer *, complex *, integer *, real *);
     real ainvnm;
     extern /* Subroutine */
@@ -227,7 +227,7 @@ int ctrcon_(char *norm, char *uplo, char *diag, integer *n, complex *a, integer 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTRCON", &i__1);
+        xerbla_("CTRCON", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

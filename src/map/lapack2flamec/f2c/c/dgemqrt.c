@@ -169,7 +169,7 @@ int dgemqrt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
     extern logical lsame_(char *, char *);
     logical right;
     extern /* Subroutine */
-    int dlarfb_(char *, char *, char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dlarfb_(char *, char *, char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical notran;
     integer ldwork;
     /* -- LAPACK computational routine (version 3.7.0) -- */
@@ -258,7 +258,7 @@ int dgemqrt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGEMQRT", &i__1);
+        xerbla_("DGEMQRT", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

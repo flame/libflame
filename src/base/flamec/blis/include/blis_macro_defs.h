@@ -142,18 +142,20 @@ else { *(alpha)      = ( double ) sqrt( *(alpha) );  *(error) = FLA_SUCCESS; }
 // void bl1_csqrte( scomplex* alpha, int* error );
 #define bl1_csqrte( alpha, error ) \
 if ( (alpha)->real <= 0.0F || isnan( (alpha)->real) ) \
-{                     *(error) = FLA_FAILURE; } \
+{ (alpha)->imag = 0.0F; *(error) = FLA_FAILURE; } \
 else { \
-(alpha)->real =  ( float ) sqrt( (alpha)->real ); \
-(alpha)->imag = 0.0F; *(error) = FLA_SUCCESS; }
+  (alpha)->real =  ( float ) sqrt( (alpha)->real ); \
+  (alpha)->imag = 0.0F; *(error) = FLA_SUCCESS; \
+}
 
 // void bl1_zsqrte( dcomplex* alpha, int* error );
 #define bl1_zsqrte( alpha, error ) \
 if ( (alpha)->real <= 0.0 || isnan( (alpha)->real) )  \
-{                     *(error) = FLA_FAILURE; } \
+{ (alpha)->imag = 0.0; *(error) = FLA_FAILURE; } \
 else { \
-(alpha)->real = ( double ) sqrt( (alpha)->real ); \
-(alpha)->imag = 0.0;  *(error) = FLA_SUCCESS; }
+  (alpha)->real = ( double ) sqrt( (alpha)->real ); \
+  (alpha)->imag = 0.0;  *(error) = FLA_SUCCESS; \
+}
 
 // --- absval2 ---
 

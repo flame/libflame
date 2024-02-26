@@ -14,8 +14,8 @@ int dlauu2_check(char *uplo, integer *n, double *a, integer * lda, integer *info
     a -= a_offset;
     /* Function Body */
     *info = 0;
-    upper = lsame_(uplo, "U");
-    if (! upper && ! lsame_(uplo, "L"))
+    upper = lsame_(uplo, "U", 1, 1);
+    if (! upper && ! lsame_(uplo, "L", 1, 1))
     {
         *info = -1;
     }
@@ -30,7 +30,7 @@ int dlauu2_check(char *uplo, integer *n, double *a, integer * lda, integer *info
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DLAUU2", &i__1);
+        xerbla_("DLAUU2", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */

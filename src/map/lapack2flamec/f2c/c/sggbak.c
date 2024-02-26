@@ -149,7 +149,7 @@ int sggbak_(char *job, char *side, integer *n, integer *ilo, integer *ihi, real 
     int sscal_(integer *, real *, real *, integer *);
     logical leftv;
     extern /* Subroutine */
-    int sswap_(integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *);
+    int sswap_(integer *, real *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical rightv;
     /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -218,7 +218,7 @@ int sggbak_(char *job, char *side, integer *n, integer *ilo, integer *ihi, real 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGGBAK", &i__1);
+        xerbla_("SGGBAK", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

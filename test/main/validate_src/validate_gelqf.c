@@ -18,6 +18,8 @@ void validate_gelqf(integer m_A,
     double* residual,
     integer* info)
 {
+    if(m_A == 0 || n_A == 0)
+      return;
     void *Q = NULL, *L = NULL, *work = NULL;
     integer min_A;
     integer lwork = -1;

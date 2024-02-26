@@ -229,7 +229,7 @@ int zlaqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     integer nblock;
     doublereal safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal safmax;
     integer ishift, istopb, swidth;
     extern /* Subroutine */
@@ -283,7 +283,7 @@ int zlaqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZLAQZ3", &i__1);
+        xerbla_("ZLAQZ3", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -202,7 +202,7 @@ int clarzt_(char *direct, char *storev, integer *n, integer * k, complex *v, int
     int cgemv_(char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer *);
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int ctrmv_(char *, char *, char *, integer *, complex *, integer *, complex *, integer *), clacgv_(integer *, complex *, integer *), xerbla_(char *, integer *);
+    int ctrmv_(char *, char *, char *, integer *, complex *, integer *, complex *, integer *), clacgv_(integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -243,7 +243,7 @@ int clarzt_(char *direct, char *storev, integer *n, integer * k, complex *v, int
     if (info != 0)
     {
         i__1 = -info;
-        xerbla_("CLARZT", &i__1);
+        xerbla_("CLARZT", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

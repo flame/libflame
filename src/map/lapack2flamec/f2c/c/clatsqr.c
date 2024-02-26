@@ -176,7 +176,7 @@ int clatsqr_(integer *m, integer *n, integer *mb, integer * nb, complex *a, inte
     /* Local variables */
     integer i__, ii, kk, ctr;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), cgeqrt_( integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *), ctpqrt_(integer *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), cgeqrt_( integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *), ctpqrt_(integer *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *);
     logical lquery;
     /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -243,7 +243,7 @@ int clatsqr_(integer *m, integer *n, integer *mb, integer * nb, complex *a, inte
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CLATSQR", &i__1);
+        xerbla_("CLATSQR", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

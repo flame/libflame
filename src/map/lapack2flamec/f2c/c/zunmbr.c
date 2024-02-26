@@ -3,7 +3,6 @@
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
 static integer c_n1 = -1;
-static integer c__2 = 2;
 /* > \brief \b ZUNMBR */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
@@ -198,8 +197,7 @@ int zunmbr_(char *vect, char *side, char *trans, integer *m, integer *n, integer
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("zunmbr inputs: vect %c, side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS ", ldc %" FLA_IS ", lwork %" FLA_IS "", *vect, *side, *trans, *m, *n, *k, *lda, *ldc, *lwork);
     /* System generated locals */
-    address a__1[2];
-    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__3[2];
+    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2;
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */
@@ -210,7 +208,7 @@ int zunmbr_(char *vect, char *side, char *trans, integer *m, integer *n, integer
     extern logical lsame_(char *, char *);
     integer iinfo;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     logical notran, applyq;
     char transt[1];
@@ -350,7 +348,7 @@ int zunmbr_(char *vect, char *side, char *trans, integer *m, integer *n, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZUNMBR", &i__1);
+        xerbla_("ZUNMBR", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

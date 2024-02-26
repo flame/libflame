@@ -266,7 +266,7 @@ int zhsein_(char *side, char *eigsrc, char *initv, logical * select, integer *n,
     extern doublereal dlamch_(char *);
     extern logical disnan_(doublereal *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zlaein_( logical *, logical *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, doublereal *, doublereal *, doublereal *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zlaein_( logical *, logical *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, doublereal *, doublereal *, doublereal *, integer *);
     extern doublereal zlanhs_(char *, integer *, doublecomplex *, integer *, doublereal *);
     logical noinit;
     integer ldwork;
@@ -369,7 +369,7 @@ int zhsein_(char *side, char *eigsrc, char *initv, logical * select, integer *n,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHSEIN", &i__1);
+        xerbla_("ZHSEIN", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

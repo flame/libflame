@@ -211,7 +211,7 @@ int dlasd1_(integer *nl, integer *nr, integer *sqre, doublereal *d__, doublereal
     int dlasd2_(integer *, integer *, integer *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *, integer *, integer *, integer *, integer *, integer *), dlasd3_( integer *, integer *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *, integer *, doublereal *, integer *), dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), dlamrg_(integer *, integer *, doublereal *, integer *, integer *, integer *);
     integer isigma;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal orgnrm;
     integer coltyp;
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
@@ -261,7 +261,7 @@ int dlasd1_(integer *nl, integer *nr, integer *sqre, doublereal *d__, doublereal
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DLASD1", &i__1);
+        xerbla_("DLASD1", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

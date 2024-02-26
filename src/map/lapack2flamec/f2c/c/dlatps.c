@@ -252,7 +252,7 @@ int dlatps_(char *uplo, char *trans, char *diag, char * normin, integer *n, doub
     extern doublereal dlamch_(char *);
     extern integer idamax_(integer *, doublereal *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal bignum;
     logical notran;
     integer jfirst;
@@ -287,6 +287,7 @@ int dlatps_(char *uplo, char *trans, char *diag, char * normin, integer *n, doub
     upper = lsame_(uplo, "U");
     notran = lsame_(trans, "N");
     nounit = lsame_(diag, "N");
+    tjjs = 0.;
     /* Test the input parameters. */
     if (! upper && ! lsame_(uplo, "L"))
     {
@@ -311,7 +312,7 @@ int dlatps_(char *uplo, char *trans, char *diag, char * normin, integer *n, doub
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DLATPS", &i__1);
+        xerbla_("DLATPS", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

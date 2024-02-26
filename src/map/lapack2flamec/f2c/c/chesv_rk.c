@@ -228,7 +228,7 @@ int chesv_rk_(char *uplo, integer *n, integer *nrhs, complex *a, integer *lda, c
     int chetrf_rk_(char *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, integer *);
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer lwkopt;
     logical lquery;
     extern /* Subroutine */
@@ -305,7 +305,7 @@ int chesv_rk_(char *uplo, integer *n, integer *nrhs, complex *a, integer *lda, c
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHESV_RK ", &i__1);
+        xerbla_("CHESV_RK ", &i__1, (ftnlen)9);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -312,7 +312,7 @@ int cunbdb_(char *trans, char *signs, integer *m, integer *p, integer *q, comple
     int caxpy_(integer *, complex *, complex *, integer *, complex *, integer *);
     extern real scnrm2_(integer *, complex *, integer *);
     extern /* Subroutine */
-    int clacgv_(integer *, complex *, integer *), xerbla_(char *, integer *);
+    int clacgv_(integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical lquery;
     extern /* Subroutine */
     int clarfgp_(integer *, complex *, complex *, integer *, complex *);
@@ -458,7 +458,7 @@ int cunbdb_(char *trans, char *signs, integer *m, integer *p, integer *q, comple
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("xORBDB", &i__1);
+        xerbla_("xORBDB", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

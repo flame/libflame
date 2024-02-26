@@ -152,6 +152,7 @@ doublereal zlansy_(char *norm, char *uplo, integer *n, doublecomplex *a, integer
     a -= a_offset;
     --work;
     /* Function Body */
+    value = 0.;
     if (*n == 0)
     {
         value = 0.;

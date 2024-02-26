@@ -3,7 +3,13 @@
 */
 
 #include "FLAME.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
+#include "fla_lapack_x86_common.h"
 
+
+#if FLA_ENABLE_AMD_OPT
 /*
  * LU with partial pivoting for tiny matrices
  *
@@ -104,8 +110,9 @@ integer FLA_LU_piv_small_s_var1( integer *m, integer *n,
     /* Local variables */
     integer i__, j, jp;
     extern real slamch_(char *);
-    extern integer isamax_(integer *, real *, integer *);
-    extern /* Subroutine */ int xerbla_(char *, integer *);
+    extern int fla_sscal(integer *n, real *alpha, real *x, integer *incx);
+    extern int fla_sger(integer *m, integer *n, real *alpha, real *x, integer *incx, real *y,
+				              integer *incy, real *a, integer *lda);
     real sfmin;
     
     a_dim1 = *lda;
@@ -166,3 +173,4 @@ integer FLA_LU_piv_small_s_var1( integer *m, integer *n,
     }
     return *info;
 }
+#endif

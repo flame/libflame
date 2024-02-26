@@ -258,7 +258,7 @@ int ctrevc_(char *side, char *howmny, logical *select, integer *n, complex *t, i
     extern integer icamax_(integer *, complex *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int csscal_(integer *, real *, complex *, integer *), xerbla_(char *, integer *), clatrs_(char *, char *, char *, char *, integer *, complex *, integer *, complex *, real *, real *, integer *);
+    int csscal_(integer *, real *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), clatrs_(char *, char *, char *, char *, integer *, complex *, integer *, complex *, real *, real *, integer *);
     extern real scasum_(integer *, complex *, integer *);
     logical rightv;
     real smlnum;
@@ -360,7 +360,7 @@ int ctrevc_(char *side, char *howmny, logical *select, integer *n, complex *t, i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTREVC", &i__1);
+        xerbla_("CTREVC", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

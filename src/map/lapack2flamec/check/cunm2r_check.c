@@ -22,8 +22,8 @@ int cunm2r_check(char *side, char *trans, integer *m, integer *n, integer *k, sc
     --work;
     /* Function Body */
     *info = 0;
-    left = lsame_(side, "L");
-    notran = lsame_(trans, "N");
+    left = lsame_(side, "L", 1, 1);
+    notran = lsame_(trans, "N", 1, 1);
     /* NQ is the order of Q */
     if (left)
     {
@@ -33,11 +33,11 @@ int cunm2r_check(char *side, char *trans, integer *m, integer *n, integer *k, sc
     {
         nq = *n;
     }
-    if (! left && ! lsame_(side, "R"))
+    if (! left && ! lsame_(side, "R", 1, 1))
     {
         *info = -1;
     }
-    else if (! notran && ! lsame_(trans, "C"))
+    else if (! notran && ! lsame_(trans, "C", 1, 1))
     {
         *info = -2;
     }
@@ -64,7 +64,7 @@ int cunm2r_check(char *side, char *trans, integer *m, integer *n, integer *k, sc
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CUNM2R", &i__1);
+        xerbla_("CUNM2R", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */

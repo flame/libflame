@@ -7,17 +7,17 @@
 #include "test_prototype.h"
 
 /* Local prototypes.*/
-void fla_test_potrf_experiment(test_params_t *params, integer datatype, integer  p_cur, integer  q_cur, integer  pci, integer  n_repeats,double* perf, double* time_min, double* residual);
+void fla_test_potrf_experiment(test_params_t *params, integer datatype, integer  p_cur, integer  q_cur, integer  pci, integer  n_repeats, integer einfo, double* perf, double* time_min, double* residual);
 void prepare_potrf_run(char* uplo, integer m, void *A, integer lda, integer datatype, integer n_repeats, double* time_min_, integer *info);
-static FILE* g_ext_fptr = NULL;
 
 void fla_test_potrf(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Cholesky factorization";
     char* front_str = "POTRF";
-    integer tests_not_run = 1, invalid_dtype = 0;
+    integer tests_not_run = 1, invalid_dtype = 0, einfo = 0;
     if(argc == 1)
     {
+        config_data = 1;
         fla_test_output_info("--- %s ---\n", op_str);
         fla_test_output_info("\n");
         fla_test_op_driver(front_str, SQUARE_INPUT, params, LIN, fla_test_potrf_experiment);
@@ -25,13 +25,7 @@ void fla_test_potrf(integer argc, char ** argv, test_params_t *params)
     }
     if (argc == 8)
     {
-        /* Read matrix input data from a file */
-        g_ext_fptr = fopen(argv[7], "r");
-        if (g_ext_fptr == NULL)
-        {
-            printf("\n Invalid input file argument \n");
-            return;
-        }
+        FLA_TEST_PARSE_LAST_ARG(argv[7]);
     }
     if (argc >= 7 && argc <= 8)
     {
@@ -74,7 +68,7 @@ void fla_test_potrf(integer argc, char ** argv, test_params_t *params)
                 fla_test_potrf_experiment(params, datatype,
                                           N, N,
                                           0,
-                                          n_repeats,
+                                          n_repeats, einfo,
                                           &perf, &time_min, &residual);
                 /* Print the results */
                 fla_test_print_status(front_str,
@@ -101,6 +95,7 @@ void fla_test_potrf(integer argc, char ** argv, test_params_t *params)
     if (g_ext_fptr != NULL)
     {
         fclose(g_ext_fptr);
+        g_ext_fptr = NULL;
     }
     return;
 }
@@ -111,6 +106,7 @@ void fla_test_potrf_experiment(test_params_t *params,
     integer  q_cur,
     integer  pci,
     integer  n_repeats,
+    integer  einfo,
     double* perf,
     double* time_min,
     double* residual)
@@ -119,15 +115,20 @@ void fla_test_potrf_experiment(test_params_t *params,
     integer info = 0, vinfo = 0;
     void *A = NULL, *A_test = NULL;
     char uplo = params->lin_solver_paramslist[pci].Uplo;
+    *residual = params->lin_solver_paramslist[pci].solver_threshold;
 
     /* Get input matrix dimensions */
     m = p_cur;
     lda = params->lin_solver_paramslist[pci].lda;
 
-    if(lda < m)
+    /* If leading dimensions = -1, set them to default value
+       when inputs are from config files */
+    if (config_data)
     {
-        *residual = DBL_MIN;
-        return;
+        if (lda == -1)
+        {
+            lda = fla_max(1,m);
+        }
     }
 
     /* Create input matrix parameters */
@@ -159,9 +160,7 @@ void fla_test_potrf_experiment(test_params_t *params,
     if(info == 0)
         validate_potrf(&uplo, m, A, A_test, lda, datatype, residual, &vinfo);
 
-    /* Assigning bigger value to residual as execution fails */
-    if (info < 0 || vinfo < 0)
-        *residual = DBL_MAX;
+    FLA_TEST_CHECK_EINFO(residual, info, einfo);
 
     free_matrix(A);
     free_matrix(A_test);
@@ -184,6 +183,7 @@ void prepare_potrf_run(char* uplo, integer m,
     create_matrix(datatype, &A_save, lda, m);
     copy_matrix(datatype, "full", m, m, A, lda, A_save, lda);
 
+    *info = 0;
     for (i = 0; i < n_repeats && *info == 0; ++i)
     {
         /* Restore input matrix A value and allocate memory to output buffers

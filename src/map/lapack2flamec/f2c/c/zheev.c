@@ -161,7 +161,7 @@ int zheev_(char *jobz, char *uplo, integer *n, doublecomplex *a, integer *lda, d
     doublereal safmin;
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal bignum;
     extern doublereal zlanhe_(char *, char *, integer *, doublecomplex *, integer *, doublereal *);
     integer indtau;
@@ -245,7 +245,7 @@ int zheev_(char *jobz, char *uplo, integer *n, doublecomplex *a, integer *lda, d
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHEEV ", &i__1);
+        xerbla_("ZHEEV ", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

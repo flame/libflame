@@ -155,7 +155,7 @@ int lapack_sorml2(char *side, char *trans, integer *m, integer *n, integer *k, r
     int slarf_(char *, integer *, integer *, real *, integer *, real *, real *, integer *, real *);
     integer i1, i2, i3, ic, jc, mi, ni, nq;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical notran;
     real aii;
     /* -- LAPACK computational routine -- */
@@ -231,7 +231,7 @@ int lapack_sorml2(char *side, char *trans, integer *m, integer *n, integer *k, r
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SORML2", &i__1);
+        xerbla_("SORML2", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

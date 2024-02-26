@@ -129,6 +129,7 @@ real clanht_(char *norm, integer *n, real *d__, complex *e)
     --e;
     --d__;
     /* Function Body */
+    anorm = 0.f;
     if (*n <= 0)
     {
         anorm = 0.f;

@@ -133,6 +133,7 @@ endif
 
 # Add AVX and FMA flags for specific  files
 CAVXFLAGS := -mavx2 -mfma
+CAVX512FLAGS := -mavx512f -mfma
 
 # Aggregate all of the flags into two groups: one for optimizable code, and
 # one for code that should not be optimized.
@@ -140,6 +141,7 @@ CFLAGS       := $(strip $(CDBGFLAGS) $(COPTFLAGS) $(CVECFLAGS) $(CWARNFLAGS) $(C
 CFLAGS_NOOPT := $(strip $(CDBGFLAGS) $(CWARNFLAGS) $(CMISCFLAGS) $(CPPROCFLAGS))
 CXXFLAGS     := $(strip $(CDBGFLAGS) $(COPTFLAGS) $(CVECFLAGS) $(CWARNFLAGS) $(CXXMISCFLAGS) $(CPPROCFLAGS))
 CFLAGS_AVX   := $(strip $(CDBGFLAGS) $(COPTFLAGS) $(CVECFLAGS) $(CWARNFLAGS) $(CMISCFLAGS) $(CPPROCFLAGS) $(CAVXFLAGS))
+CFLAGS_AVX512   := $(strip $(CDBGFLAGS) $(COPTFLAGS) $(CVECFLAGS) $(CWARNFLAGS) $(CMISCFLAGS) $(CPPROCFLAGS) $(CAVX512FLAGS))
 
 # If the user provided his own CFLAGS, allow them to override our own.
 # *** Notice that wo do not also modify the 'no optimization' set of flags.

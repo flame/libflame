@@ -250,7 +250,7 @@ int zhegv_2stage_(integer *itype, char *jobz, char *uplo, integer *n, doublecomp
     integer lwtrd;
     logical wantz;
     extern /* Subroutine */
-    int ztrmm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), ztrsm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(char *, integer *), zhegst_(integer *, char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *);
+    int ztrmm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), ztrsm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), zhegst_(integer *, char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *);
     logical lquery;
     extern /* Subroutine */
     int zpotrf_(char *, integer *, doublecomplex *, integer *, integer *);
@@ -331,7 +331,7 @@ int zhegv_2stage_(integer *itype, char *jobz, char *uplo, integer *n, doublecomp
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHEGV_2STAGE ", &i__1);
+        xerbla_("ZHEGV_2STAGE ", &i__1, (ftnlen)13);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -209,7 +209,7 @@ int chegv_(integer *itype, char *jobz, char *uplo, integer * n, complex *a, inte
     int chegst_(integer *, char *, integer *, complex *, integer *, complex *, integer *, integer *);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), cpotrf_( char *, integer *, complex *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), cpotrf_( char *, integer *, complex *, integer *, integer *);
     integer lwkopt;
     logical lquery;
     /* -- LAPACK driver routine (version 3.4.0) -- */
@@ -292,7 +292,7 @@ int chegv_(integer *itype, char *jobz, char *uplo, integer * n, complex *a, inte
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHEGV ", &i__1);
+        xerbla_("CHEGV ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

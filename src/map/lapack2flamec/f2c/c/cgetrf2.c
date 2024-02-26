@@ -139,7 +139,7 @@ int cgetrf2_(integer *m, integer *n, complex *a, integer * lda, integer *ipiv, i
     extern integer icamax_(integer *, complex *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), claswp_( integer *, complex *, integer *, integer *, integer *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), claswp_( integer *, complex *, integer *, integer *, integer *, integer *, integer *);
     /* -- LAPACK computational routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -164,6 +164,7 @@ int cgetrf2_(integer *m, integer *n, complex *a, integer * lda, integer *ipiv, i
     /* Parameter adjustments */
     #if AOCL_FLA_PROGRESS_H
        AOCL_FLA_PROGRESS_VAR;
+       static TLS_CLASS_SPEC integer progress_size = 0;
     #endif
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;
@@ -186,7 +187,7 @@ int cgetrf2_(integer *m, integer *n, complex *a, integer * lda, integer *ipiv, i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGETRF2", &i__1);
+        xerbla_("CGETRF2", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
@@ -275,24 +276,24 @@ int cgetrf2_(integer *m, integer *n, complex *a, integer * lda, integer *ipiv, i
 	   #endif
                 if(aocl_fla_progress_ptr)
                 {
-                        if(step_count == 0 || step_count==size ){
-                                        size=fla_min(*m,*n);
-                                        step_count =1;
+                        if(progress_step_count == 0 || progress_step_count == progress_size ){
+                                        progress_size = fla_min(*m,*n);
+                                        progress_step_count = 1;
                          }
 
-                        if(!(step_count == 1 &&(*m < FLA_GETRF_SMALL &&  *n < FLA_GETRF_SMALL)))
+                        if(!(progress_step_count == 1 &&(*m < FLA_GETRF_SMALL &&  *n < FLA_GETRF_SMALL)))
                         {
 
 
-                                ++step_count;
-                                if((step_count%8)==0 || step_count==size)
+                                ++progress_step_count;
+                                if((progress_step_count%8)==0 || progress_step_count == progress_size)
                                 {
-                                        AOCL_FLA_PROGRESS_FUNC_PTR("CGETRF2",7,&step_count,&thread_id,&total_threads);
+                                        AOCL_FLA_PROGRESS_FUNC_PTR("CGETRF2",7,&progress_step_count,&progress_thread_id,&progress_total_threads);
                                 }
                         }
                 }
 
-        #endif
+    #endif
 
         cgetrf2_(m, &n1, &a[a_offset], lda, &ipiv[1], &iinfo);
         if (*info == 0 && iinfo > 0)
@@ -336,4 +337,3 @@ int cgetrf2_(integer *m, integer *n, complex *a, integer * lda, integer *ipiv, i
     /* End of CGETRF2 */
 }
 /* cgetrf2_ */
-

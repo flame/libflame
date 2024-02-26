@@ -228,7 +228,7 @@ int zgghrd_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, d
     extern logical lsame_(char *, char *);
     doublecomplex ctemp;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer icompq, icompz;
     extern /* Subroutine */
     int zlaset_(char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *), zlartg_(doublecomplex *, doublecomplex *, doublereal *, doublecomplex *, doublecomplex *);
@@ -347,7 +347,7 @@ int zgghrd_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, d
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGGHRD", &i__1);
+        xerbla_("ZGGHRD", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

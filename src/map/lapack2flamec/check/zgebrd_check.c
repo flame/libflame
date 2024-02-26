@@ -60,7 +60,7 @@ int zgebrd_check(integer *m, integer *n, dcomplex *a, integer *lda, double *d__,
     if (*info < 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGEBRD", &i__1);
+        xerbla_("ZGEBRD", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

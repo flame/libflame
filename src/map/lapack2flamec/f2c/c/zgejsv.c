@@ -641,7 +641,7 @@ int zgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
     logical goscal;
     doublereal aatmin, aatmax;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical noscal;
     extern /* Subroutine */
     int zdscal_(integer *, doublereal *, doublecomplex *, integer *), zlacgv_(integer *, doublecomplex *, integer *), dlassq_(integer *, doublereal *, integer *, doublereal *, doublereal *);
@@ -724,6 +724,10 @@ int zgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
     defr = lsame_(jobr, "N");
     l2pert = lsame_(jobp, "P");
     lquery = *lwork == -1 || *lrwork == -1;
+    iwoff = 0;
+    lwrk_zgeqrf__ = 0;
+    lwrk_zgelqf__ = 0;
+    lwrk_zgeqp3__ = 0;
     if (! (rowpiv || l2rank || l2aber || errest || lsame_(joba, "C")))
     {
         *info = -1;
@@ -1302,7 +1306,7 @@ int zgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
     {
         /* #:( */
         i__1 = -(*info);
-        xerbla_("ZGEJSV", &i__1);
+        xerbla_("ZGEJSV", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -1373,7 +1377,7 @@ int zgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
         {
             *info = -9;
             i__2 = -(*info);
-            xerbla_("ZGEJSV", &i__2);
+            xerbla_("ZGEJSV", &i__2, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }

@@ -2,7 +2,6 @@
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__6 = 6;
 static integer c__0 = 0;
-static integer c__2 = 2;
 static integer c_n1 = -1;
 static real c_b57 = 0.f;
 static integer c__1 = 1;
@@ -222,8 +221,7 @@ the routine */
 int lapack_sgesvd(char *jobu, char *jobvt, integer *m, integer *n, real *a, integer *lda, real *s, real *u, integer *ldu, real *vt, integer *ldvt, real *work, integer *lwork, integer *info)
 {
     /* System generated locals */
-    address a__1[2];
-    integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1[2], i__2, i__3, i__4;
+    integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__2, i__3, i__4;
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */
@@ -244,7 +242,7 @@ int lapack_sgesvd(char *jobu, char *jobvt, integer *m, integer *n, real *a, inte
     int lapack_sgebrd(integer *, integer *, real *, integer *, real *, real *, real *, real *, real *, integer *, integer *);
     extern real slamch_(char *), slange_(char *, integer *, integer *, real *, integer *, real *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     real bignum;
     extern /* Subroutine */
@@ -307,6 +305,10 @@ int lapack_sgesvd(char *jobu, char *jobvt, integer *m, integer *n, real *a, inte
     wntvo = lsame_(jobvt, "O");
     wntvn = lsame_(jobvt, "N");
     lquery = *lwork == -1;
+    ie = 0;
+    bdspac = 0;
+    mnthr = 0;
+    wrkbl = 0;
     if (! (wntua || wntus || wntuo || wntun))
     {
         *info = -1;
@@ -931,7 +933,7 @@ int lapack_sgesvd(char *jobu, char *jobvt, integer *m, integer *n, real *a, inte
     if (*info != 0)
     {
         i__2 = -(*info);
-        xerbla_("SGESVD", &i__2);
+        xerbla_("SGESVD", &i__2, (ftnlen)6);
         return 0;
     }
     else if (lquery)

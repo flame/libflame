@@ -336,7 +336,7 @@ int chgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     int claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), clartg_(complex *, complex *, real *, complex *, complex *);
     real safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     complex eshift;
     logical ilschr;
     integer icompq, ilastm, ischur;
@@ -494,7 +494,7 @@ int chgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     {
         i__1 = -(*info);
         AOCL_DTL_TRACE_LOG_EXIT
-        xerbla_("CHGEQZ", &i__1);
+        xerbla_("CHGEQZ", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

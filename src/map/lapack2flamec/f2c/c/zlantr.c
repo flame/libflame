@@ -171,6 +171,7 @@ doublereal zlantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, d
     a -= a_offset;
     --work;
     /* Function Body */
+    value = 0.;
     if (fla_min(*m,*n) == 0)
     {
         value = 0.;

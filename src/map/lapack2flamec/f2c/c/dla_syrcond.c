@@ -152,10 +152,9 @@ doublereal dla_syrcond_(char *uplo, integer *n, doublereal *a, integer *lda, dou
     int dlacn2_(integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *);
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal ainvnm;
     char normin[1];
-    doublereal smlnum;
     extern /* Subroutine */
     int dsytrs_(char *, integer *, integer *, doublereal *, integer *, integer *, doublereal *, integer *, integer *);
     /* -- LAPACK computational routine (version 3.7.0) -- */
@@ -207,7 +206,7 @@ doublereal dla_syrcond_(char *uplo, integer *n, doublereal *a, integer *lda, dou
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DLA_SYRCOND", &i__1);
+        xerbla_("DLA_SYRCOND", &i__1, (ftnlen)11);
         AOCL_DTL_TRACE_LOG_EXIT
         return ret_val;
     }
@@ -349,7 +348,6 @@ doublereal dla_syrcond_(char *uplo, integer *n, doublereal *a, integer *lda, dou
         }
     }
     /* Estimate the norm of inv(op(A)). */
-    smlnum = dlamch_("Safe minimum");
     ainvnm = 0.;
     *(unsigned char *)normin = 'N';
     kase = 0;

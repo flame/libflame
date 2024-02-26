@@ -155,7 +155,7 @@ int stzrzf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
     /* Local variables */
     integer i__, m1, ib, nb, ki, kk, mu, nx, iws, nbmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int slarzb_(char *, char *, char *, char *, integer *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *);
@@ -208,6 +208,7 @@ int stzrzf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
     {
         *info = -4;
     }
+    nb = ilaenv_(&c__1, "SGERQF", " ", m, n, &c_n1, &c_n1);
     if (*info == 0)
     {
         if (*m == 0 || *m == *n)
@@ -218,7 +219,6 @@ int stzrzf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
         else
         {
             /* Determine the block size. */
-            nb = ilaenv_(&c__1, "SGERQF", " ", m, n, &c_n1, &c_n1);
             lwkopt = *m * nb;
             lwkmin = fla_max(1,*m);
         }
@@ -231,7 +231,7 @@ int stzrzf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("STZRZF", &i__1);
+        xerbla_("STZRZF", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

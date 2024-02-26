@@ -1,10 +1,13 @@
 /*
-    Copyright (c) 2021-2022 Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (c) 2021-2023 Advanced Micro Devices, Inc. All rights reserved.
 */
 
 /* dpotrf.f -- translated by f2c and slightly modified */
 
 #include "FLAME.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
 
 /* Table of constant values */
 static integer c__1 = 1;
@@ -20,6 +23,12 @@ static doublereal c_b14 = 1.;
     /* Local variables */
     integer j, jb, nb;
     logical upper;
+
+#ifndef FLA_ENABLE_AOCL_BLAS
+	logical lsame_(char *ca, char *cb, integer a, integer b);
+	int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
+#endif
+	int lapack_dpotf2(char *uplo, integer *n, doublereal *a, integer *lda, integer *info);
 
 /*  DPOTRF computes the Cholesky factorization of a real symmetric */
 /*  positive definite matrix A. */
@@ -72,7 +81,7 @@ static doublereal c_b14 = 1.;
     a -= a_offset;
     #if AOCL_FLA_PROGRESS_H
         AOCL_FLA_PROGRESS_VAR;
-	step_count =0;
+	progress_step_count =0;
       #ifndef FLA_ENABLE_WINDOWS_BUILD
 	if(!aocl_fla_progress_ptr)
             aocl_fla_progress_ptr=aocl_fla_progress;
@@ -80,9 +89,9 @@ static doublereal c_b14 = 1.;
     #endif
     /* Function Body */
     *info = 0;
-    upper = lsame_(uplo, "U");
-    if (! upper && ! lsame_(uplo, "L")) {
-	*info = -1;
+    upper = lsame_(uplo, "U", 1, 1);
+    if (! upper && ! lsame_(uplo, "L", 1, 1)) {
+        *info = -1;
     } else if (*n < 0) {
 	*info = -2;
     } else if (*lda < fla_max(1,*n)) {
@@ -90,7 +99,7 @@ static doublereal c_b14 = 1.;
     }
     if (*info != 0) {
 	i__1 = -(*info);
-	xerbla_("DPOTRF", &i__1);
+	xerbla_("DPOTRF", &i__1, (ftnlen)6);
 	return 0;
     }
 
@@ -128,8 +137,8 @@ static doublereal c_b14 = 1.;
 		i__3 = j - 1;
 		#if AOCL_FLA_PROGRESS_H
 		    if(aocl_fla_progress_ptr){
-                       step_count+=jb;
-                       AOCL_FLA_PROGRESS_FUNC_PTR("DPOTRF",6,&step_count,&thread_id,&total_threads);
+                       progress_step_count+=jb;
+                       AOCL_FLA_PROGRESS_FUNC_PTR("DPOTRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
                     }
                 #endif     
 		dsyrk_("Upper", "Transpose", &jb, &i__3, &c_b13, &a[j *
@@ -172,8 +181,8 @@ static doublereal c_b14 = 1.;
 		i__3 = j - 1;
 		#if AOCL_FLA_PROGRESS_H
 		   if(aocl_fla_progress_ptr){
-                      step_count+=jb;
-                      AOCL_FLA_PROGRESS_FUNC_PTR("DPOTRF",6,&step_count,&thread_id,&total_threads);
+                      progress_step_count+=jb;
+                      AOCL_FLA_PROGRESS_FUNC_PTR("DPOTRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
                    }
                 #endif
 

@@ -519,7 +519,7 @@ int ssysvxx_(char *fact, char *uplo, integer *n, integer * nrhs, real *a, intege
     extern real slamch_(char *);
     logical nofact;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     integer infequ;
     extern /* Subroutine */
@@ -669,7 +669,7 @@ int ssysvxx_(char *fact, char *uplo, integer *n, integer * nrhs, real *a, intege
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSYSVXX", &i__1);
+        xerbla_("SSYSVXX", &i__1, (ftnlen)7);
         return 0;
     }
     if (equil)

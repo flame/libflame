@@ -145,6 +145,7 @@ doublereal zlanhp_(char *norm, char *uplo, integer *n, doublecomplex *ap, double
     --work;
     --ap;
     /* Function Body */
+    value = 0.;
     if (*n == 0)
     {
         value = 0.;

@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2021 Advanced Micro Devices, Inc.  All rights reserved.
+    Copyright (c) 2021-2023 Advanced Micro Devices, Inc. All rights reserved.
     Mar 16, 2021
 */
 
@@ -31,19 +31,11 @@ integer FLA_env_get_var( const char* env, integer fallback )
 
 integer FLASH_get_num_threads( integer fallback )
 {
-    integer omp_threads, fla_threads;
 
-    omp_threads = FLA_env_get_var( "OMP_NUM_THREADS", -1 );
-    fla_threads = FLA_env_get_var( "FLA_NUM_THREADS", -1 );
+    integer fla_threads;
+    extern int fla_thread_get_num_threads(void);
 
-    if( ( omp_threads == -1 ) && ( fla_threads == -1 ) )
-    {
-        fla_threads = fallback;
-    }
-    else if( fla_threads == -1 )
-    {
-        fla_threads = omp_threads;
-    }
+    fla_threads = fla_thread_get_num_threads();
 
     if( fla_threads <= 0 )
     {

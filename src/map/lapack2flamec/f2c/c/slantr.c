@@ -169,6 +169,7 @@ real slantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, real *a
     a -= a_offset;
     --work;
     /* Function Body */
+    value = 0.f;
     if (fla_min(*m,*n) == 0)
     {
         value = 0.f;

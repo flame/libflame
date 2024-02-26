@@ -289,7 +289,7 @@ int dhsein_(char *side, char *eigsrc, char *initv, logical * select, integer *n,
     extern doublereal dlanhs_(char *, integer *, doublereal *, integer *, doublereal *);
     extern logical disnan_(doublereal *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal bignum;
     logical noinit;
     integer ldwork;
@@ -409,7 +409,7 @@ int dhsein_(char *side, char *eigsrc, char *initv, logical * select, integer *n,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DHSEIN", &i__1);
+        xerbla_("DHSEIN", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

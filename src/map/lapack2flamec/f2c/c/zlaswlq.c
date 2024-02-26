@@ -166,7 +166,7 @@ int zlaswlq_(integer *m, integer *n, integer *mb, integer * nb, doublecomplex *a
     /* Local variables */
     integer i__, ii, kk, ctr;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zgelqt_( integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zgelqt_( integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *);
     logical lquery;
     extern /* Subroutine */
     int ztplqt_(integer *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *);
@@ -235,7 +235,7 @@ int zlaswlq_(integer *m, integer *n, integer *mb, integer * nb, doublecomplex *a
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZLASWLQ", &i__1);
+        xerbla_("ZLASWLQ", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

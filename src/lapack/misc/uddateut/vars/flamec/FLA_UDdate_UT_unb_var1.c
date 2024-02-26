@@ -66,9 +66,9 @@ FLA_Error FLA_UDdate_UT_unb_var1( FLA_Obj R,
                       c1,
                       d1, tau11 );
 
-    // / r12t \       / r12t \ 
-    // |  C2  | =  H' |  C2  | 
-    // \  D2  /       \  D2  / 
+    //  ( r12t )        ( r12t ) 
+    // (  C2    ) =  H'(  C2    )
+    //  (  D2  )        (  D2  )
     //
     // where H is formed from tau11, u1 (stored in c1) and v1 (stored in d1).
     FLA_Apply_HUD_UT( FLA_LEFT,

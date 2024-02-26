@@ -22,8 +22,8 @@ int zungtr_check(char *uplo, integer *n, dcomplex *a, integer *lda, dcomplex *ta
     /* Function Body */
     *info = 0;
     lquery = *lwork == -1;
-    upper = lsame_(uplo, "U");
-    if (! upper && ! lsame_(uplo, "L"))
+    upper = lsame_(uplo, "U", 1, 1);
+    if (! upper && ! lsame_(uplo, "L", 1, 1))
     {
         *info = -1;
     }
@@ -71,7 +71,7 @@ int zungtr_check(char *uplo, integer *n, dcomplex *a, integer *lda, dcomplex *ta
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZUNGTR", &i__1);
+        xerbla_("ZUNGTR", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

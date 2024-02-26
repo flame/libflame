@@ -181,7 +181,7 @@ int cgetsqrhrt_(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2
     int cungtsqr_row_(integer *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, integer *);
     integer iinfo;
     extern /* Subroutine */
-    int ccopy_(integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *);
+    int ccopy_(integer *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical lquery;
     extern /* Subroutine */
     int clatsqr_(integer *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, integer *);
@@ -300,7 +300,7 @@ int cgetsqrhrt_(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGETSQRHRT", &i__1);
+        xerbla_("CGETSQRHRT", &i__1, (ftnlen)10);
         return 0;
     }
     else if (lquery)

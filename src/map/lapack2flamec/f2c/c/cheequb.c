@@ -143,7 +143,7 @@ int cheequb_(char *uplo, integer *n, complex *a, integer * lda, real *s, real *s
     real sumsq;
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     extern /* Subroutine */
     int classq_(integer *, complex *, integer *, real *, real *);
@@ -195,7 +195,7 @@ int cheequb_(char *uplo, integer *n, complex *a, integer * lda, real *s, real *s
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHEEQUB", &i__1);
+        xerbla_("CHEEQUB", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

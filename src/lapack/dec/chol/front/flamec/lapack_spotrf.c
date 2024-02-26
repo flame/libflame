@@ -1,8 +1,12 @@
 /*
-    Copyright (c) 2021-2022 Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (c) 2021-2023 Advanced Micro Devices, Inc. All rights reserved.
 */
 
 #include "FLAME.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
+
 /* Table of constant values */
 
 static integer c__1 = 1;
@@ -19,7 +23,11 @@ static real c_b14 = 1.f;
     /* Local variables */
     integer j, jb, nb;
     logical upper;
-
+#ifndef FLA_ENABLE_AOCL_BLAS
+	int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
+	logical lsame_(char *ca, char *cbi, integer a, integer b);
+#endif
+	int lapack_spotf2(char *uplo, integer *n, real *a, integer *lda, integer *info);
 
 /*  SPOTRF computes the Cholesky factorization of a real symmetric */
 /*  positive definite matrix A. */
@@ -70,7 +78,7 @@ static real c_b14 = 1.f;
     a -= a_offset;
     #if AOCL_FLA_PROGRESS_H
         AOCL_FLA_PROGRESS_VAR;
-	step_count=0;
+	progress_step_count=0;
       #ifndef FLA_ENABLE_WINDOWS_BUILD
 	if(!aocl_fla_progress_ptr)
             aocl_fla_progress_ptr=aocl_fla_progress;
@@ -79,8 +87,9 @@ static real c_b14 = 1.f;
     #endif
     /* Function Body */
     *info = 0;
-    upper = lsame_(uplo, "U");
-    if (! upper && ! lsame_(uplo, "L")) {
+    upper = lsame_(uplo, "U", 1, 1);
+
+    if (! upper && ! lsame_(uplo, "L", 1, 1)) {
 	*info = -1;
     } else if (*n < 0) {
 	*info = -2;
@@ -89,7 +98,7 @@ static real c_b14 = 1.f;
     }
     if (*info != 0) {
 	i__1 = -(*info);
-	xerbla_("LAPACK_SPOTRF", &i__1);
+	xerbla_("LAPACK_SPOTRF", &i__1, (ftnlen)13);
 	return 0;
     }
 
@@ -127,8 +136,8 @@ static real c_b14 = 1.f;
 		i__3 = j - 1;
 		#if AOCL_FLA_PROGRESS_H
 		    if(aocl_fla_progress_ptr){
-                	step_count+=jb;
-                	AOCL_FLA_PROGRESS_FUNC_PTR("SPOTRF",6,&step_count,&thread_id,&total_threads);
+                	progress_step_count+=jb;
+                	AOCL_FLA_PROGRESS_FUNC_PTR("SPOTRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
             	    }
         	#endif 
 		ssyrk_("Upper", "Transpose", &jb, &i__3, &c_b13, &a[j *
@@ -172,8 +181,8 @@ static real c_b14 = 1.f;
 		i__3 = j - 1;
 		#if AOCL_FLA_PROGRESS_H
 		    if(aocl_fla_progress_ptr){
-                	step_count+=jb;
-                	AOCL_FLA_PROGRESS_FUNC_PTR("SPOTRF",6,&step_count,&thread_id,&total_threads);
+                	progress_step_count+=jb;
+                	AOCL_FLA_PROGRESS_FUNC_PTR("SPOTRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
                     }
                 #endif
 		ssyrk_("Lower", "No transpose", &jb, &i__3, &c_b13, &a[j +

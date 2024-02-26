@@ -82,6 +82,8 @@ FLA_Error FLA_Sort_bsvd_ext( FLA_Direct direct, FLA_Obj s,
     //                         apply_V, V,
     //                         apply_C, C );
 
+    datatype = FLA_Obj_datatype(U);
+
     // Sort singular values only; quick sort
     if ( apply_U == FALSE && apply_V == FALSE  )
         return FLA_Sort( direct, s );

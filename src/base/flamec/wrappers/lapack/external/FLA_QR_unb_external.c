@@ -12,7 +12,7 @@
 
 FLA_Error FLA_QR_unb_external( FLA_Obj A, FLA_Obj t )
 {
-  int          info = 0;
+  integer      info = 0;
 #ifdef FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
   FLA_Datatype datatype;
   integer          m_A, n_A, cs_A;

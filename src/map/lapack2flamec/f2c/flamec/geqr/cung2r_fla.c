@@ -110,7 +110,7 @@ int cung2r_fla(integer *m, integer *n, integer *k, complex *a, integer *lda, com
     /* Local variables */
     integer i__, j, l;
     extern /* Subroutine */
-    int cscal_(integer *, complex *, complex *, integer *), clarf_(char *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *), xerbla_(char *, integer *);
+    int cscal_(integer *, complex *, complex *, integer *), clarf_(char *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -157,7 +157,7 @@ int cung2r_fla(integer *m, integer *n, integer *k, complex *a, integer *lda, com
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CUNG2R", &i__1);
+        xerbla_("CUNG2R", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

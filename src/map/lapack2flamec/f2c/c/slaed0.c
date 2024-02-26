@@ -185,7 +185,7 @@ int slaed0_(integer *icompq, integer *qsiz, integer *n, real *d__, real *e, real
     int slaed1_(integer *, real *, real *, integer *, integer *, real *, integer *, real *, integer *, integer *), slaed7_(integer *, integer *, integer *, integer *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, real *, integer *, integer *, integer *, integer *, integer *, real *, real *, integer *, integer *);
     integer igivcl;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer igivnm, submat;
     extern /* Subroutine */
@@ -227,6 +227,13 @@ int slaed0_(integer *icompq, integer *qsiz, integer *n, real *d__, real *e, real
     --iwork;
     /* Function Body */
     *info = 0;
+    iprmpt = 0;
+    igivpt = 0;
+    igivcl = 0;
+    iqptr = 0;
+    iwrem = 0;
+    iperm = 0;
+    iq = 0;
     if (*icompq < 0 || *icompq > 2)
     {
         *info = -1;
@@ -250,7 +257,7 @@ int slaed0_(integer *icompq, integer *qsiz, integer *n, real *d__, real *e, real
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLAED0", &i__1);
+        xerbla_("SLAED0", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

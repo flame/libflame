@@ -354,7 +354,7 @@ int dpbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, doub
     int dpbcon_(char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, integer *), dlaqsb_(char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, char *);
     logical nofact;
     extern /* Subroutine */
-    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(char *, integer *), dpbequ_(char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *);
+    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), dpbequ_(char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *);
     doublereal bignum;
     extern /* Subroutine */
     int dpbrfs_(char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, integer *), dpbtrf_(char *, integer *, integer *, doublereal *, integer *, integer *);
@@ -405,6 +405,8 @@ int dpbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, doub
     nofact = lsame_(fact, "N");
     equil = lsame_(fact, "E");
     upper = lsame_(uplo, "U");
+    smlnum = 0.;
+    bignum = 0.;
     if (nofact || equil)
     {
         *(unsigned char *)equed = 'N';
@@ -498,7 +500,7 @@ int dpbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, doub
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DPBSVX", &i__1);
+        xerbla_("DPBSVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -289,7 +289,7 @@ int stgsy2_(char *trans, integer *ijob, integer *m, integer * n, real *a, intege
     int sscal_(integer *, real *, real *, integer *), sgemm_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), sgemv_(char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), scopy_(integer *, real *, integer *, real *, integer *), saxpy_(integer *, real *, real *, integer *, real *, integer *), sgesc2_(integer *, real *, integer *, real *, integer *, integer *, real *), sgetc2_(integer *, real *, integer *, integer *, integer *, integer *);
     real scaloc;
     extern /* Subroutine */
-    int slatdf_(integer *, integer *, real *, integer *, real *, real *, real *, integer *, integer *), xerbla_(char *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
+    int slatdf_(integer *, integer *, real *, integer *, real *, real *, real *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
     logical notran;
     /* -- LAPACK auxiliary routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -389,7 +389,7 @@ int stgsy2_(char *trans, integer *ijob, integer *m, integer * n, real *a, intege
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("STGSY2", &i__1);
+        xerbla_("STGSY2", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

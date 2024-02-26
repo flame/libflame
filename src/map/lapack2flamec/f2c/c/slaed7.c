@@ -263,7 +263,7 @@ int slaed7_(integer *icompq, integer *n, integer *qsiz, integer *tlvls, integer 
     int slaed8_(integer *, integer *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, real *, real *, real *, integer *, real *, integer *, integer *, integer *, real *, integer *, integer *, integer *), slaed9_( integer *, integer *, integer *, integer *, real *, real *, integer *, real *, real *, real *, real *, integer *, integer *), slaeda_(integer *, integer *, integer *, integer *, integer *, integer *, integer *, integer *, real *, real *, integer *, real *, real *, integer *);
     integer idlmda;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), slamrg_( integer *, integer *, real *, integer *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), slamrg_( integer *, integer *, real *, integer *, integer *, integer *);
     integer coltyp;
     /* -- LAPACK computational routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -324,7 +324,7 @@ int slaed7_(integer *icompq, integer *n, integer *qsiz, integer *tlvls, integer 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLAED7", &i__1);
+        xerbla_("SLAED7", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

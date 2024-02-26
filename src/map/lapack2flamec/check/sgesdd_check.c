@@ -36,11 +36,11 @@ int sgesdd_check(char *jobz, integer *m, integer *n, real *a, integer *lda, real
     /* Function Body */
     *info = 0;
     minmn = fla_min(*m,*n);
-    wntqa = lsame_(jobz, "A");
-    wntqs = lsame_(jobz, "S");
+    wntqa = lsame_(jobz, "A", 1, 1);
+    wntqs = lsame_(jobz, "S", 1, 1);
     wntqas = wntqa || wntqs;
-    wntqo = lsame_(jobz, "O");
-    wntqn = lsame_(jobz, "N");
+    wntqo = lsame_(jobz, "O", 1, 1);
+    wntqn = lsame_(jobz, "N", 1, 1);
     lquery = *lwork == -1;
     if (! (wntqa || wntqs || wntqo || wntqn))
     {
@@ -438,7 +438,7 @@ int sgesdd_check(char *jobz, integer *m, integer *n, real *a, integer *lda, real
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGESDD", &i__1);
+        xerbla_("SGESDD", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

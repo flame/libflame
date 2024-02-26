@@ -201,7 +201,7 @@ int zsprfs_(char *uplo, integer *n, integer *nrhs, doublecomplex *ap, doublecomp
     extern doublereal dlamch_(char *);
     doublereal safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal lstres;
     extern /* Subroutine */
     int zsptrs_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *);
@@ -272,7 +272,7 @@ int zsprfs_(char *uplo, integer *n, integer *nrhs, doublecomplex *ap, doublecomp
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZSPRFS", &i__1);
+        xerbla_("ZSPRFS", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

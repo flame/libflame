@@ -422,7 +422,7 @@ int sla_syrfsx_extended_(integer *prec_type__, char *uplo, integer *n, integer *
     int saxpy_(integer *, real *, real *, integer *, real *, integer *), ssymv_(char *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real normdx;
     extern /* Subroutine */
     int ssytrs_(char *, integer *, integer *, real *, integer *, integer *, real *, integer *, integer *);
@@ -509,7 +509,7 @@ int sla_syrfsx_extended_(integer *prec_type__, char *uplo, integer *n, integer *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLA_SYRFSX_EXTENDED", &i__1);
+        xerbla_("SLA_SYRFSX_EXTENDED", &i__1, (ftnlen)19);
         return 0;
     }
     eps = slamch_("Epsilon");

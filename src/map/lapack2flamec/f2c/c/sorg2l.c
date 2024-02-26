@@ -116,7 +116,7 @@ int sorg2l_(integer *m, integer *n, integer *k, real *a, integer *lda, real *tau
     /* Local variables */
     integer i__, j, l, ii;
     extern /* Subroutine */
-    int sscal_(integer *, real *, real *, integer *), slarf_(char *, integer *, integer *, real *, integer *, real *, real *, integer *, real *), xerbla_(char *, integer *);
+    int sscal_(integer *, real *, real *, integer *), slarf_(char *, integer *, integer *, real *, integer *, real *, real *, integer *, real *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -163,7 +163,7 @@ int sorg2l_(integer *m, integer *n, integer *k, real *a, integer *lda, real *tau
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SORG2L", &i__1);
+        xerbla_("SORG2L", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

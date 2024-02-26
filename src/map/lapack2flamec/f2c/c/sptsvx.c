@@ -232,7 +232,7 @@ int sptsvx_(char *fact, integer *n, integer *nrhs, real *d__, real *e, real *df,
     extern real slamch_(char *);
     logical nofact;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), slacpy_( char *, integer *, integer *, real *, integer *, real *, integer * );
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), slacpy_( char *, integer *, integer *, real *, integer *, real *, integer * );
     extern real slanst_(char *, integer *, real *, real *);
     extern /* Subroutine */
     int sptcon_(integer *, real *, real *, real *, real *, real *, integer *), sptrfs_(integer *, integer *, real *, real *, real *, real *, real *, integer *, real *, integer *, real *, real *, real *, integer *), spttrf_(integer *, real *, real *, integer *), spttrs_(integer *, integer *, real *, real *, real *, integer *, integer *);
@@ -297,7 +297,7 @@ int sptsvx_(char *fact, integer *n, integer *nrhs, real *d__, real *e, real *df,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SPTSVX", &i__1);
+        xerbla_("SPTSVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

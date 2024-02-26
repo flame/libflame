@@ -217,6 +217,7 @@ int dlahr2_(integer *n, integer *k, integer *nb, doublereal * a, integer *lda, d
     y_offset = 1 + y_dim1;
     y -= y_offset;
     /* Function Body */
+    ei = 0;
     if (*n <= 1)
     {
         AOCL_DTL_TRACE_LOG_EXIT

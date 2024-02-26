@@ -354,7 +354,7 @@ int cheevx_2stage_(char *jobz, char *range, char *uplo, integer *n, complex *a, 
     int csscal_(integer *, real *, complex *, integer *), clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *);
     real safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real abstll, bignum;
     integer indiwk, indisp, indtau;
     extern /* Subroutine */
@@ -483,7 +483,7 @@ int cheevx_2stage_(char *jobz, char *range, char *uplo, integer *n, complex *a, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHEEVX_2STAGE", &i__1);
+        xerbla_("CHEEVX_2STAGE", &i__1, (ftnlen)13);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

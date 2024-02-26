@@ -32,7 +32,7 @@ int dgebd2_check(integer *m, integer *n, double *a, integer * lda, double *d__, 
     if (*info < 0)
     {
         i__1 = -(*info);
-        xerbla_("DGEBD2", &i__1);
+        xerbla_("DGEBD2", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     return LAPACK_SUCCESS;

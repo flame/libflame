@@ -10,7 +10,7 @@ int sger_(integer *m, integer *n, real *alpha, real *x, integer *incx, real *y, 
     real temp;
     integer i__, j, ix, jy, kx;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
     /* .. */
@@ -103,7 +103,7 @@ int sger_(integer *m, integer *n, real *alpha, real *x, integer *incx, real *y, 
     }
     if (info != 0)
     {
-        xerbla_("SGER ", &info);
+        xerbla_("SGER ", &info, (ftnlen)5);
         return 0;
     }
     /* Quick return if possible. */

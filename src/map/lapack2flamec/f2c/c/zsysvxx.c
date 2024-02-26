@@ -519,7 +519,7 @@ int zsysvxx_(char *fact, char *uplo, integer *n, integer * nrhs, doublecomplex *
     extern doublereal dlamch_(char *);
     logical nofact;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal bignum;
     integer infequ;
     extern /* Subroutine */
@@ -669,7 +669,7 @@ int zsysvxx_(char *fact, char *uplo, integer *n, integer * nrhs, doublecomplex *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZSYSVXX", &i__1);
+        xerbla_("ZSYSVXX", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

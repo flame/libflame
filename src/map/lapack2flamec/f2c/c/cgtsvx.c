@@ -305,7 +305,7 @@ int cgtsvx_(char *fact, char *trans, integer *n, integer * nrhs, complex *dl, co
     extern real slamch_(char *), clangt_(char *, integer *, complex *, complex *, complex *);
     logical nofact;
     extern /* Subroutine */
-    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), cgtcon_(char *, integer *, complex *, complex *, complex *, complex *, integer *, real *, real *, complex *, integer *), xerbla_(char *, integer *), cgtrfs_(char *, integer *, integer *, complex *, complex *, complex *, complex *, complex *, complex *, complex *, integer *, complex *, integer *, complex *, integer *, real *, real *, complex *, real *, integer *), cgttrf_(integer *, complex *, complex *, complex *, complex *, integer *, integer *);
+    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), cgtcon_(char *, integer *, complex *, complex *, complex *, complex *, integer *, real *, real *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), cgtrfs_(char *, integer *, integer *, complex *, complex *, complex *, complex *, complex *, complex *, complex *, integer *, complex *, integer *, complex *, integer *, real *, real *, complex *, real *, integer *), cgttrf_(integer *, complex *, complex *, complex *, complex *, integer *, integer *);
     logical notran;
     extern /* Subroutine */
     int cgttrs_(char *, integer *, integer *, complex *, complex *, complex *, complex *, integer *, complex *, integer *, integer *);
@@ -379,7 +379,7 @@ int cgtsvx_(char *fact, char *trans, integer *n, integer * nrhs, complex *dl, co
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGTSVX", &i__1);
+        xerbla_("CGTSVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

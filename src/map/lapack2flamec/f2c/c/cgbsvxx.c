@@ -589,7 +589,7 @@ int cgbsvxx_(char *fact, char *trans, integer *n, integer * kl, integer *ku, int
     int cgbtrf_(integer *, integer *, integer *, integer *, complex *, integer *, integer *, integer *);
     logical nofact;
     extern /* Subroutine */
-    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *);
+    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     extern /* Subroutine */
     int cgbtrs_(char *, integer *, integer *, integer *, integer *, complex *, integer *, integer *, complex *, integer *, integer *);
@@ -787,7 +787,7 @@ int cgbsvxx_(char *fact, char *trans, integer *n, integer * kl, integer *ku, int
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGBSVXX", &i__1);
+        xerbla_("CGBSVXX", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -6130,6 +6130,8 @@ fi
 $as_echo "#define _GNU_SOURCE 1" >>confdefs.h
 
 		;;
+				clang)
+		;;
 				icc)
 		;;
 				pathcc)
@@ -6155,13 +6157,13 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} language flags... "
 
 		case ${CC_VENDOR} in
 				gcc)
-			fla_c_lang_flags='-std=c99 -Wall -Wno-unused-function -Wno-error=implicit-function-declaration -Wno-parentheses -Wfatal-errors'
+			fla_c_lang_flags='-std=c11'
 		;;
 				clang)
-			fla_c_lang_flags='-Wall -Wno-unused-function -Wno-error=implicit-function-declaration -Wno-error=incompatible-function-pointer-types -Wno-parentheses -Wfatal-errors'
+			fla_c_lang_flags='-std=c11'
 		;;
 				icc)
-			fla_c_lang_flags='-std=c99'
+			fla_c_lang_flags='-std=c11'
 		;;
 				pathcc)
 			fla_c_lang_flags='-std=c99'
@@ -6176,7 +6178,7 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} language flags... "
 			fla_c_lang_flags='-qlanglvl=stdc99 -qstrict -qlargepage -qthreaded'
 		;;
 				cc)
-			fla_c_lang_flags='-std=c99'
+			fla_c_lang_flags='-std=c11'
 		;;
 				*)
 			fla_c_lang_flags=''
@@ -7380,21 +7382,21 @@ $as_echo_n "checking whether to enable compiler warnings... " >&6; }
 if test "${enable_warnings+set}" = set; then :
   enableval=$enable_warnings;
 
-				if test "$enableval" = "no" ; then
+		if test "$enableval" = "no" ; then
 
-						fla_enable_compiler_warnings=no
+				fla_enable_compiler_warnings=no
 
 		elif test "$enableval" = "yes" ; then
 
-						fla_enable_compiler_warnings=yes
+				fla_enable_compiler_warnings=yes
 		else
 
-												as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_WARNINGS!" "$LINENO" 5
+				as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_WARNINGS!" "$LINENO" 5
 		fi
 
 else
 
-						fla_enable_compiler_warnings=yes
+				fla_enable_compiler_warnings=yes
 
 
 fi
@@ -7423,9 +7425,12 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} warning flags... " 
 
 	if test "$fla_enable_compiler_warnings" == "yes" ; then
 
-				case ${CC_VENDOR} in
+		case ${CC_VENDOR} in
 						gcc)
-				fla_c_warning_flags='-Wall -Wno-comment'
+				fla_c_warning_flags='-Wall -Wno-comment -Wno-unused-function -Wno-error=implicit-function-declaration -Wno-parentheses -Wfatal-errors'
+			;;
+						clang)
+				fla_c_warning_flags='-Wall -Wno-comment -Wno-unused-function -Wno-error=implicit-function-declaration -Wno-error=incompatible-function-pointer-types -Wno-parentheses -Wfatal-errors'
 			;;
 						icc)
 				fla_c_warning_flags='-Wall -wd869,981,1418,1419,1572'
@@ -7451,9 +7456,12 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} warning flags... " 
 		esac
 	else
 
-				case ${CC_VENDOR} in
+		case ${CC_VENDOR} in
 						gcc)
-				fla_c_warning_flags='-w'
+				fla_c_warning_flags='-w -Wno-error=implicit-function-declaration'
+			;;
+						clang)
+				fla_c_warning_flags='-w -Wno-error=implicit-function-declaration'
 			;;
 						icc)
 				fla_c_warning_flags='-w'
@@ -7544,6 +7552,9 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} debug flags... " >&
 						gcc)
 				fla_c_debug_flags='-g'
 			;;
+						clang)
+				fla_c_debug_flags='-g'
+			;;
 						icc)
 				fla_c_debug_flags='-g'
 			;;
@@ -7571,6 +7582,9 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} debug flags... " >&
 				case ${CC_VENDOR} in
 						gcc)
 				fla_c_debug_flags='-g0'
+			;;
+						clang)
+				fla_c_debug_flags=''
 			;;
 						icc)
 				fla_c_debug_flags=''
@@ -7662,6 +7676,9 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} profiling flags... 
 						gcc)
 				fla_c_prof_flags='-pg'
 			;;
+						clang)
+				fla_c_prof_flags='-pg'
+			;;
 						icc)
 				fla_c_prof_flags='-p'
 			;;
@@ -7688,6 +7705,9 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} profiling flags... 
 
 				case ${CC_VENDOR} in
 						gcc)
+				fla_c_prof_flags=''
+			;;
+						clang)
 				fla_c_prof_flags=''
 			;;
 						icc)

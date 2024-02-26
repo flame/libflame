@@ -184,7 +184,7 @@ int zhptrf_(char *uplo, integer *n, doublecomplex *ap, integer *ipiv, integer *i
     extern doublereal dlapy2_(doublereal *, doublereal *);
     doublereal absakk;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zdscal_( integer *, doublereal *, doublecomplex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zdscal_( integer *, doublereal *, doublecomplex *, integer *);
     doublereal colmax;
     extern integer izamax_(integer *, doublecomplex *, integer *);
     doublereal rowmax;
@@ -219,6 +219,8 @@ int zhptrf_(char *uplo, integer *n, doublecomplex *ap, integer *ipiv, integer *i
     /* Function Body */
     *info = 0;
     upper = lsame_(uplo, "U");
+    imax = 0;
+    jmax = 0;
     if (! upper && ! lsame_(uplo, "L"))
     {
         *info = -1;
@@ -230,7 +232,7 @@ int zhptrf_(char *uplo, integer *n, doublecomplex *ap, integer *ipiv, integer *i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHPTRF", &i__1);
+        xerbla_("ZHPTRF", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

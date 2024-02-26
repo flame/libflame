@@ -13,7 +13,6 @@ static complex c_b2 =
 ;
 static integer c__1 = 1;
 static integer c_n1 = -1;
-static integer c__2 = 2;
 /* > \brief \b CTREVC3 */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
@@ -268,8 +267,7 @@ int ctrevc3_(char *side, char *howmny, logical *select, integer *n, complex *t, 
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */
-    address a__1[2];
-    integer t_dim1, t_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1, i__2[2], i__3, i__4, i__5, i__6;
+    integer t_dim1, t_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1, i__3, i__4, i__5, i__6;
     real r__1, r__2, r__3;
     complex q__1, q__2;
     char ch__1[2];
@@ -294,7 +292,7 @@ int ctrevc3_(char *side, char *howmny, logical *select, integer *n, complex *t, 
     extern integer icamax_(integer *, complex *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int csscal_(integer *, real *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_( char *, integer *);
+    int csscal_(integer *, real *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int clatrs_(char *, char *, char *, char *, integer *, complex *, integer *, complex *, real *, real *, integer *);
@@ -421,7 +419,7 @@ int ctrevc3_(char *side, char *howmny, logical *select, integer *n, complex *t, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTREVC3", &i__1);
+        xerbla_("CTREVC3", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -10,22 +10,28 @@ LINKER         := $(CC)
 RM_RF          := rm -rf
 OMP_LIB        := -fopenmp
 CPPFLAGS       :=
-CFLAGS         := -O2 -Wall -Wno-comment ${OMP_LIB}
-LDFLAGS        := -lm -lpthread $(OMP_LIB)
+CFLAGS         := -std=c11 -D_GNU_SOURCE -O2 -Wall -Wno-comment ${OMP_LIB}
+LDFLAGS        := -lstdc++ -lm -lpthread $(OMP_LIB)
+
+#
+# --- LIBFLAME \ LAPACK library ------------------------------------------------
+#
+LIB_PATH          := ../../lib/x86_64-unknown-linux-gnu/
+LIBFLAME          := $(LIB_PATH)/libflame.a
+LAPACK_INC_PATH   := ../../include/x86_64-unknown-linux-gnu/
 
 #
 # --- BLAS library -------------------------------------------------------------
 #
 # A BLAS library must be given in order to run the libflame test suite.
-LIBBLAS        :=
+LIBBLAS           :=
 BLAS_HEADER_PATH  :=
 
 #
-# --- LIBFLAME library ---------------------------------------------------------
+# ----- AOCL-Utils library path
 #
-LIB_PATH          := ../../lib/x86_64-unknown-linux-gnu/
-LIBFLAME          := $(LIB_PATH)/libflame.a
-LAPACK_INC_PATH   := ../../include/x86_64-unknown-linux-gnu/
+LIBAOCLUTILS_LIBRARY_PATH := 
+
 #
 # --- Uncomment the four lines below and set MKLROOT & LDFLAGS -----------------
 #     appropriately to link to MKL libs
@@ -36,7 +42,7 @@ LAPACK_INC_PATH   := ../../include/x86_64-unknown-linux-gnu/
 #LDFLAGS        := -Wl,--start-group ${MKLROOT}/intel64/libmkl_intel_lp64.a \
                    ${MKLROOT}/intel64/libmkl_sequential.a \
                    ${MKLROOT}/intel64/libmkl_core.a -Wl,--end-group \
-                   -lpthread -lm -fopenmp -ldl
+                   -lpthread -lm -fopenmp -ldl -lstdc++
 
 #
 # --- ILP64 --- Set to 1 to enable ILP64 ---------------------------------------
@@ -111,7 +117,7 @@ $(TEST_OBJ_PATH)/%.o: $(TEST_SRC_PATH)/%.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
 test_$(FNAME): $(TEST_VALIDATE_OBJS) $(TEST_OBJS)
-	$(LINKER) $(TEST_VALIDATE_OBJS) $(TEST_OBJS) $(LIBFLAME) $(LIBBLAS) \
+	$(LINKER) $(TEST_VALIDATE_OBJS) $(TEST_OBJS) $(LIBFLAME) $(LIBBLAS) $(LIBAOCLUTILS_LIBRARY_PATH) \
 	$(LDFLAGS) -o $(TEST_BIN)
 
 clean:

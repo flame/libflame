@@ -18,6 +18,8 @@ void validate_geqp3(integer m_A, integer n_A,
     double* residual,
     integer* info)
 {
+    if(m_A == 0 || n_A == 0)
+      return;
     void *Q = NULL, *R = NULL, *work = NULL;
     integer min_A;
     integer lwork = -1, FLA_TRUE = 1;

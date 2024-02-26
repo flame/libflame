@@ -217,7 +217,7 @@ int sggqrf_(integer *n, integer *m, integer *p, real *a, integer *lda, real *tau
     /* Local variables */
     integer nb, nb1, nb2, nb3, lopt;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int sgeqrf_(integer *, integer *, real *, integer *, real *, real *, integer *, integer *), sgerqf_(integer *, integer *, real *, integer *, real *, real *, integer *, integer * );
@@ -299,7 +299,7 @@ int sggqrf_(integer *n, integer *m, integer *p, real *a, integer *lda, real *tau
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGGQRF", &i__1);
+        xerbla_("SGGQRF", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

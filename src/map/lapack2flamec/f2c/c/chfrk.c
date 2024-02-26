@@ -180,7 +180,7 @@ int chfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *
     logical lower;
     complex calpha;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical nisodd, notrans;
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -249,7 +249,7 @@ int chfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *
     if (info != 0)
     {
         i__1 = -info;
-        xerbla_("CHFRK ", &i__1);
+        xerbla_("CHFRK ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

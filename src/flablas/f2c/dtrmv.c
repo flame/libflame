@@ -12,7 +12,7 @@ int dtrmv_(char *uplo, char *trans, char *diag, integer *n, doublereal *a, integ
     extern logical lsame_(char *, char *);
     integer ix, jx, kx;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical nounit;
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
@@ -122,7 +122,7 @@ int dtrmv_(char *uplo, char *trans, char *diag, integer *n, doublereal *a, integ
     }
     if (info != 0)
     {
-        xerbla_("DTRMV ", &info);
+        xerbla_("DTRMV ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

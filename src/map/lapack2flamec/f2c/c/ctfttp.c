@@ -216,12 +216,12 @@ int ctfttp_(char *transr, char *uplo, integer *n, complex * arf, complex *ap, in
     /* Builtin functions */
     void r_cnjg(complex *, complex *);
     /* Local variables */
-    integer i__, j, k, n1, n2, ij, jp, js, nt, lda, ijp;
+    integer i__, j, k, n1, n2, ij, jp, js, lda, ijp;
     logical normaltransr;
     extern logical lsame_(char *, char *);
     logical lower;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical nisodd;
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -264,7 +264,7 @@ int ctfttp_(char *transr, char *uplo, integer *n, complex * arf, complex *ap, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTFTTP", &i__1);
+        xerbla_("CTFTTP", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
@@ -290,8 +290,6 @@ int ctfttp_(char *transr, char *uplo, integer *n, complex * arf, complex *ap, in
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
-    /* Size of array ARF(0:NT-1) */
-    nt = *n * (*n + 1) / 2;
     /* Set N1 and N2 depending on LOWER */
     if (lower)
     {

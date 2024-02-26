@@ -142,7 +142,7 @@ int cgecon_(char *norm, integer *n, complex *a, integer *lda, real *anorm, real 
     extern integer icamax_(integer *, complex *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real ainvnm;
     extern /* Subroutine */
     int clatrs_(char *, char *, char *, char *, integer *, complex *, integer *, complex *, real *, real *, integer *), csrscl_(integer *, real *, complex *, integer *);
@@ -204,7 +204,7 @@ int cgecon_(char *norm, integer *n, complex *a, integer *lda, real *anorm, real 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGECON", &i__1);
+        xerbla_("CGECON", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

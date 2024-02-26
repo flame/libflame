@@ -97,7 +97,7 @@ int slasrt_(char *id, integer *n, real *d__, integer *info)
     real dmnmx;
     integer start;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer stkpnt;
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -144,7 +144,7 @@ int slasrt_(char *id, integer *n, real *d__, integer *info)
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLASRT", &i__1);
+        xerbla_("SLASRT", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

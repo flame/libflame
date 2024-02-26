@@ -356,7 +356,7 @@ int spbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, real
     extern real slamch_(char *);
     logical nofact;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     extern real slansb_(char *, char *, integer *, integer *, real *, integer *, real *);
     extern /* Subroutine */
@@ -410,6 +410,8 @@ int spbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, real
     nofact = lsame_(fact, "N");
     equil = lsame_(fact, "E");
     upper = lsame_(uplo, "U");
+    smlnum = 0.f;
+    bignum = 0.f;
     if (nofact || equil)
     {
         *(unsigned char *)equed = 'N';
@@ -503,7 +505,7 @@ int spbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, real
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SPBSVX", &i__1);
+        xerbla_("SPBSVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

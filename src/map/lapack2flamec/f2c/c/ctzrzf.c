@@ -159,7 +159,7 @@ int ctzrzf_(integer *m, integer *n, complex *a, integer *lda, complex *tau, comp
     /* Local variables */
     integer i__, m1, ib, nb, ki, kk, mu, nx, iws, nbmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), clarzb_( char *, char *, char *, char *, integer *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), clarzb_( char *, char *, char *, char *, integer *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int clarzt_(char *, char *, integer *, integer *, complex *, integer *, complex *, complex *, integer *), clatrz_(integer *, integer *, integer *, complex *, integer *, complex *, complex *);
@@ -194,6 +194,7 @@ int ctzrzf_(integer *m, integer *n, complex *a, integer *lda, complex *tau, comp
     --work;
     /* Function Body */
     *info = 0;
+    nb = 0;
     lquery = *lwork == -1;
     if (*m < 0)
     {
@@ -231,7 +232,7 @@ int ctzrzf_(integer *m, integer *n, complex *a, integer *lda, complex *tau, comp
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTZRZF", &i__1);
+        xerbla_("CTZRZF", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

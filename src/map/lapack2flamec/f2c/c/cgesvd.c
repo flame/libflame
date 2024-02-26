@@ -13,7 +13,6 @@ static complex c_b2 =
 ;
 static integer c__6 = 6;
 static integer c__0 = 0;
-static integer c__2 = 2;
 static integer c_n1 = -1;
 static integer c__1 = 1;
 /* > \brief <b> CGESVD computes the singular value decomposition (SVD) for GE matrices</b> */
@@ -244,8 +243,7 @@ int cgesvd_(char *jobu, char *jobvt, integer *m, integer *n, complex *a, integer
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */
-    address a__1[2];
-    integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1[2], i__2, i__3, i__4;
+    integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__2, i__3, i__4;
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */
@@ -271,7 +269,7 @@ int cgesvd_(char *jobu, char *jobvt, integer *m, integer *n, complex *a, integer
     int cgelqf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *), clascl_( char *, integer *, integer *, real *, real *, integer *, integer *, complex *, integer *, integer *), cgeqrf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), cbdsqr_(char *, integer *, integer *, integer *, integer *, real *, real *, complex *, integer *, complex *, integer *, complex *, integer *, real *, integer *), xerbla_(char *, integer *), cungbr_(char *, integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *);
+    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), cbdsqr_(char *, integer *, integer *, integer *, integer *, real *, real *, complex *, integer *, complex *, integer *, complex *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), cungbr_(char *, integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *);
     real bignum;
     extern /* Subroutine */
     int slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *);
@@ -333,6 +331,8 @@ int cgesvd_(char *jobu, char *jobvt, integer *m, integer *n, complex *a, integer
     wntvo = lsame_(jobvt, "O");
     wntvn = lsame_(jobvt, "N");
     lquery = *lwork == -1;
+    mnthr = 0;
+    wrkbl = 0;
     if (! (wntua || wntus || wntuo || wntun))
     {
         *info = -1;
@@ -896,7 +896,7 @@ int cgesvd_(char *jobu, char *jobvt, integer *m, integer *n, complex *a, integer
     if (*info != 0)
     {
         i__2 = -(*info);
-        xerbla_("CGESVD", &i__2);
+        xerbla_("CGESVD", &i__2, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

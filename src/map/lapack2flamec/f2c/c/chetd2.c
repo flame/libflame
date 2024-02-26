@@ -191,7 +191,7 @@ int chetd2_(char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e
     int chemv_(char *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer * ), caxpy_(integer *, complex *, complex *, integer *, complex *, integer *);
     logical upper;
     extern /* Subroutine */
-    int clarfg_(integer *, complex *, complex *, integer *, complex *), xerbla_(char *, integer *);
+    int clarfg_(integer *, complex *, complex *, integer *, complex *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -237,7 +237,7 @@ int chetd2_(char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHETD2", &i__1);
+        xerbla_("CHETD2", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

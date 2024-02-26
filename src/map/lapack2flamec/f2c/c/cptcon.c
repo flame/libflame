@@ -127,7 +127,7 @@ int cptcon_(integer *n, real *d__, complex *e, real *anorm, real *rcond, real *r
     /* Local variables */
     integer i__, ix;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer isamax_(integer *, real *, integer *);
     real ainvnm;
     /* -- LAPACK computational routine (version 3.4.2) -- */
@@ -168,7 +168,7 @@ int cptcon_(integer *n, real *d__, complex *e, real *anorm, real *rcond, real *r
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CPTCON", &i__1);
+        xerbla_("CPTCON", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

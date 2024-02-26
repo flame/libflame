@@ -228,7 +228,7 @@ int dbdsdc_(char *uplo, char *compq, integer *n, doublereal * d__, doublereal *e
     int dlasda_(integer *, integer *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, integer *, integer *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, integer *), dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), dlasdq_(char *, integer *, integer *, integer *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), dlartg_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer givcol;
     extern doublereal dlanst_(char *, integer *, doublereal *, doublereal *);
     integer icompq;
@@ -274,6 +274,15 @@ int dbdsdc_(char *uplo, char *compq, integer *n, doublereal * d__, doublereal *e
     /* Function Body */
     *info = 0;
     iuplo = 0;
+    givnum = 0;
+    givcol = 0;
+    poles = 0;
+    difr = 0;
+    difl = 0;
+    ivt = 0;
+    is = 0;
+    ic = 0;
+    z__ = 0;
     if (lsame_(uplo, "U"))
     {
         iuplo = 1;
@@ -321,7 +330,7 @@ int dbdsdc_(char *uplo, char *compq, integer *n, doublereal * d__, doublereal *e
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DBDSDC", &i__1);
+        xerbla_("DBDSDC", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

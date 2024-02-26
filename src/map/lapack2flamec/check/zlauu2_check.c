@@ -15,8 +15,8 @@ int zlauu2_check(char *uplo, integer *n, dcomplex *a, integer *lda, integer *inf
     a -= a_offset;
     /* Function Body */
     *info = 0;
-    upper = lsame_(uplo, "U");
-    if (! upper && ! lsame_(uplo, "L"))
+    upper = lsame_(uplo, "U", 1, 1);
+    if (! upper && ! lsame_(uplo, "L", 1, 1))
     {
         *info = -1;
     }
@@ -31,7 +31,7 @@ int zlauu2_check(char *uplo, integer *n, dcomplex *a, integer *lda, integer *inf
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZLAUU2", &i__1);
+        xerbla_("ZLAUU2", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */

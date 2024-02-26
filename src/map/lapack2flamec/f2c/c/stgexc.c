@@ -226,7 +226,7 @@ int stgexc_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, r
     /* Local variables */
     integer nbf, nbl, here, lwmin;
     extern /* Subroutine */
-    int stgex2_(logical *, logical *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *, integer *, integer *, real *, integer *, integer *), xerbla_(char *, integer *);
+    int stgex2_(logical *, logical *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *, integer *, integer *, real *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer nbnext;
     logical lquery;
     /* -- LAPACK computational routine (version 3.4.0) -- */
@@ -312,7 +312,7 @@ int stgexc_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, r
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("STGEXC", &i__1);
+        xerbla_("STGEXC", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -141,6 +141,7 @@ doublereal dlansp_(char *norm, char *uplo, integer *n, doublereal *ap, doublerea
     --work;
     --ap;
     /* Function Body */
+    value = 0.;
     if (*n == 0)
     {
         value = 0.;

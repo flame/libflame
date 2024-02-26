@@ -34,11 +34,11 @@ int cgesdd_check(char *jobz, integer *m, integer *n, scomplex *a, integer *lda, 
     minmn = fla_min(*m,*n);
     mnthr1 = (integer) (minmn * 17.f / 9.f);
     mnthr2 = (integer) (minmn * 5.f / 3.f);
-    wntqa = lsame_(jobz, "A");
-    wntqs = lsame_(jobz, "S");
+    wntqa = lsame_(jobz, "A", 1, 1);
+    wntqs = lsame_(jobz, "S", 1, 1);
     wntqas = wntqa || wntqs;
-    wntqo = lsame_(jobz, "O");
-    wntqn = lsame_(jobz, "N");
+    wntqo = lsame_(jobz, "O", 1, 1);
+    wntqn = lsame_(jobz, "N", 1, 1);
     minwrk = 1;
     maxwrk = 1;
     if (! (wntqa || wntqs || wntqo || wntqn))
@@ -437,7 +437,7 @@ int cgesdd_check(char *jobz, integer *m, integer *n, scomplex *a, integer *lda, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGESDD", &i__1);
+        xerbla_("CGESDD", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     if (*lwork == -1)

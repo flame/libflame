@@ -13,7 +13,7 @@ int ssymm_(char *side, char *uplo, integer *m, integer *n, real *alpha, real *a,
     integer nrowa;
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
     /* .. */
@@ -172,7 +172,7 @@ int ssymm_(char *side, char *uplo, integer *m, integer *n, real *alpha, real *a,
     }
     if (info != 0)
     {
-        xerbla_("SSYMM ", &info);
+        xerbla_("SSYMM ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

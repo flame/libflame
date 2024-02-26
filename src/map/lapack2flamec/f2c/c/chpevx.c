@@ -269,7 +269,7 @@ int chpevx_(char *jobz, char *range, char *uplo, integer *n, complex *ap, real *
     int csscal_(integer *, real *, complex *, integer *);
     real safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real abstll, bignum;
     integer indiwk, indisp, indtau;
     extern /* Subroutine */
@@ -367,7 +367,7 @@ int chpevx_(char *jobz, char *range, char *uplo, integer *n, complex *ap, real *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHPEVX", &i__1);
+        xerbla_("CHPEVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -141,7 +141,7 @@ int dsyequb_(char *uplo, integer *n, doublereal *a, integer * lda, doublereal *s
     doublereal sumsq;
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal bignum;
     extern /* Subroutine */
     int dlassq_(integer *, doublereal *, integer *, doublereal *, doublereal *);
@@ -190,7 +190,7 @@ int dsyequb_(char *uplo, integer *n, doublereal *a, integer * lda, doublereal *s
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSYEQUB", &i__1);
+        xerbla_("DSYEQUB", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

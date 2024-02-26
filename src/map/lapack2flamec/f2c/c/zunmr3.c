@@ -178,7 +178,7 @@ int zunmr3_(char *side, char *trans, integer *m, integer *n, integer *k, integer
     doublecomplex taui;
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int zlarz_(char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *), xerbla_(char *, integer *);
+    int zlarz_(char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical notran;
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -256,7 +256,7 @@ int zunmr3_(char *side, char *trans, integer *m, integer *n, integer *k, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZUNMR3", &i__1);
+        xerbla_("ZUNMR3", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

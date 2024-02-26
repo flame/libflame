@@ -342,7 +342,7 @@ int zheevx_2stage_(char *jobz, char *range, char *uplo, integer *n, doublecomple
     logical valeig;
     doublereal safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zdscal_( integer *, doublereal *, doublecomplex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zdscal_( integer *, doublereal *, doublecomplex *, integer *);
     doublereal abstll, bignum;
     extern doublereal zlanhe_(char *, char *, integer *, doublecomplex *, integer *, doublereal *);
     integer indiwk, indisp, indtau;
@@ -474,7 +474,7 @@ int zheevx_2stage_(char *jobz, char *range, char *uplo, integer *n, doublecomple
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHEEVX_2STAGE", &i__1);
+        xerbla_("ZHEEVX_2STAGE", &i__1, (ftnlen)13);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

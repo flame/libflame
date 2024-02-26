@@ -258,7 +258,7 @@ int claed7_(integer *n, integer *cutpnt, integer *qsiz, integer *tlvls, integer 
     int claed8_(integer *, integer *, integer *, complex *, integer *, real *, real *, integer *, real *, real *, complex *, integer *, real *, integer *, integer *, integer *, integer *, integer *, integer *, real *, integer *), slaed9_( integer *, integer *, integer *, integer *, real *, real *, integer *, real *, real *, real *, real *, integer *, integer *), slaeda_(integer *, integer *, integer *, integer *, integer *, integer *, integer *, integer *, real *, real *, integer *, real *, real *, integer *);
     integer idlmda;
     extern /* Subroutine */
-    int clacrm_(integer *, integer *, complex *, integer *, real *, integer *, complex *, integer *, real *), xerbla_(char *, integer *), slamrg_(integer *, integer *, real *, integer *, integer *, integer *);
+    int clacrm_(integer *, integer *, complex *, integer *, real *, integer *, complex *, integer *, real *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), slamrg_(integer *, integer *, real *, integer *, integer *, integer *);
     integer coltyp;
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -317,7 +317,7 @@ int claed7_(integer *n, integer *cutpnt, integer *qsiz, integer *tlvls, integer 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CLAED7", &i__1);
+        xerbla_("CLAED7", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

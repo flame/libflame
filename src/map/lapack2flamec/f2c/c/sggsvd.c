@@ -344,7 +344,7 @@ int sggsvd_(char *jobu, char *jobv, char *jobq, integer *m, integer *n, integer 
     extern real slamch_(char *), slange_(char *, integer *, integer *, real *, integer *, real *);
     integer ncycle;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), stgsja_( char *, char *, char *, integer *, integer *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, real *, real *, real *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *), sggsvp_(char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, real *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *, real *, real *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), stgsja_( char *, char *, char *, integer *, integer *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, real *, real *, real *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *), sggsvp_(char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, real *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *, real *, real *, integer *);
     /* -- LAPACK driver routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -436,7 +436,7 @@ int sggsvd_(char *jobu, char *jobv, char *jobq, integer *m, integer *n, integer 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGGSVD", &i__1);
+        xerbla_("SGGSVD", &i__1, (ftnlen)6);
         return 0;
     }
     /* Compute the Frobenius norm of matrices A and B */

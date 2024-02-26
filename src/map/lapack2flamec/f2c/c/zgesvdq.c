@@ -468,7 +468,7 @@ int zgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
     extern integer idamax_(integer *, doublereal *, integer *);
     doublereal sconda;
     extern /* Subroutine */
-    int dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *), zdscal_(integer *, doublereal *, doublecomplex *, integer *);
+    int dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), zdscal_(integer *, doublereal *, doublecomplex *, integer *);
     extern doublereal zlange_(char *, integer *, integer *, doublecomplex *, integer *, doublereal *);
     extern /* Subroutine */
     int zgelqf_(integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, integer * ), zlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublecomplex *, integer *, integer *);
@@ -541,6 +541,10 @@ int zgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
     acclh = lsame_(joba, "H") || conda;
     rowprm = lsame_(jobp, "P");
     rtrans = lsame_(jobr, "T");
+    sconda = 0.;
+    lwunq = 0;
+    lwrk_zunmqr__ = 0;
+    lwrk_zgeqp3__ = 0;
     if (rowprm)
     {
         /* Computing MAX */
@@ -935,7 +939,7 @@ int zgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGESVDQ", &i__1);
+        xerbla_("ZGESVDQ", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -978,7 +982,7 @@ int zgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
             {
                 *info = -8;
                 i__2 = -(*info);
-                xerbla_("ZGESVDQ", &i__2);
+                xerbla_("ZGESVDQ", &i__2, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
@@ -1071,7 +1075,7 @@ int zgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
         {
             *info = -8;
             i__1 = -(*info);
-            xerbla_("ZGESVDQ", &i__1);
+            xerbla_("ZGESVDQ", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }

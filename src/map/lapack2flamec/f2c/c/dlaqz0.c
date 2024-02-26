@@ -316,8 +316,6 @@ int dlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     double sqrt(doublereal);
     /* Local variables */
     integer aed_info__;
-    extern /* Subroutine */
-    int f90_cycle_(void);
     integer shiftpos, lworkreq, i__, k;
     doublereal c1;
     integer k2;
@@ -349,7 +347,7 @@ int dlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     int dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *);
     doublereal safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal safmax;
     extern /* Subroutine */
     int dlartg_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
@@ -361,8 +359,6 @@ int dlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     integer iwantq, iwants, istart;
     doublereal smlnum;
     integer istopm, iwantz, istart2;
-    extern /* Subroutine */
-    int f90_exit_(void);
     logical ilschur;
     integer nshifts, istartm;
     /* Arguments */
@@ -388,6 +384,7 @@ int dlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     z__ -= z_offset;
     --work;
     /* Function Body */
+    eshift = 0.;
     if (lsame_(wants, "E"))
     {
         ilschur = FALSE_;
@@ -485,7 +482,7 @@ int dlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DLAQZ0", &i__1);
+        xerbla_("DLAQZ0", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -557,7 +554,7 @@ int dlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     }
     if (*info != 0)
     {
-        xerbla_("DLAQZ0", info);
+        xerbla_("DLAQZ0", info, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

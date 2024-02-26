@@ -200,7 +200,7 @@ int ssytrd_fla(char *uplo, integer *n, real *a, integer *lda, real *d__, real *e
     integer nbmin, iinfo;
     logical upper;
     extern /* Subroutine */
-    int ssytd2_fla(char *, integer *, real *, integer *, real *, real *, real *, integer *), ssyr2k_(char *, char * , integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), xerbla_( char *, integer *);
+    int ssytd2_fla(char *, integer *, real *, integer *, real *, real *, real *, integer *), ssyr2k_(char *, char * , integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int slatrd_(char *, integer *, integer *, real *, integer *, real *, real *, real *, integer *);
@@ -265,7 +265,7 @@ int ssytrd_fla(char *uplo, integer *n, real *a, integer *lda, real *d__, real *e
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSYTRD", &i__1);
+        xerbla_("SSYTRD", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

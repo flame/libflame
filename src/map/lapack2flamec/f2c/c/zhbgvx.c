@@ -318,7 +318,7 @@ int zhbgvx_(char *jobz, char *range, char *uplo, integer *n, integer *ka, intege
     integer indibl;
     logical valeig;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer indiwk, indisp;
     extern /* Subroutine */
     int dsterf_(integer *, doublereal *, doublereal *, integer *), dstebz_(char *, char *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), zhbtrd_(char *, char *, integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, integer *, doublecomplex *, integer *);
@@ -441,7 +441,7 @@ int zhbgvx_(char *jobz, char *range, char *uplo, integer *n, integer *ka, intege
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHBGVX", &i__1);
+        xerbla_("ZHBGVX", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

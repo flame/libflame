@@ -315,7 +315,7 @@ int sposvx_(char *fact, char *uplo, integer *n, integer * nrhs, real *a, integer
     extern real slamch_(char *);
     logical nofact;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     integer infequ;
     extern /* Subroutine */
@@ -366,6 +366,8 @@ int sposvx_(char *fact, char *uplo, integer *n, integer * nrhs, real *a, integer
     *info = 0;
     nofact = lsame_(fact, "N");
     equil = lsame_(fact, "E");
+    smlnum = 0.f;
+    bignum = 0.f;
     if (nofact || equil)
     {
         *(unsigned char *)equed = 'N';
@@ -455,7 +457,7 @@ int sposvx_(char *fact, char *uplo, integer *n, integer * nrhs, real *a, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SPOSVX", &i__1);
+        xerbla_("SPOSVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

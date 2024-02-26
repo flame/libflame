@@ -180,7 +180,7 @@ int dsbgv_(char *jobz, char *uplo, integer *n, integer *ka, integer *kb, doubler
     integer iinfo;
     logical upper, wantz;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), dpbstf_( char *, integer *, integer *, doublereal *, integer *, integer *), dsbtrd_(char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *), dsbgst_(char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), dsterf_(integer *, doublereal *, doublereal *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), dpbstf_( char *, integer *, integer *, doublereal *, integer *, integer *), dsbtrd_(char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *), dsbgst_(char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), dsterf_(integer *, doublereal *, doublereal *, integer *);
     integer indwrk;
     extern /* Subroutine */
     int dsteqr_(char *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *);
@@ -252,7 +252,7 @@ int dsbgv_(char *jobz, char *uplo, integer *n, integer *ka, integer *kb, doubler
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSBGV ", &i__1);
+        xerbla_("DSBGV ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

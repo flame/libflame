@@ -183,7 +183,6 @@ int chb2st_kernels_(char *uplo, logical *wantz, integer * ttype, integer *st, in
     logical upper;
     extern /* Subroutine */
     int clarfg_(integer *, complex *, complex *, integer *, complex *);
-    integer ajeter;
     extern /* Subroutine */
     int clarfx_(char *, integer *, integer *, complex *, complex *, complex *, integer *, complex *), clarfy_( char *, integer *, complex *, integer *, complex *, complex *, integer *, complex *);
     integer ofdpos, taupos;
@@ -215,7 +214,6 @@ int chb2st_kernels_(char *uplo, logical *wantz, integer * ttype, integer *st, in
     --tau;
     --work;
     /* Function Body */
-    ajeter = *ib + *ldvt;
     upper = lsame_(uplo, "U");
     if (upper)
     {

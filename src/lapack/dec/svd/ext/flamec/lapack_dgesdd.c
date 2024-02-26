@@ -243,10 +243,10 @@ int lapack_dgesdd(char *jobz, integer *m, integer *n, doublereal * a, integer *l
     logical wntqa;
     integer nwork;
     logical wntqn, wntqo, wntqs;
-    integer ie, lwork_dorgbr_p_mm__;
+    integer ie;
     extern /* Subroutine */
     int dbdsdc_(char *, char *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *);
-    integer il, lwork_dorgbr_q_nn__;
+    integer il;
     extern /* Subroutine */
     int lapack_dgebrd(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, integer *);
     extern doublereal dlamch_(char *);
@@ -254,7 +254,7 @@ int lapack_dgesdd(char *jobz, integer *m, integer *n, doublereal * a, integer *l
     extern doublereal dlange_(char *, integer *, integer *, doublereal *, integer *, doublereal *);
     integer iu;
     extern /* Subroutine */
-    int dgelqf_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), dgeqrf_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *), dorgbr_(char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
+    int dgelqf_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), dgeqrf_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), dorgbr_(char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
     extern logical disnan_(doublereal *);
     doublereal bignum;
     extern /* Subroutine */
@@ -369,7 +369,6 @@ int lapack_dgesdd(char *jobz, integer *m, integer *n, doublereal * a, integer *l
             dgeqrf_(m, n, dum, m, dum, dum, &c_n1, &ierr);
             lwork_dgeqrf_mn__ = (integer) dum[0];
             dorgbr_("Q", n, n, n, dum, n, dum, dum, &c_n1, &ierr);
-            lwork_dorgbr_q_nn__ = (integer) dum[0];
             dorgqr_(m, m, n, dum, m, dum, dum, &c_n1, &ierr);
             lwork_dorgqr_mm__ = (integer) dum[0];
             dorgqr_(m, n, n, dum, m, dum, dum, &c_n1, &ierr);
@@ -578,7 +577,6 @@ int lapack_dgesdd(char *jobz, integer *m, integer *n, doublereal * a, integer *l
             dorglq_(m, n, m, &a[a_offset], m, dum, dum, &c_n1, &ierr);
             lwork_dorglq_mn__ = (integer) dum[0];
             dorgbr_("P", m, m, m, &a[a_offset], n, dum, dum, &c_n1, &ierr);
-            lwork_dorgbr_p_mm__ = (integer) dum[0];
             lapack_dormbr("P", "R", "T", m, m, m, dum, m, dum, dum, m, dum, &c_n1, & ierr);
             lwork_dormbr_prt_mm__ = (integer) dum[0];
             lapack_dormbr("P", "R", "T", m, n, m, dum, m, dum, dum, m, dum, &c_n1, & ierr);
@@ -768,7 +766,7 @@ int lapack_dgesdd(char *jobz, integer *m, integer *n, doublereal * a, integer *l
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGESDD", &i__1);
+        xerbla_("DGESDD", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

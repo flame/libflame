@@ -265,7 +265,7 @@ int zhegvd_(integer *itype, char *jobz, char *uplo, integer * n, doublecomplex *
     integer lropt;
     logical wantz;
     extern /* Subroutine */
-    int ztrmm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), ztrsm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(char *, integer *), zheevd_(char *, char *, integer *, doublecomplex *, integer *, doublereal *, doublecomplex *, integer *, doublereal *, integer *, integer *, integer *, integer *);
+    int ztrmm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), ztrsm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), zheevd_(char *, char *, integer *, doublecomplex *, integer *, doublereal *, doublecomplex *, integer *, doublereal *, integer *, integer *, integer *, integer *);
     integer liwmin;
     extern /* Subroutine */
     int zhegst_(integer *, char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *);
@@ -377,7 +377,7 @@ int zhegvd_(integer *itype, char *jobz, char *uplo, integer * n, doublecomplex *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHEGVD", &i__1);
+        xerbla_("ZHEGVD", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

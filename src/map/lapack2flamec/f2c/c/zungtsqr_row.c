@@ -202,7 +202,7 @@ int zungtsqr_row_(integer *m, integer *n, integer *mb, integer *nb, doublecomple
     doublecomplex dummy[1] /* was [1][1] */
     ;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zlaset_( char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zlaset_( char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *);
     logical lquery;
     integer nblocal, kb_last__;
     /* -- LAPACK computational routine -- */
@@ -283,7 +283,7 @@ int zungtsqr_row_(integer *m, integer *n, integer *mb, integer *nb, doublecomple
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZUNGTSQR_ROW", &i__1);
+        xerbla_("ZUNGTSQR_ROW", &i__1, (ftnlen)12);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

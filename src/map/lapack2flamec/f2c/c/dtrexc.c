@@ -152,7 +152,7 @@ int dtrexc_(char *compq, integer *n, doublereal *t, integer * ldt, doublereal *q
     extern logical lsame_(char *, char *);
     logical wantq;
     extern /* Subroutine */
-    int dlaexc_(logical *, integer *, doublereal *, integer *, doublereal *, integer *, integer *, integer *, integer *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dlaexc_(logical *, integer *, doublereal *, integer *, doublereal *, integer *, integer *, integer *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer nbnext;
     /* -- LAPACK computational routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -213,7 +213,7 @@ int dtrexc_(char *compq, integer *n, doublereal *t, integer * ldt, doublereal *q
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DTREXC", &i__1);
+        xerbla_("DTREXC", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

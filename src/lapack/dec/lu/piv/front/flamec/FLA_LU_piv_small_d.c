@@ -1,8 +1,11 @@
 /*
-    Copyright (c) 2021-2022 Advanced Micro Devices, Inc.  All rights reserved.
+    Copyright (c) 2021-2023 Advanced Micro Devices, Inc.  All rights reserved.
 */
 
 #include "FLAME.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
 
 /*
  * LU with partial pivoting for tiny matrices
@@ -102,8 +105,7 @@ integer FLA_LU_piv_small_d_var1( integer *m, integer *n,
     /* Local variables */
     integer i__, j, jp;
     extern doublereal dlamch_(char *);
-    extern integer idamax_(integer *, doublereal *, integer *);
-    extern /* Subroutine */ int xerbla_(char *, integer *);
+    extern /* Subroutine */ int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal sfmin;
 
     a_dim1 = *lda;
@@ -187,19 +189,15 @@ integer FLA_LU_piv_small_d_var2( integer *m, integer *n,
                                    integer *info)
 {
     integer c__1 = 1;
-    integer c_n1 = -1;
     doublereal c_b16 = 1.;
     doublereal c_b19 = -1.;
 
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;
-    doublereal d__1;
 
     /* Local variables */
-    integer i__, j, jp, jb, nb;
+    integer i__, j, jb, nb;
     extern doublereal dlamch_(char *);
-    extern integer idamax_(integer *, doublereal *, integer *);
-    extern /* Subroutine */ int xerbla_(char *, integer *);
-    doublereal sfmin;
+    extern /* Subroutine */ int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer iinfo;
 
 #define a_ref(a_1,a_2) a[(a_2)*a_dim1 + a_1]

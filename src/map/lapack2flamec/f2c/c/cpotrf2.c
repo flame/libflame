@@ -130,7 +130,7 @@ int cpotrf2_(char *uplo, integer *n, complex *a, integer * lda, integer *info)
     int ctrsm_(char *, char *, char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *);
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern logical sisnan_(real *);
     /* -- LAPACK computational routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -175,7 +175,7 @@ int cpotrf2_(char *uplo, integer *n, complex *a, integer * lda, integer *info)
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CPOTRF2", &i__1);
+        xerbla_("CPOTRF2", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -218,7 +218,7 @@ int sgeev_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *wr
     int sgebak_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, integer *), sgebal_(char *, integer *, real *, integer *, integer *, integer *, real *, integer *);
     extern real slamch_(char *), slange_(char *, integer *, integer *, real *, integer *, real *);
     extern /* Subroutine */
-    int sgehrd_(integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *), xerbla_(char *, integer *);
+    int sgehrd_(integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     logical select[1];
     real bignum;
@@ -390,7 +390,7 @@ int sgeev_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *wr
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGEEV ", &i__1);
+        xerbla_("SGEEV ", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

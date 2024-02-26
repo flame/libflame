@@ -145,7 +145,7 @@ int cgeqrt_(integer *m, integer *n, integer *nb, complex *a, integer *lda, compl
     /* Local variables */
     integer i__, k, ib, iinfo;
     extern /* Subroutine */
-    int clarfb_(char *, char *, char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *), cgeqrt2_(integer *, integer *, complex *, integer *, complex *, integer *, integer *), cgeqrt3_(integer *, integer *, complex *, integer *, complex *, integer *, integer *);
+    int clarfb_(char *, char *, char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), cgeqrt2_(integer *, integer *, complex *, integer *, complex *, integer *, integer *), cgeqrt3_(integer *, integer *, complex *, integer *, complex *, integer *, integer *);
     /* -- LAPACK computational routine (version 3.7.1) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -195,7 +195,7 @@ int cgeqrt_(integer *m, integer *n, integer *nb, complex *a, integer *lda, compl
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGEQRT", &i__1);
+        xerbla_("CGEQRT", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

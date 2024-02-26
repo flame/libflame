@@ -283,7 +283,7 @@ int shsein_(char *side, char *eigsrc, char *initv, logical * select, integer *n,
     real hnorm;
     extern real slamch_(char *);
     extern /* Subroutine */
-    int slaein_(logical *, logical *, integer *, real *, integer *, real *, real *, real *, real *, real *, integer *, real *, real *, real *, real *, integer *), xerbla_(char *, integer *);
+    int slaein_(logical *, logical *, integer *, real *, integer *, real *, real *, real *, real *, real *, integer *, real *, real *, real *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     extern real slanhs_(char *, integer *, real *, integer *, real *);
     extern logical sisnan_(real *);
@@ -405,7 +405,7 @@ int shsein_(char *side, char *eigsrc, char *initv, logical * select, integer *n,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SHSEIN", &i__1);
+        xerbla_("SHSEIN", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

@@ -120,7 +120,7 @@ int zspcon_(char *uplo, integer *n, doublecomplex *ap, integer *ipiv, doublereal
     integer isave[3];
     logical upper;
     extern /* Subroutine */
-    int zlacn2_(integer *, doublecomplex *, doublecomplex *, doublereal *, integer *, integer *), xerbla_( char *, integer *);
+    int zlacn2_(integer *, doublecomplex *, doublecomplex *, doublereal *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal ainvnm;
     extern /* Subroutine */
     int zsptrs_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *);
@@ -167,7 +167,7 @@ int zspcon_(char *uplo, integer *n, doublecomplex *ap, integer *ipiv, doublereal
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZSPCON", &i__1);
+        xerbla_("ZSPCON", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -134,7 +134,7 @@ int zgebak_(char *job, char *side, integer *n, integer *ilo, integer *ihi, doubl
     extern logical lsame_(char *, char *);
     logical leftv;
     extern /* Subroutine */
-    int zswap_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(char *, integer *), zdscal_(integer *, doublereal *, doublecomplex *, integer *);
+    int zswap_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), zdscal_(integer *, doublereal *, doublecomplex *, integer *);
     logical rightv;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -197,7 +197,7 @@ int zgebak_(char *job, char *side, integer *n, integer *ilo, integer *ihi, doubl
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGEBAK", &i__1);
+        xerbla_("ZGEBAK", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

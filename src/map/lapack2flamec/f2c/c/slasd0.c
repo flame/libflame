@@ -153,7 +153,7 @@ int slasd0_(integer *n, integer *sqre, real *d__, real *e, real *u, integer *ldu
     real alpha;
     integer inode, ndiml, idxqc, ndimr, itemp, sqrei;
     extern /* Subroutine */
-    int slasd1_(integer *, integer *, integer *, real *, real *, real *, real *, integer *, real *, integer *, integer *, integer *, real *, integer *), xerbla_(char *, integer *), slasdq_(char *, integer *, integer *, integer *, integer *, integer *, real *, real *, real *, integer *, real *, integer *, real *, integer *, real *, integer *), slasdt_(integer *, integer *, integer *, integer *, integer *, integer *, integer * );
+    int slasd1_(integer *, integer *, integer *, real *, real *, real *, real *, integer *, real *, integer *, integer *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), slasdq_(char *, integer *, integer *, integer *, integer *, integer *, real *, real *, real *, integer *, real *, integer *, real *, integer *, real *, integer *), slasdt_(integer *, integer *, integer *, integer *, integer *, integer *, integer * );
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -206,7 +206,7 @@ int slasd0_(integer *n, integer *sqre, real *d__, real *e, real *u, integer *ldu
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLASD0", &i__1);
+        xerbla_("SLASD0", &i__1, (ftnlen)6);
         return 0;
     }
     /* If the input matrix is too small, call SLASDQ to find the SVD. */

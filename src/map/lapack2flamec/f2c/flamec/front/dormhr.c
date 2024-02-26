@@ -186,7 +186,7 @@ int dormhr_(char *side, char *trans, integer *m, integer *n, integer *ilo, integ
     extern logical lsame_(char *, char *);
     integer iinfo;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int dormqr_fla(char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *);
@@ -288,7 +288,7 @@ int dormhr_(char *side, char *trans, integer *m, integer *n, integer *ilo, integ
     if (*info != 0)
     {
         i__2 = -(*info);
-        xerbla_("DORMHR", &i__2);
+        xerbla_("DORMHR", &i__2, (ftnlen)6);
         return 0;
     }
     else if (lquery)

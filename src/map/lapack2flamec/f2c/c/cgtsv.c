@@ -133,7 +133,7 @@ int cgtsv_(integer *n, integer *nrhs, complex *dl, complex * d__, complex *du, c
     integer j, k;
     complex temp, mult;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK driver routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -180,7 +180,7 @@ int cgtsv_(integer *n, integer *nrhs, complex *dl, complex * d__, complex *du, c
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGTSV ", &i__1);
+        xerbla_("CGTSV ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

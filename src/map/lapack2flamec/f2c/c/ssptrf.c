@@ -180,7 +180,7 @@ int ssptrf_(char *uplo, integer *n, real *ap, integer *ipiv, integer *info)
     int sswap_(integer *, real *, integer *, real *, integer *);
     real absakk;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer isamax_(integer *, real *, integer *);
     real colmax, rowmax;
     /* -- LAPACK computational routine (version 3.4.0) -- */
@@ -210,6 +210,7 @@ int ssptrf_(char *uplo, integer *n, real *ap, integer *ipiv, integer *info)
     /* Function Body */
     *info = 0;
     upper = lsame_(uplo, "U");
+    imax = 0;
     if (! upper && ! lsame_(uplo, "L"))
     {
         *info = -1;
@@ -221,7 +222,7 @@ int ssptrf_(char *uplo, integer *n, real *ap, integer *ipiv, integer *info)
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSPTRF", &i__1);
+        xerbla_("SSPTRF", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

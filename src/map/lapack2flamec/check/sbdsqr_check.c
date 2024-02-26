@@ -33,8 +33,8 @@ int sbdsqr_check(char *uplo, integer *n, integer *ncvt, integer * nru, integer *
     --work;
     /* Function Body */
     *info = 0;
-    lower = lsame_(uplo, "L");
-    if (! lsame_(uplo, "U") && ! lower)
+    lower = lsame_(uplo, "L", 1, 1);
+    if (! lsame_(uplo, "U", 1, 1) && ! lower)
     {
         *info = -1;
     }
@@ -69,7 +69,7 @@ int sbdsqr_check(char *uplo, integer *n, integer *ncvt, integer * nru, integer *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SBDSQR", &i__1);
+        xerbla_("SBDSQR", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     if (*n == 0)

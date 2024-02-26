@@ -200,7 +200,7 @@ int dsytrd_fla(char *uplo, integer *n, doublereal *a, integer * lda, doublereal 
     integer nbmin, iinfo;
     logical upper;
     extern /* Subroutine */
-    int dsytd2_fla(char *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *), dsyr2k_(char *, char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), dlatrd_(char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dsytd2_fla(char *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *), dsyr2k_(char *, char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), dlatrd_(char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer ldwork, lwkopt;
     logical lquery;
@@ -263,7 +263,7 @@ int dsytrd_fla(char *uplo, integer *n, doublereal *a, integer * lda, doublereal 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSYTRD", &i__1);
+        xerbla_("DSYTRD", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

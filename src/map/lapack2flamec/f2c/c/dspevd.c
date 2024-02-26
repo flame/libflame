@@ -197,7 +197,7 @@ int dspevd_(char *jobz, char *uplo, integer *n, doublereal * ap, doublereal *w, 
     int dstedc_(char *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *, integer *, integer *);
     doublereal safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal bignum;
     extern doublereal dlansp_(char *, char *, integer *, doublereal *, doublereal *);
     integer indtau;
@@ -294,7 +294,7 @@ int dspevd_(char *jobz, char *uplo, integer *n, doublereal * ap, doublereal *w, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSPEVD", &i__1);
+        xerbla_("DSPEVD", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

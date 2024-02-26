@@ -250,8 +250,7 @@ int strevc3_(char *side, char *howmny, logical *select, integer *n, real *t, int
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */
-    address a__1[2];
-    integer t_dim1, t_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1[2], i__2, i__3, i__4;
+    integer t_dim1, t_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__2, i__3, i__4;
     real r__1, r__2, r__3, r__4;
     char ch__1[2];
     /* Builtin functions */
@@ -291,7 +290,7 @@ int strevc3_(char *side, char *howmny, logical *select, integer *n, real *t, int
     int saxpy_(integer *, real *, real *, integer *, real *, integer *), slaln2_(logical *, integer *, integer *, real *, real *, real *, integer *, real *, real *, real *, integer *, real *, real *, real *, integer *, real *, real *, integer *), slabad_(real *, real *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     real bignum;
     extern integer isamax_(integer *, real *, integer *);
@@ -445,7 +444,7 @@ int strevc3_(char *side, char *howmny, logical *select, integer *n, real *t, int
     if (*info != 0)
     {
         i__2 = -(*info);
-        xerbla_("STREVC3", &i__2);
+        xerbla_("STREVC3", &i__2, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

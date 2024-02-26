@@ -17,12 +17,12 @@ int chegst_check(integer *itype, char *uplo, integer *n, scomplex * a, integer *
     b -= b_offset;
     /* Function Body */
     *info = 0;
-    upper = lsame_(uplo, "U");
+    upper = lsame_(uplo, "U", 1, 1);
     if (*itype < 1 || *itype > 3)
     {
         *info = -1;
     }
-    else if (! upper && ! lsame_(uplo, "L"))
+    else if (! upper && ! lsame_(uplo, "L", 1, 1))
     {
         *info = -2;
     }
@@ -41,7 +41,7 @@ int chegst_check(integer *itype, char *uplo, integer *n, scomplex * a, integer *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHEGST", &i__1);
+        xerbla_("CHEGST", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */

@@ -213,7 +213,7 @@ int zsytf2_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *ipi
     doublereal absakk;
     extern logical disnan_(doublereal *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal colmax;
     extern integer izamax_(integer *, doublecomplex *, integer *);
     doublereal rowmax;
@@ -250,6 +250,7 @@ int zsytf2_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *ipi
     /* Function Body */
     *info = 0;
     upper = lsame_(uplo, "U");
+    imax = 0;
     if (! upper && ! lsame_(uplo, "L"))
     {
         *info = -1;
@@ -265,7 +266,7 @@ int zsytf2_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *ipi
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZSYTF2", &i__1);
+        xerbla_("ZSYTF2", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

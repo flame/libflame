@@ -364,7 +364,7 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
     doublereal temp1;
     extern /* Subroutine */
     int dscal_(integer *, doublereal *, doublereal *, integer *);
-    doublereal large, apoaq, aqoap;
+    doublereal apoaq, aqoap;
     extern logical lsame_(char *, char *);
     doublereal theta, small_val, sfmin;
     logical lsvec;
@@ -388,7 +388,7 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
     int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *);
     extern integer idamax_(integer *, doublereal *, integer *);
     extern /* Subroutine */
-    int dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer ijblsk, swband, blskip;
     doublereal mxaapq;
     extern /* Subroutine */
@@ -497,7 +497,7 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGESVJ", &i__1);
+        xerbla_("DGESVJ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -540,7 +540,6 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
     big = dlamch_("Overflow");
     /* BIG = ONE / SFMIN */
     rootbig = 1. / rootsfmin;
-    large = big / sqrt((doublereal) (*m * *n));
     bigtheta = 1. / rooteps;
     tol = ctol * epsln;
     roottol = sqrt(tol);
@@ -548,7 +547,7 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
     {
         *info = -4;
         i__1 = -(*info);
-        xerbla_("DGESVJ", &i__1);
+        xerbla_("DGESVJ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -590,7 +589,7 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
             {
                 *info = -6;
                 i__2 = -(*info);
-                xerbla_("DGESVJ", &i__2);
+                xerbla_("DGESVJ", &i__2, (ftnlen)6);
                 AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
@@ -634,7 +633,7 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
             {
                 *info = -6;
                 i__2 = -(*info);
-                xerbla_("DGESVJ", &i__2);
+                xerbla_("DGESVJ", &i__2, (ftnlen)6);
                 AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
@@ -678,7 +677,7 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
             {
                 *info = -6;
                 i__2 = -(*info);
-                xerbla_("DGESVJ", &i__2);
+                xerbla_("DGESVJ", &i__2, (ftnlen)6);
                 AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }

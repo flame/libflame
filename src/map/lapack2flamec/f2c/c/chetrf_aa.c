@@ -150,7 +150,7 @@ int chetrf_aa_(char *uplo, integer *n, complex *a, integer * lda, integer *ipiv,
     int ccopy_(integer *, complex *, integer *, complex *, integer *), cswap_(integer *, complex *, integer *, complex *, integer *);
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer lwkopt;
     logical lquery;
@@ -210,7 +210,7 @@ int chetrf_aa_(char *uplo, integer *n, complex *a, integer * lda, integer *ipiv,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHETRF_AA", &i__1);
+        xerbla_("CHETRF_AA", &i__1, (ftnlen)9);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

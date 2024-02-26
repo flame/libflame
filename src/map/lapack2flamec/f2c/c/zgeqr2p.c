@@ -124,7 +124,7 @@ int zgeqr2p_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecompl
     integer i__, k;
     doublecomplex alpha;
     extern /* Subroutine */
-    int zlarf_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *), xerbla_(char *, integer *), zlarfgp_(integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *);
+    int zlarf_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), zlarfgp_(integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -167,7 +167,7 @@ int zgeqr2p_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecompl
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGEQR2P", &i__1);
+        xerbla_("ZGEQR2P", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

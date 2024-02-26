@@ -206,7 +206,6 @@ int dlaqp2_(integer *m, integer *n, integer *offset, doublereal *a, integer *lda
         i__2 = *n - i__ + 1;
 #ifdef FLA_ENABLE_AMD_OPT
         /* Inline IDAMAX for small sizes (<= 128) */
-        integer idmax = 1;
         if(i__2 <= FLA_IDAMAX_INLINE_SMALL_THRESH)
         {
             pvt = i__ - 1 + fla_idamax(&i__2, &vn1[i__], &c__1);

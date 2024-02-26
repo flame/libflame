@@ -173,7 +173,7 @@ int sspgv_(integer *itype, char *jobz, char *uplo, integer * n, real *ap, real *
     int sspev_(char *, char *, integer *, real *, real *, real *, integer *, real *, integer *);
     logical wantz;
     extern /* Subroutine */
-    int stpmv_(char *, char *, char *, integer *, real *, real *, integer *), stpsv_(char *, char *, char *, integer *, real *, real *, integer *), xerbla_(char *, integer *), spptrf_(char *, integer *, real *, integer *), sspgst_(integer *, char *, integer *, real *, real *, integer *);
+    int stpmv_(char *, char *, char *, integer *, real *, real *, integer *), stpsv_(char *, char *, char *, integer *, real *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), spptrf_(char *, integer *, real *, integer *), sspgst_(integer *, char *, integer *, real *, real *, integer *);
     /* -- LAPACK driver routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -226,7 +226,7 @@ int sspgv_(integer *itype, char *jobz, char *uplo, integer * n, real *ap, real *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSPGV ", &i__1);
+        xerbla_("SSPGV ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

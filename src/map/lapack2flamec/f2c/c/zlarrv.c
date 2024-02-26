@@ -299,7 +299,6 @@ int zlarrv_(integer *n, doublereal *vl, doublereal *vu, doublereal *d__, doubler
     doublereal ztz;
     integer iend, jblk;
     doublereal lgap;
-    integer done;
     doublereal rgap, left;
     integer wend, iter;
     doublereal bstw;
@@ -466,8 +465,6 @@ int zlarrv_(integer *n, doublereal *vl, doublereal *vu, doublereal *d__, doubler
     /* entries is contained in the interval IBEGIN:IEND. */
     /* Remark that if k eigenpairs are desired, then the eigenvectors */
     /* are stored in k contiguous columns of Z. */
-    /* DONE is the number of eigenvectors already computed */
-    done = 0;
     ibegin = 1;
     wbegin = 1;
     i__1 = iblock[*m];
@@ -526,7 +523,6 @@ L15:
         /* This is for a 1x1 block */
         if (ibegin == iend)
         {
-            ++done;
             i__2 = ibegin + wbegin * z_dim1;
             z__[i__2].r = 1.;
             z__[i__2].i = 0.; // , expr subst
@@ -913,7 +909,6 @@ L40:
                         i__4 = windex + 1;
                         windpl = fla_min(i__4,*m);
                         lambda = work[windex];
-                        ++done;
                         /* Check if eigenvector computation is to be skipped */
                         if (windex < *dol || windex > *dou)
                         {

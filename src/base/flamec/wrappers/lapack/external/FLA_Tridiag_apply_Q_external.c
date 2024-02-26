@@ -12,14 +12,13 @@
 
 FLA_Error FLA_Tridiag_apply_Q_external( FLA_Side side, FLA_Uplo uplo, FLA_Trans trans, FLA_Obj A, FLA_Obj t, FLA_Obj B )
 {
-  int          info = 0;
+  integer      info = 0;
 #ifdef FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
   FLA_Datatype datatype;
   // integer          m_A, n_A;
   integer          m_B, n_B;
   integer          cs_A;
   integer          cs_B;
-  integer          k_t;
   integer          lwork;
   char         blas_side;
   char         blas_uplo;
@@ -41,8 +40,6 @@ FLA_Error FLA_Tridiag_apply_Q_external( FLA_Side side, FLA_Uplo uplo, FLA_Trans 
   m_B      = FLA_Obj_length( B );
   n_B      = FLA_Obj_width( B );
   cs_B     = FLA_Obj_col_stride( B );
-
-  k_t      = FLA_Obj_vector_dim( t );
 
   FLA_Param_map_flame_to_netlib_side( side, &blas_side );
   FLA_Param_map_flame_to_netlib_uplo( uplo, &blas_uplo );

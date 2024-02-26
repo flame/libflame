@@ -1,7 +1,11 @@
 /* ../netlib/dlarfg.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
+
+/*
+    Modifications Copyright (c) 2023 Advanced Micro Devices, Inc.  All rights reserved.
+*/
+
 #include "FLA_f2c.h" /* > \brief \b DLARFG generates an elementary reflector (Householder matrix). */
-static integer c__1 = 1;
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
 /* http://www.netlib.org/lapack/explore-html/ */
@@ -110,7 +114,9 @@ int dlarfg_(integer *n, doublereal *alpha, doublereal *x, integer *incx, doubler
     int dscal_(integer *, doublereal *, doublereal *, integer *);
     doublereal xnorm;
     extern doublereal dlapy2_(doublereal *, doublereal *), dlamch_(char *);
+#if FLA_ENABLE_AMD_OPT
     extern int fla_dscal(integer *n, doublereal *da, doublereal *dx, integer *incx);
+#endif
     static TLS_CLASS_SPEC integer r_once = 1;
     static TLS_CLASS_SPEC doublereal safmin, rsafmn;
     /* -- LAPACK auxiliary routine (version 3.8.0) -- */
@@ -190,7 +196,7 @@ L10:
         i__1 = *n - 1;
         d__1 = 1. / (*alpha - beta);
 
-#ifdef FLA_ENABLE_AMD_OPT
+#if FLA_ENABLE_AMD_OPT
         /* Inline DSCAL for small sizes */
         fla_dscal(&i__1, &d__1, &x[1], incx);
 #else

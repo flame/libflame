@@ -8,11 +8,17 @@
 
 // Global variables.
 int n_threads = 1;
+
+char *LINEAR_PARAMETERS_FILENAME = NULL;
+char *SYM_EIG_PARAMETERS_FILENAME = NULL;
+char *SVD_PARAMETERS_FILENAME = NULL;
+char *NON_SYM_EIG_PARAMETERS_FILENAME = NULL;
+char *AUX_PARAMETERS_FILENAME = NULL;
+
 char fla_test_binary_name[ MAX_BINARY_NAME_LENGTH + 1 ];
 char fla_test_pass_string[ MAX_PASS_STRING_LENGTH + 1 ];
 char fla_test_warn_string[ MAX_PASS_STRING_LENGTH + 1 ];
 char fla_test_fail_string[ MAX_PASS_STRING_LENGTH + 1 ];
-char fla_test_incomplete_string [ MAX_PASS_STRING_LENGTH + 1];
 char fla_test_invalid_string [ MAX_PASS_STRING_LENGTH + 1];
 char fla_test_storage_format_string[ 200 ];
 char fla_test_stor_chars[ NUM_STORAGE_CHARS + 1 ];
@@ -24,6 +30,23 @@ integer total_incomplete_tests;
 integer tests_passed[4];
 integer tests_failed[4];
 integer tests_incomplete[4];
+
+/* Flag to indicate lwork/liwork/lrwork availability status
+ * <= 0 - To be calculated
+ * > 0  - Use the value
+ * */
+integer g_lwork = -1;
+integer g_liwork= -1;
+integer g_lrwork= -1;
+/* Variable to indicate the source of inputs
+ * = 0 - Inputs are from command line
+ * = 1 - Inputs are from config file
+ * */
+integer config_data = 0;
+/* File pointer for external file which is used
+ * to pass the input matrix values
+ * */
+FILE* g_ext_fptr = NULL;
 
 #define SKIP_EXTRA_LINE_READ() \
         eol = fgetc(fp); \
@@ -37,6 +60,8 @@ integer tests_incomplete[4];
             num_ranges = ( (i+1) < num_ranges)? (i+1):num_ranges; \
             break; \
         } \
+
+int fla_check_cmd_config_dir( int argc, char** argv );
 
 #if AOCL_FLA_SET_PROGRESS_ENABLE == 1
 int aocl_fla_progress(const char* const api,const integer lenapi,const  integer* const progress,const integer* const current_thread,const integer* const total_threads)
@@ -79,12 +104,15 @@ int  main( int argc, char** argv )
         }
     }
 
+    /* Checking for the cmd option or config file option */
+    int cmd_option = fla_check_cmd_config_dir(argc,argv);
+
     /* Check for Command line requests */
-    if ( argc > 1 )
+    if ( cmd_option == 1)
     {
         fla_test_execute_cli_api(argc, argv, &params);
     }
-    else
+    else if(cmd_option == 0)
     {
         printf(" LAPACK version: %"FT_IS".%"FT_IS".%"FT_IS" \n", vers_major, vers_minor, vers_patch);
         /* Copy the binary name to a global string so we can use it later. */
@@ -100,17 +128,176 @@ int  main( int argc, char** argv )
         /* Read SVD parameters from config file */
         fla_test_read_svd_params ( SVD_PARAMETERS_FILENAME, &params  );
 
+        /* Read AUX parameters from config file */
+        fla_test_read_aux_params ( AUX_PARAMETERS_FILENAME, &params  );
+
         #if AOCL_FLA_SET_PROGRESS_ENABLE == 2
             aocl_fla_set_progress(test_progress);
         #endif
 
         /* Test the LAPACK-level operations. */
         fla_test_lapack_suite( OPERATIONS_FILENAME, &params );
+
+        if( LINEAR_PARAMETERS_FILENAME )
+            free( LINEAR_PARAMETERS_FILENAME );
+        if( SYM_EIG_PARAMETERS_FILENAME )
+            free( SYM_EIG_PARAMETERS_FILENAME );
+        if( SVD_PARAMETERS_FILENAME )
+            free( SVD_PARAMETERS_FILENAME );
+        if( NON_SYM_EIG_PARAMETERS_FILENAME )
+            free( NON_SYM_EIG_PARAMETERS_FILENAME );
+        if( AUX_PARAMETERS_FILENAME )
+            free( AUX_PARAMETERS_FILENAME );
+    }
+    else
+    {
+        return 0;
     }
 
     return 0;
 }
 
+/* Function for checking cmd option or config file directory */
+int fla_check_cmd_config_dir( int argc, char** argv )
+{
+    integer i, j, len_lin_file, len_eig_file, len_svd_file, len_eig_nsy_file, len_aux_file;
+    int cmd_test_option = 0;
+    char *config_dir = NULL;
+    char *lin_file;
+    char *eig_file;
+    char *svd_file;
+    char *eig_nsy_file;
+    char *aux_file;
+    char *config_opt = "--config-dir=";
+    integer len_config_opt = strlen(config_opt);
+
+    struct stat info;
+    bool dir = 0;
+
+    /*for default config*/
+    if(argc == 1)
+    {
+        lin_file     =  "config/short/LIN_SLVR.dat";
+        eig_file     =  "config/short/EIG_PARAMS.dat";
+        svd_file     =  "config/short/SVD.dat";
+        eig_nsy_file =  "config/short/EIG_NSYM_PARAMS.dat";
+        aux_file     =  "config/short/AUX_PARAMS.dat";
+
+        len_lin_file = strlen(  lin_file);
+        len_eig_file = strlen(  eig_file);
+        len_svd_file = strlen(  svd_file);
+        len_eig_nsy_file = strlen(  eig_nsy_file);
+        len_aux_file = strlen(  aux_file);
+
+        LINEAR_PARAMETERS_FILENAME      =  (char *) malloc(len_lin_file + 1 );
+        SYM_EIG_PARAMETERS_FILENAME     =  (char *) malloc(len_eig_file + 1);
+        SVD_PARAMETERS_FILENAME         =  (char *) malloc(len_svd_file + 1 );
+        NON_SYM_EIG_PARAMETERS_FILENAME =  (char *) malloc(len_eig_nsy_file + 1);
+        AUX_PARAMETERS_FILENAME         =  (char *) malloc(len_aux_file + 1 );
+
+        memcpy( LINEAR_PARAMETERS_FILENAME, lin_file, len_lin_file + 1 );
+ 
+        memcpy( SYM_EIG_PARAMETERS_FILENAME, eig_file, len_eig_file + 1 );
+
+        memcpy( SVD_PARAMETERS_FILENAME, svd_file, len_svd_file + 1);
+
+        memcpy( NON_SYM_EIG_PARAMETERS_FILENAME, eig_nsy_file, len_eig_nsy_file + 1 );
+
+        memcpy( AUX_PARAMETERS_FILENAME, aux_file, len_aux_file + 1);
+
+        return 0;
+    }
+    else if(argc == 2 && strlen(argv[1]) > len_config_opt)
+    {
+        /*checking config dir option or cmd*/
+        if(!(strncmp(argv[1], config_opt, len_config_opt )))
+        {
+            config_dir = (char *) malloc( strlen( argv[1] + len_config_opt ) + 1);
+            memcpy( config_dir, argv[1] + len_config_opt, strlen( argv[1] + len_config_opt) + 1 );
+
+            char *c_str  = "config/";
+            lin_file     = "/LIN_SLVR.dat";
+            svd_file     = "/SVD.dat";
+            eig_file     = "/EIG_PARAMS.dat";
+            eig_nsy_file = "/EIG_NSYM_PARAMS.dat";
+            aux_file     = "/AUX_PARAMS.dat";
+
+            integer len_cstr = strlen( c_str);
+            integer len_dir  = strlen( config_dir);
+            len_lin_file     = strlen( lin_file);
+            len_eig_file     = strlen( eig_file);
+            len_svd_file     = strlen( svd_file);
+            len_eig_nsy_file = strlen( eig_nsy_file);
+            len_aux_file     = strlen( aux_file);
+
+            char *dir_path = (char *) malloc(len_cstr + len_dir + 1);
+
+            /*checking given Directory exist or not*/
+            memcpy(dir_path, c_str, len_cstr);
+            memcpy(dir_path + len_cstr, config_dir, len_dir + 1);
+
+            if( stat( dir_path, &info ) != 0 )
+            {
+                printf("Error: '%s' directory not found under 'config' directory.  Exiting... \n", config_dir);
+                cmd_test_option = -1;
+            }
+            else if( info.st_mode & S_IFDIR )  // S_ISDIR() doesn't exist on my windows
+                    dir = 1;
+            else
+            {
+                printf("Error: '%s' directory not found under 'config' directory.  Exiting... \n", config_dir);
+                cmd_test_option = -1;
+            }
+            
+            /*Reading the config directory*/
+            if(dir)
+            {
+                LINEAR_PARAMETERS_FILENAME       = (char *) malloc(len_cstr + len_dir + len_lin_file + 1);
+                SYM_EIG_PARAMETERS_FILENAME      = (char *) malloc(len_cstr + len_dir + len_eig_file + 1);
+                SVD_PARAMETERS_FILENAME          = (char *) malloc(len_cstr + len_dir + len_svd_file + 1);
+                NON_SYM_EIG_PARAMETERS_FILENAME  = (char *) malloc(len_cstr + len_dir + len_eig_nsy_file + 1);
+                AUX_PARAMETERS_FILENAME          = (char *) malloc(len_cstr + len_dir + len_aux_file + 1);
+
+                memcpy(LINEAR_PARAMETERS_FILENAME, c_str, len_cstr);
+                memcpy(LINEAR_PARAMETERS_FILENAME + len_cstr, config_dir, len_dir);
+                memcpy(LINEAR_PARAMETERS_FILENAME + len_cstr + len_dir, lin_file, len_lin_file + 1);
+
+                memcpy(SYM_EIG_PARAMETERS_FILENAME, c_str, len_cstr);
+                memcpy(SYM_EIG_PARAMETERS_FILENAME + len_cstr, config_dir, len_dir);
+                memcpy(SYM_EIG_PARAMETERS_FILENAME + len_cstr + len_dir, eig_file, len_eig_file + 1);
+
+                memcpy(SVD_PARAMETERS_FILENAME, c_str, len_cstr);
+                memcpy(SVD_PARAMETERS_FILENAME + len_cstr, config_dir, len_dir);
+                memcpy(SVD_PARAMETERS_FILENAME + len_cstr + len_dir, svd_file, len_svd_file + 1);
+
+                memcpy(NON_SYM_EIG_PARAMETERS_FILENAME, c_str, len_cstr);
+                memcpy(NON_SYM_EIG_PARAMETERS_FILENAME + len_cstr, config_dir, len_dir);
+                memcpy(NON_SYM_EIG_PARAMETERS_FILENAME + len_cstr + len_dir, eig_nsy_file, len_eig_nsy_file + 1);
+
+                memcpy(AUX_PARAMETERS_FILENAME, c_str, len_cstr);
+                memcpy(AUX_PARAMETERS_FILENAME + len_cstr, config_dir, len_dir);
+                memcpy(AUX_PARAMETERS_FILENAME + len_cstr + len_dir, aux_file, len_aux_file + 1);
+
+                cmd_test_option = 0;
+            }
+            if(dir_path)
+                free(dir_path);
+        }
+        else
+        {
+            cmd_test_option = 1;
+        }
+    }
+    else
+    {
+        /*cmd option*/
+        cmd_test_option = 1;
+    }
+    if(config_dir)
+        free(config_dir);
+
+    return cmd_test_option;
+}
 
 /* This function reads the operation file to execute selected LAPACK APIs*/
 void fla_test_lapack_suite( char* input_filename, test_params_t *params )
@@ -896,6 +1083,49 @@ void fla_test_read_sym_eig_params( const char *file_name , test_params_t* params
         CHECK_LINE_SKIP ();
     }
 
+    /* Range is used to select the range of eigen values to be generated */
+    fscanf(fp, "%s", &line[0]);
+    for (i = 0; i < NUM_SUB_TESTS; i++) {
+        fscanf(fp, "%s", str);
+        params->eig_sym_paramslist[i].range_x = *str;
+        CHECK_LINE_SKIP();
+    }
+
+    /* Index of the smallest eigen value to be returned */
+    fscanf(fp, "%s", &line[0]);
+    for (i = 0; i < NUM_SUB_TESTS; i++) {
+        fscanf(fp, "%"FT_IS"", &(params->eig_sym_paramslist[i].IL));
+        CHECK_LINE_SKIP();
+    }
+
+    /* Index of the largest eigen value to be returned */
+    fscanf(fp, "%s", &line[0]);
+    for (i = 0; i < NUM_SUB_TESTS; i++) {
+        fscanf(fp, "%"FT_IS"", &(params->eig_sym_paramslist[i].IU));
+        CHECK_LINE_SKIP();
+    }
+
+    /* Lower bound of the interval to be searched for eigen values */
+    fscanf(fp, "%s", &line[0]);
+    for (i = 0; i < NUM_SUB_TESTS; i++) {
+        fscanf(fp, "%f", &(params->eig_sym_paramslist[i].VL));
+        CHECK_LINE_SKIP();
+    }
+
+    /* Upper bound of the interval to be searched for eigen values */
+    fscanf(fp, "%s", &line[0]);
+    for (i = 0; i < NUM_SUB_TESTS; i++) {
+        fscanf(fp, "%f", &(params->eig_sym_paramslist[i].VU));
+        CHECK_LINE_SKIP();
+    }
+
+    /* The absolute error tolerance for the eigen values */
+    fscanf(fp, "%s", &line[0]);
+    for (i = 0; i < NUM_SUB_TESTS; i++) {
+        fscanf(fp, "%f", &(params->eig_sym_paramslist[i].abstol));
+        CHECK_LINE_SKIP();
+    }
+
     fscanf(fp, "%s", &line[0]);
     for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%"FT_IS"", &(params->eig_sym_paramslist[i].threshold_value) );
@@ -1594,6 +1824,133 @@ void fla_test_read_svd_params ( const char *file_name, test_params_t* params )
     fclose(fp);
 }
 
+/* This function reads parameters needed for aux APIs
+   from the config settings file 'AUX_PARAMS.dat' and saves in the
+   'params->aux_paramslist' structure array   */
+void fla_test_read_aux_params ( const char *file_name, test_params_t* params )
+{
+    FILE *fp;
+    integer i, j;
+    char line[25];
+    char *str;
+    char eol;
+    integer num_tests;
+    integer ndata_types;
+    integer num_ranges;
+
+    str = &line[0];
+    fp = fopen( file_name, "r");
+    if (fp == NULL){
+    printf("Error: aux config file missing. Exiting.. \n");
+    exit(-1);
+    }
+
+    fscanf(fp, "%s", &line[0]);
+    fscanf(fp, "%"FT_IS"", &num_tests);
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        params->aux_paramslist[i].num_tests = num_tests;
+    }
+
+    num_ranges = num_tests;
+    fscanf(fp, "%s", &line[0]); // Range_start
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->aux_paramslist[i].m_range_start) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // Range_end
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->aux_paramslist[i].m_range_end) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // Range_step_size
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->aux_paramslist[i].m_range_step_size) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // Range_start
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->aux_paramslist[i].n_range_start) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // Range_end
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->aux_paramslist[i].n_range_end) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // Range_step_size
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->aux_paramslist[i].n_range_step_size) );
+        CHECK_LINE_SKIP ();
+    }
+
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        params->aux_paramslist[i].num_ranges = num_ranges;
+    }
+
+    fscanf(fp, "%s", &line[0]); // leading dimension of input
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->aux_paramslist[i].lda) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // The increment between successive values of CX
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->aux_paramslist[i].incx) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // The increment between successive values of CY
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->aux_paramslist[i].incy) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // number of repeats
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->aux_paramslist[i].num_repeats) );
+        CHECK_LINE_SKIP ();
+    }
+
+    ndata_types = NUM_SUB_TESTS;
+    fscanf(fp, "%s", &line[0]);// num data types
+    for( i = 0; i < NUM_SUB_TESTS; i++ )
+    {
+        fscanf(fp, "%s", str); // num data types
+        for( j = 0; j < NUM_SUB_TESTS; j++ )
+        {
+            params->aux_paramslist[j].data_types_char[i] = *str;
+            params->aux_paramslist[j].data_types[i] = get_datatype(*str);
+        }
+        eol = fgetc(fp);
+        if((eol == '\r') || (eol == '\n')){
+            ndata_types = ( (i+1) < ndata_types)? (i+1):ndata_types;
+            break;
+        }
+    }
+
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        params->aux_paramslist[i].num_data_types = ndata_types;
+    }
+
+    fscanf(fp, "%s", &line[0]);
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->aux_paramslist[i].matrix_layout) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]);
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%f", &(params->aux_paramslist[i].aux_threshold) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fclose(fp);
+}
 
 void fla_test_output_info( char* message, ... )
 {
@@ -1750,29 +2107,25 @@ char* fla_test_get_string_for_result( double residual, integer datatype, double 
 
     if ( datatype == FLOAT )
     {
-        if      ( residual == DBL_MAX )   r_val = fla_test_incomplete_string;
-        else if ( residual == DBL_MIN )   r_val = fla_test_invalid_string;
+        if ( residual == DBL_MIN )        r_val = fla_test_invalid_string;
         else if ( residual > thresh )     r_val = fla_test_fail_string;
         else                              r_val = fla_test_pass_string;
     }
     else if ( datatype == DOUBLE )
     {
-        if      ( residual == DBL_MAX )   r_val = fla_test_incomplete_string;
-        else if ( residual == DBL_MIN )   r_val = fla_test_invalid_string;
+        if ( residual == DBL_MIN )        r_val = fla_test_invalid_string;
         else if ( residual > thresh )     r_val = fla_test_fail_string;
         else                              r_val = fla_test_pass_string;
     }
     else if ( datatype == COMPLEX )
     {
-        if      ( residual == DBL_MAX )   r_val = fla_test_incomplete_string;
-        else if ( residual == DBL_MIN )   r_val = fla_test_invalid_string;
+        if ( residual == DBL_MIN )        r_val = fla_test_invalid_string;
         else if ( residual > thresh )     r_val = fla_test_fail_string;
         else                              r_val = fla_test_pass_string;
     }
     else
     {
-        if      ( residual == DBL_MAX )   r_val = fla_test_incomplete_string;
-        else if ( residual == DBL_MIN )   r_val = fla_test_invalid_string;
+        if ( residual == DBL_MIN )        r_val = fla_test_invalid_string;
         else if ( residual > thresh )     r_val = fla_test_fail_string;
         else                              r_val = fla_test_pass_string;
     }
@@ -1786,8 +2139,7 @@ void fla_test_init_strings( void )
     sprintf( fla_test_pass_string, "PASS" );
     sprintf( fla_test_warn_string, "MARGINAL" );
     sprintf( fla_test_fail_string, "FAIL" );
-    sprintf( fla_test_incomplete_string, "INCOMPLETE" );
-    sprintf( fla_test_invalid_string, "INVALID_LDA" );
+    sprintf( fla_test_invalid_string, "INVALID_PARAM" );
     sprintf( fla_test_storage_format_string, "Row(r) and General(g) storage format is not supported by External LAPACK interface" );
     sprintf( fla_test_stor_chars, STORAGE_SCHEME_CHARS );
 }
@@ -1803,6 +2155,7 @@ void fla_test_op_driver( char*         func_str,
                                            integer,          // q_cur
                                            integer,          // pci (param combo counter)
                                            integer,          // n_repeats
+                                           integer,          // einfo
                                            double*,          // perf
                                            double*,          //time
                                            double* ) )       // residual
@@ -1812,7 +2165,7 @@ void fla_test_op_driver( char*         func_str,
     integer num_ranges, range_loop_counter;
     integer p_first, p_max, p_inc;
     integer q_first, q_max, q_inc;
-    integer dt, p_cur, q_cur;
+    integer dt, p_cur, q_cur, einfo = 0;
     char    datatype_char;
     integer datatype;
     double thresh;
@@ -1839,6 +2192,10 @@ void fla_test_op_driver( char*         func_str,
 
         case SVD:
             num_ranges          = params->svd_paramslist[0].num_ranges;
+            break;
+        
+        case AUX:
+            num_ranges          = params->aux_paramslist[0].num_ranges;
             break;
 
         default:
@@ -1906,6 +2263,21 @@ void fla_test_op_driver( char*         func_str,
                 n_repeats             = params->svd_paramslist[range_loop_counter].num_repeats;
                 n_datatypes           = params->svd_paramslist[range_loop_counter].num_data_types;
                 break;
+
+            case AUX:
+                p_first               = params->aux_paramslist[range_loop_counter].m_range_start;
+                p_max                 = params->aux_paramslist[range_loop_counter].m_range_end;
+                p_inc                 = params->aux_paramslist[range_loop_counter].m_range_step_size;
+                q_first               = params->aux_paramslist[range_loop_counter].n_range_start;
+                q_max                 = params->aux_paramslist[range_loop_counter].n_range_end;
+                q_inc                 = params->aux_paramslist[range_loop_counter].n_range_step_size;
+                thresh                = params->aux_paramslist[range_loop_counter].aux_threshold;
+                params->datatype      = params->aux_paramslist[range_loop_counter].data_types;
+                params->datatype_char = params->aux_paramslist[range_loop_counter].data_types_char;
+                n_repeats             = params->aux_paramslist[range_loop_counter].num_repeats;
+                n_datatypes           = params->aux_paramslist[range_loop_counter].num_data_types;
+                break;
+                
             default:
                 return;
         }
@@ -1925,7 +2297,7 @@ void fla_test_op_driver( char*         func_str,
 #pragma omp for
                     for ( ith = 0; ith < n_threads; ith++ )
                     {
-                        f_exp(params, datatype, p_cur, q_cur, range_loop_counter, n_repeats, (perf+ith), (time+ith), (residual+ith));
+                        f_exp(params, datatype, p_cur, q_cur, range_loop_counter, n_repeats, einfo, (perf+ith), (time+ith), (residual+ith));
                     }
 
                     get_max(DOUBLE, (void*)residual, (void*)&residual_max_val, n_threads);
@@ -1936,7 +2308,7 @@ void fla_test_op_driver( char*         func_str,
                 }
                 else
                 {
-                    f_exp(params, datatype, p_cur, q_cur, range_loop_counter, n_repeats, perf, time, residual);
+                    f_exp(params, datatype, p_cur, q_cur, range_loop_counter, n_repeats, einfo, perf, time, residual);
                     fla_test_print_status(func_str, datatype_char, sqr_inp, p_cur, q_cur, *residual, thresh, *time, *perf);
                 }
 
@@ -2070,22 +2442,22 @@ void fla_test_get_time_unit(char * scale , double * time)
         return ;
     }
 
-    if ((*time < 1) && (*time > 0.001))
+    if ((*time < 1) && (*time >= 0.001))
     {
         scale[0]='m';
         *time *= 1000;
     }
-    else if ((*time <0.001) && (*time > 0.000001))
+    else if ((*time <0.001) && (*time >= 0.000001))
     {
         scale[0]='u';
         *time *= 1000000;
     }
-    else if ((*time < 0.000001) && (*time > 0.000000001))
+    else if ((*time < 0.000001) && (*time >= 0.000000001))
     {
         scale[0]='n';
         *time *= 1000000000;
     }
-    else if ((*time < 0.000000001) && (*time > 0.000000000001))
+    else if ((*time < 0.000000001) && (*time >= 0.000000000001))
     {
         scale[0]='p';
         *time *= 1000000000000;

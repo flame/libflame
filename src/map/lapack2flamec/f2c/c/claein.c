@@ -169,7 +169,7 @@ int claein_(logical *rightv, logical *noinit, integer *n, complex *h__, integer 
     extern real scnrm2_(integer *, complex *, integer *);
     extern integer icamax_(integer *, complex *, integer *);
     extern /* Complex */
-    VOID cladiv_(complex *, complex *, complex *);
+    void cladiv_f2c_(complex *, complex *, complex *);
     extern /* Subroutine */
     int csscal_(integer *, real *, complex *, integer *), clatrs_(char *, char *, char *, char *, integer *, complex *, integer *, complex *, real *, real *, integer *);
     extern real scasum_(integer *, complex *, integer *);

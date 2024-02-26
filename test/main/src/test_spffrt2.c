@@ -6,16 +6,15 @@
 
 /* Local prototypes */
 void fla_test_spffrt2_experiment(test_params_t *params, integer  datatype, integer  p_cur, integer  q_cur, integer pci,
-                                    integer n_repeats, double* perf, double* t, double* residual);
+                                    integer n_repeats, integer einfo, double* perf, double* t, double* residual);
 void prepare_spffrt2_run(integer n_A, integer ncolm, integer pn, void *A, integer datatype, integer n_repeats, double* time_min_);
 void invoke_spffrt2(integer datatype, void *a, integer* n, integer * ncolm, void *work, void *work2);
-static FILE* g_ext_fptr = NULL;
 
 void fla_test_spffrt2(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Computes LDLT partial factorization";
     char* front_str = "SPFFRT2";
-    integer tests_not_run = 1, invalid_dtype = 0;
+    integer tests_not_run = 1, invalid_dtype = 0, einfo = 0;
 
     if(argc == 1)
     {
@@ -26,13 +25,7 @@ void fla_test_spffrt2(integer argc, char ** argv, test_params_t *params)
     }
     if (argc == 7)
     {
-        /* Read matrix input data from a file */
-        g_ext_fptr = fopen(argv[6], "r");
-        if (g_ext_fptr == NULL)
-        {
-            printf("\n Invalid input file argument \n");
-            return;
-        }
+        FLA_TEST_PARSE_LAST_ARG(argv[6]);
     }
     if (argc >= 6 && argc <= 7)
     {
@@ -75,7 +68,7 @@ void fla_test_spffrt2(integer argc, char ** argv, test_params_t *params)
                 fla_test_spffrt2_experiment(params, datatype,
                                           N, N,
                                           0,
-                                          n_repeats,
+                                          n_repeats, einfo,
                                           &perf, &time_min, &residual);
                 /* Print the results */
                 fla_test_print_status(front_str,
@@ -102,6 +95,7 @@ void fla_test_spffrt2(integer argc, char ** argv, test_params_t *params)
     if (g_ext_fptr != NULL)
     {
         fclose(g_ext_fptr);
+        g_ext_fptr = NULL;
     }
 
     return;
@@ -114,6 +108,7 @@ void fla_test_spffrt2_experiment(test_params_t *params,
     integer  q_cur,
     integer pci,
     integer n_repeats,
+    integer einfo,
     double* perf,
     double* t,
     double* residual)
@@ -160,10 +155,6 @@ void fla_test_spffrt2_experiment(test_params_t *params,
     if(ncolm <= n && n > 0 && ncolm > 0)
     {
         validate_spffrt2(n, ncolm, A, AP, datatype, residual);
-    }
-    else
-    {   /* Assigning bigger value to residual as execution fails */
-        *residual = DBL_MAX;
     }
 
     /* Free up the buffers */

@@ -9,7 +9,7 @@
 */
 
 /*
-    Copyright (c) 2021-2023 Advanced Micro Devices, Inc.  All rights reserved.
+    Modifications Copyright (c) 2021-2023 Advanced Micro Devices, Inc.  All rights reserved.
 */
 
 
@@ -21,10 +21,6 @@
 #undef  NULL
 #define NULL 0
 
-/* Enable AMD specific optimizations */
-#ifdef FLA_ENABLE_AMD_OPT
-#define FLA_AMD_OPT 1
-#endif
 #ifdef FLA_ENABLE_WINDOWS_BUILD
   #define restrict  __restrict
 #endif
@@ -258,10 +254,11 @@
 #define FLA_SGETRF_SMALL_THRESH1      (117)
 #define FLA_SGETRF_MEDIUM_THRESH0     (480)
 
-#define FLA_DGETRF_SMALL_THRESH0      (81)
+#define FLA_DGETRF_SMALL_THRESH0      (8)
+#define FLA_DGETRF_SMALL_AVX2_THRESH0      (81)
+#define FLA_DGETRF_SMALL_AVX512_THRESH0    (160)
 
-#define FLA_ZGETRF_SMALL_THRESH0      (22)
-#define FLA_ZGETRF_SMALL_THRESH1      (50)
+#define FLA_ZGETRF_SMALL_THRESH      (100)
 
 // GETRFNPI , these thresholds are used to chose between 3 algorithms to get best
 // results in terms of perfmormance

@@ -434,7 +434,7 @@ int sgerfsx_(char *trans, char *equed, integer *n, integer * nrhs, real *a, inte
     real anorm;
     extern real slamch_(char *), slange_(char *, integer *, integer *, real *, integer *, real *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), sgecon_( char *, integer *, real *, integer *, real *, real *, real *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), sgecon_( char *, integer *, real *, integer *, real *, real *, real *, integer *, integer *);
     logical colequ, notran, rowequ;
     extern integer ilaprec_(char *);
     integer ithresh, n_norms__;
@@ -587,7 +587,7 @@ int sgerfsx_(char *trans, char *equed, integer *n, integer * nrhs, real *a, inte
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGERFSX", &i__1);
+        xerbla_("SGERFSX", &i__1, (ftnlen)7);
         return 0;
     }
     /* Quick return if possible. */

@@ -263,11 +263,11 @@ int zlatps_(char *uplo, char *trans, char *diag, char * normin, integer *n, doub
     extern doublereal dlamch_(char *);
     extern integer idamax_(integer *, doublereal *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zdscal_( integer *, doublereal *, doublecomplex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zdscal_( integer *, doublereal *, doublecomplex *, integer *);
     doublereal bignum;
     extern integer izamax_(integer *, doublecomplex *, integer *);
     extern /* Double Complex */
-    VOID zladiv_(doublecomplex *, doublecomplex *, doublecomplex *);
+    void zladiv_f2c_(doublecomplex *, doublecomplex *, doublecomplex *);
     logical notran;
     integer jfirst;
     extern doublereal dzasum_(integer *, doublecomplex *, integer *);
@@ -330,7 +330,7 @@ int zlatps_(char *uplo, char *trans, char *diag, char * normin, integer *n, doub
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZLATPS", &i__1);
+        xerbla_("ZLATPS", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

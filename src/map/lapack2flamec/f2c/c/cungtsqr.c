@@ -189,7 +189,7 @@ int cungtsqr_(integer *m, integer *n, integer *mb, integer * nb, complex *a, int
     int clamtsqr_(char *, char *, integer *, integer *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, integer * );
     integer lworkopt, j, lc, lw, ldc, iinfo;
     extern /* Subroutine */
-    int ccopy_(integer *, complex *, integer *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(char *, integer *);
+    int ccopy_(integer *, complex *, integer *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical lquery;
     integer nblocal;
     /* -- LAPACK computational routine (version 3.9.0) -- */
@@ -282,7 +282,7 @@ int cungtsqr_(integer *m, integer *n, integer *mb, integer * nb, complex *a, int
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CUNGTSQR", &i__1);
+        xerbla_("CUNGTSQR", &i__1, (ftnlen)8);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

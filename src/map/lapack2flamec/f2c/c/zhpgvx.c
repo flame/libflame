@@ -288,7 +288,7 @@ int zhpgvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, do
     int ztpmv_(char *, char *, char *, integer *, doublecomplex *, doublecomplex *, integer *), ztpsv_(char *, char *, char *, integer *, doublecomplex *, doublecomplex *, integer *);
     logical alleig, indeig, valeig;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zhpgst_( integer *, char *, integer *, doublecomplex *, doublecomplex *, integer *), zhpevx_(char *, char *, char *, integer *, doublecomplex *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, doublereal *, doublecomplex *, integer *, doublecomplex *, doublereal *, integer *, integer *, integer *), zpptrf_(char *, integer *, doublecomplex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zhpgst_( integer *, char *, integer *, doublecomplex *, doublecomplex *, integer *), zhpevx_(char *, char *, char *, integer *, doublecomplex *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, doublereal *, doublecomplex *, integer *, doublecomplex *, doublereal *, integer *, integer *, integer *), zpptrf_(char *, integer *, doublecomplex *, integer *);
     /* -- LAPACK driver routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -377,7 +377,7 @@ int zhpgvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, do
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHPGVX", &i__1);
+        xerbla_("ZHPGVX", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

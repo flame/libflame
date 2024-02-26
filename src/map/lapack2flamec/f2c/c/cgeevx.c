@@ -327,7 +327,7 @@ int cgeevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, co
     int cgehrd_(integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *), clascl_(char *, integer *, integer *, real *, real *, integer *, integer *, complex *, integer *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int csscal_(integer *, real *, complex *, integer *), clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *);
+    int csscal_(integer *, real *, complex *, integer *), clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     logical select[1];
     real bignum;
@@ -528,7 +528,7 @@ int cgeevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, co
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGEEVX", &i__1);
+        xerbla_("CGEEVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

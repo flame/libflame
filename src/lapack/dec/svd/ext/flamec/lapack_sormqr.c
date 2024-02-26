@@ -169,8 +169,7 @@ the routine */
 int lapack_sormqr(char *side, char *trans, integer *m, integer *n, integer *k, real *a, integer *lda, real *tau, real *c__, integer *ldc, real *work, integer *lwork, integer *info)
 {
     /* System generated locals */
-    address a__1[2];
-    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__3[2], i__4, i__5;
+    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__4, i__5;
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */
@@ -184,7 +183,7 @@ int lapack_sormqr(char *side, char *trans, integer *m, integer *n, integer *k, r
     int lapack_sorm2r(char *, char *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *);
     integer mi, ni, nq, nw;
     extern /* Subroutine */
-    int slarfb_(char *, char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *);
+    int slarfb_(char *, char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int slarft_(char *, char *, integer *, integer *, real *, integer *, real *, real *, integer *);
@@ -288,7 +287,7 @@ int lapack_sormqr(char *side, char *trans, integer *m, integer *n, integer *k, r
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SORMQR", &i__1);
+        xerbla_("SORMQR", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

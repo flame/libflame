@@ -134,7 +134,7 @@ int zsyr_(char *uplo, integer *n, doublecomplex *alpha, doublecomplex *x, intege
     doublecomplex temp;
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -163,6 +163,7 @@ int zsyr_(char *uplo, integer *n, doublecomplex *alpha, doublecomplex *x, intege
     a -= a_offset;
     /* Function Body */
     info = 0;
+    kx = 0;
     if (! lsame_(uplo, "U") && ! lsame_(uplo, "L"))
     {
         info = 1;
@@ -181,7 +182,7 @@ int zsyr_(char *uplo, integer *n, doublecomplex *alpha, doublecomplex *x, intege
     }
     if (info != 0)
     {
-        xerbla_("ZSYR ", &info);
+        xerbla_("ZSYR ", &info, (ftnlen)5);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

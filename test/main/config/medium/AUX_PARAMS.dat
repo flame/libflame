@@ -1,0 +1,14 @@
+Num_Tests 4
+MRange_start 10 100 1000 2000
+MRange_end   20 300 1600 3000
+MRange_step_size 10 100 200 1000
+NRange_start 5 120 1400 2500
+NRange_end   100 1000 2000 5000
+NRange_step_size 15 130 250 1600
+lda -1 300 1400 3000
+incx 1 -1 3 3
+incy 1 -1 -1 3
+Repeats 1 1 1 1
+DataTypes s d c z
+Matrix_Layout 101 102 101 102
+threshold 3.0 3.0 3.0 3.0

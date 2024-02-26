@@ -289,7 +289,7 @@ int ssysvx_(char *fact, char *uplo, integer *n, integer * nrhs, real *a, integer
     extern real slamch_(char *);
     logical nofact;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *);
@@ -404,7 +404,7 @@ int ssysvx_(char *fact, char *uplo, integer *n, integer * nrhs, real *a, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSYSVX", &i__1);
+        xerbla_("SSYSVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

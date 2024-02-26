@@ -7,8 +7,13 @@
     directory, or at http://opensource.org/licenses/BSD-3-Clause
 
 */
-
+/*
+ *     Modifications Copyright (c) 2021-2023 Advanced Micro Devices, Inc.  All rights reserved.
+ */
 #include "FLAME.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
 
 #ifndef FLA_LAPACK2FLAME_RETURN_DEFS_H
 #define FLA_LAPACK2FLAME_RETURN_DEFS_H
@@ -50,8 +55,10 @@ switch ( r_val )                                                      \
     }                                                                   \
   }
 
-extern int lsame_(char *, char *);
-extern int xerbla_(char *, integer *);
+#ifndef FLA_ENABLE_AOCL_BLAS
+extern int lsame_(char *, char *, integer a, integer b);
+extern int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
+#endif
 extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
 
 

@@ -366,7 +366,7 @@ the */
 /* > */
 /* ===================================================================== */
 /* Subroutine */
-int sggesx_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, char *sense, integer *n, real *a, integer *lda, real *b, integer *ldb, integer *sdim, real *alphar, real *alphai, real *beta, real *vsl, integer *ldvsl, real *vsr, integer *ldvsr, real *rconde, real *rcondv, real *work, integer *lwork, integer *iwork, integer * liwork, logical *bwork, integer *info)
+int sggesx_(char *jobvsl, char *jobvsr, char *sort, L_fps3 selctg, char *sense, integer *n, real *a, integer *lda, real *b, integer *ldb, integer *sdim, real *alphar, real *alphai, real *beta, real *vsl, integer *ldvsl, real *vsr, integer *ldvsr, real *rconde, real *rcondv, real *work, integer *lwork, integer *iwork, integer * liwork, logical *bwork, integer *info)
 {
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, vsl_dim1, vsl_offset, vsr_dim1, vsr_offset, i__1, i__2;
@@ -395,7 +395,7 @@ int sggesx_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, char *sense, in
     int sgghrd_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *);
     real safmax;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     extern /* Subroutine */
     int slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *);
@@ -617,7 +617,7 @@ int sggesx_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, char *sense, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGGESX", &i__1);
+        xerbla_("SGGESX", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

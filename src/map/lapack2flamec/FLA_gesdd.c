@@ -107,7 +107,7 @@ LAPACK_gesdd_real(s)
   extern int sgesdd_fla_check(char *jobu, char *jobvt, integer *m, integer *n, float *a, integer *lda, float *s, float *u, integer *ldu, float *vt, integer *ldvt, float *work, integer *lwork, integer *info);
   extern int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, real *s, real *u, integer *ldu, real *vt, integer *ldvt, real *work, integer *lwork, integer *iwork, integer *info);
  
-#if FLA_AMD_OPT
+#if FLA_ENABLE_AMD_OPT
   {
     if(*m > 750 || *n > 750){
       char jobu[1], jobv[1];
@@ -206,7 +206,7 @@ LAPACK_gesdd_real(d)
   AOCL_DTL_SNPRINTF("dgesdd inputs: jobz %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS ", lwork %" FLA_IS "", *jobz, *m, *n, *ldim_A, *ldim_U, *ldim_Vh, *lwork);
   extern int lapack_dgesdd(char *jobz, integer *m, integer *n, doublereal *a, integer *lda, doublereal *s, doublereal *u, integer *ldu, doublereal *vt, integer *ldvt, doublereal *work, integer *lwork, integer *iwork, integer *info);
 
-#if FLA_AMD_OPT
+#if FLA_ENABLE_AMD_OPT
   {
     LAPACK_RETURN_CHECK_VAR1( dgesdd_check( jobz,
                                     m, n,

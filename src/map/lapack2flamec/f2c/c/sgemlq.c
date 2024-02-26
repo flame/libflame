@@ -172,9 +172,8 @@ int sgemlq_(char *side, char *trans, integer *m, integer *n, integer *k, real *a
     logical left, tran;
     extern logical lsame_(char *, char *);
     logical right;
-    integer nblcks;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical notran, lquery;
     extern /* Subroutine */
     int sgemlqt_(char *, char *, integer *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *);
@@ -225,21 +224,6 @@ int sgemlq_(char *side, char *trans, integer *m, integer *n, integer *k, real *a
         lw = *m * mb;
         mn = *n;
     }
-    if (nb > *k && mn > *k)
-    {
-        if ((mn - *k) % (nb - *k) == 0)
-        {
-            nblcks = (mn - *k) / (nb - *k);
-        }
-        else
-        {
-            nblcks = (mn - *k) / (nb - *k) + 1;
-        }
-    }
-    else
-    {
-        nblcks = 1;
-    }
     *info = 0;
     if (! left && ! right)
     {
@@ -284,7 +268,7 @@ int sgemlq_(char *side, char *trans, integer *m, integer *n, integer *k, real *a
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGEMLQ", &i__1);
+        xerbla_("SGEMLQ", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

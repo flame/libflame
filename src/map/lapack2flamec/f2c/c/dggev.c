@@ -253,7 +253,7 @@ int dggev_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
     char chtemp[1];
     doublereal bignum;
     extern /* Subroutine */
-    int dhgeqz_(char *, char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *), xerbla_(char *, integer *);
+    int dhgeqz_(char *, char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer ijobvl, iright, ijobvr;
     extern /* Subroutine */
@@ -404,7 +404,7 @@ int dggev_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGGEV ", &i__1);
+        xerbla_("DGGEV ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

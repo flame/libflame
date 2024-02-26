@@ -77,6 +77,7 @@ doublereal dlapy2_(doublereal *x, doublereal *y)
     /* .. Intrinsic Functions .. */
     /* .. */
     /* .. Executable Statements .. */
+    ret_val = 0;
     x_is_nan__ = (*x != *x);
     y_is_nan__ = (*y != *y);
     if (r_once)

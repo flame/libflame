@@ -194,7 +194,7 @@ int zgelss_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     integer i__, bl, ie, il, mm;
     doublecomplex dum[1];
     doublereal eps, thr, anrm, bnrm;
-    integer itau, lwork_zgebrd__, lwork_zgelqf__, lwork_zgeqrf__, lwork_zungbr__, lwork_zunmbr__, iascl, ibscl, lwork_zunmlq__, chunk, lwork_zunmqr__;
+    integer itau, lwork_zgebrd__, lwork_zgelqf__, lwork_zungbr__, lwork_zunmbr__, iascl, ibscl, lwork_zunmlq__, chunk;
     doublereal sfmin;
     integer minmn;
     extern /* Subroutine */
@@ -207,7 +207,7 @@ int zgelss_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     int zcopy_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), dlabad_(doublereal *, doublereal *);
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *), zgebrd_(integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, integer *);
+    int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), zgebrd_(integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, integer *);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern doublereal zlange_(char *, integer *, integer *, doublecomplex *, integer *, doublereal *);
     doublereal bignum;
@@ -291,6 +291,7 @@ int zgelss_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     /* CWorkspace refers to complex workspace, and RWorkspace refers */
     /* to real workspace. NB refers to the optimal block size for the */
     /* immediately following subroutine, as returned by ILAENV.) */
+    mnthr = ilaenv_(&c__6, "ZGELSS", " ", m, n, nrhs, &c_n1);
     if (*info == 0)
     {
         minwrk = 1;
@@ -298,17 +299,14 @@ int zgelss_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
         if (minmn > 0)
         {
             mm = *m;
-            mnthr = ilaenv_(&c__6, "ZGELSS", " ", m, n, nrhs, &c_n1);
             if (*m >= *n && *m >= mnthr)
             {
                 /* Path 1a - overdetermined, with many more rows than */
                 /* columns */
                 /* Compute space needed for ZGEQRF */
                 zgeqrf_(m, n, &a[a_offset], lda, dum, dum, &c_n1, info);
-                lwork_zgeqrf__ = (integer) dum[0].r;
                 /* Compute space needed for ZUNMQR */
                 zunmqr_("L", "C", m, nrhs, n, &a[a_offset], lda, dum, &b[ b_offset], ldb, dum, &c_n1, info);
-                lwork_zunmqr__ = (integer) dum[0].r;
                 mm = *n;
                 /* Computing MAX */
                 i__1 = maxwrk;
@@ -444,7 +442,7 @@ int zgelss_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGELSS", &i__1);
+        xerbla_("ZGELSS", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

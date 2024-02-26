@@ -14,7 +14,7 @@ int zsyrk_(char *uplo, char *trans, integer *n, integer *k, doublecomplex *alpha
     integer nrowa;
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
     /* .. */
@@ -149,7 +149,7 @@ int zsyrk_(char *uplo, char *trans, integer *n, integer *k, doublecomplex *alpha
     }
     if (info != 0)
     {
-        xerbla_("ZSYRK ", &info);
+        xerbla_("ZSYRK ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

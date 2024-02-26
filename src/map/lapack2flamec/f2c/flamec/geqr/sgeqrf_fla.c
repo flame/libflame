@@ -148,7 +148,7 @@
  int sgeqr2_fla(integer *, integer *, real *, integer *, real *, real *, integer *);
  integer ib, nb, nx;
  extern /* Subroutine */
- int slarfb_(char *, char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *);
+ int slarfb_(char *, char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
  extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
  extern /* Subroutine */
  int slarft_(char *, char *, integer *, integer *, real *, integer *, real *, real *, integer *);
@@ -203,7 +203,7 @@
  }
  if (*info != 0) {
  i__1 = -(*info);
- xerbla_("SGEQRF", &i__1);
+ xerbla_("SGEQRF", &i__1, (ftnlen)6);
  return 0;
  }
  else if (lquery) {
@@ -220,7 +220,7 @@
  iws = *n;
 
  #if AOCL_FLA_PROGRESS_H
-        step_count =0;
+        progress_step_count =0;
     #ifndef FLA_ENABLE_WINDOWS_BUILD
         if(!aocl_fla_progress_ptr)
               aocl_fla_progress_ptr=aocl_fla_progress;
@@ -262,8 +262,8 @@
   #if AOCL_FLA_PROGRESS_H
 
         if(aocl_fla_progress_ptr){
-                step_count+=ib;
-                AOCL_FLA_PROGRESS_FUNC_PTR("SGEQRF",6,&step_count,&thread_id,&total_threads);
+                progress_step_count+=ib;
+                AOCL_FLA_PROGRESS_FUNC_PTR("SGEQRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
          }
 
   #endif
@@ -293,8 +293,8 @@
   #if AOCL_FLA_PROGRESS_H
 
          if(aocl_fla_progress_ptr){
-                  step_count=k;
-                   AOCL_FLA_PROGRESS_FUNC_PTR("SGEQRF",6,&step_count,&thread_id,&total_threads);
+                  progress_step_count=k;
+                   AOCL_FLA_PROGRESS_FUNC_PTR("SGEQRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
           }
 
   #endif

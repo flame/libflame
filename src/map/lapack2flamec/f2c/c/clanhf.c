@@ -286,6 +286,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
     /* .. Intrinsic Functions .. */
     /* .. */
     /* .. Executable Statements .. */
+    value = 0.f;
     if (*n == 0)
     {
         ret_val = 0.f;

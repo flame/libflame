@@ -402,7 +402,7 @@ int cgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
     int cgbrfs_(char *, integer *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, integer *, complex *, integer *, complex *, integer *, real *, real *, complex *, real *, integer *), cgbtrf_(integer *, integer *, integer *, integer *, complex *, integer *, integer *, integer *);
     logical nofact;
     extern /* Subroutine */
-    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *);
+    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     extern /* Subroutine */
     int cgbtrs_(char *, integer *, integer *, integer *, integer *, complex *, integer *, integer *, complex *, integer *, integer *);
@@ -461,6 +461,8 @@ int cgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
     nofact = lsame_(fact, "N");
     equil = lsame_(fact, "E");
     notran = lsame_(trans, "N");
+    smlnum = 0.f;
+    bignum = 0.f;
     if (nofact || equil)
     {
         *(unsigned char *)equed = 'N';
@@ -592,7 +594,7 @@ int cgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGBSVX", &i__1);
+        xerbla_("CGBSVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

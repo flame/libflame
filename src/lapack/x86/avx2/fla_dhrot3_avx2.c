@@ -1,5 +1,5 @@
 /******************************************************************************
-* Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+* Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
 *******************************************************************************/
 
 /*! @file fla_dhrot3_avx2.c
@@ -7,8 +7,9 @@
  *  */
 
 #include "FLAME.h"
+#include "fla_lapack_avx2_kernels.h"
 
-#ifdef FLA_ENABLE_AMD_OPT
+#if FLA_ENABLE_AMD_OPT
 
 /* Application of 3x3 Householder reflector on a 3xn matrix */
 int fla_dhrot3_avx2(integer *n, doublereal *a, integer *lda, doublereal *v, doublereal *tau)

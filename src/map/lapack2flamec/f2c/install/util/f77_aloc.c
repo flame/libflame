@@ -5,7 +5,7 @@
 #include "stdio.h"
 
 static const integer memfailure = 3;
-extern void exit_(integer*);
+extern void exit_(const integer*);
 
 #ifdef __cplusplus
 extern "C" {

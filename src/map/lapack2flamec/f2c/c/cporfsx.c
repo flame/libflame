@@ -419,7 +419,7 @@ int cporfsx_(char *uplo, char *equed, integer *n, integer * nrhs, complex *a, in
     logical rcequ;
     extern real cla_porcond_c_(char *, integer *, complex *, integer *, complex *, integer *, real *, logical *, integer *, complex *, real *), cla_porcond_x_(char *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, real *), clanhe_(char *, char *, integer *, complex *, integer *, real *), slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), cpocon_( char *, integer *, complex *, integer *, real *, real *, complex *, real *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), cpocon_( char *, integer *, complex *, integer *, real *, real *, complex *, real *, integer *);
     extern integer ilaprec_(char *);
     integer ithresh, n_norms__;
     real rthresh;
@@ -566,7 +566,7 @@ int cporfsx_(char *uplo, char *equed, integer *n, integer * nrhs, complex *a, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CPORFSX", &i__1);
+        xerbla_("CPORFSX", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

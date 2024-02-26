@@ -186,7 +186,7 @@ int dsytrf_(char *uplo, integer *n, doublereal *a, integer * lda, integer *ipiv,
     integer nbmin, iinfo;
     logical upper;
     extern /* Subroutine */
-    int dsytf2_(char *, integer *, doublereal *, integer *, integer *, integer *), xerbla_(char *, integer *);
+    int dsytf2_(char *, integer *, doublereal *, integer *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int dlasyf_(char *, integer *, integer *, integer *, doublereal *, integer *, integer *, doublereal *, integer *, integer *);
@@ -247,7 +247,7 @@ int dsytrf_(char *uplo, integer *n, doublereal *a, integer * lda, integer *ipiv,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSYTRF", &i__1);
+        xerbla_("DSYTRF", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -151,7 +151,7 @@ int sgbtf2_(integer *m, integer *n, integer *kl, integer *ku, real *ab, integer 
     /* Local variables */
     integer i__, j, km, jp, ju, kv;
     extern /* Subroutine */
-    int sger_(integer *, integer *, real *, real *, integer *, real *, integer *, real *, integer *), sscal_(integer *, real *, real *, integer *), sswap_(integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *);
+    int sger_(integer *, integer *, real *, real *, integer *, real *, integer *, real *, integer *), sscal_(integer *, real *, real *, integer *), sswap_(integer *, real *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer isamax_(integer *, real *, integer *);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -210,7 +210,7 @@ int sgbtf2_(integer *m, integer *n, integer *kl, integer *ku, real *ab, integer 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGBTF2", &i__1);
+        xerbla_("SGBTF2", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
@@ -221,7 +221,7 @@ int sgbtf2_(integer *m, integer *n, integer *kl, integer *ku, real *ab, integer 
         return 0;
     }
     #if AOCL_FLA_PROGRESS_H
-        step_count =0;
+        progress_step_count =0;
     	 #ifndef FLA_ENABLE_WINDOWS_BUILD
         	if(!aocl_fla_progress_ptr)
               	    aocl_fla_progress_ptr=aocl_fla_progress;
@@ -254,13 +254,13 @@ int sgbtf2_(integer *m, integer *n, integer *kl, integer *ku, real *ab, integer 
             ++j)
     {
 	#if AOCL_FLA_PROGRESS_H
-            if(aocl_fla_progress_ptr){
-		if(j%32==0 || j==i__1){
-			step_count=j;
-                        AOCL_FLA_PROGRESS_FUNC_PTR("SGBTF2",6,&step_count,&thread_id,&total_threads);
-                }
-            }  
-        #endif
+        if(aocl_fla_progress_ptr){
+		    if(j%32==0 || j==i__1){
+			    progress_step_count=j;
+                AOCL_FLA_PROGRESS_FUNC_PTR("SGBTF2",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
+            }
+        }  
+    #endif
 
         /* Set fill-in elements in column J+KV to zero. */
         if (j + kv <= *n)

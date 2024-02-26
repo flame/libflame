@@ -5,7 +5,6 @@
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
 static integer c_n1 = -1;
-static integer c__2 = 2;
 /* > \brief \b SORMBR */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
@@ -197,8 +196,7 @@ the routine */
 int lapack_sormbr(char *vect, char *side, char *trans, integer *m, integer *n, integer *k, real *a, integer *lda, real *tau, real *c__, integer *ldc, real *work, integer *lwork, integer *info)
 {
     /* System generated locals */
-    address a__1[2];
-    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__3[2];
+    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2;
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */
@@ -208,7 +206,7 @@ int lapack_sormbr(char *vect, char *side, char *trans, integer *m, integer *n, i
     extern logical lsame_(char *, char *);
     integer iinfo, i1, i2, nb, mi, ni, nq, nw;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     logical notran, applyq;
     char transt[1];
@@ -342,7 +340,7 @@ int lapack_sormbr(char *vect, char *side, char *trans, integer *m, integer *n, i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SORMBR", &i__1);
+        xerbla_("SORMBR", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

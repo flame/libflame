@@ -74,19 +74,21 @@ main()
 	mkdir ./${testdir_new}/lapacke
 	cp ./build/lapacke-Makefile ./${testdir_new}/lapacke/Makefile
 
-	echo "Tweaking TESTING/LIN/xerbla.f."
-	echo "Tweaking TESTING/EIG/xerbla.f."
+	#echo "Tweaking TESTING/LIN/xerbla.f."
+	#echo "Tweaking TESTING/EIG/xerbla.f."
 
 	# Disable a part of the custom xerbla_() that tests string equality
 	# since this is broken due to Fortran/C incompatibilities.
-	xb_lin_in=${netlib_path}/TESTING/LIN/xerbla.f
-	xb_lin_ou=${testdir_new}/TESTING/LIN/xerbla.f
-	xb_eig_in=${netlib_path}/TESTING/EIG/xerbla.f
-	xb_eig_ou=${testdir_new}/TESTING/EIG/xerbla.f
-	sed_expr="s/SRNAME\.NE\.SRNAMT/\.FALSE./g"
+	# (No longer needed due to adaptation of C xerbla to include extra
+	# string length argument.
+	#xb_lin_in=${netlib_path}/TESTING/LIN/xerbla.f
+	#xb_lin_ou=${testdir_new}/TESTING/LIN/xerbla.f
+	#xb_eig_in=${netlib_path}/TESTING/EIG/xerbla.f
+	#xb_eig_ou=${testdir_new}/TESTING/EIG/xerbla.f
+	#sed_expr="s/SRNAME\.NE\.SRNAMT/\.FALSE./g"
 
-	sed -e "${sed_expr}" ${xb_lin_in} > ${xb_lin_ou}
-	sed -e "${sed_expr}" ${xb_eig_in} > ${xb_eig_ou}
+	#sed -e "${sed_expr}" ${xb_lin_in} > ${xb_lin_ou}
+	#sed -e "${sed_expr}" ${xb_eig_in} > ${xb_eig_ou}
 
 	echo "Tweaking ddrvsg.f"
 

@@ -1,8 +1,11 @@
 /*
- *  Copyright (c) 2021 Advanced Micro Devices, Inc. All rights reserved.
+ *  Copyright (c) 2021-2023 Advanced Micro Devices, Inc. All rights reserved.
  * */
 
 #include "FLAME.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
 
 /**************************************************************************************
  This method uses nonrecursive ger based method to calculate ATL,ABL,ATR,ABR implicitly
@@ -18,7 +21,6 @@ FLA_Error FLA_LU_nopiv_is_unblk_var1( integer m_A, integer n_A, float* A , integ
   float *Minusone = &rminusone;
   float rone = bl1_s1();
   float *One = &rone;
-  float rzero = bl1_s0();
   integer inc_x, inc_y, i, diff, tr_m, tr_n, tr_nfe, tr_ne;
   float alpha_inv;
   float *alpha;
@@ -85,13 +87,13 @@ FLA_Error FLA_LU_nopiv_is_unblk_var1( integer m_A, integer n_A, float* A , integ
     // U2 or new ATR = L1^-1 * ATR                    // ATR size to be updated is e_val x (m_A - nfact)
     if( tr_m != 0 )                             // if size of ATR is 0 then trsm is invalid
     {
-      strsm_( "L", "L", "N", "U", &e_val, &tr_m, One, A, &cs_A, (A + cs_A * nfact), &cs_A );
+      strsm_( "L", "L", "N", "U", (integer *) &e_val, &tr_m, One, A, &cs_A, (A + cs_A * nfact), &cs_A );
     }
 
     // L2 valid ABL calculation = U1^-1 * valid ABL   // ABL size to be updated is (n_A - nfact) * e_val
     if( tr_n != 0 )                             // base invalid cases when size of  ABL is 0, nfact=1 case handled seperately
     {
-       strsm_( "R", "U", "N", "N", &tr_n, &e_val, One, A, &cs_A, (A + nfact), &cs_A );
+       strsm_( "R", "U", "N", "N", &tr_n, (integer *) &e_val, One, A, &cs_A, (A + nfact), &cs_A );
     }
 
 
@@ -101,14 +103,14 @@ FLA_Error FLA_LU_nopiv_is_unblk_var1( integer m_A, integer n_A, float* A , integ
     if( ( tr_n != 0 ) )                         // base invalid cases check
     {
        tr_nfe = nfact - e_val;
-       sgemm_( "N", "N", &tr_n, &tr_nfe,  &e_val, Minusone, (A + nfact), &cs_A, (A + e_val * cs_A), &cs_A, One, (A + nfact + e_val * cs_A), &cs_A );
+       sgemm_( "N", "N", &tr_n, &tr_nfe, (integer *) &e_val, Minusone, (A + nfact), &cs_A, (A + e_val * cs_A), &cs_A, One, (A + nfact + e_val * cs_A), &cs_A );
     }
 
   // new ABR2 = ABR2 - valid ATR * (valid updated ATL's ABL part + new ABL)
     if( ( tr_m != 0 ) )
     {
        tr_ne = n_A - e_val;
-       sgemm_( "N", "N", &tr_ne, &tr_m,  &e_val, Minusone, (A + e_val), &cs_A, (A + nfact * cs_A), &cs_A, One, (A + e_val + nfact * cs_A), &cs_A );
+       sgemm_( "N", "N", &tr_ne, &tr_m, (integer *) &e_val, Minusone, (A + e_val), &cs_A, (A + nfact * cs_A), &cs_A, One, (A + e_val + nfact * cs_A), &cs_A );
     }
   }
 

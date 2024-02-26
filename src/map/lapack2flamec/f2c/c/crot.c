@@ -102,8 +102,8 @@ int crot_(integer *n, complex *cx, integer *incx, complex * cy, integer *incy, r
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */
-    integer i__1, i__2, i__3, i__4;
-    complex q__1, q__2, q__3, q__4;
+    integer i__1;
+    complex q__1, q__2, q__3;
     /* Local variables */
     integer i__, ix, iy;
     complex stemp;

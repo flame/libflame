@@ -8,6 +8,8 @@
 #include <string.h>
 #include <time.h>
 #include <float.h>
+#include <sys/stat.h>
+#include <ctype.h>
 #ifdef _WIN32
 #include <Windows.h>
 #endif
@@ -22,10 +24,6 @@
 #include "test_common.h"
 
 #define OPERATIONS_FILENAME                "input.global.operations"
-#define LINEAR_PARAMETERS_FILENAME         "config/LIN_SLVR.dat"
-#define SYM_EIG_PARAMETERS_FILENAME        "config/EIG_PARAMS.dat"
-#define SVD_PARAMETERS_FILENAME            "config/SVD.dat"
-#define NON_SYM_EIG_PARAMETERS_FILENAME    "config/EIG_NSYM_PARAMS.dat"
 
 #define COMMENT_CHAR             '#'
 #define MAX_BINARY_NAME_LENGTH   256
@@ -70,6 +68,8 @@
 #define EIG_SYM        (2)
 #define EIG_NSYM       (3)
 #define SVD            (4)
+#define AUX            (5)
+
 
 //pass 1 to test  standard AOCL_FLA_PROGRESS fucntion,
 //pass 2 to test  register callback function
@@ -78,6 +78,66 @@
 #if AOCL_FLA_SET_PROGRESS_ENABLE == 2
 int test_progress(const char* const api,const integer lenapi,const integer* const progress,const integer* const current_thread,const integer* const total_threads);
 #endif
+
+/* Flag to indicate lwork/liwork/lrwork availability status
+ * <= 0 - To be calculated
+ * > 0  - Use the value
+ * */
+extern integer g_lwork;
+extern integer g_liwork;
+extern integer g_lrwork;
+/* Variable to indicate the source of inputs
+ * = 0 - Inputs are from command line
+ * = 1 - Inputs are from config file
+ * */
+extern integer config_data;
+/* File pointer for external file which is used
+ * to pass the input matrix values
+ * */
+extern FILE* g_ext_fptr;
+
+
+#define FLA_TEST_PARSE_LAST_ARG(argv)                     \
+    integer i;                                            \
+    char *info;                                           \
+    char info_value[2][MAX_PASS_STRING_LENGTH];           \
+                                                          \
+    i = 0;                                                \
+    if(strstr(argv,"--einfo") != NULL)                    \
+    {                                                     \
+        info = strtok(argv,"=");                          \
+        while( info != NULL && i < 2 )                    \
+        {                                                 \
+            strcpy( info_value[i], info);                 \
+            i++;                                          \
+            info = strtok(NULL, "=");                     \
+        }                                                 \
+        einfo = atoi(info_value[1]);                      \
+    }                                                     \
+    else if(strstr(argv,"--imatrix") != NULL)             \
+    {                                                     \
+        info = strtok(argv,"=");                          \
+        while( info != NULL && i < 2 )                    \
+        {                                                 \
+            strcpy( info_value[i], info);                 \
+            i++;                                          \
+            info = strtok(NULL, "=");                     \
+        }                                                 \
+        params->imatrix_char  = info_value[1][0];         \
+    }                                                     \
+    else                                                  \
+    {                                                     \ 
+        g_ext_fptr = fopen(argv, "r");                    \
+        if (g_ext_fptr == NULL)                           \
+        {                                                 \
+            printf("\n Invalid input file argument \n");  \
+            return;                                       \
+        }                                                 \
+    }                                                     \
+
+#define FLA_TEST_CHECK_EINFO(residual, info, einfo)       \
+    if(info != einfo)                                     \
+        *residual = DBL_MAX;                              \
 
 typedef struct Lin_solver_paramlist_t
 {
@@ -172,6 +232,12 @@ typedef struct EIG_paramlist_t
     integer tsize;
     integer ilo;
     integer ihi;
+    char range_x; // range must be 'A', 'V' or 'I'
+    integer IL;
+    integer IU;
+    real VL;
+    real VU;
+    real abstol;
     integer threshold_value; // threshold value for EIG
 }EIG_paramlist;
 
@@ -305,6 +371,30 @@ typedef struct SVD_paramlist_t
 
 }SVD_paramlist;
 
+/* struct to hold AUX parameters */
+typedef struct AUX_paramlist_t
+{
+    integer num_ranges; // number of ranges to run
+    integer m_range_start;
+    integer m_range_end;
+    integer m_range_step_size;
+    integer n_range_start;
+    integer n_range_end;
+    integer n_range_step_size;
+    integer lda; // Leading dimension of Array A. LDA >= fla_max(1, n)
+    integer incx; // The increment between successive values of CX
+    integer incy; // The increment between successive values of CY
+    integer num_repeats;
+    integer num_tests;
+    integer num_data_types;
+    integer data_types[MAX_NUM_DATATYPES];
+    char data_types_char[MAX_NUM_DATATYPES];
+    integer matrix_layout; //  storage layout LAPACK_ROW_MAJOR or LAPACK_COL_MAJOR
+    /* Thresholds for the APIs  */
+    float aux_threshold; // threshold for the aux API
+
+}AUX_paramlist;
+
 
 typedef struct
 {
@@ -316,11 +406,13 @@ typedef struct
     integer       p_max;
     integer       p_inc;
     integer       p_nfact;
+    char          imatrix_char;
 
     struct SVD_paramlist_t svd_paramslist[NUM_SUB_TESTS];
     struct EIG_Non_symmetric_paramlist_t eig_non_sym_paramslist[NUM_SUB_TESTS];
     struct EIG_paramlist_t eig_sym_paramslist[NUM_SUB_TESTS];
     struct Lin_solver_paramlist_t lin_solver_paramslist[NUM_SUB_TESTS];
+    struct AUX_paramlist_t aux_paramslist[NUM_SUB_TESTS];
 
 } test_params_t;
 
@@ -338,7 +430,7 @@ typedef struct
 
 typedef struct
 {
-    integer type;/* 0 for LIN, 1 for EIG, 2 for SVD */
+    integer type;/* 0 for LIN, 1 for EIG, 2 for SVD, 3 for AUX */
     char *ops;
     void (*fp)(integer argc, char** argv, test_params_t *);
 }OPERATIONS;
@@ -368,6 +460,9 @@ void fla_test_read_non_sym_eig_params( const char* input_filename, test_params_t
 /*Function to read SVD parametes from config file */
 void fla_test_read_svd_params ( const char* input_filename, test_params_t* params );
 
+/*Function to read AUX parametes from config file */
+void fla_test_read_aux_params ( const char* input_filename, test_params_t* params );
+
 void fla_test_lapack_suite( char* input_filename, test_params_t *params );
 
 void fla_test_op_driver( char*            func_str,
@@ -380,6 +475,7 @@ void fla_test_op_driver( char*            func_str,
                                         integer,        // q_cur
                                         integer,        // pci (param combo counter)
                                         integer,        // n_repeats
+                                        integer,        // einfo
                                         double*,        // perf
                                         double*,        // time
                                         double* ) );    // residual

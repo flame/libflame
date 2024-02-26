@@ -186,7 +186,7 @@ int chpgv_(integer *itype, char *jobz, char *uplo, integer * n, complex *ap, com
     int ctpsv_(char *, char *, char *, integer *, complex *, complex *, integer *);
     logical wantz;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), chpgst_( integer *, char *, integer *, complex *, complex *, integer *), cpptrf_(char *, integer *, complex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), chpgst_( integer *, char *, integer *, complex *, complex *, integer *), cpptrf_(char *, integer *, complex *, integer *);
     /* -- LAPACK driver routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -240,7 +240,7 @@ int chpgv_(integer *itype, char *jobz, char *uplo, integer * n, complex *ap, com
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHPGV ", &i__1);
+        xerbla_("CHPGV ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

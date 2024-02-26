@@ -16,7 +16,7 @@ int zhemv_(char *uplo, integer *n, doublecomplex *alpha, doublecomplex *a, integ
     extern logical lsame_(char *, char *);
     integer ix, iy, jx, jy, kx, ky;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
     /* .. */
@@ -127,7 +127,7 @@ int zhemv_(char *uplo, integer *n, doublecomplex *alpha, doublecomplex *a, integ
     }
     if (info != 0)
     {
-        xerbla_("ZHEMV ", &info);
+        xerbla_("ZHEMV ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

@@ -118,7 +118,7 @@ array.f"> */
 
     /* Local variables */
     integer i__;
-    extern /* Subroutine */ int xerbla_(char *, integer *);
+    extern /* Subroutine */ int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     char srname[32];
 
 
@@ -157,7 +157,7 @@ array.f"> */
         *(unsigned char *)&srname[i__ - 1] = *(unsigned char *)&
                                              srname_array__[i__];
     }
-    xerbla_(srname, info);
+    xerbla_(srname, info, i__1);
     return 0;
 } /* xerbla_array__ */
 

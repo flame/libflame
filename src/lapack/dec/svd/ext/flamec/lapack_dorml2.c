@@ -156,7 +156,7 @@
  int dlarf_(char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *);
  extern logical lsame_(char *, char *);
  extern /* Subroutine */
- int xerbla_(char *, integer *);
+ int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
  logical notran;
  /* -- LAPACK computational routine -- */
  /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -221,7 +221,7 @@
  }
  if (*info != 0) {
  i__1 = -(*info);
- xerbla_("DORML2", &i__1);
+ xerbla_("DORML2", &i__1, (ftnlen)6);
  return 0;
  }
  /* Quick return if possible */

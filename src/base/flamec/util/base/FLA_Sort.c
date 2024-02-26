@@ -91,7 +91,7 @@ FLA_Error FLA_Sort_f_ops( integer     m_x,
 	qsort( x,
 	       m_x,
 	       sizeof( float ),
-	       fla_scomp_f );
+	       (const void *) fla_scomp_f );
 
 	return FLA_SUCCESS;
 }
@@ -102,7 +102,7 @@ FLA_Error FLA_Sort_b_ops( integer     m_x,
 	qsort( x,
 	       m_x,
 	       sizeof( float ),
-	       fla_scomp_b );
+	       (const void *) fla_scomp_b );
 
 	return FLA_SUCCESS;
 }
@@ -113,7 +113,7 @@ FLA_Error FLA_Sort_f_opd( integer     m_x,
 	qsort( x,
 	       m_x,
 	       sizeof( double ),
-	       fla_dcomp_f );
+	       (const void *) fla_dcomp_f );
 
 	return FLA_SUCCESS;
 }
@@ -124,7 +124,7 @@ FLA_Error FLA_Sort_b_opd( integer     m_x,
 	qsort( x,
 	       m_x,
 	       sizeof( double ),
-	       fla_dcomp_b );
+	       (const void *) fla_dcomp_b );
 
 	return FLA_SUCCESS;
 }

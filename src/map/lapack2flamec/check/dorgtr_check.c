@@ -22,8 +22,8 @@ int dorgtr_check(char *uplo, integer *n, double *a, integer * lda, double *tau, 
     /* Function Body */
     *info = 0;
     lquery = *lwork == -1;
-    upper = lsame_(uplo, "U");
-    if (! upper && ! lsame_(uplo, "L"))
+    upper = lsame_(uplo, "U", 1, 1);
+    if (! upper && ! lsame_(uplo, "L", 1, 1))
     {
         *info = -1;
     }
@@ -70,7 +70,7 @@ int dorgtr_check(char *uplo, integer *n, double *a, integer * lda, double *tau, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DORGTR", &i__1);
+        xerbla_("DORGTR", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

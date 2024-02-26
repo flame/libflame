@@ -267,7 +267,7 @@ int strevc_(char *side, char *howmny, logical *select, integer *n, real *t, inte
     int saxpy_(integer *, real *, real *, integer *, real *, integer *), slaln2_(logical *, integer *, integer *, real *, real *, real *, integer *, real *, real *, real *, integer *, real *, real *, real *, integer *, real *, real *, integer *), slabad_(real *, real *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     extern integer isamax_(integer *, real *, integer *);
     logical rightv;
@@ -402,7 +402,7 @@ int strevc_(char *side, char *howmny, logical *select, integer *n, real *t, inte
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("STREVC", &i__1);
+        xerbla_("STREVC", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

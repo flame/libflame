@@ -188,7 +188,7 @@ int zsysv_aa_2stage_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, in
     extern logical lsame_(char *, char *);
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer lwkopt;
     logical tquery, wquery;
     /* -- LAPACK computational routine (version 3.8.0) -- */
@@ -262,7 +262,7 @@ int zsysv_aa_2stage_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZSYSV_AA_2STAGE", &i__1);
+        xerbla_("ZSYSV_AA_2STAGE", &i__1, (ftnlen)15);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

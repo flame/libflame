@@ -172,7 +172,7 @@ int cgeqp3_(integer *m, integer *n, complex *a, integer *lda, integer *jpvt, com
     int claqp2_(integer *, integer *, integer *, complex *, integer *, integer *, complex *, real *, real *, complex *);
     extern real scnrm2_(integer *, complex *, integer *);
     extern /* Subroutine */
-    int cgeqrf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *), xerbla_( char *, integer *);
+    int cgeqrf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int claqps_(integer *, integer *, integer *, integer *, integer *, complex *, integer *, integer *, complex *, real *, real *, complex *, complex *, integer *);
@@ -252,7 +252,7 @@ int cgeqp3_(integer *m, integer *n, complex *a, integer *lda, integer *jpvt, com
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGEQP3", &i__1);
+        xerbla_("CGEQP3", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -161,7 +161,7 @@ int dpbsv_(char *uplo, integer *n, integer *kd, integer * nrhs, doublereal *ab, 
     /* Local variables */
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), dpbtrf_( char *, integer *, integer *, doublereal *, integer *, integer *), dpbtrs_(char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), dpbtrf_( char *, integer *, integer *, doublereal *, integer *, integer *), dpbtrs_(char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, integer *);
     /* -- LAPACK driver routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -215,7 +215,7 @@ int dpbsv_(char *uplo, integer *n, integer *kd, integer * nrhs, doublereal *ab, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DPBSV ", &i__1);
+        xerbla_("DPBSV ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

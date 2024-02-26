@@ -127,7 +127,7 @@ int cunglq_fla(integer *m, integer *n, integer *k, complex *a, integer *lda, com
     /* Local variables */
     integer i__, j, l, ib, nb, ki, kk, nx, iws, nbmin, iinfo;
     extern /* Subroutine */
-    int cungl2_fla(integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *), clarfb_( char *, char *, char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *), clarft_( char *, char *, integer *, integer *, complex *, integer *, complex *, complex *, integer *), xerbla_(char *, integer *);
+    int cungl2_fla(integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *), clarfb_( char *, char *, char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *), clarft_( char *, char *, integer *, integer *, complex *, integer *, complex *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer ldwork, lwkopt;
     logical lquery;
@@ -188,7 +188,7 @@ int cunglq_fla(integer *m, integer *n, integer *k, complex *a, integer *lda, com
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CUNGLQ", &i__1);
+        xerbla_("CUNGLQ", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

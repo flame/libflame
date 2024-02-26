@@ -163,7 +163,7 @@ typedef unsigned __int64 uint64_t;
 typedef int64_t integer;
 typedef uint64_t uinteger;
 #else
-typedef int integer;
+typedef int32_t integer;
 typedef unsigned long int uinteger;
 #endif
 
@@ -203,11 +203,7 @@ typedef short ftnlen;
 typedef short ftnint;
 #else
 typedef long int flag;
- #ifndef BLIS1_FROM_LIBFLAME
-   #define ftnlen integer
- #else
-   typedef long int ftnlen;
- #endif
+typedef integer ftnlen;
 typedef long int ftnint;
 #endif
 
@@ -354,6 +350,14 @@ typedef doublereal (*E_fp)(...);
 typedef /* Complex */ VOID (*C_fp)(...);
 typedef /* Double Complex */ VOID (*Z_fp)(...);
 typedef logical (*L_fp)(...);
+typedef logical (*L_fp1)(complex *);
+typedef logical (*L_fp2)(complex *, complex *);
+typedef logical (*L_fps2)(real *, real *);
+typedef logical (*L_fps3)(real *, real *, real *);
+typedef logical (*L_fpd2)(doublereal *, doublereal *);
+typedef logical (*L_fpd3)(doublereal *, doublereal *, doublereal *);
+typedef logical (*L_fpz1)(doublecomplex *);
+typedef logical (*L_fpz2)(doublecomplex *, doublecomplex *);
 typedef shortlogical (*K_fp)(...);
 typedef /* Character */ VOID (*H_fp)(...);
 typedef /* Subroutine */ int (*S_fp)(...);
@@ -367,6 +371,14 @@ typedef doublereal (*E_fp)();
 typedef /* Complex */ VOID (*C_fp)();
 typedef /* Double Complex */ VOID (*Z_fp)();
 typedef logical (*L_fp)();
+typedef logical (*L_fp1)(complex *);
+typedef logical (*L_fp2)(complex *, complex *);
+typedef logical (*L_fps2)(real *, real *);
+typedef logical (*L_fps3)(real *, real *, real *);
+typedef logical (*L_fpd2)(doublereal *, doublereal *);
+typedef logical (*L_fpd3)(doublereal *, doublereal *, doublereal *);
+typedef logical (*L_fpz1)(doublecomplex *);
+typedef logical (*L_fpz2)(doublecomplex *, doublecomplex *);
 typedef shortlogical (*K_fp)();
 typedef /* Character */ VOID (*H_fp)();
 typedef /* Subroutine */ int (*S_fp)();

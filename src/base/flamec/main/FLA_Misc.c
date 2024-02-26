@@ -306,7 +306,7 @@ FLA_Error FLA_Obj_fshow( FILE* file, char *s1, FLA_Obj A, char *format, char *s2
     scomplex* constc = FLA_COMPLEX_PTR( A );
     dcomplex* constz = FLA_DOUBLE_COMPLEX_PTR( A );
 
-    fprintf( file, "integer      = %d\n", *consti );
+    fprintf( file, "integer      = %d\n", (int) *consti );
     fprintf( file, "float    = %e\n", *consts );
     fprintf( file, "double   = %e\n", *constd );
     fprintf( file, "scomplex = %e + %e\n", constc->real, constc->imag );

@@ -176,7 +176,7 @@ int dorgtsqr_(integer *m, integer *n, integer *mb, integer * nb, doublereal *a, 
     int dlamtsqr_(char *, char *, integer *, integer *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *);
     integer lworkopt, j, lc, lw, ldc, iinfo;
     extern /* Subroutine */
-    int dcopy_(integer *, doublereal *, integer *, doublereal *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dcopy_(integer *, doublereal *, integer *, doublereal *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical lquery;
     integer nblocal;
     /* -- LAPACK computational routine (version 3.9.0) -- */
@@ -269,7 +269,7 @@ int dorgtsqr_(integer *m, integer *n, integer *mb, integer * nb, doublereal *a, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DORGTSQR", &i__1);
+        xerbla_("DORGTSQR", &i__1, (ftnlen)8);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

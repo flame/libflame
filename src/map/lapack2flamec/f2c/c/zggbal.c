@@ -207,7 +207,7 @@ int zggbal_(char *job, integer *n, doublecomplex *a, integer *lda, doublecomplex
     extern doublereal dlamch_(char *);
     doublereal pgamma;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zdscal_( integer *, doublereal *, doublecomplex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zdscal_( integer *, doublereal *, doublecomplex *, integer *);
     integer lsfmin;
     extern integer izamax_(integer *, doublecomplex *, integer *);
     integer lsfmax;
@@ -267,7 +267,7 @@ int zggbal_(char *job, integer *n, doublecomplex *a, integer *lda, doublecomplex
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGGBAL", &i__1);
+        xerbla_("ZGGBAL", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

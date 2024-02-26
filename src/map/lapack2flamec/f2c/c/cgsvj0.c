@@ -254,7 +254,7 @@ int cgsvj0_(char *jobv, integer *m, integer *n, complex *a, integer *lda, comple
     logical rotok;
     extern real scnrm2_(integer *, complex *, integer *);
     extern /* Subroutine */
-    int clascl_(char *, integer *, integer *, real *, real *, integer *, integer *, complex *, integer *, integer *), xerbla_(char *, integer *);
+    int clascl_(char *, integer *, integer *, real *, real *, integer *, integer *, complex *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer ijblsk, swband;
     extern integer isamax_(integer *, real *, integer *);
     integer blskip;
@@ -348,7 +348,7 @@ int cgsvj0_(char *jobv, integer *m, integer *n, complex *a, integer *lda, comple
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGSVJ0", &i__1);
+        xerbla_("CGSVJ0", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

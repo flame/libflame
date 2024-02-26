@@ -240,7 +240,7 @@ int sgegs_(char *jobvsl, char *jobvsr, integer *n, real *a, integer *lda, real *
     extern real slamch_(char *), slange_(char *, integer *, integer *, real *, integer *, real *);
     real safmin;
     extern /* Subroutine */
-    int sgghrd_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *), xerbla_(char *, integer *);
+    int sgghrd_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     real bignum;
     extern /* Subroutine */
@@ -386,7 +386,7 @@ int sgegs_(char *jobvsl, char *jobvsr, integer *n, real *a, integer *lda, real *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGEGS ", &i__1);
+        xerbla_("SGEGS ", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

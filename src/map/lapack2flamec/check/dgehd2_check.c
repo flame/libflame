@@ -33,7 +33,7 @@ int dgehd2_check(integer *n, integer *ilo, integer *ihi, double *a, integer *lda
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGEHD2", &i__1);
+        xerbla_("DGEHD2", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     return LAPACK_SUCCESS;

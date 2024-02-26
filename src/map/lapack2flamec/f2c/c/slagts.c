@@ -159,7 +159,7 @@ int slagts_(integer *job, integer *n, real *a, real *b, real *c__, real *d__, in
     real ak, eps, temp, pert, absak, sfmin;
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -201,7 +201,7 @@ int slagts_(integer *job, integer *n, real *a, real *b, real *c__, real *d__, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLAGTS", &i__1);
+        xerbla_("SLAGTS", &i__1, (ftnlen)6);
         return 0;
     }
     if (*n == 0)

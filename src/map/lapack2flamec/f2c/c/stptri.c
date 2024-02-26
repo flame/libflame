@@ -126,7 +126,7 @@ int stptri_(char *uplo, char *diag, integer *n, real *ap, integer *info)
     int sscal_(integer *, real *, real *, integer *);
     logical upper;
     extern /* Subroutine */
-    int stpmv_(char *, char *, char *, integer *, real *, real *, integer *), xerbla_(char *, integer *);
+    int stpmv_(char *, char *, char *, integer *, real *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer jclast;
     logical nounit;
     /* -- LAPACK computational routine (version 3.4.0) -- */
@@ -154,6 +154,7 @@ int stptri_(char *uplo, char *diag, integer *n, real *ap, integer *info)
     *info = 0;
     upper = lsame_(uplo, "U");
     nounit = lsame_(diag, "N");
+    jclast = 0;
     if (! upper && ! lsame_(uplo, "L"))
     {
         *info = -1;
@@ -169,7 +170,7 @@ int stptri_(char *uplo, char *diag, integer *n, real *ap, integer *info)
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("STPTRI", &i__1);
+        xerbla_("STPTRI", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

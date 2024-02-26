@@ -275,7 +275,7 @@ int ctgsy2_(char *trans, integer *ijob, integer *m, integer * n, complex *a, int
     int caxpy_(integer *, complex *, complex *, integer *, complex *, integer *), cgesc2_(integer *, complex *, integer *, complex *, integer *, integer *, real *), cgetc2_( integer *, complex *, integer *, integer *, integer *, integer *), clatdf_(integer *, integer *, complex *, integer *, complex *, real *, real *, integer *, integer *);
     real scaloc;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical notran;
     /* -- LAPACK auxiliary routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -372,7 +372,7 @@ int ctgsy2_(char *trans, integer *ijob, integer *m, integer * n, complex *a, int
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTGSY2", &i__1);
+        xerbla_("CTGSY2", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

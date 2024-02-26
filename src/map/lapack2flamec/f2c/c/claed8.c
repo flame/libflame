@@ -243,7 +243,7 @@ int claed8_(integer *k, integer *n, integer *qsiz, complex * q, integer *ldq, re
     int sscal_(integer *, real *, real *, integer *), ccopy_(integer *, complex *, integer *, complex *, integer *), csrot_(integer *, complex *, integer *, complex *, integer *, real *, real *), scopy_(integer *, real *, integer *, real *, integer *);
     extern real slapy2_(real *, real *), slamch_(char *);
     extern /* Subroutine */
-    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *);
+    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer isamax_(integer *, real *, integer *);
     extern /* Subroutine */
     int slamrg_(integer *, integer *, real *, integer *, integer *, integer *);
@@ -287,6 +287,7 @@ int claed8_(integer *k, integer *n, integer *qsiz, complex * q, integer *ldq, re
     givnum -= 3;
     /* Function Body */
     *info = 0;
+    jlam = 0;
     if (*n < 0)
     {
         *info = -2;
@@ -310,7 +311,7 @@ int claed8_(integer *k, integer *n, integer *qsiz, complex * q, integer *ldq, re
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CLAED8", &i__1);
+        xerbla_("CLAED8", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

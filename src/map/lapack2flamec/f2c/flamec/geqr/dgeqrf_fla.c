@@ -160,7 +160,7 @@ extern int fla_dgeqrf_small(integer *m, integer *n,
  int dlarfb_(char *, char *, char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *);
  integer nx;
  extern /* Subroutine */
- int dlarft_(char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
+ int dlarft_(char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
  extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
  integer ldwork, lwkopt;
  logical lquery;
@@ -217,7 +217,7 @@ extern int fla_dgeqrf_small(integer *m, integer *n,
  }
  if (*info != 0) {
  i__1 = -(*info);
- xerbla_("DGEQRF", &i__1);
+ xerbla_("DGEQRF", &i__1, (ftnlen)6);
  return 0;
  }
  else if (lquery) {
@@ -233,7 +233,7 @@ extern int fla_dgeqrf_small(integer *m, integer *n,
  nx = 0;
  iws = *n;
  #if AOCL_FLA_PROGRESS_H
-        step_count =0;
+        progress_step_count =0;
      #ifndef FLA_ENABLE_WINDOWS_BUILD
         if(!aocl_fla_progress_ptr)
               aocl_fla_progress_ptr=aocl_fla_progress;
@@ -284,8 +284,8 @@ extern int fla_dgeqrf_small(integer *m, integer *n,
   #if AOCL_FLA_PROGRESS_H
 
         if(aocl_fla_progress_ptr){
-                step_count+=ib;
-                AOCL_FLA_PROGRESS_FUNC_PTR("DGEQRF",6,&step_count,&thread_id,&total_threads);
+                progress_step_count+=ib;
+                AOCL_FLA_PROGRESS_FUNC_PTR("DGEQRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
          }
 
   #endif
@@ -315,8 +315,8 @@ extern int fla_dgeqrf_small(integer *m, integer *n,
  #if AOCL_FLA_PROGRESS_H
 
          if(aocl_fla_progress_ptr){
-                  step_count=k;
-                   AOCL_FLA_PROGRESS_FUNC_PTR("DGEQRF",6,&step_count,&thread_id,&total_threads);
+                  progress_step_count=k;
+                   AOCL_FLA_PROGRESS_FUNC_PTR("DGEQRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
           }
 
  #endif

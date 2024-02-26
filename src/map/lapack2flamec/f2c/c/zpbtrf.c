@@ -153,7 +153,7 @@ int zpbtrf_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *lda
     ;
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int zgemm_(char *, char *, integer *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), zherk_(char *, char *, integer *, integer *, doublereal *, doublecomplex *, integer *, doublereal *, doublecomplex *, integer *), ztrsm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), zpbtf2_(char *, integer *, integer *, doublecomplex *, integer *, integer *), zpotf2_(char *, integer *, doublecomplex *, integer *, integer *), xerbla_(char *, integer *);
+    int zgemm_(char *, char *, integer *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), zherk_(char *, char *, integer *, integer *, doublereal *, doublecomplex *, integer *, doublereal *, doublecomplex *, integer *), ztrsm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), zpbtf2_(char *, integer *, integer *, doublecomplex *, integer *, integer *), zpotf2_(char *, integer *, doublecomplex *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -203,7 +203,7 @@ int zpbtrf_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *lda
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZPBTRF", &i__1);
+        xerbla_("ZPBTRF", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

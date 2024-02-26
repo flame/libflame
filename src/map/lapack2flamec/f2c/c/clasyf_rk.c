@@ -333,6 +333,7 @@ int clasyf_rk_(char *uplo, integer *n, integer *nb, integer *kb, complex *a, int
     w -= w_offset;
     /* Function Body */
     *info = 0;
+    jmax = 0;
     /* Initialize ALPHA for use in choosing pivot block size. */
     alpha = (sqrt(17.f) + 1.f) / 8.f;
     /* Compute machine safe minimum */

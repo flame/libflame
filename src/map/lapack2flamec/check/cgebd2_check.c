@@ -32,7 +32,7 @@ int cgebd2_check(integer *m, integer *n, scomplex *a, integer *lda, real *d__, r
     if (*info < 0)
     {
         i__1 = -(*info);
-        xerbla_("CGEBD2", &i__1);
+        xerbla_("CGEBD2", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     return LAPACK_SUCCESS;

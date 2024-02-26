@@ -143,6 +143,7 @@ real clangt_(char *norm, integer *n, complex *dl, complex *d__, complex *du)
     --d__;
     --dl;
     /* Function Body */
+    anorm = 0.f;
     if (*n <= 0)
     {
         anorm = 0.f;

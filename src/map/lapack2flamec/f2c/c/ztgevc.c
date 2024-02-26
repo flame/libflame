@@ -268,11 +268,11 @@ int ztgevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex
     doublecomplex salpha;
     doublereal safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal bignum;
     logical ilcomp;
     extern /* Double Complex */
-    VOID zladiv_(doublecomplex *, doublecomplex *, doublecomplex *);
+    void zladiv_f2c_(doublecomplex *, doublecomplex *, doublecomplex *);
     integer ihwmny;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -316,6 +316,8 @@ int ztgevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex
     --work;
     --rwork;
     /* Function Body */
+    ilall = FALSE_;
+    ilback = FALSE_;
     if (lsame_(howmny, "A"))
     {
         ihwmny = 1;
@@ -384,7 +386,7 @@ int ztgevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZTGEVC", &i__1);
+        xerbla_("ZTGEVC", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -440,7 +442,7 @@ int ztgevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZTGEVC", &i__1);
+        xerbla_("ZTGEVC", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

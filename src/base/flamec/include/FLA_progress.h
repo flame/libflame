@@ -38,7 +38,7 @@ const integer* const total_threads
 );
 
 void aocl_fla_set_progress(aocl_fla_progress_callback func);
-extern aocl_fla_progress_callback aocl_fla_progress_ptr;
+extern volatile aocl_fla_progress_callback aocl_fla_progress_glb_ptr;
 #ifndef FLA_ENABLE_WINDOWS_BUILD  
 __attribute__((weak))
 int aocl_fla_progress(
@@ -56,16 +56,24 @@ const integer* const total_threads
 			exit(0);\
          }\
 
+#if FLA_OPENMP_MULTITHREADING
+
 #define AOCL_FLA_PROGRESS_VAR \
-        static TLS_CLASS_SPEC integer step_count=0;\
-        static TLS_CLASS_SPEC integer size=0;\
-        static TLS_CLASS_SPEC integer thread_id = 0;\
-        static TLS_CLASS_SPEC integer total_threads = 1;\
-        if(aocl_fla_progress_ptr)\
-        {\
-        /* Current implementation returns threadid as 0 and total_threads as 1*/ \
-        /* even if invoked from multithreaded application. */ \
-        /* Support for actual thread number will be added in future */ \
-            thread_id = 0;\
-            total_threads =  1;\
-        }\
+        aocl_fla_progress_callback aocl_fla_progress_ptr = aocl_fla_progress_glb_ptr;\
+        static TLS_CLASS_SPEC integer progress_step_count = 0;\
+        static TLS_CLASS_SPEC integer progress_thread_id = 0;\
+        static TLS_CLASS_SPEC integer progress_total_threads = 1;\
+        progress_thread_id = omp_get_thread_num();\
+        progress_total_threads = omp_get_num_threads();\
+
+#else
+
+#define AOCL_FLA_PROGRESS_VAR \
+        aocl_fla_progress_callback aocl_fla_progress_ptr = aocl_fla_progress_glb_ptr;\
+        static TLS_CLASS_SPEC integer progress_step_count = 0;\
+        static TLS_CLASS_SPEC integer progress_thread_id = 0;\
+        static TLS_CLASS_SPEC integer progress_total_threads = 1;\
+        progress_thread_id = 0;\
+        progress_total_threads = 1;\
+
+#endif

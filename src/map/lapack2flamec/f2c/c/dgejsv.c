@@ -520,7 +520,7 @@ int dgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
     int dgeqrf_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
     doublereal aatmax;
     extern /* Subroutine */
-    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical noscal;
     extern /* Subroutine */
     int dpocon_(char *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, integer *), dgesvj_(char *, char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *), dlassq_(integer *, doublereal *, integer *, doublereal *, doublereal *), dlaswp_(integer *, doublereal *, integer *, integer *, integer *, integer *, integer *);
@@ -663,7 +663,7 @@ int dgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
     {
         /* #:( */
         i__1 = -(*info);
-        xerbla_("DGEJSV", &i__1);
+        xerbla_("DGEJSV", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -723,7 +723,7 @@ int dgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
         {
             *info = -9;
             i__2 = -(*info);
-            xerbla_("DGEJSV", &i__2);
+            xerbla_("DGEJSV", &i__2, (ftnlen)6);
             AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }

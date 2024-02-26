@@ -152,6 +152,7 @@ real slantp_(char *norm, char *uplo, char *diag, integer *n, real *ap, real * wo
     --work;
     --ap;
     /* Function Body */
+    value = 0.f;
     if (*n == 0)
     {
         value = 0.f;

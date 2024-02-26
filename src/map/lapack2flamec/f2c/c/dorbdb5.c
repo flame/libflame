@@ -151,7 +151,7 @@ int dorbdb5_(integer *m1, integer *m2, integer *n, doublereal *x1, integer *incx
     integer i__, j, childinfo;
     extern doublereal dnrm2_(integer *, doublereal *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), dorbdb6_( integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), dorbdb6_( integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *);
     /* -- LAPACK computational routine (version 3.5.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -220,7 +220,7 @@ int dorbdb5_(integer *m1, integer *m2, integer *n, doublereal *x1, integer *incx
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DORBDB5", &i__1);
+        xerbla_("DORBDB5", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

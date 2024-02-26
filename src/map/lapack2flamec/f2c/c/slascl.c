@@ -148,7 +148,7 @@ int slascl_(char *type__, integer *kl, integer *ku, real * cfrom, real *cto, int
     extern real slamch_(char *);
     real cfromc;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     extern logical sisnan_(real *);
     real smlnum;
@@ -259,7 +259,7 @@ int slascl_(char *type__, integer *kl, integer *ku, real * cfrom, real *cto, int
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLASCL", &i__1);
+        xerbla_("SLASCL", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -159,7 +159,7 @@ int dgbsv_(integer *n, integer *kl, integer *ku, integer * nrhs, doublereal *ab,
     integer ab_dim1, ab_offset, b_dim1, b_offset, i__1;
     /* Local variables */
     extern /* Subroutine */
-    int dgbtrf_(integer *, integer *, integer *, integer *, doublereal *, integer *, integer *, integer *), xerbla_(char *, integer *), dgbtrs_(char *, integer *, integer *, integer *, integer *, doublereal *, integer *, integer *, doublereal *, integer *, integer *);
+    int dgbtrf_(integer *, integer *, integer *, integer *, doublereal *, integer *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), dgbtrs_(char *, integer *, integer *, integer *, integer *, doublereal *, integer *, integer *, doublereal *, integer *, integer *);
     /* -- LAPACK driver routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -212,7 +212,7 @@ int dgbsv_(integer *n, integer *kl, integer *ku, integer * nrhs, doublereal *ab,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGBSV ", &i__1);
+        xerbla_("DGBSV ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

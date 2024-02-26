@@ -162,7 +162,7 @@ int csytri_rook_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv
     integer kstep;
     logical upper;
     extern /* Subroutine */
-    int csymv_(char *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer * ), xerbla_(char *, integer *);
+    int csymv_(char *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer * ), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -208,7 +208,7 @@ int csytri_rook_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CSYTRI_ROOK", &i__1);
+        xerbla_("CSYTRI_ROOK", &i__1, (ftnlen)11);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

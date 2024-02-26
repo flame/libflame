@@ -164,7 +164,7 @@ int spstrf_(char *uplo, integer *n, real *a, integer *lda, integer *piv, integer
     int ssyrk_(char *, char *, integer *, integer *, real *, real *, integer *, real *, real *, integer *), spstf2_(char *, integer *, real *, integer *, integer *, integer *, real *, real *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *), smaxloc_(real *, integer *);
     extern logical sisnan_(real *);
     /* -- LAPACK computational routine (version 3.7.0) -- */
@@ -212,7 +212,7 @@ int spstrf_(char *uplo, integer *n, real *a, integer *lda, integer *piv, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SPSTRF", &i__1);
+        xerbla_("SPSTRF", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

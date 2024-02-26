@@ -271,16 +271,17 @@ int fla_dlabrd(integer *m, integer *n, integer *nb, doublereal * a, integer *lda
     y_offset = 1 + y_dim1;
     y -= y_offset;
 
-#ifdef FLA_OPENMP_MULTITHREADING
-    /* Get optimum thread number for DLABRD*/
-    FLA_Thread_optimum( FLA_LABRD, &actual_num_threads);
-#endif
-
     /* Function Body */
     if (*m <= 0 || *n <= 0)
     {
         return 0;
     }
+
+#ifdef FLA_OPENMP_MULTITHREADING
+    /* Get optimum thread number for DLABRD*/
+    FLA_Thread_optimum( FLA_LABRD, &actual_num_threads);
+#endif
+
     if (*m >= *n)
     {
         /* Reduce to upper bidiagonal form */

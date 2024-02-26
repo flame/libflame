@@ -225,6 +225,26 @@
 #define fla_lapack_cgghrd CGGHRD_
 #define fla_lapack_zgghrd ZGGHRD_
 
+#define fla_lapack_srot SROT_
+#define fla_lapack_drot DROT_
+#define fla_lapack_crot CROT_
+#define fla_lapack_zrot ZROT_
+
+#define fla_lapack_slartg SLARTG_
+#define fla_lapack_dlartg DLARTG_
+#define fla_lapack_clartg CLARTG_
+#define fla_lapack_zlartg ZLARTG_
+
+#define fla_lapack_sorg2r SORG2R_
+#define fla_lapack_dorg2r DORG2R_
+#define fla_lapack_cung2r CUNG2R_
+#define fla_lapack_zung2r ZUNG2R_
+
+#define fla_lapack_ssyevx SSYEVX_
+#define fla_lapack_dsyevx DSYEVX_
+#define fla_lapack_cheevx CHEEVX_
+#define fla_lapack_zheevx ZHEEVX_
+
 #elif (UPPER)
 
 #define fla_lapack_sladiv SLADIV
@@ -440,6 +460,26 @@
 #define fla_lapack_dgghrd DGGHRD
 #define fla_lapack_cgghrd CGGHRD
 #define fla_lapack_zgghrd ZGGHRD
+
+#define fla_lapack_srot SROT
+#define fla_lapack_drot DROT
+#define fla_lapack_crot CROT
+#define fla_lapack_zrot ZROT
+
+#define fla_lapack_slartg SLARTG
+#define fla_lapack_dlartg DLARTG
+#define fla_lapack_clartg CLARTG
+#define fla_lapack_zlartg ZLARTG
+
+#define fla_lapack_sorg2r SORG2R
+#define fla_lapack_dorg2r DORG2R
+#define fla_lapack_cung2r CUNG2R
+#define fla_lapack_zung2r ZUNG2R
+
+#define fla_lapack_ssyevx SSYEVX
+#define fla_lapack_dsyevx DSYEVX
+#define fla_lapack_cheevx CHEEVX
+#define fla_lapack_zheevx ZHEEVX
 
 #elif (LOWER)
 
@@ -657,6 +697,26 @@
 #define fla_lapack_cgghrd cgghrd
 #define fla_lapack_zgghrd zgghrd
 
+#define fla_lapack_srot srot
+#define fla_lapack_drot drot
+#define fla_lapack_crot crot
+#define fla_lapack_zrot zrot
+
+#define fla_lapack_slartg slartg
+#define fla_lapack_dlartg dlartg
+#define fla_lapack_clartg clartg
+#define fla_lapack_zlartg zlartg
+
+#define fla_lapack_sorg2r sorg2r
+#define fla_lapack_dorg2r dorg2r
+#define fla_lapack_cung2r cung2r
+#define fla_lapack_zung2r zung2r
+
+#define fla_lapack_ssyevx ssyevx
+#define fla_lapack_dsyevx dsyevx
+#define fla_lapack_cheevx cheevx
+#define fla_lapack_zheevx zheevx
+
 #else
 
 #define fla_lapack_sladiv sladiv_
@@ -872,6 +932,26 @@
 #define fla_lapack_dgghrd dgghrd_
 #define fla_lapack_cgghrd cgghrd_
 #define fla_lapack_zgghrd zgghrd_
+
+#define fla_lapack_srot srot_
+#define fla_lapack_drot drot_
+#define fla_lapack_crot crot_
+#define fla_lapack_zrot zrot_
+
+#define fla_lapack_slartg slartg_
+#define fla_lapack_dlartg dlartg_
+#define fla_lapack_clartg clartg_
+#define fla_lapack_zlartg zlartg_
+
+#define fla_lapack_sorg2r sorg2r_
+#define fla_lapack_dorg2r dorg2r_
+#define fla_lapack_cung2r cung2r_
+#define fla_lapack_zung2r zung2r_
+
+#define fla_lapack_ssyevx ssyevx_
+#define fla_lapack_dsyevx dsyevx_
+#define fla_lapack_cheevx cheevx_
+#define fla_lapack_zheevx zheevx_
 
 #endif /*if UPPER_*/
 

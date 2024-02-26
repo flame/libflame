@@ -149,7 +149,7 @@ int ssycon_rook_(char *uplo, integer *n, real *a, integer * lda, integer *ipiv, 
     integer isave[3];
     logical upper;
     extern /* Subroutine */
-    int slacn2_(integer *, real *, real *, integer *, real *, integer *, integer *), xerbla_(char *, integer *);
+    int slacn2_(integer *, real *, real *, integer *, real *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real ainvnm;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -203,7 +203,7 @@ int ssycon_rook_(char *uplo, integer *n, real *a, integer * lda, integer *ipiv, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSYCON_ROOK", &i__1);
+        xerbla_("SSYCON_ROOK", &i__1, (ftnlen)11);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

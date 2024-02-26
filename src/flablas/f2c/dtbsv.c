@@ -12,7 +12,7 @@ int dtbsv_(char *uplo, char *trans, char *diag, integer *n, integer *k, doublere
     extern logical lsame_(char *, char *);
     integer kplus1, ix, jx, kx;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical nounit;
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
@@ -161,7 +161,7 @@ int dtbsv_(char *uplo, char *trans, char *diag, integer *n, integer *k, doublere
     }
     if (info != 0)
     {
-        xerbla_("DTBSV ", &info);
+        xerbla_("DTBSV ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

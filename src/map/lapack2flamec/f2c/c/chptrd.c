@@ -169,7 +169,7 @@ int chptrd_(char *uplo, integer *n, complex *ap, real *d__, real *e, complex *ta
     int chpmv_(char *, integer *, complex *, complex *, complex *, integer *, complex *, complex *, integer *), caxpy_(integer *, complex *, complex *, integer *, complex *, integer *);
     logical upper;
     extern /* Subroutine */
-    int clarfg_(integer *, complex *, complex *, integer *, complex *), xerbla_(char *, integer *);
+    int clarfg_(integer *, complex *, complex *, integer *, complex *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -209,7 +209,7 @@ int chptrd_(char *uplo, integer *n, complex *ap, real *d__, real *e, complex *ta
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHPTRD", &i__1);
+        xerbla_("CHPTRD", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

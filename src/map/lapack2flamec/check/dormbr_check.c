@@ -27,9 +27,9 @@ int dormbr_check(char *vect, char *side, char *trans, integer *m, integer *n, in
     --work;
     /* Function Body */
     *info = 0;
-    applyq = lsame_(vect, "Q");
-    left = lsame_(side, "L");
-    notran = lsame_(trans, "N");
+    applyq = lsame_(vect, "Q", 1, 1);
+    left = lsame_(side, "L", 1, 1);
+    notran = lsame_(trans, "N", 1, 1);
     lquery = *lwork == -1;
     /* NQ is the order of Q or P and NW is the minimum dimension of WORK */
     if (left)
@@ -42,15 +42,15 @@ int dormbr_check(char *vect, char *side, char *trans, integer *m, integer *n, in
         nq = *n;
         nw = *m;
     }
-    if (! applyq && ! lsame_(vect, "P"))
+    if (! applyq && ! lsame_(vect, "P", 1, 1))
     {
         *info = -1;
     }
-    else if (! left && ! lsame_(side, "R"))
+    else if (! left && ! lsame_(side, "R", 1, 1))
     {
         *info = -2;
     }
-    else if (! notran && ! lsame_(trans, "T"))
+    else if (! notran && ! lsame_(trans, "T", 1, 1))
     {
         *info = -3;
     }
@@ -122,7 +122,7 @@ int dormbr_check(char *vect, char *side, char *trans, integer *m, integer *n, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DORMBR", &i__1);
+        xerbla_("DORMBR", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

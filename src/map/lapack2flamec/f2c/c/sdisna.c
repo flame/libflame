@@ -121,7 +121,7 @@ int sdisna_(char *job, integer *m, integer *n, real *d__, real *sep, integer *in
     extern real slamch_(char *);
     real safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real newgap, thresh;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -211,7 +211,7 @@ int sdisna_(char *job, integer *m, integer *n, real *d__, real *sep, integer *in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SDISNA", &i__1);
+        xerbla_("SDISNA", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

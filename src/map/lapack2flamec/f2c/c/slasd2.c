@@ -283,7 +283,7 @@ int slasd2_(integer *nl, integer *nr, integer *sqre, integer *k, real *d__, real
     int scopy_(integer *, real *, integer *, real *, integer *);
     extern real slapy2_(real *, real *), slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), slamrg_( integer *, integer *, real *, integer *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), slamrg_( integer *, integer *, real *, integer *, integer *, integer *);
     real hlftol;
     extern /* Subroutine */
     int slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
@@ -333,6 +333,7 @@ int slasd2_(integer *nl, integer *nr, integer *sqre, integer *k, real *d__, real
     --coltyp;
     /* Function Body */
     *info = 0;
+    jprev = 0;
     if (*nl < 1)
     {
         *info = -1;
@@ -366,7 +367,7 @@ int slasd2_(integer *nl, integer *nr, integer *sqre, integer *k, real *d__, real
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLASD2", &i__1);
+        xerbla_("SLASD2", &i__1, (ftnlen)6);
         return 0;
     }
     nlp1 = *nl + 1;

@@ -176,7 +176,7 @@ int sla_geamv_(integer *trans, integer *m, integer *n, real *alpha, real *a, int
     real safe1;
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -232,7 +232,7 @@ int sla_geamv_(integer *trans, integer *m, integer *n, real *alpha, real *a, int
     }
     if (info != 0)
     {
-        xerbla_("SLA_GEAMV ", &info);
+        xerbla_("SLA_GEAMV ", &info, (ftnlen)10);
         return 0;
     }
     /* Quick return if possible. */

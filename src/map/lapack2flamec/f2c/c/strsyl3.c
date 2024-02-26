@@ -192,11 +192,10 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
     /* Builtin functions */
     double pow_dd(doublereal *, doublereal *);
     /* Local variables */
-    extern /* Subroutine */
-    int f90_cycle_(void);
     integer i__, j, k, l, i1, i2, j1, j2, k1, k2, l1, l2, nb, pc, jj, ll, nba, nbb;
     real buf, sgn, scal, anrm, bnrm, cnrm;
-    integer awrk, bwrk, temp;
+    integer awrk, bwrk;
+    int temp;
     logical skip;
     real *wnrm, xnrm;
     extern logical lsame_(char *, char *);
@@ -207,7 +206,7 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
     extern real slamch_(char *), slange_(char *, integer *, integer *, real *, integer *, real *);
     real scamin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     real bignum;
     extern /* Subroutine */
@@ -322,7 +321,7 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("STRSYL3", &i__1);
+        xerbla_("STRSYL3", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -574,7 +573,7 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                     else
                     {
                         /* Use second scaling factor to prevent flushing to zero. */
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         buf *= pow_dd(&c_b19, &d__1);
                     }
                     i__2 = nbb;
@@ -592,7 +591,7 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                             corresponding entries of the */
                             /* solution will be flushed in consistency scaling. */
                             /* Computing fla_min */
-                            frexp(scaloc, &temp); d__1 = temp;
+                            frexp(scaloc, (int *) &temp); d__1 = temp;
                             r__1 = bignum;
                             r__2 = swork[ll + jj * swork_dim1] / pow_dd(&c_b19, &d__1); // , expr subst
                             swork[ll + jj * swork_dim1] = fla_min(r__1,r__2);
@@ -626,7 +625,7 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                     if (scaloc * scamin == 0.f)
                     {
                         /* Use second scaling factor to prevent flushing to zero. */
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         buf *= pow_dd(&c_b19, &d__1);
                         i__2 = nbb;
                         for (jj = 1;
@@ -639,15 +638,15 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                                     ++ll)
                             {
                                 /* Computing fla_min */
-                                frexp(scaloc, &temp); d__1 = temp;
+                                frexp(scaloc, (int *) &temp); d__1 = temp;
                                 r__1 = bignum;
                                 r__2 = swork[ll + jj * swork_dim1] / pow_dd(&c_b19, &d__1); // , expr subst
                                 swork[ll + jj * swork_dim1] = fla_min(r__1,r__2);
                             }
                         }
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         scamin /= pow_dd(&c_b19, &d__1);
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         scaloc /= pow_dd(&c_b19, &d__1);
                     }
                     cnrm *= scaloc;
@@ -710,7 +709,7 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                     if (scaloc * scamin == 0.f)
                     {
                         /* Use second scaling factor to prevent flushing to zero. */
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         buf *= pow_dd(&c_b19, &d__1);
                         i__3 = nbb;
                         for (jj = 1;
@@ -723,15 +722,15 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                                     ++ll)
                             {
                                 /* Computing fla_min */
-                                frexp(scaloc, &temp); d__1 = temp;
+                                frexp(scaloc, (int *) &temp); d__1 = temp;
                                 r__1 = bignum;
                                 r__2 = swork[ll + jj * swork_dim1] / pow_dd(&c_b19, &d__1); // , expr subst
                                 swork[ll + jj * swork_dim1] = fla_min(r__1,r__2);
                             }
                         }
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         scamin /= pow_dd(&c_b19, &d__1);
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         scaloc /= pow_dd(&c_b19, &d__1);
                     }
                     cnrm *= scaloc;
@@ -822,7 +821,7 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                     else
                     {
                         /* Use second scaling factor to prevent flushing to zero. */
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         buf *= pow_dd(&c_b19, &d__1);
                     }
                     i__3 = nbb;
@@ -840,7 +839,7 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                             corresponding entries of the */
                             /* solution will be flushed in consistency scaling. */
                             /* Computing fla_min */
-                            frexp(scaloc, &temp); d__1 = temp;
+                            frexp(scaloc, (int *) &temp); d__1 = temp;
                             r__1 = bignum;
                             r__2 = swork[ll + jj * swork_dim1] / pow_dd(&c_b19, &d__1); // , expr subst
                             swork[ll + jj * swork_dim1] = fla_min(r__1,r__2);
@@ -875,7 +874,7 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                     if (scaloc * scamin == 0.f)
                     {
                         /* Use second scaling factor to prevent flushing to zero. */
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         buf *= pow_dd(&c_b19, &d__1);
                         i__4 = nbb;
                         for (jj = 1;
@@ -888,15 +887,15 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                                     ++ll)
                             {
                                 /* Computing fla_min */
-                                frexp(scaloc, &temp); d__1 = temp;
+                                frexp(scaloc, (int *) &temp); d__1 = temp;
                                 r__1 = bignum;
                                 r__2 = swork[ll + jj * swork_dim1] / pow_dd(&c_b19, &d__1); // , expr subst
                                 swork[ll + jj * swork_dim1] = fla_min(r__1,r__2);
                             }
                         }
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         scamin /= pow_dd(&c_b19, &d__1);
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         scaloc /= pow_dd(&c_b19, &d__1);
                     }
                     cnrm *= scaloc;
@@ -959,7 +958,7 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                     if (scaloc * scamin == 0.f)
                     {
                         /* Use second scaling factor to prevent flushing to zero. */
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         buf *= pow_dd(&c_b19, &d__1);
                         i__4 = nbb;
                         for (jj = 1;
@@ -972,15 +971,15 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                                     ++ll)
                             {
                                 /* Computing fla_min */
-                                frexp(scaloc, &temp); d__1 = temp;
+                                frexp(scaloc, (int *) &temp); d__1 = temp;
                                 r__1 = bignum;
                                 r__2 = swork[ll + jj * swork_dim1] / pow_dd(&c_b19, &d__1); // , expr subst
                                 swork[ll + jj * swork_dim1] = fla_min(r__1,r__2);
                             }
                         }
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         scamin /= pow_dd(&c_b19, &d__1);
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         scaloc /= pow_dd(&c_b19, &d__1);
                     }
                     cnrm *= scaloc;
@@ -1070,7 +1069,7 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                     else
                     {
                         /* Use second scaling factor to prevent flushing to zero. */
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         buf *= pow_dd(&c_b19, &d__1);
                     }
                     i__2 = nbb;
@@ -1088,7 +1087,7 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                             corresponding entries of the */
                             /* solution will be flushed in consistency scaling. */
                             /* Computing fla_min */
-                            frexp(scaloc, &temp); d__1 = temp;
+                            frexp(scaloc, (int *) &temp); d__1 = temp;
                             r__1 = bignum;
                             r__2 = swork[ll + jj * swork_dim1] / pow_dd(&c_b19, &d__1); // , expr subst
                             swork[ll + jj * swork_dim1] = fla_min(r__1,r__2);
@@ -1123,7 +1122,7 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                     if (scaloc * scamin == 0.f)
                     {
                         /* Use second scaling factor to prevent flushing to zero. */
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         buf *= pow_dd(&c_b19, &d__1);
                         i__3 = nbb;
                         for (jj = 1;
@@ -1136,15 +1135,15 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                                     ++ll)
                             {
                                 /* Computing fla_min */
-                                frexp(scaloc, &temp); d__1 = temp;
+                                frexp(scaloc, (int *) &temp); d__1 = temp;
                                 r__1 = bignum;
                                 r__2 = swork[ll + jj * swork_dim1] / pow_dd(&c_b19, &d__1); // , expr subst
                                 swork[ll + jj * swork_dim1] = fla_min(r__1,r__2);
                             }
                         }
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         scamin /= pow_dd(&c_b19, &d__1);
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         scaloc /= pow_dd(&c_b19, &d__1);
                     }
                     cnrm *= scaloc;
@@ -1207,7 +1206,7 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                     if (scaloc * scamin == 0.f)
                     {
                         /* Use second scaling factor to prevent flushing to zero. */
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         buf *= pow_dd(&c_b19, &d__1);
                         i__3 = nbb;
                         for (jj = 1;
@@ -1220,15 +1219,15 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                                     ++ll)
                             {
                                 /* Computing fla_min */
-                                frexp(scaloc, &temp); d__1 = temp;
+                                frexp(scaloc, (int *) &temp); d__1 = temp;
                                 r__1 = bignum;
                                 r__2 = swork[ll + jj * swork_dim1] / pow_dd(&c_b19, &d__1); // , expr subst
                                 swork[ll + jj * swork_dim1] = fla_min(r__1,r__2);
                             }
                         }
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         scamin /= pow_dd(&c_b19, &d__1);
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         scaloc /= pow_dd(&c_b19, &d__1);
                     }
                     cnrm *= scaloc;
@@ -1317,7 +1316,7 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                     else
                     {
                         /* Use second scaling factor to prevent flushing to zero. */
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         buf *= pow_dd(&c_b19, &d__1);
                     }
                     i__1 = nbb;
@@ -1335,7 +1334,7 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                             corresponding entries of the */
                             /* solution will be flushed in consistency scaling. */
                             /* Computing fla_min */
-                            frexp(scaloc, &temp); d__1 = temp;
+                            frexp(scaloc, (int *) &temp); d__1 = temp;
                             r__1 = bignum;
                             r__2 = swork[ll + jj * swork_dim1] / pow_dd(&c_b19, &d__1); // , expr subst
                             swork[ll + jj * swork_dim1] = fla_min(r__1,r__2);
@@ -1370,7 +1369,7 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                     if (scaloc * scamin == 0.f)
                     {
                         /* Use second scaling factor to prevent flushing to zero. */
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         buf *= pow_dd(&c_b19, &d__1);
                         i__2 = nbb;
                         for (jj = 1;
@@ -1383,15 +1382,15 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                                     ++ll)
                             {
                                 /* Computing fla_min */
-                                frexp(scaloc, &temp); d__1 = temp;
+                                frexp(scaloc, (int *) &temp); d__1 = temp;
                                 r__1 = bignum;
                                 r__2 = swork[ll + jj * swork_dim1] / pow_dd(&c_b19, &d__1); // , expr subst
                                 swork[ll + jj * swork_dim1] = fla_min(r__1,r__2);
                             }
                         }
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         scamin /= pow_dd(&c_b19, &d__1);
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         scaloc /= pow_dd(&c_b19, &d__1);
                     }
                     cnrm *= scaloc;
@@ -1454,7 +1453,7 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                     if (scaloc * scamin == 0.f)
                     {
                         /* Use second scaling factor to prevent flushing to zero. */
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         buf *= pow_dd(&c_b19, &d__1);
                         i__2 = nbb;
                         for (jj = 1;
@@ -1467,15 +1466,15 @@ int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, re
                                     ++ll)
                             {
                                 /* Computing fla_min */
-                                frexp(scaloc, &temp); d__1 = temp;
+                                frexp(scaloc, (int *) &temp); d__1 = temp;
                                 r__1 = bignum;
                                 r__2 = swork[ll + jj * swork_dim1] / pow_dd(&c_b19, &d__1); // , expr subst
                                 swork[ll + jj * swork_dim1] = fla_min(r__1,r__2);
                             }
                         }
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         scamin /= pow_dd(&c_b19, &d__1);
-                        frexp(scaloc, &temp); d__1 = temp;
+                        frexp(scaloc, (int *) &temp); d__1 = temp;
                         scaloc /= pow_dd(&c_b19, &d__1);
                     }
                     cnrm *= scaloc;

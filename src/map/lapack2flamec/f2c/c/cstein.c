@@ -203,7 +203,7 @@ int cstein_(integer *n, real *d__, real *e, integer *m, real *w, integer *iblock
     integer indrv1, indrv2, indrv3, indrv4, indrv5;
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), slagtf_( integer *, real *, real *, real *, real *, real *, real *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), slagtf_( integer *, real *, real *, real *, real *, real *, real *, integer *, integer *);
     integer nrmchk;
     extern integer isamax_(integer *, real *, integer *);
     extern /* Subroutine */
@@ -250,6 +250,11 @@ int cstein_(integer *n, real *d__, real *e, integer *m, real *w, integer *iblock
     --ifail;
     /* Function Body */
     *info = 0;
+    stpcrt = 0.f;
+    onenrm = 0.f;
+    ortol = 0.f;
+    gpind= 0;
+    xjm = 0.f;
     i__1 = *m;
     for (i__ = 1;
             i__ <= i__1;
@@ -295,7 +300,7 @@ L30:
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CSTEIN", &i__1);
+        xerbla_("CSTEIN", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -2,7 +2,7 @@
  #include "FLA_f2c.h"
  #include "stdio.h" /* Table of constant values */
  /* Subroutine */
- int xerbla_(char *srname, integer *info) {
+ int xerbla_(const char *srname, const integer *info, ftnlen srname_len) {
  /* -- LAPACK auxiliary routine (preliminary version) -- */
  /* Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd., */
  /* Courant Institute, Argonne National Lab, and Rice University */

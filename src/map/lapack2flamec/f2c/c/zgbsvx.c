@@ -388,7 +388,7 @@ int zgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
     logical nofact;
     extern doublereal zlangb_(char *, integer *, integer *, integer *, doublecomplex *, integer *, doublereal *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zlaqgb_( integer *, integer *, integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, char *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zlaqgb_( integer *, integer *, integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, char *);
     doublereal bignum;
     extern /* Subroutine */
     int zgbcon_(char *, integer *, integer *, integer *, doublecomplex *, integer *, integer *, doublereal *, doublereal *, doublecomplex *, doublereal *, integer *);
@@ -454,6 +454,8 @@ int zgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
     nofact = lsame_(fact, "N");
     equil = lsame_(fact, "E");
     notran = lsame_(trans, "N");
+    smlnum = 0.;
+    bignum = 0.;
     if (nofact || equil)
     {
         *(unsigned char *)equed = 'N';
@@ -585,7 +587,7 @@ int zgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGBSVX", &i__1);
+        xerbla_("ZGBSVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

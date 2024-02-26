@@ -135,7 +135,7 @@ int sgecon_(char *norm, integer *n, real *a, integer *lda, real *anorm, real *rc
     int srscl_(integer *, real *, real *, integer *), slacn2_(integer *, real *, real *, integer *, real *, integer *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer isamax_(integer *, real *, integer *);
     real ainvnm;
     logical onenrm;
@@ -194,7 +194,7 @@ int sgecon_(char *norm, integer *n, real *a, integer *lda, real *anorm, real *rc
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGECON", &i__1);
+        xerbla_("SGECON", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

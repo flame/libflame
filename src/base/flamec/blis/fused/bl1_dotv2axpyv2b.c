@@ -8,7 +8,13 @@
 
 */
 
+/*
+*     Modifications Copyright (c) 2023 Advanced Micro Devices, Inc.  All rights reserved.
+*/
 #include "blis1.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
 
 /*
    Effective computation:

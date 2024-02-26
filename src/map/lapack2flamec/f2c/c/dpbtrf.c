@@ -148,7 +148,7 @@ int dpbtrf_(char *uplo, integer *n, integer *kd, doublereal * ab, integer *ldab,
     int dgemm_(char *, char *, integer *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *);
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int dtrsm_(char *, char *, char *, char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *), dsyrk_( char *, char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, integer *), dpbtf2_(char *, integer *, integer *, doublereal *, integer *, integer *), dpotf2_(char *, integer *, doublereal *, integer *, integer *), xerbla_(char *, integer *);
+    int dtrsm_(char *, char *, char *, char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *), dsyrk_( char *, char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, integer *), dpbtf2_(char *, integer *, integer *, doublereal *, integer *, integer *), dpotf2_(char *, integer *, doublereal *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -198,7 +198,7 @@ int dpbtrf_(char *uplo, integer *n, integer *kd, doublereal * ab, integer *ldab,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DPBTRF", &i__1);
+        xerbla_("DPBTRF", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

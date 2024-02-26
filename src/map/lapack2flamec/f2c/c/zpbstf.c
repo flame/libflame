@@ -165,7 +165,7 @@ int zpbstf_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *lda
     extern logical lsame_(char *, char *);
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zdscal_( integer *, doublereal *, doublecomplex *, integer *), zlacgv_( integer *, doublecomplex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zdscal_( integer *, doublereal *, doublecomplex *, integer *), zlacgv_( integer *, doublecomplex *, integer *);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -213,7 +213,7 @@ int zpbstf_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *lda
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZPBSTF", &i__1);
+        xerbla_("ZPBSTF", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

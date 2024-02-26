@@ -15,7 +15,7 @@ int ztbmv_(char *uplo, char *trans, char *diag, integer *n, integer *k, doubleco
     extern logical lsame_(char *, char *);
     integer kplus1, ix, jx, kx;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical noconj, nounit;
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
@@ -161,7 +161,7 @@ int ztbmv_(char *uplo, char *trans, char *diag, integer *n, integer *k, doubleco
     }
     if (info != 0)
     {
-        xerbla_("ZTBMV ", &info);
+        xerbla_("ZTBMV ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

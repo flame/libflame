@@ -12,7 +12,7 @@ int spotri_check(char *uplo, integer *n, float *a, integer *lda, integer *info)
     a -= a_offset;
     /* Function Body */
     *info = 0;
-    if (! lsame_(uplo, "U") && ! lsame_(uplo, "L"))
+    if (! lsame_(uplo, "U", 1, 1) && ! lsame_(uplo, "L", 1, 1))
     {
         *info = -1;
     }
@@ -27,7 +27,7 @@ int spotri_check(char *uplo, integer *n, float *a, integer *lda, integer *info)
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SPOTRI", &i__1);
+        xerbla_("SPOTRI", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */

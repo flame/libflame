@@ -213,7 +213,7 @@ int sorbdb2_(integer *m, integer *p, integer *q, real *x11, integer *ldx11, real
     extern real snrm2_(integer *, real *, integer *);
     integer ilarf, llarf;
     extern /* Subroutine */
-    int sscal_(integer *, real *, real *, integer *), slarf_(char *, integer *, integer *, real *, integer *, real *, real *, integer *, real *), xerbla_(char *, integer *);
+    int sscal_(integer *, real *, real *, integer *), slarf_(char *, integer *, integer *, real *, integer *, real *, real *, integer *, real *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical lquery;
     integer iorbdb5, lorbdb5;
     extern /* Subroutine */
@@ -306,7 +306,7 @@ int sorbdb2_(integer *m, integer *p, integer *q, real *x11, integer *ldx11, real
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SORBDB2", &i__1);
+        xerbla_("SORBDB2", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

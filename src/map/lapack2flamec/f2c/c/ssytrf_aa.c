@@ -142,7 +142,7 @@ int ssytrf_aa_(char *uplo, integer *n, real *a, integer * lda, integer *ipiv, re
     int sscal_(integer *, real *, real *, integer *), sgemm_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), sgemv_(char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *);
     logical upper;
     extern /* Subroutine */
-    int scopy_(integer *, real *, integer *, real *, integer *), sswap_(integer *, real *, integer *, real *, integer * ), xerbla_(char *, integer *);
+    int scopy_(integer *, real *, integer *, real *, integer *), sswap_(integer *, real *, integer *, real *, integer * ), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer lwkopt;
     logical lquery;
@@ -207,7 +207,7 @@ int ssytrf_aa_(char *uplo, integer *n, real *a, integer * lda, integer *ipiv, re
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSYTRF_AA", &i__1);
+        xerbla_("SSYTRF_AA", &i__1, (ftnlen)9);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

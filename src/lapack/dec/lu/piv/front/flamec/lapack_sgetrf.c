@@ -1,8 +1,12 @@
 /*
-    Copyright (c) 2021-2022 Advanced Micro Devices, Inc.  All rights reserved.
+    Copyright (c) 2021-2023 Advanced Micro Devices, Inc.  All rights reserved.
 */
 
 #include "FLAME.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
+
 /* Table of constant values */
 
 static TLS_CLASS_SPEC integer c__1 = 1;
@@ -21,6 +25,7 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *,integer *, integer *);
     extern /* Subroutine */ int slaswp_(integer *, real *, integer *, integer
 	    *, integer *, integer *, integer *);
+	extern int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
 
 
 /*  ======= */
@@ -102,7 +107,7 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
     }
     if (*info != 0) {
 	i__1 = -(*info);
-	xerbla_("LAPACK_SGETRF", &i__1);
+	xerbla_("LAPACK_SGETRF", &i__1, (ftnlen)13);
 	return *info;
     }
 
@@ -125,8 +130,8 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
                         aocl_fla_progress_ptr=aocl_fla_progress;
             #endif
                     if(aocl_fla_progress_ptr){
-                        step_count= fla_min(*m,*n);
-                        AOCL_FLA_PROGRESS_FUNC_PTR("SGETRF",6,&step_count,&thread_id,&total_threads);
+                        progress_step_count= fla_min(*m,*n);
+                        AOCL_FLA_PROGRESS_FUNC_PTR("SGETRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
                     }
          #endif
 
@@ -135,8 +140,8 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
 
 /*        Use blocked code. */
 	#if AOCL_FLA_PROGRESS_H
-                    step_count =0;
-        #endif
+            progress_step_count = 0;
+    #endif
 
 
 	i__1 = fla_min(*m,*n);
@@ -154,8 +159,8 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
                         aocl_fla_progress_ptr=aocl_fla_progress;
               #endif
                     if(aocl_fla_progress_ptr){
-                	step_count+=jb;
-                	AOCL_FLA_PROGRESS_FUNC_PTR("SGETRF",6,&step_count,&thread_id,&total_threads);
+                	progress_step_count+=jb;
+                	AOCL_FLA_PROGRESS_FUNC_PTR("SGETRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
                     }
   	    #endif
 

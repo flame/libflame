@@ -131,7 +131,7 @@ int dpocon_(char *uplo, integer *n, doublereal *a, integer * lda, doublereal *an
     extern integer idamax_(integer *, doublereal *, integer *);
     doublereal scaleu;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal ainvnm;
     extern /* Subroutine */
     int dlatrs_(char *, char *, char *, char *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *);
@@ -188,7 +188,7 @@ int dpocon_(char *uplo, integer *n, doublereal *a, integer * lda, doublereal *an
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DPOCON", &i__1);
+        xerbla_("DPOCON", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

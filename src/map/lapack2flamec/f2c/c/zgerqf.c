@@ -143,7 +143,7 @@ int zgerqf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
     /* Local variables */
     integer i__, k, ib, nb, ki, kk, mu, nu, nx, iws, nbmin, iinfo;
     extern /* Subroutine */
-    int zgerq2_(integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), xerbla_( char *, integer *);
+    int zgerq2_(integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int zlarfb_(char *, char *, char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *);
@@ -191,6 +191,7 @@ int zgerqf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
     {
         *info = -4;
     }
+    nb = ilaenv_(&c__1, "ZGERQF", " ", m, n, &c_n1, &c_n1);
     if (*info == 0)
     {
         k = fla_min(*m,*n);
@@ -200,7 +201,6 @@ int zgerqf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
         }
         else
         {
-            nb = ilaenv_(&c__1, "ZGERQF", " ", m, n, &c_n1, &c_n1);
             lwkopt = *m * nb;
         }
         work[1].r = (doublereal) lwkopt;
@@ -216,7 +216,7 @@ int zgerqf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGERQF", &i__1);
+        xerbla_("ZGERQF", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

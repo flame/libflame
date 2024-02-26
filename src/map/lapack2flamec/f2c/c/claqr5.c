@@ -268,10 +268,8 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
     /* System generated locals */
     integer h_dim1, h_offset, u_dim1, u_offset, v_dim1, v_offset, wh_dim1, wh_offset, wv_dim1, wv_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7, i__8, i__9, i__10, i__11;
     real r__1, r__2, r__3, r__4, r__5, r__6, r__7, r__8, r__9, r__10;
-    complex q__1, q__2, q__3, q__4, q__5, q__6, q__7, q__8;
+    complex q__1, q__2, q__3, q__4, q__5, q__6, q__7;
     /* Local variables */
-    extern /* Subroutine */
-    int f90_cycle_(void);
     integer j, k, m, i2, k1, i4;
     real h11, h12, h21, h22;
     integer m22, ns, nu;
@@ -342,6 +340,8 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
     wh_offset = 1 + wh_dim1;
     wh -= wh_offset;
     /* Function Body */
+    q__5.r = 0.f;
+    q__5.i = 0.f;
     if (*nshfts < 2)
     {
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
@@ -1092,11 +1092,11 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                     {
                         /* Computing MAX */
                         r__5 = (r__1 = u1r, f2c_abs(r__1)) + (r__2 = u1i, f2c_abs(r__2));
-                        r__6 = (r__3 = u2r, f2c_abs(r__3)) + ( r__4 = u2i, abs(r__4)); // , expr subst
+                        r__6 = (r__3 = u2r, f2c_abs(r__3)) + ( r__4 = u2i, f2c_abs(r__4)); // , expr subst
                         h12 = fla_max(r__5,r__6);
                         /* Computing MIN */
                         r__5 = (r__1 = u1r, f2c_abs(r__1)) + (r__2 = u1i, f2c_abs(r__2));
-                        r__6 = (r__3 = u2r, f2c_abs(r__3)) + ( r__4 = u2i, abs(r__4)); // , expr subst
+                        r__6 = (r__3 = u2r, f2c_abs(r__3)) + ( r__4 = u2i, f2c_abs(r__4)); // , expr subst
                         h21 = fla_min(r__5,r__6);
                         i__4 = k + k * h_dim1;
                         i__5 = k + 1 + (k + 1) * h_dim1;

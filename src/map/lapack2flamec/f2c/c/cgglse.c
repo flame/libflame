@@ -183,7 +183,7 @@ int cgglse_(integer *m, integer *n, integer *p, complex *a, integer *lda, comple
     /* Local variables */
     integer nb, mn, nr, nb1, nb2, nb3, nb4, lopt;
     extern /* Subroutine */
-    int cgemv_(char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer *), ccopy_(integer *, complex *, integer *, complex *, integer *), caxpy_(integer *, complex *, complex *, integer *, complex *, integer *), ctrmv_(char *, char *, char *, integer *, complex *, integer *, complex *, integer *), cggrqf_(integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *, complex *, integer *, integer *), xerbla_(char *, integer *);
+    int cgemv_(char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer *), ccopy_(integer *, complex *, integer *, complex *, integer *), caxpy_(integer *, complex *, complex *, integer *, complex *, integer *), ctrmv_(char *, char *, char *, integer *, complex *, integer *, complex *, integer *), cggrqf_(integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *, complex *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer lwkmin;
     extern /* Subroutine */
@@ -278,7 +278,7 @@ int cgglse_(integer *m, integer *n, integer *p, complex *a, integer *lda, comple
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGGLSE", &i__1);
+        xerbla_("CGGLSE", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

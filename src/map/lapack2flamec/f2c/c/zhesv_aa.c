@@ -163,7 +163,7 @@ int zhesv_aa_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *
     integer lwkopt_hetrf__, lwkopt_hetrs__;
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer lwkopt;
     logical lquery;
     /* -- LAPACK driver routine (version 3.8.0) -- */
@@ -240,7 +240,7 @@ int zhesv_aa_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHESV_AA ", &i__1);
+        xerbla_("ZHESV_AA ", &i__1, (ftnlen)9);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -202,7 +202,7 @@ int cpprfs_(char *uplo, integer *n, integer *nrhs, complex * ap, complex *afp, c
     extern real slamch_(char *);
     real safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), cpptrs_( char *, integer *, integer *, complex *, complex *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), cpptrs_( char *, integer *, integer *, complex *, complex *, integer *, integer *);
     real lstres;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -270,7 +270,7 @@ int cpprfs_(char *uplo, integer *n, integer *nrhs, complex * ap, complex *afp, c
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CPPRFS", &i__1);
+        xerbla_("CPPRFS", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

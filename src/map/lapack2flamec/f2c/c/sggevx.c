@@ -415,7 +415,7 @@ int sggevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, re
     logical ilascl, ilbscl;
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), sgghrd_( char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), sgghrd_( char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *);
     logical ldumma[1];
     char chtemp[1];
     real bignum;
@@ -625,7 +625,7 @@ int sggevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, re
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGGEVX", &i__1);
+        xerbla_("SGGEVX", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

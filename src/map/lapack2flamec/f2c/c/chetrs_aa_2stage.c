@@ -156,7 +156,7 @@ int chetrs_aa_2stage_(char *uplo, integer *n, integer *nrhs, complex *a, integer
     int ctrsm_(char *, char *, char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *);
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), cgbtrs_( char *, integer *, integer *, integer *, integer *, complex *, integer *, integer *, complex *, integer *, integer *), claswp_(integer *, complex *, integer *, integer *, integer *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), cgbtrs_( char *, integer *, integer *, integer *, integer *, complex *, integer *, integer *, complex *, integer *, integer *), claswp_(integer *, complex *, integer *, integer *, integer *, integer *, integer *);
     /* -- LAPACK computational routine (version 3.8.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -216,7 +216,7 @@ int chetrs_aa_2stage_(char *uplo, integer *n, integer *nrhs, complex *a, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHETRS_AA_2STAGE", &i__1);
+        xerbla_("CHETRS_AA_2STAGE", &i__1, (ftnlen)16);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

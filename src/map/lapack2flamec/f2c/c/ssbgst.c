@@ -181,7 +181,7 @@ int ssbgst_(char *vect, char *uplo, integer *n, integer *ka, integer *kb, real *
     int sscal_(integer *, real *, real *, integer *);
     logical upper, wantx;
     extern /* Subroutine */
-    int slar2v_(integer *, real *, real *, real *, integer *, real *, real *, integer *), xerbla_(char *, integer *);
+    int slar2v_(integer *, real *, real *, real *, integer *, real *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical update;
     extern /* Subroutine */
     int slaset_(char *, integer *, integer *, real *, real *, real *, integer *), slartg_(real *, real *, real *, real *, real *), slargv_(integer *, real *, integer *, real *, integer *, real *, integer *), slartv_(integer *, real *, integer *, real *, integer *, real *, real *, integer *);
@@ -258,7 +258,7 @@ int ssbgst_(char *vect, char *uplo, integer *n, integer *ka, integer *kb, real *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSBGST", &i__1);
+        xerbla_("SSBGST", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

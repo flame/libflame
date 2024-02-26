@@ -269,7 +269,7 @@ int ssytrf_rk_(char *uplo, integer *n, real *a, integer * lda, real *e, integer 
     integer nbmin, iinfo;
     logical upper;
     extern /* Subroutine */
-    int sswap_(integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *);
+    int sswap_(integer *, real *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer ldwork, lwkopt;
     logical lquery;
@@ -329,7 +329,7 @@ int ssytrf_rk_(char *uplo, integer *n, real *a, integer * lda, real *e, integer 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSYTRF_RK", &i__1);
+        xerbla_("SSYTRF_RK", &i__1, (ftnlen)9);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

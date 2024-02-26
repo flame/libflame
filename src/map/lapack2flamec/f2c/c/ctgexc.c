@@ -208,7 +208,7 @@ int ctgexc_(logical *wantq, logical *wantz, integer *n, complex *a, integer *lda
     /* Local variables */
     integer here;
     extern /* Subroutine */
-    int ctgex2_(logical *, logical *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, integer *, integer *), xerbla_(char *, integer *);
+    int ctgex2_(logical *, logical *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -272,7 +272,7 @@ int ctgexc_(logical *wantq, logical *wantz, integer *n, complex *a, integer *lda
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTGEXC", &i__1);
+        xerbla_("CTGEXC", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

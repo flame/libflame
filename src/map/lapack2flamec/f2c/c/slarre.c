@@ -378,6 +378,9 @@ int slarre_(char *range, integer *n, real *vl, real *vu, integer *il, integer *i
     --d__;
     /* Function Body */
     *info = 0;
+    wend = 0;
+    mb = 0;
+    irange = 0;
     /* Quick return if possible */
     if (*n <= 0)
     {

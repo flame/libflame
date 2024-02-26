@@ -165,7 +165,7 @@ doublereal zla_gbrcond_c_(char *trans, integer *n, integer *kl, integer *ku, dou
     integer isave[3];
     doublereal anorm;
     extern /* Subroutine */
-    int zlacn2_(integer *, doublecomplex *, doublecomplex *, doublereal *, integer *, integer *), xerbla_( char *, integer *);
+    int zlacn2_(integer *, doublecomplex *, doublecomplex *, doublereal *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal ainvnm;
     extern /* Subroutine */
     int zgbtrs_(char *, integer *, integer *, integer *, integer *, doublecomplex *, integer *, integer *, doublecomplex *, integer *, integer *);
@@ -235,7 +235,7 @@ doublereal zla_gbrcond_c_(char *trans, integer *n, integer *kl, integer *ku, dou
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZLA_GBRCOND_C", &i__1);
+        xerbla_("ZLA_GBRCOND_C", &i__1, (ftnlen)13);
         AOCL_DTL_TRACE_LOG_EXIT
         return ret_val;
     }

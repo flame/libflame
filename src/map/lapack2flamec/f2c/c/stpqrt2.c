@@ -181,7 +181,7 @@ int stpqrt2_(integer *m, integer *n, integer *l, real *a, integer *lda, real *b,
     int sger_(integer *, integer *, real *, real *, integer *, real *, integer *, real *, integer *);
     real alpha;
     extern /* Subroutine */
-    int sgemv_(char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), strmv_(char *, char *, char *, integer *, real *, integer *, real *, integer *), xerbla_( char *, integer *), slarfg_(integer *, real *, real *, integer *, real *);
+    int sgemv_(char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), strmv_(char *, char *, char *, integer *, real *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), slarfg_(integer *, real *, real *, integer *, real *);
     /* -- LAPACK computational routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -240,7 +240,7 @@ int stpqrt2_(integer *m, integer *n, integer *l, real *a, integer *lda, real *b,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("STPQRT2", &i__1);
+        xerbla_("STPQRT2", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

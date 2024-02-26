@@ -224,7 +224,7 @@ int zgebrd_(integer *m, integer *n, doublecomplex *a, integer *lda, doublereal *
     /* Local variables */
     integer i__, j, nb, nx, ws, nbmin, iinfo, minmn;
     extern /* Subroutine */
-    int zgemm_(char *, char *, integer *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), zgebd2_(integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublecomplex *, doublecomplex *, integer *), xerbla_(char *, integer *), zlabrd_(integer *, integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *);
+    int zgemm_(char *, char *, integer *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), zgebd2_(integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublecomplex *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), zlabrd_(integer *, integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer ldwrkx, ldwrky, lwkopt;
     logical lquery;
@@ -293,7 +293,7 @@ int zgebrd_(integer *m, integer *n, doublecomplex *a, integer *lda, doublereal *
     if (*info < 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGEBRD", &i__1);
+        xerbla_("ZGEBRD", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

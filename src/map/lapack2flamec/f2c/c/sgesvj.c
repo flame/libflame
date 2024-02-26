@@ -347,7 +347,7 @@ int sgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, real *a,
     extern real sdot_(integer *, real *, integer *, real *, integer *);
     real aapp0, temp1;
     extern real snrm2_(integer *, real *, integer *);
-    real large, apoaq, aqoap;
+    real apoaq, aqoap;
     extern logical lsame_(char *, char *);
     real theta;
     extern /* Subroutine */
@@ -363,7 +363,7 @@ int sgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, real *a,
     int sswap_(integer *, real *, integer *, real *, integer *), saxpy_(integer *, real *, real *, integer *, real *, integer *), srotm_(integer *, real *, integer *, real *, integer *, real *), sgsvj0_(char *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *, real *, real *, real *, integer *, real *, integer *, integer *), sgsvj1_( char *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *, real *, real *, real *, integer *, real *, integer *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer ijblsk, swband;
     extern /* Subroutine */
     int slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *);
@@ -479,7 +479,7 @@ int sgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, real *a,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGESVJ", &i__1);
+        xerbla_("SGESVJ", &i__1, (ftnlen)6);
         return 0;
     }
     /* #:) Quick return for void matrix */
@@ -520,7 +520,6 @@ int sgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, real *a,
     big = slamch_("Overflow");
     /* BIG = ONE / SFMIN */
     rootbig = 1.f / rootsfmin;
-    large = big / sqrt((real) (*m * *n));
     bigtheta = 1.f / rooteps;
     tol = ctol * epsln;
     roottol = sqrt(tol);
@@ -528,7 +527,7 @@ int sgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, real *a,
     {
         *info = -4;
         i__1 = -(*info);
-        xerbla_("SGESVJ", &i__1);
+        xerbla_("SGESVJ", &i__1, (ftnlen)6);
         return 0;
     }
     /* Initialize the right singular vector matrix. */
@@ -569,7 +568,7 @@ int sgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, real *a,
             {
                 *info = -6;
                 i__2 = -(*info);
-                xerbla_("SGESVJ", &i__2);
+                xerbla_("SGESVJ", &i__2, (ftnlen)6);
                 return 0;
             }
             aaqq = sqrt(aaqq);
@@ -612,7 +611,7 @@ int sgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, real *a,
             {
                 *info = -6;
                 i__2 = -(*info);
-                xerbla_("SGESVJ", &i__2);
+                xerbla_("SGESVJ", &i__2, (ftnlen)6);
                 return 0;
             }
             aaqq = sqrt(aaqq);
@@ -655,7 +654,7 @@ int sgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, real *a,
             {
                 *info = -6;
                 i__2 = -(*info);
-                xerbla_("SGESVJ", &i__2);
+                xerbla_("SGESVJ", &i__2, (ftnlen)6);
                 return 0;
             }
             aaqq = sqrt(aaqq);

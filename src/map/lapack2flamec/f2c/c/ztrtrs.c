@@ -142,7 +142,7 @@ int ztrtrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
     /* Local variables */
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int ztrsm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(char *, integer *);
+    int ztrsm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical nounit;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -206,7 +206,7 @@ int ztrtrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZTRTRS", &i__1);
+        xerbla_("ZTRTRS", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -274,12 +274,12 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
     int slabad_(real *, real *);
     real ascale, bscale;
     extern /* Complex */
-    VOID cladiv_(complex *, complex *, complex *);
+    void cladiv_f2c_(complex *, complex *, complex *);
     extern real slamch_(char *);
     complex salpha;
     real safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     logical ilcomp;
     integer ihwmny;
@@ -325,6 +325,8 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
     --work;
     --rwork;
     /* Function Body */
+    ilall = FALSE_;
+    ilback = FALSE_;
     if (lsame_(howmny, "A"))
     {
         ihwmny = 1;
@@ -393,7 +395,7 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTGEVC", &i__1);
+        xerbla_("CTGEVC", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
@@ -449,7 +451,7 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTGEVC", &i__1);
+        xerbla_("CTGEVC", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -32,10 +32,10 @@ int sorgbr_check(char *vect, integer *m, integer *n, integer *k, float *a, integ
     --work;
     /* Function Body */
     *info = 0;
-    wantq = lsame_(vect, "Q");
+    wantq = lsame_(vect, "Q", 1, 1);
     mn = fla_min(*m,*n);
     lquery = *lwork == -1;
-    if (! wantq && ! lsame_(vect, "P"))
+    if (! wantq && ! lsame_(vect, "P", 1, 1))
     {
         *info = -1;
     }
@@ -102,7 +102,7 @@ int sorgbr_check(char *vect, integer *m, integer *n, integer *k, float *a, integ
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SORGBR", &i__1);
+        xerbla_("SORGBR", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

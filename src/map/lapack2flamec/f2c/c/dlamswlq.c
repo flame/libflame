@@ -203,7 +203,7 @@ int dlamswlq_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     extern logical lsame_(char *, char *);
     logical right;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical notran, lquery;
     extern /* Subroutine */
     int dgemlqt_(char *, char *, integer *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), dtpmlqt_(char *, char *, integer *, integer *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *);
@@ -292,7 +292,7 @@ int dlamswlq_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DLAMSWLQ", &i__1);
+        xerbla_("DLAMSWLQ", &i__1, (ftnlen)8);
         work[1] = (doublereal) lw;
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;

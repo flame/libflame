@@ -173,7 +173,6 @@ int dsb2st_kernels_(char *uplo, logical *wantz, integer * ttype, integer *st, in
     logical upper;
     extern /* Subroutine */
     int dlarfg_(integer *, doublereal *, doublereal *, integer *, doublereal *);
-    integer ajeter;
     extern /* Subroutine */
     int dlarfx_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *), dlarfy_(char *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *);
     integer ofdpos, taupos;
@@ -205,7 +204,6 @@ int dsb2st_kernels_(char *uplo, logical *wantz, integer * ttype, integer *st, in
     --tau;
     --work;
     /* Function Body */
-    ajeter = *ib + *ldvt;
     upper = lsame_(uplo, "U");
     if (upper)
     {

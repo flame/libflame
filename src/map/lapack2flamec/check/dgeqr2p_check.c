@@ -29,7 +29,7 @@ int dgeqr2p_check(integer *m, integer *n, double *a, integer * lda, double *tau,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGEQR2P", &i__1);
+        xerbla_("DGEQR2P", &i__1, (ftnlen)7);
         return LAPACK_FAILURE;
     }
     return LAPACK_SUCCESS;

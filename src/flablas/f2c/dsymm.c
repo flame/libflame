@@ -13,7 +13,7 @@ int dsymm_(char *side, char *uplo, integer *m, integer *n, doublereal *alpha, do
     integer nrowa;
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
     /* .. */
@@ -172,7 +172,7 @@ int dsymm_(char *side, char *uplo, integer *m, integer *n, doublereal *alpha, do
     }
     if (info != 0)
     {
-        xerbla_("DSYMM ", &info);
+        xerbla_("DSYMM ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

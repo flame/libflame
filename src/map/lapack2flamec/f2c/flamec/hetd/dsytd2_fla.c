@@ -182,7 +182,7 @@ int dsytd2_fla(char *uplo, integer *n, doublereal *a, integer * lda, doublereal 
     int daxpy_(integer *, doublereal *, doublereal *, integer *, doublereal *, integer *);
     logical upper;
     extern /* Subroutine */
-    int dsymv_(char *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), dlarfg_(integer *, doublereal *, doublereal *, integer *, doublereal *), xerbla_(char *, integer * );
+    int dsymv_(char *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), dlarfg_(integer *, doublereal *, doublereal *, integer *, doublereal *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -229,7 +229,7 @@ int dsytd2_fla(char *uplo, integer *n, doublereal *a, integer * lda, doublereal 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DSYTD2", &i__1);
+        xerbla_("DSYTD2", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

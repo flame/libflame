@@ -216,7 +216,7 @@ int ctpmlqt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
     extern logical lsame_(char *, char *);
     logical right;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), ctprfb_( char *, char *, char *, char *, integer *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), ctprfb_( char *, char *, char *, char *, integer *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *);
     logical notran;
     /* -- LAPACK computational routine (version 3.7.1) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -313,7 +313,7 @@ int ctpmlqt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTPMLQT", &i__1);
+        xerbla_("CTPMLQT", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

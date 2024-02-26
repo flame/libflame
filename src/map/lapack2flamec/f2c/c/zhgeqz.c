@@ -1,7 +1,7 @@
 /* zhgeqz.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 /*
- *  Copyright (c) 2020-2023 Advanced Micro Devices, Inc.  All rights reserved.
+ *  Copyright (c) 2020-2023 Advanced Micro Devices, Inc. All rights reserved.
  */
 #include "FLA_f2c.h" /* Table of constant values */
 #ifdef FLA_OPENMP_MULTITHREADING
@@ -324,6 +324,10 @@ int fla_zhgeqz(char *job, char *compq, char *compz, integer *n, integer *ilo, in
     doublereal d_imag(doublecomplex *);
     void z_div(doublecomplex *, doublecomplex *, doublecomplex *), z_sqrt( doublecomplex *, doublecomplex *), pow_zi(doublecomplex *, doublecomplex *, integer *);
     /* Local variables */
+#ifdef FLA_OPENMP_MULTITHREADING
+    extern /* Function */
+        int fla_thread_get_num_threads();    
+#endif
     doublereal c__;
     integer j;
     doublecomplex s, x, y;
@@ -359,7 +363,7 @@ int fla_zhgeqz(char *job, char *compq, char *compz, integer *n, integer *ilo, in
     doublecomplex signbc;
     doublereal safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublecomplex eshift;
     logical ilschr;
     integer icompq, ilastm;
@@ -376,18 +380,12 @@ int fla_zhgeqz(char *job, char *compq, char *compz, integer *n, integer *ilo, in
     int zlaset_(char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *);
     integer istart;
     logical lquery;
+    int num_threads, tid;
 
     /* Initialize global context data */
     aocl_fla_init();
 
 #ifdef FLA_ENABLE_AMD_OPT
-#ifdef FLA_OPENMP_MULTITHREADING
-    int num_threads = omp_get_max_threads();
-    int tid;
-#else
-    int num_threads = 1;
-    int tid = 0;
-#endif
     doublereal c1;
     doublecomplex s1;
     integer max_swps = QZ_MAX_SWEEPS;
@@ -575,7 +573,7 @@ int fla_zhgeqz(char *job, char *compq, char *compz, integer *n, integer *ilo, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHGEQZ", &i__1);
+        xerbla_("ZHGEQZ", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)
@@ -1425,12 +1423,17 @@ L90: /* Do an implicit-shift QZ sweep. */
 
             num_swps++;
         }
+
 #ifdef FLA_OPENMP_MULTITHREADING
+        num_threads = fla_thread_get_num_threads();
+
         num_threads = fla_min(2, num_threads);
         #pragma omp parallel num_threads(num_threads) private(j, i__3, i__4, i__5, tid)
         {
             tid = omp_get_thread_num();
 #else
+    num_threads = 1;
+    tid = 0;
         {
 #endif
             for (j = istart;

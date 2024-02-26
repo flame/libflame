@@ -167,7 +167,7 @@ int cunml2_(char *side, char *trans, integer *m, integer *n, integer *k, complex
     int clarf_(char *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *);
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int clacgv_(integer *, complex *, integer *), xerbla_(char *, integer *);
+    int clacgv_(integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical notran;
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -243,7 +243,7 @@ int cunml2_(char *side, char *trans, integer *m, integer *n, integer *k, complex
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CUNML2", &i__1);
+        xerbla_("CUNML2", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -162,7 +162,7 @@ int zunm2r_fla(char *side, char *trans, integer *m, integer *n, integer *k, doub
     doublecomplex taui;
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int zlarf_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *), xerbla_(char *, integer *);
+    int zlarf_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical notran;
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -238,7 +238,7 @@ int zunm2r_fla(char *side, char *trans, integer *m, integer *n, integer *k, doub
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZUNM2R", &i__1);
+        xerbla_("ZUNM2R", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

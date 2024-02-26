@@ -209,7 +209,7 @@ int slasd1_(integer *nl, integer *nr, integer *sqre, real * d__, real *alpha, re
     int slasd2_(integer *, integer *, integer *, integer *, real *, real *, real *, real *, real *, integer *, real *, integer *, real *, real *, integer *, real *, integer *, integer *, integer *, integer *, integer *, integer *, integer *), slasd3_(integer *, integer *, integer *, integer *, real *, real *, integer *, real *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *, integer *, real *, integer *);
     integer isigma;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), slascl_( char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *), slamrg_(integer *, integer *, real *, integer *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), slascl_( char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *), slamrg_(integer *, integer *, real *, integer *, integer *, integer *);
     real orgnrm;
     integer coltyp;
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
@@ -259,7 +259,7 @@ int slasd1_(integer *nl, integer *nr, integer *sqre, real * d__, real *alpha, re
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLASD1", &i__1);
+        xerbla_("SLASD1", &i__1, (ftnlen)6);
         return 0;
     }
     n = *nl + *nr + 1;

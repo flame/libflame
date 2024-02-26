@@ -167,7 +167,7 @@ real sla_gbrcond_(char *trans, integer *n, integer *kl, integer *ku, real * ab, 
     extern logical lsame_(char *, char *);
     integer isave[3];
     extern /* Subroutine */
-    int slacn2_(integer *, real *, real *, integer *, real *, integer *, integer *), xerbla_(char *, integer *);
+    int slacn2_(integer *, real *, real *, integer *, real *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real ainvnm;
     extern /* Subroutine */
     int sgbtrs_(char *, integer *, integer *, integer *, integer *, real *, integer *, integer *, real *, integer *, integer *);
@@ -234,7 +234,7 @@ real sla_gbrcond_(char *trans, integer *n, integer *kl, integer *ku, real * ab, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLA_GBRCOND", &i__1);
+        xerbla_("SLA_GBRCOND", &i__1, (ftnlen)11);
         return ret_val;
     }
     if (*n == 0)

@@ -212,7 +212,7 @@ int zgelsd_check(integer *m, integer *n, integer *nrhs, dcomplex *a, integer *ld
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGELSD", &i__1);
+        xerbla_("ZGELSD", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

@@ -154,6 +154,9 @@ int zgetc2_(integer *n, doublecomplex *a, integer *lda, integer *ipiv, integer *
     --jpiv;
     /* Function Body */
     *info = 0;
+    smin = 0.;
+    ipv = 0;
+    jpv = 0;
     /* Quick return if possible */
     if (*n == 0)
     {

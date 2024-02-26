@@ -175,7 +175,7 @@ int zgebal_(char *job, integer *n, doublecomplex *a, integer *lda, integer *ilo,
     extern doublereal dznrm2_(integer *, doublecomplex *, integer *), dlamch_( char *);
     extern logical disnan_(doublereal *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zdscal_( integer *, doublereal *, doublecomplex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zdscal_( integer *, doublereal *, doublecomplex *, integer *);
     extern integer izamax_(integer *, doublecomplex *, integer *);
     logical noconv;
     /* -- LAPACK computational routine (version 3.7.1) -- */
@@ -219,7 +219,7 @@ int zgebal_(char *job, integer *n, doublecomplex *a, integer *lda, integer *ilo,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGEBAL", &i__1);
+        xerbla_("ZGEBAL", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -390,7 +390,7 @@ L160: /* Computing MAX */
             /* Exit if NaN to avoid infinite loop */
             *info = -3;
             i__2 = -(*info);
-            xerbla_("ZGEBAL", &i__2);
+            xerbla_("ZGEBAL", &i__2, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }

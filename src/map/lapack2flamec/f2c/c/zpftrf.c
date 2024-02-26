@@ -225,7 +225,7 @@ int zpftrf_(char *transr, char *uplo, integer *n, doublecomplex *a, integer *inf
     int zherk_(char *, char *, integer *, integer *, doublereal *, doublecomplex *, integer *, doublereal *, doublecomplex *, integer *);
     logical lower;
     extern /* Subroutine */
-    int ztrsm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(char *, integer *);
+    int ztrsm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical nisodd;
     extern /* Subroutine */
     int zpotrf_(char *, integer *, doublecomplex *, integer *, integer *);
@@ -267,7 +267,7 @@ int zpftrf_(char *transr, char *uplo, integer *n, doublecomplex *a, integer *inf
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZPFTRF", &i__1);
+        xerbla_("ZPFTRF", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

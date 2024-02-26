@@ -12,7 +12,7 @@ int dspmv_(char *uplo, integer *n, doublereal *alpha, doublereal *ap, doublereal
     extern logical lsame_(char *, char *);
     integer kk, ix, iy, jx, jy, kx, ky;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
     /* .. */
@@ -112,7 +112,7 @@ int dspmv_(char *uplo, integer *n, doublereal *alpha, doublereal *ap, doublereal
     }
     if (info != 0)
     {
-        xerbla_("DSPMV ", &info);
+        xerbla_("DSPMV ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

@@ -33,7 +33,7 @@ int zungl2_check(integer *m, integer *n, integer *k, dcomplex *a, integer *lda, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZUNGL2", &i__1);
+        xerbla_("ZUNGL2", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */

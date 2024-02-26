@@ -127,7 +127,7 @@ int dgetrf2_(integer *m, integer *n, doublereal *a, integer * lda, integer *ipiv
     extern doublereal dlamch_(char *);
     extern integer idamax_(integer *, doublereal *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), dlaswp_( integer *, doublereal *, integer *, integer *, integer *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), dlaswp_( integer *, doublereal *, integer *, integer *, integer *, integer *, integer *);
 
     /* -- LAPACK computational routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -153,6 +153,7 @@ int dgetrf2_(integer *m, integer *n, doublereal *a, integer * lda, integer *ipiv
     /* Parameter adjustments */
    #if AOCL_FLA_PROGRESS_H
        AOCL_FLA_PROGRESS_VAR;
+       static TLS_CLASS_SPEC integer progress_size = 0;
    #endif
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;
@@ -175,7 +176,7 @@ int dgetrf2_(integer *m, integer *n, doublereal *a, integer * lda, integer *ipiv
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGETRF2", &i__1);
+        xerbla_("DGETRF2", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -246,9 +247,9 @@ int dgetrf2_(integer *m, integer *n, doublereal *a, integer * lda, integer *ipiv
         /* Factor [ --- ] */
         /* [ A21 ] */
 	#if AOCL_FLA_PROGRESS_H
-        if(step_count == 0 || step_count==size ){
-            size=fla_min(*m,*n);
-            step_count =1;
+        if(progress_step_count == 0 || progress_step_count == progress_size ){
+            progress_size = fla_min(*m,*n);
+            progress_step_count = 1;
         }
 	#ifndef FLA_ENABLE_WINDOWS_BUILD
 		if(!aocl_fla_progress_ptr)
@@ -256,10 +257,10 @@ int dgetrf2_(integer *m, integer *n, doublereal *a, integer * lda, integer *ipiv
 	#endif
         if(aocl_fla_progress_ptr)
         {
-	        ++step_count;
-            if((step_count%8)==0 || step_count==size)
+	        ++progress_step_count;
+            if((progress_step_count%8)==0 || progress_step_count == progress_size)
 	        {
-                AOCL_FLA_PROGRESS_FUNC_PTR("DGETRF",6,&step_count,&thread_id,&total_threads);
+                AOCL_FLA_PROGRESS_FUNC_PTR("DGETRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
             }
                
         }
@@ -304,4 +305,3 @@ int dgetrf2_(integer *m, integer *n, doublereal *a, integer * lda, integer *ipiv
     /* End of DGETRF2 */
 }
 /* dgetrf2_ */
-

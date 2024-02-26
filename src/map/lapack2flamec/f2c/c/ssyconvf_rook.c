@@ -203,7 +203,7 @@ int ssyconvf_rook_(char *uplo, char *way, integer *n, real * a, integer *lda, re
     extern logical lsame_(char *, char *);
     logical upper;
     extern /* Subroutine */
-    int sswap_(integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *);
+    int sswap_(integer *, real *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical convert;
     /* -- LAPACK computational routine (version 3.8.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -250,7 +250,7 @@ int ssyconvf_rook_(char *uplo, char *way, integer *n, real * a, integer *lda, re
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSYCONVF_ROOK", &i__1);
+        xerbla_("SSYCONVF_ROOK", &i__1, (ftnlen)13);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

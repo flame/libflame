@@ -34,7 +34,7 @@ int cgetrfnpi_check(integer *m, integer *n, integer *nfact, scomplex *a, integer
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGETRFNPI", &i__1);
+        xerbla_("CGETRFNPI", &i__1, (ftnlen)9);
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */

@@ -483,7 +483,7 @@ int stgsen_(integer *ijob, logical *wantq, logical *wantz, logical *select, inte
     real dscale, rdscal;
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), slacpy_( char *, integer *, integer *, real *, integer *, real *, integer * ), stgexc_(logical *, logical *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *, integer *, real *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), slacpy_( char *, integer *, integer *, real *, integer *, real *, integer * ), stgexc_(logical *, logical *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *, integer *, real *, integer *, integer *);
     integer liwmin;
     extern /* Subroutine */
     int slassq_(integer *, real *, integer *, real *, real *);
@@ -564,7 +564,7 @@ int stgsen_(integer *ijob, logical *wantq, logical *wantz, logical *select, inte
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("STGSEN", &i__1);
+        xerbla_("STGSEN", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
@@ -668,7 +668,7 @@ int stgsen_(integer *ijob, logical *wantq, logical *wantz, logical *select, inte
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("STGSEN", &i__1);
+        xerbla_("STGSEN", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

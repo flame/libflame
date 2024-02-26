@@ -17,7 +17,7 @@ int zher2k_(char *uplo, char *trans, integer *n, integer *k, doublecomplex *alph
     integer nrowa;
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -186,7 +186,7 @@ int zher2k_(char *uplo, char *trans, integer *n, integer *k, doublecomplex *alph
     }
     if (info != 0)
     {
-        xerbla_("ZHER2K", &info);
+        xerbla_("ZHER2K", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

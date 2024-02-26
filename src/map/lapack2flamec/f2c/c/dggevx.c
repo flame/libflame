@@ -427,7 +427,7 @@ int dggevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, do
     int dhgeqz_(char *, char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *), dtgevc_(char *, char *, logical *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *, integer *, doublereal *, integer *);
     integer ijobvl;
     extern /* Subroutine */
-    int dtgsna_(char *, char *, logical *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *, integer *), xerbla_(char *, integer *);
+    int dtgsna_(char *, char *, logical *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer ijobvr;
     logical wantsb;
@@ -625,7 +625,7 @@ int dggevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, do
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGGEVX", &i__1);
+        xerbla_("DGGEVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -227,7 +227,7 @@ LAPACK_ormbr(s, orm)
   AOCL_DTL_TRACE_LOG_INIT
   AOCL_DTL_SNPRINTF("sormbr inputs: vect %c, side %c, trans %c, m " FLA_IS ", n " FLA_IS ", k " FLA_IS ", lda " FLA_IS ", ldc " FLA_IS "", *vect, *side, *trans, *m, *n, *k, *ldim_A, *ldim_C);
   {
-#if !FLA_AMD_OPT
+#if !FLA_ENABLE_AMD_OPT
   int fla_error = LAPACK_SUCCESS;
   {
       LAPACK_RETURN_CHECK_VAR1(sormbr_check(vect, side, trans,
@@ -266,7 +266,7 @@ LAPACK_ormbr(d, orm)
   AOCL_DTL_TRACE_LOG_INIT
   AOCL_DTL_SNPRINTF("dormbr inputs: vect %c, side %c, trans %c, m " FLA_IS ", n " FLA_IS ", k " FLA_IS ", lda " FLA_IS ", ldc " FLA_IS "", *vect, *side, *trans, *m, *n, *k, *ldim_A, *ldim_C);
   {
-#if !FLA_AMD_OPT
+#if !FLA_ENABLE_AMD_OPT
   int fla_error = LAPACK_SUCCESS;
   {
     LAPACK_RETURN_CHECK_VAR1(dormbr_check(vect, side, trans,

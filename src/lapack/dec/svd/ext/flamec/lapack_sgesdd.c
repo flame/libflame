@@ -243,15 +243,14 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
     logical wntqa;
     integer nwork;
     logical wntqn, wntqo, wntqs;
-    integer ie, il, ir, bdspac, iu, lwork_sorgbr_p_mm__;
+    integer ie, il, ir, bdspac, iu;
     extern /* Subroutine */
     int sbdsdc_(char *, char *, integer *, real *, real *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *);
-    integer lwork_sorgbr_q_nn__;
     extern /* Subroutine */
     int lapack_sgebrd(integer *, integer *, real *, integer *, real *, real *, real *, real *, real *, integer *, integer *);
     extern real slamch_(char *), slange_(char *, integer *, integer *, real *, integer *, real *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     extern /* Subroutine */
     int sgelqf_(integer *, integer *, real *, integer *, real *, real *, integer *, integer *), slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *), sgeqrf_(integer *, integer *, real *, integer *, real *, real *, integer *, integer *), slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
@@ -376,7 +375,6 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
             sgeqrf_(m, n, dum, m, dum, dum, &c_n1, &ierr);
             lwork_sgeqrf_mn__ = (integer) dum[0];
             sorgbr_("Q", n, n, n, dum, n, dum, dum, &c_n1, &ierr);
-            lwork_sorgbr_q_nn__ = (integer) dum[0];
             sorgqr_(m, m, n, dum, m, dum, dum, &c_n1, &ierr);
             lwork_sorgqr_mm__ = (integer) dum[0];
             sorgqr_(m, n, n, dum, m, dum, dum, &c_n1, &ierr);
@@ -585,7 +583,6 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
             sorglq_(m, n, m, &a[a_offset], m, dum, dum, &c_n1, &ierr);
             lwork_sorglq_mn__ = (integer) dum[0];
             sorgbr_("P", m, m, m, &a[a_offset], n, dum, dum, &c_n1, &ierr);
-            lwork_sorgbr_p_mm__ = (integer) dum[0];
             lapack_sormbr("P", "R", "T", m, m, m, dum, m, dum, dum, m, dum, &c_n1, & ierr);
             lwork_sormbr_prt_mm__ = (integer) dum[0];
             lapack_sormbr("P", "R", "T", m, n, m, dum, m, dum, dum, m, dum, &c_n1, & ierr);
@@ -775,7 +772,7 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGESDD", &i__1);
+        xerbla_("SGESDD", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

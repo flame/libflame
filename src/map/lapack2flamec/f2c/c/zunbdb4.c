@@ -227,7 +227,7 @@ int zunbdb4_(integer *m, integer *p, integer *q, doublecomplex *x11, integer *ld
     int zscal_(integer *, doublecomplex *, doublecomplex *, integer *), zlarf_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *), zdrot_(integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublereal *);
     extern doublereal dznrm2_(integer *, doublecomplex *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zlacgv_( integer *, doublecomplex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zlacgv_( integer *, doublecomplex *, integer *);
     logical lquery;
     integer iorbdb5, lorbdb5;
     extern /* Subroutine */
@@ -323,7 +323,7 @@ int zunbdb4_(integer *m, integer *p, integer *q, doublecomplex *x11, integer *ld
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZUNBDB4", &i__1);
+        xerbla_("ZUNBDB4", &i__1, (ftnlen)7);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

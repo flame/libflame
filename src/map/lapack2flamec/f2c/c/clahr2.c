@@ -232,6 +232,8 @@ int clahr2_(integer *n, integer *k, integer *nb, complex *a, integer *lda, compl
     y_offset = 1 + y_dim1;
     y -= y_offset;
     /* Function Body */
+    ei.r = 0.f;
+    ei.i = 0.f;
     if (*n <= 1)
     {
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);

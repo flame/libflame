@@ -15,6 +15,7 @@
 
 #include "blis.h"
 #include "test_prototype.h"
+#include "validate_common.h"
 
 // global variables
 extern integer i_zero , i_one , i_n_one;
@@ -97,7 +98,7 @@ void init_matrix_from_file(integer datatype, void* A,integer m, integer n, integ
 /* Reading vector input data from a file */
 void init_vector_from_file(integer datatype, void* A, integer m, integer inc, FILE* fptr);
 /* Allocate dynamic memory. If FLA_MEM_UNALIGNED is set, unaligned memory is allocated */
-char* fla_mem_alloc(integer size);
+char* fla_mem_alloc(size_t size);
 /* Generate Hessenberg matrix */
 void get_hessenberg_matrix(integer datatype, integer n, void* A, integer lda, void *Z, integer ldz, integer *ilo, integer *ihi, void* scale, integer *info);
 /* Convert matrix to upper hessenberg form */
@@ -114,4 +115,10 @@ void get_orthogonal_matrix_from_QR(integer datatype, integer n, void *A, integer
 void print_matrix(char* desc, integer datatype, integer M, integer N, void* A, integer lda);
 /* Get upper triangular matrix or lower triangular matrix based on UPLO */
 void get_triangular_matrix(char *uplo, integer datatype, integer m, integer n, void *a, integer lda);
+/*To Check order of Singular values of SVD (positive and non-decreasing)*/
+double svd_check_order(integer datatype, void *s, integer m, integer n, double residual);
+/* Intialize matrix with special values*/
+void init_matrix_spec_in(integer datatype, void *A, integer M, integer N, integer LDA, char type);
+/*Intialize matrix according to given input*/
+void init_matrix(integer datatype, void *A, integer M, integer N, integer LDA, FILE* g_ext_fptr, char imatrix_char);
 #endif // TEST_COMMON_H

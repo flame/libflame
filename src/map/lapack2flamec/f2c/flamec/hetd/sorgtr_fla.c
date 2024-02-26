@@ -124,7 +124,7 @@ int sorgtr_fla(char *uplo, integer *n, real *a, integer *lda, real *tau, real *w
     integer iinfo;
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int sorgql_(integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *), sorgqr_fla( integer *, integer *, integer *, real *, integer *, real *, real * , integer *, integer *);
@@ -208,7 +208,7 @@ int sorgtr_fla(char *uplo, integer *n, real *a, integer *lda, real *tau, real *w
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SORGTR", &i__1);
+        xerbla_("SORGTR", &i__1, (ftnlen)6);
         return 0;
     }
     else if (lquery)

@@ -13,7 +13,6 @@ static doublecomplex c_b2 =
 ;
 static integer c__6 = 6;
 static integer c__0 = 0;
-static integer c__2 = 2;
 static integer c_n1 = -1;
 static integer c__1 = 1;
 /* > \brief <b> ZGESVD computes the singular value decomposition (SVD) for GE matrices</b> */
@@ -237,8 +236,7 @@ int zgesvd_(char *jobu, char *jobvt, integer *m, integer *n, doublecomplex *a, i
     AOCL_DTL_SNPRINTF("zgesvd inputs: jobu %c, jobvt %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS "",*jobu, *jobvt, *m, *n, *lda, *ldu, *ldvt);
 
     /* System generated locals */
-    address a__1[2];
-    integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1[2], i__2, i__3, i__4;
+    integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__2, i__3, i__4;
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */
@@ -260,7 +258,7 @@ int zgesvd_(char *jobu, char *jobvt, integer *m, integer *n, doublecomplex *a, i
     logical wntua, wntva, wntun, wntuo, wntvn, wntvo, wntus, wntvs;
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), xerbla_(char *, integer *), zgebrd_(integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, integer *);
+    int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len), zgebrd_(integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, integer *);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern doublereal zlange_(char *, integer *, integer *, doublecomplex *, integer *, doublereal *);
     doublereal bignum;
@@ -330,6 +328,8 @@ int zgesvd_(char *jobu, char *jobvt, integer *m, integer *n, doublecomplex *a, i
     wntvo = lsame_(jobvt, "O");
     wntvn = lsame_(jobvt, "N");
     lquery = *lwork == -1;
+    mnthr = 0;
+    wrkbl = 0;
     if (! (wntua || wntus || wntuo || wntun))
     {
         *info = -1;
@@ -892,7 +892,7 @@ int zgesvd_(char *jobu, char *jobvt, integer *m, integer *n, doublecomplex *a, i
     if (*info != 0)
     {
         i__2 = -(*info);
-        xerbla_("ZGESVD", &i__2);
+        xerbla_("ZGESVD", &i__2, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

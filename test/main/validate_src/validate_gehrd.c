@@ -19,6 +19,8 @@ void validate_gehrd(integer n,
     double* residual,
     integer *info)
 {
+    if(n == 0)
+        return;
     void *Q = NULL, *work = NULL, *lambda = NULL;
     integer lwork = -1;
     *info = 0;

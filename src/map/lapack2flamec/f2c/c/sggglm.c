@@ -187,7 +187,7 @@ int sggglm_(integer *n, integer *m, integer *p, real *a, integer *lda, real *b, 
     /* Local variables */
     integer i__, nb, np, nb1, nb2, nb3, nb4, lopt;
     extern /* Subroutine */
-    int sgemv_(char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), scopy_(integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *);
+    int sgemv_(char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), scopy_(integer *, real *, integer *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int sggqrf_(integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, real *, integer *, integer *);
@@ -280,7 +280,7 @@ int sggglm_(integer *n, integer *m, integer *p, real *a, integer *lda, real *b, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGGGLM", &i__1);
+        xerbla_("SGGGLM", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

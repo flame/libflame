@@ -167,8 +167,7 @@ int zunmrq_(char *side, char *trans, integer *m, integer *n, integer *k, doublec
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("zunmrq inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS ", ldc %" FLA_IS ", lwork %" FLA_IS "", *side, *trans, *m, *n, *k, *lda, *ldc, *lwork);
     /* System generated locals */
-    address a__1[2];
-    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__3[2], i__4, i__5;
+    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__4, i__5;
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */
@@ -179,7 +178,7 @@ int zunmrq_(char *side, char *trans, integer *m, integer *n, integer *k, doublec
     extern logical lsame_(char *, char *);
     integer nbmin, iinfo;
     extern /* Subroutine */
-    int zunmr2_(char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(char *, integer *);
+    int zunmr2_(char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int zlarfb_(char *, char *, char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *);
@@ -225,6 +224,7 @@ int zunmrq_(char *side, char *trans, integer *m, integer *n, integer *k, doublec
     left = lsame_(side, "L");
     notran = lsame_(trans, "N");
     lquery = *lwork == -1;
+    nb = 0;
     /* NQ is the order of Q and NW is the minimum dimension of WORK */
     if (left)
     {
@@ -289,7 +289,7 @@ int zunmrq_(char *side, char *trans, integer *m, integer *n, integer *k, doublec
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZUNMRQ", &i__1);
+        xerbla_("ZUNMRQ", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

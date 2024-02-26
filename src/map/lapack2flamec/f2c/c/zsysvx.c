@@ -287,7 +287,7 @@ int zsysvx_(char *fact, char *uplo, integer *n, integer * nrhs, doublecomplex *a
     extern doublereal dlamch_(char *);
     logical nofact;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int zlacpy_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *);
@@ -401,7 +401,7 @@ int zsysvx_(char *fact, char *uplo, integer *n, integer * nrhs, doublecomplex *a
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZSYSVX", &i__1);
+        xerbla_("ZSYSVX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -313,7 +313,7 @@ int zgegv_(char *jobvl, char *jobvr, integer *n, doublecomplex *a, integer *lda,
     int zggbak_(char *, char *, integer *, integer *, integer *, doublereal *, doublereal *, integer *, doublecomplex *, integer *, integer *), zggbal_(char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *);
     doublereal salfar, safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal safmax;
     char chtemp[1];
     logical ldumma[1];
@@ -468,7 +468,7 @@ int zgegv_(char *jobvl, char *jobvr, integer *n, doublecomplex *a, integer *lda,
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGEGV ", &i__1);
+        xerbla_("ZGEGV ", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

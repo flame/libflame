@@ -286,7 +286,6 @@ PARENT_PATH     := ./$(OBJ_DIR)/$(HOST)
 # Create a list of the makefile fragments.
 MAKEFILE_FRAGMENTS := $(addsuffix /$(FRAGMENT_MK), $(FRAGMENT_DIR_PATHS))
 
-
 # Detect whether we actually got any makefile fragments. If we didn't, then it
 # is likely that the user has not yet generated them (via configure).
 ifeq ($(strip $(MAKEFILE_FRAGMENTS)),)
@@ -339,9 +338,22 @@ MK_HEADER_FILES := $(strip $(MK_HEADER_FILES))
 # Then, strip the header filename to leave the path to each header location.
 # Notice this process even weeds out duplicates! Add the config directory manually
 # since it contains FLA_config.h.
+
 MK_HEADER_DIR_PATHS := $(dir $(foreach frag_path, $(FRAGMENT_DIR_PATHS), \
                                        $(firstword $(wildcard $(frag_path)/*.h))))
 MK_HEADER_DIR_PATHS += $(BASE_CONFIG_PATH)
+
+# Create list of header file paths to be not included for flattening.
+# These paths will be removed from the list of search directories used
+# for flattening.
+
+MK_EXC_HEADER_PATHS := ./src/lapack/x86/
+MK_EXC_HEADER_PATHS += ./src/lapack/x86/avx2/
+MK_EXC_HEADER_PATHS += ./src/lapack/x86/avx512/
+MK_EXC_HEADER_PATHS += ./src/lapack/x86/front/
+
+# Remove the header paths in exclude list
+MK_HEADER_DIR_PATHS := $(filter-out $(MK_EXC_HEADER_PATHS), $(MK_HEADER_DIR_PATHS))
 
 # Define a list of headers to flatten. We have to flatten blis1.h and FLA_f2c.h
 # because a few files #include only those files, but they aren't needed after
@@ -378,9 +390,18 @@ INCLUDE_PATHS   += $(strip $(patsubst %, -I%, $(L2F_HEADER_DIR_PATHS)))
 endif
 
 INCLUDE_PATHS += $(strip $(patsubst %, -I%, $(LAPACKE_HEADERS_DIR)))
+ifeq ($(ENABLE_EMBED_AOCLUTILS),1)
 ifeq ($(strip $(LIBAOCLUTILS_LIBRARY_PATH)),)
 INCLUDE_PATHS += "-I$(LIBAOCLUTILS_DIR)/$(LIBAOCLUTILS_REPO)/include"
 endif
+endif
+
+$(info MK_EXC_HEADER_PATHS is $(MK_EXC_HEADER_PATHS))
+$(info INCLUDE_PATHS is $(INCLUDE_PATHS))
+
+# Add the paths of non-flattened header files to INCLUDE_PATHS
+MK_EXC_HEADER_PATHS := $(strip $(patsubst %, -I%, $(MK_EXC_HEADER_PATHS)))
+INCLUDE_PATHS += $(MK_EXC_HEADER_PATHS)
 
 # Add the include flags determined above to various compiler flags variables.
 CFLAGS          := $(CFLAGS) $(INCLUDE_PATHS)
@@ -388,6 +409,7 @@ CFLAGS_NOOPT    := $(CFLAGS_NOOPT) $(INCLUDE_PATHS)
 CPPFLAGS        := $(CPPFLAGS) $(INCLUDE_PATHS)
 FFLAGS          := $(FFLAGS) $(INCLUDE_PATHS)
 CFLAGS_AVX      := $(CFLAGS_AVX) $(INCLUDE_PATHS)
+CFLAGS_AVX512   := $(CFLAGS_AVX512) $(INCLUDE_PATHS)
 
 #
 # --- Library object definitions -----------------------------------------------
@@ -463,6 +485,7 @@ MK_ALL_FLAMEC_OBJS        := $(MK_FLABLAS_F2C_OBJS) \
                              $(MK_ALL_FLAMEC_OBJS)
 endif
 
+ifeq ($(ENABLE_EMBED_AOCLUTILS),1)
 ifeq ($(strip $(LIBAOCLUTILS_LIBRARY_PATH)),)
 LIBAOCLUTILS_OBJS         := 
 else
@@ -472,6 +495,7 @@ LIBAOCLUTILS_OBJS         := $(shell mkdir -p $(LIBAOCLUTILS_OBJ_DIR); \
                                 cd ..)
 MK_ALL_FLAMEC_OBJS        := $(LIBAOCLUTILS_OBJS) \
                              $(MK_ALL_FLAMEC_OBJS)
+endif
 endif
 
 ### Kyungjoo 2015.10.21
@@ -484,8 +508,10 @@ AR_CHUNK_SIZE=1024
 
 # --- Primary targets ---
 
+ifeq ($(ENABLE_EMBED_AOCLUTILS),1)
 ifeq ($(strip $(LIBAOCLUTILS_LIBRARY_PATH)),)
 all: aoclutillib libs
+endif
 else
 all: libs
 endif
@@ -515,7 +541,7 @@ ifeq ($(MAKEFILE_FRAGMENTS_PRESENT),no)
 endif
 
 aoclutillib:
-	bash script_aoclutil.sh
+	bash script_aoclutil.sh LIBAOCLUTILS_GIT_URL=$(LIBAOCLUTILS_GIT_URL) LIBAOCLUTILS_GIT_TAG=$(LIBAOCLUTILS_GIT_TAG)
 	
 # --- Cosolidated header creation ---
 
@@ -567,6 +593,14 @@ else
 	@$(CC) $(CFLAGS_AVX) -c $< -o $@
 endif
 
+FLA_AVX512PATH=lapack/x86/avx512
+$(BASE_OBJ_PATH)/$(FLA_AVX512PATH)/%.o: $(SRC_PATH)/$(FLA_AVX512PATH)/%.c $(CONFIG_MK_FILE) $(HEADERS_TO_FLATTEN)
+ifeq ($(ENABLE_VERBOSE),yes)
+	$(CC) $(CFLAGS_AVX512) -c $< -o $@
+else
+	@echo "Compiling $<"
+	@$(CC) $(CFLAGS_AVX512) -c $< -o $@
+endif
 FLA_SLAMCH=base/flamec/util/lapack/mch/fla_slamch
 $(BASE_OBJ_PATH)/$(FLA_SLAMCH).o: $(SRC_PATH)/$(FLA_SLAMCH).c $(CONFIG_MK_FILE) $(HEADERS_TO_FLATTEN)
 ifeq ($(ENABLE_VERBOSE),yes)
@@ -637,7 +671,11 @@ ifeq ($(OS_NAME),Darwin)
 #	$(CAT) $(AR_OBJ_LIST_FILE) >> $(AR_ARG_LIST_FILE)
 #	$(AR) @$(AR_ARG_LIST_FILE)
 else
+ifeq ($(ENABLE_EMBED_AOCLUTILS),1)
 	$(file > $@.in,$^ $(shell ls $(LIBAOCLUTILS_OBJ_DIR)/*.o))
+else
+	$(file > $@.in,$^)
+endif
 	$(AR) $(ARFLAGS) $@ @$@.in
 	$(RM_F) $@.in
 endif 
@@ -660,7 +698,11 @@ ifeq ($(OS_NAME),Darwin)
 #	@$(CAT) $(AR_OBJ_LIST_FILE) >> $(AR_ARG_LIST_FILE)
 #	@$(AR) @$(AR_ARG_LIST_FILE)
 else
+ifeq ($(ENABLE_EMBED_AOCLUTILS),1)
 	@$(file > $@.in,$^ $(shell ls $(LIBAOCLUTILS_OBJ_DIR)/*.o))
+else	
+	@$(file > $@.in,$^)
+endif
 	@$(AR) $(ARFLAGS) $@ @$@.in
 	@$(RM_F) $@.in
 endif
@@ -684,7 +726,11 @@ ifeq ($(OS_NAME),Darwin)
 	$(CAT) $(AR_OBJ_LIST_FILE) | xargs -n$(AR_CHUNK_SIZE) $(AR) $(ARFLAGS) $(LIBFLAME_A)
 	$(LINKER) $(SOFLAGS) -o $@ -Wl,-force_load,$(LIBFLAME_A) $(LDFLAGS)
 else
+ifeq ($(ENABLE_EMBED_AOCLUTILS),1)
 	$(file > $@.in,$^ $(shell ls $(LIBAOCLUTILS_OBJ_DIR)/*.o))
+else
+	@$(file > $@.in,$^)
+endif
 	$(LINKER) $(SOFLAGS) -o $(LIBFLAME_SO_OUTPUT_NAME) @$@.in $(LDFLAGS)
 	$(RM_F) $@.in
 endif
@@ -700,7 +746,11 @@ ifeq ($(OS_NAME),Darwin)
 	@$(CAT) $(AR_OBJ_LIST_FILE) | xargs -n$(AR_CHUNK_SIZE) $(AR) $(ARFLAGS) $(LIBFLAME_A)
 	@$(LINKER) $(SOFLAGS) -o $@ -Wl,-force_load,$(LIBFLAME_A) $(LDFLAGS)
 else
+ifeq ($(ENABLE_EMBED_AOCLUTILS),1)
 	@$(file > $@.in,$^ $(shell ls $(LIBAOCLUTILS_OBJ_DIR)/*.o))
+else
+	@$(file > $@.in,$^)
+endif
 	@$(LINKER) $(SOFLAGS) -o $(LIBFLAME_SO_OUTPUT_NAME) @$@.in $(LDFLAGS)
 	@$(RM_F) $@.in
 endif
@@ -946,8 +996,10 @@ ifeq ($(ENABLE_VERBOSE),yes)
 	- $(RM_F) $(AOCLDTL_obj_PATH)
 	- $(RM_F) $(AOCLDTL_gch_PATH)
 	- $(RM_F) $(BASE_LIB_PATH)/*
+ifeq ($(ENABLE_EMBED_AOCLUTILS),1)
 	- $(RM_F) -r $(LIBAOCLUTILS_DIR)
 	- $(RM_F) -r $(LIBAOCLUTILS_OBJ_DIR)
+endif
 else
 	@echo "Removing object files from $(BASE_OBJ_PATH)"
 	@$(FIND) $(BASE_OBJ_PATH) -name "*.o" | $(XARGS) $(RM_F)
@@ -959,8 +1011,10 @@ else
 	@$(RM_F) $(AOCLDTL_obj_PATH)
 	@$(RM_F) $(AOCLDTL_gch_PATH)
 	@$(RM_F) $(BASE_LIB_PATH)/*
+ifeq ($(ENABLE_EMBED_AOCLUTILS),1)
 	@$(RM_F) -r $(LIBAOCLUTILS_DIR)
 	@$(RM_F) -r $(LIBAOCLUTILS_OBJ_DIR)
+endif
 endif
 endif
 

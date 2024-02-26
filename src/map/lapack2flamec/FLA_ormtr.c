@@ -203,7 +203,7 @@ LAPACK_ormtr(d, orm)
   AOCL_DTL_TRACE_LOG_INIT
   AOCL_DTL_SNPRINTF("dormtr inputs: side %c, uplo %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldc %" FLA_IS "\n", *side, *uplo, *trans, *m, *n, *ldim_A, *ldim_C);
   {
-#if !FLA_AMD_OPT
+#if !FLA_ENABLE_AMD_OPT
     if (*uplo == 'U' || *uplo == 'u')
 #endif
     {

@@ -279,7 +279,7 @@ int zgesdd_(char *jobz, integer *m, integer *n, doublecomplex *a, integer *lda, 
     int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *);
     extern logical disnan_(doublereal *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zgebrd_( integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zgebrd_( integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, integer *);
     doublereal bignum;
     extern doublereal zlange_(char *, integer *, integer *, doublecomplex *, integer *, doublereal *);
     extern /* Subroutine */
@@ -815,7 +815,7 @@ int zgesdd_(char *jobz, integer *m, integer *n, doublecomplex *a, integer *lda, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZGESDD", &i__1);
+        xerbla_("ZGESDD", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

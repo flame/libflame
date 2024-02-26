@@ -204,7 +204,7 @@ int ssyevd_(char *jobz, char *uplo, integer *n, real *a, integer *lda, real *w, 
     real safmin;
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     extern /* Subroutine */
     int slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *);
@@ -312,7 +312,7 @@ int ssyevd_(char *jobz, char *uplo, integer *n, real *a, integer *lda, real *w, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSYEVD", &i__1);
+        xerbla_("SSYEVD", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

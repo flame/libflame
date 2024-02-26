@@ -281,7 +281,7 @@ int ctrsna_(char *job, char *howmny, logical *select, integer *n, complex *t, in
     extern integer icamax_(integer *, complex *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *);
+    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum;
     logical wantbh;
     extern /* Subroutine */
@@ -396,7 +396,7 @@ int ctrsna_(char *job, char *howmny, logical *select, integer *n, complex *t, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CTRSNA", &i__1);
+        xerbla_("CTRSNA", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

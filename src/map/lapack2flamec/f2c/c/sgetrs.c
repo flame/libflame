@@ -119,7 +119,7 @@ int sgetrs_(char *trans, integer *n, integer *nrhs, real *a, integer *lda, integ
     /* Local variables */
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), xerbla_(char *, integer *);
+    int strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical notran;
     extern /* Subroutine */
     int slaswp_(integer *, real *, integer *, integer *, integer *, integer *, integer *);
@@ -178,7 +178,7 @@ int sgetrs_(char *trans, integer *n, integer *nrhs, real *a, integer *lda, integ
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGETRS", &i__1);
+        xerbla_("SGETRS", &i__1, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible */

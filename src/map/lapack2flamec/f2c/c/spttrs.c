@@ -111,7 +111,7 @@ int spttrs_(integer *n, integer *nrhs, real *d__, real *e, real *b, integer *ldb
     /* Local variables */
     integer j, jb, nb;
     extern /* Subroutine */
-    int sptts2_(integer *, integer *, real *, real *, real *, integer *), xerbla_(char *, integer *);
+    int sptts2_(integer *, integer *, real *, real *, real *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -155,7 +155,7 @@ int spttrs_(integer *n, integer *nrhs, real *d__, real *e, real *b, integer *ldb
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SPTTRS", &i__1);
+        xerbla_("SPTTRS", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

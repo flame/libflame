@@ -134,7 +134,7 @@ int ztrexc_(char *compq, integer *n, doublecomplex *t, integer *ldt, doublecompl
     extern logical lsame_(char *, char *);
     logical wantq;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zlartg_( doublecomplex *, doublecomplex *, doublereal *, doublecomplex *, doublecomplex *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), zlartg_( doublecomplex *, doublecomplex *, doublereal *, doublecomplex *, doublecomplex *);
     /* -- LAPACK computational routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -191,7 +191,7 @@ int ztrexc_(char *compq, integer *n, doublecomplex *t, integer *ldt, doublecompl
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZTREXC", &i__1);
+        xerbla_("ZTREXC", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -167,7 +167,7 @@ int ssysv_aa_(char *uplo, integer *n, integer *nrhs, real * a, integer *lda, int
     extern logical lsame_(char *, char *);
     integer lwkopt_sytrf__, lwkopt_sytrs__;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer lwkopt;
     logical lquery;
     /* -- LAPACK driver routine (version 3.8.0) -- */
@@ -243,7 +243,7 @@ int ssysv_aa_(char *uplo, integer *n, integer *nrhs, real * a, integer *lda, int
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSYSV_AA", &i__1);
+        xerbla_("SSYSV_AA", &i__1, (ftnlen)8);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

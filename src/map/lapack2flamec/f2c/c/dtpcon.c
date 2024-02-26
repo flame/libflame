@@ -143,7 +143,7 @@ int dtpcon_(char *norm, char *uplo, char *diag, integer *n, doublereal *ap, doub
     extern doublereal dlamch_(char *);
     extern integer idamax_(integer *, doublereal *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern doublereal dlantp_(char *, char *, char *, integer *, doublereal *, doublereal *);
     doublereal ainvnm;
     extern /* Subroutine */
@@ -203,7 +203,7 @@ int dtpcon_(char *norm, char *uplo, char *diag, integer *n, doublereal *ap, doub
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DTPCON", &i__1);
+        xerbla_("DTPCON", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

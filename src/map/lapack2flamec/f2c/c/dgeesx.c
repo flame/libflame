@@ -284,7 +284,7 @@ if */
 /* > \ingroup doubleGEeigen */
 /* ===================================================================== */
 /* Subroutine */
-int dgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, doublereal *a, integer *lda, integer *sdim, doublereal *wr, doublereal *wi, doublereal *vs, integer *ldvs, doublereal *rconde, doublereal *rcondv, doublereal *work, integer * lwork, integer *iwork, integer *liwork, logical *bwork, integer *info)
+int dgeesx_(char *jobvs, char *sort, L_fpd2 select, char * sense, integer *n, doublereal *a, integer *lda, integer *sdim, doublereal *wr, doublereal *wi, doublereal *vs, integer *ldvs, doublereal *rconde, doublereal *rcondv, doublereal *work, integer * lwork, integer *iwork, integer *liwork, logical *bwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("dgeesx inputs: jobvs %c, sort %c, sense %c, n %" FLA_IS ", lda %" FLA_IS ", ldvs %" FLA_IS ", lwork %" FLA_IS "",*jobvs, *sort, *sense, *n, *lda, *ldvs, *lwork);
@@ -310,7 +310,7 @@ int dgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, doub
     doublereal cscale;
     extern doublereal dlange_(char *, integer *, integer *, doublereal *, integer *, doublereal *);
     extern /* Subroutine */
-    int dgehrd_(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dgehrd_(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     doublereal bignum;
     extern /* Subroutine */
@@ -363,6 +363,7 @@ int dgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, doub
     --bwork;
     /* Function Body */
     *info = 0;
+    maxwrk = 0;
     wantvs = lsame_(jobvs, "V");
     wantst = lsame_(sort, "S");
     wantsn = lsame_(sense, "N");
@@ -466,7 +467,7 @@ int dgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, doub
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGEESX", &i__1);
+        xerbla_("DGEESX", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

@@ -275,7 +275,7 @@ int csytrf_rk_(char *uplo, integer *n, complex *a, integer * lda, complex *e, in
     int cswap_(integer *, complex *, integer *, complex *, integer *);
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer ldwork, lwkopt;
     logical lquery;
@@ -336,7 +336,7 @@ int csytrf_rk_(char *uplo, integer *n, complex *a, integer * lda, complex *e, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CSYTRF_RK", &i__1);
+        xerbla_("CSYTRF_RK", &i__1, (ftnlen)9);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

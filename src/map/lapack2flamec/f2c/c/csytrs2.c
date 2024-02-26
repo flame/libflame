@@ -155,7 +155,7 @@ int csytrs2_(char *uplo, integer *n, integer *nrhs, complex * a, integer *lda, i
     int cswap_(integer *, complex *, integer *, complex *, integer *), ctrsm_(char *, char *, char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *);
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), csyconv_( char *, char *, integer *, complex *, integer *, integer *, complex *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), csyconv_( char *, char *, integer *, complex *, integer *, integer *, complex *, integer *);
     /* -- LAPACK computational routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -211,7 +211,7 @@ int csytrs2_(char *uplo, integer *n, integer *nrhs, complex * a, integer *lda, i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CSYTRS2", &i__1);
+        xerbla_("CSYTRS2", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

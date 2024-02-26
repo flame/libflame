@@ -54,7 +54,7 @@ int sgebrd_check(integer *m, integer *n, float *a, integer *lda, float *d__, flo
     if (*info < 0)
     {
         i__1 = -(*info);
-        xerbla_("SGEBRD", &i__1);
+        xerbla_("SGEBRD", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

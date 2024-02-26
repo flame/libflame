@@ -176,7 +176,7 @@ int zhetri_3_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecomp
     extern logical lsame_(char *, char *);
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer lwkopt;
     logical lquery;
@@ -235,7 +235,7 @@ int zhetri_3_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecomp
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHETRI_3", &i__1);
+        xerbla_("ZHETRI_3", &i__1, (ftnlen)8);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

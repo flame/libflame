@@ -241,7 +241,7 @@ int cstedc_(char *compz, integer *n, real *d__, real *e, complex *z__, integer *
     int clacrm_(integer *, integer *, complex *, integer *, real *, integer *, complex *, integer *, real *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *);
+    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer finish;
     extern /* Subroutine */
@@ -290,6 +290,9 @@ int cstedc_(char *compz, integer *n, real *d__, real *e, complex *z__, integer *
     --iwork;
     /* Function Body */
     *info = 0;
+    lwmin = 0;
+    lrwmin = 0;
+    liwmin = 0;
     lquery = *lwork == -1 || *lrwork == -1 || *liwork == -1;
     if (lsame_(compz, "N"))
     {
@@ -380,7 +383,7 @@ int cstedc_(char *compz, integer *n, real *d__, real *e, complex *z__, integer *
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CSTEDC", &i__1);
+        xerbla_("CSTEDC", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

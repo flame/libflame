@@ -8,19 +8,19 @@
 
 /* Local prototypes.*/
 void fla_test_steqr_experiment(test_params_t *params, integer datatype, integer p_cur, integer  q_cur, integer pci,
-integer n_repeats, double* perf, double* t, double* residual);
+integer n_repeats, integer einfo, double* perf, double* t, double* residual);
 void prepare_steqr_run(char* compz, integer n, void* Z, integer ldz, void* D, void* E, integer datatype, integer n_repeats, double* time_min_, integer* info);
 void invoke_steqr(integer datatype, char* compz, integer* n, void* z, integer* ldz, void* d, void* e, void* work, integer* info);
-static FILE* g_ext_fptr = NULL;
 
 void fla_test_steqr(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Eigen Decomposition of symmetrix tridiagonal matrix";
     char* front_str = "STEQR";
-    integer tests_not_run = 1, invalid_dtype = 0;
+    integer tests_not_run = 1, invalid_dtype = 0, einfo = 0;
 
     if(argc == 1)
     {
+        config_data = 1;
         /* Test with parameters from config */
         fla_test_output_info("--- %s ---\n", op_str);
         fla_test_output_info("\n");
@@ -29,13 +29,7 @@ void fla_test_steqr(integer argc, char ** argv, test_params_t *params)
     }
     if (argc == 8)
     {
-        /* Read matrix input data from a file */
-        g_ext_fptr = fopen(argv[7], "r");
-        if (g_ext_fptr == NULL)
-        {
-            printf("\n Invalid input file argument \n");
-            return;
-        }
+        FLA_TEST_PARSE_LAST_ARG(argv[7]);
     }
     if (argc >= 7 && argc <= 8)
     {
@@ -50,7 +44,7 @@ void fla_test_steqr(integer argc, char ** argv, test_params_t *params)
         num_types = strlen(argv[2]);
         params->eig_sym_paramslist[0].compz = argv[3][0];
         N = strtoimax(argv[4], &endptr, CLI_DECIMAL_BASE);
-        params->eig_sym_paramslist[0].lda = strtoimax(argv[5], &endptr, CLI_DECIMAL_BASE);
+        params->eig_sym_paramslist[0].ldz = strtoimax(argv[5], &endptr, CLI_DECIMAL_BASE);
         n_repeats = strtoimax(argv[6], &endptr, CLI_DECIMAL_BASE);
 
         if(n_repeats > 0)
@@ -79,7 +73,7 @@ void fla_test_steqr(integer argc, char ** argv, test_params_t *params)
                 fla_test_steqr_experiment(params, datatype,
                                           N, N,
                                           0,
-                                          n_repeats,
+                                          n_repeats, einfo,
                                           &perf, &time_min, &residual);
                 /* Print the results */
                 fla_test_print_status(front_str,
@@ -106,6 +100,7 @@ void fla_test_steqr(integer argc, char ** argv, test_params_t *params)
     if (g_ext_fptr != NULL)
     {
         fclose(g_ext_fptr);
+        g_ext_fptr = NULL;
     }
     return;
 }
@@ -116,6 +111,7 @@ void fla_test_steqr_experiment(test_params_t *params,
                                integer  q_cur,
                                integer pci,
                                integer n_repeats,
+                               integer einfo,
                                double* perf,
                                double *time_min,
                                double* residual)
@@ -132,13 +128,17 @@ void fla_test_steqr_experiment(test_params_t *params,
 
     n = p_cur;
     ldz = params->eig_sym_paramslist[pci].ldz;
-    lda = ldz;
 
-    if(ldz < n || lda < n)
+    /* If leading dimensions = -1, set them to default value
+       when inputs are from config files */
+    if (config_data)
     {
-        *residual = DBL_MIN;
-        return;
+        if (ldz == -1)
+        {
+            ldz = fla_max(1,n);
+        }
     }
+    lda = ldz;
 
     /* Create input matrix parameters */
     create_matrix(datatype, &Z, ldz, n);
@@ -176,17 +176,7 @@ void fla_test_steqr_experiment(test_params_t *params,
     reset_matrix(datatype, n, n, Z_test, ldz);
 
     invoke_sytrd(datatype, &uplo, compz, n, Q, lda, D, E, &info);
-    if(info < 0)
-    {
-        *residual = DBL_MAX;
-        free_matrix(Z_test);
-        free_matrix(A);
-        free_matrix(Z);
-        free_matrix(Q);
-        free_vector(D);
-        free_vector(E);
-        return;
-    }
+
     /*form tridiagonal matrix Z by copying from matrix*/
     copy_sym_tridiag_matrix(datatype, D, E, n, n, Z, ldz);
 
@@ -219,9 +209,8 @@ void fla_test_steqr_experiment(test_params_t *params,
     /* output validation */
     if (info == 0)
         validate_syevd(&compz, n, Z, Z_test, ldz, D_test, datatype, residual, &vinfo);
-    
-    if (info < 0 || vinfo < 0)
-        *residual = DBL_MAX;
+
+    FLA_TEST_CHECK_EINFO(residual, info, einfo);
 
     /* Free up the buffers */
     free_matrix(Z);
@@ -259,6 +248,7 @@ void prepare_steqr_run(char *compz,
     copy_vector(get_realtype(datatype), n, D, 1, D_save, 1);
     copy_vector(get_realtype(datatype), n-1, E, 1, E_save, 1);
 
+    *info = 0;
     for (i = 0; i < n_repeats && *info == 0; ++i)
     {
         /* Restore input matrix A value and allocate memory to output buffers

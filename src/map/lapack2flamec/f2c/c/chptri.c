@@ -139,7 +139,7 @@ int chptri_(char *uplo, integer *n, complex *ap, integer * ipiv, complex *work, 
     integer kstep;
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer kcnext;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -180,7 +180,7 @@ int chptri_(char *uplo, integer *n, complex *ap, integer * ipiv, complex *work, 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHPTRI", &i__1);
+        xerbla_("CHPTRI", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

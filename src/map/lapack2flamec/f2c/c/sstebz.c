@@ -291,7 +291,7 @@ int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *i
     real safemn;
     integer idumma[1];
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer idiscu;
     extern /* Subroutine */
@@ -332,6 +332,8 @@ int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *i
     --d__;
     /* Function Body */
     *info = 0;
+    wlu = 0;
+    wul = 0;
     /* Decode RANGE */
     if (lsame_(range, "A"))
     {
@@ -393,7 +395,7 @@ int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSTEBZ", &i__1);
+        xerbla_("SSTEBZ", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -161,7 +161,7 @@ int ssteqr_(char *compz, integer *n, real *d__, real *e, real *z__, integer *ldz
     extern real slamch_(char *);
     real safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real safmax;
     extern /* Subroutine */
     int slascl_(char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *);
@@ -235,7 +235,7 @@ int ssteqr_(char *compz, integer *n, real *d__, real *e, real *z__, integer *ldz
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSTEQR", &i__1);
+        xerbla_("SSTEQR", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

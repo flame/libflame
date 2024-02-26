@@ -338,7 +338,7 @@ int slaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     extern real slamch_(char *);
     real safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real safmax;
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     real eshift;
@@ -349,8 +349,6 @@ int slaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     integer iwantq, iwants, istart;
     real smlnum;
     integer istopm, iwantz, istart2;
-    extern /* Subroutine */
-    int f90_exit_(void);
     logical ilschur;
     integer nshifts, istartm;
     /* Arguments */
@@ -376,6 +374,7 @@ int slaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     z__ -= z_offset;
     --work;
     /* Function Body */
+    eshift = 0.f;
     if (lsame_(wants, "E"))
     {
         ilschur = FALSE_;
@@ -473,7 +472,7 @@ int slaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SLAQZ0", &i__1);
+        xerbla_("SLAQZ0", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -545,7 +544,7 @@ int slaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     }
     if (*info != 0)
     {
-        xerbla_("SLAQZ0", info);
+        xerbla_("SLAQZ0", info, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

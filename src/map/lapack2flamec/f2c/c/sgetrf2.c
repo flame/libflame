@@ -122,7 +122,7 @@ int sgetrf2_(integer *m, integer *n, real *a, integer *lda, integer *ipiv, integ
     int strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * );
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer isamax_(integer *, real *, integer *);
     extern /* Subroutine */
     int slaswp_(integer *, real *, integer *, integer *, integer *, integer *, integer *);
@@ -150,6 +150,7 @@ int sgetrf2_(integer *m, integer *n, real *a, integer *lda, integer *ipiv, integ
     /* Parameter adjustments */
     #if AOCL_FLA_PROGRESS_H 
        	AOCL_FLA_PROGRESS_VAR;
+        static TLS_CLASS_SPEC integer progress_size = 0;
     #endif
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;
@@ -172,7 +173,7 @@ int sgetrf2_(integer *m, integer *n, real *a, integer *lda, integer *ipiv, integ
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGETRF2", &i__1);
+        xerbla_("SGETRF2", &i__1, (ftnlen)7);
         return 0;
     }
     /* Quick return if possible */
@@ -246,21 +247,20 @@ int sgetrf2_(integer *m, integer *n, real *a, integer *lda, integer *ipiv, integ
 	     #endif
             	if(aocl_fla_progress_ptr)
             	{
-			if(step_count == 0 || step_count==size ){
-                                        size=fla_min(*m,*n);
-                                        step_count =1;
-                         }
+			        if(progress_step_count == 0 || progress_step_count == progress_size )
+                    {
+                                        progress_size = fla_min(*m,*n);
+                                        progress_step_count = 1;
+                    }
 
-	            	if(!(step_count == 1 &&(*m < FLA_GETRF_SMALL &&  *n < FLA_GETRF_SMALL)))
- 		        {
-
-
-				++step_count;
-                		if((step_count%8)==0 || step_count==size)
+	            	if(!(progress_step_count == 1 &&(*m < FLA_GETRF_SMALL &&  *n < FLA_GETRF_SMALL)))
+ 		            {
+				        ++progress_step_count;
+                		if((progress_step_count%8)==0 || progress_step_count == progress_size)
 	            		{
-                    			AOCL_FLA_PROGRESS_FUNC_PTR("SGETRF2",7,&step_count,&thread_id,&total_threads);
+                    			AOCL_FLA_PROGRESS_FUNC_PTR("SGETRF2",7,&progress_step_count,&progress_thread_id,&progress_total_threads);
                 		}
-                        }
+                    }
             	}
 		
 	#endif

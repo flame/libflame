@@ -223,7 +223,7 @@ int sgbrfs_(char *trans, integer *n, integer *kl, integer * ku, integer *nrhs, r
     extern real slamch_(char *);
     real safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical notran;
     extern /* Subroutine */
     int sgbtrs_(char *, integer *, integer *, integer *, integer *, real *, integer *, integer *, real *, integer *, integer *);
@@ -312,7 +312,7 @@ int sgbrfs_(char *trans, integer *n, integer *kl, integer * ku, integer *nrhs, r
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SGBRFS", &i__1);
+        xerbla_("SGBRFS", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -177,9 +177,8 @@ int dgemqr_(char *side, char *trans, integer *m, integer *n, integer *k, doubler
     logical left, tran;
     extern logical lsame_(char *, char *);
     logical right;
-    integer nblcks;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical notran, lquery;
     extern /* Subroutine */
     int dgemqrt_(char *, char *, integer *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *);
@@ -230,21 +229,6 @@ int dgemqr_(char *side, char *trans, integer *m, integer *n, integer *k, doubler
         lw = mb * nb;
         mn = *n;
     }
-    if (mb > *k && mn > *k)
-    {
-        if ((mn - *k) % (mb - *k) == 0)
-        {
-            nblcks = (mn - *k) / (mb - *k);
-        }
-        else
-        {
-            nblcks = (mn - *k) / (mb - *k) + 1;
-        }
-    }
-    else
-    {
-        nblcks = 1;
-    }
     *info = 0;
     if (! left && ! right)
     {
@@ -289,7 +273,7 @@ int dgemqr_(char *side, char *trans, integer *m, integer *n, integer *k, doubler
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DGEMQR", &i__1);
+        xerbla_("DGEMQR", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

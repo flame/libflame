@@ -31,6 +31,19 @@
   completed.
 */
 
+extern int spotrf_check(char *uplo, integer *n, float *a, integer *lda, integer *info);
+extern int dpotrf_check(char *uplo, integer *n, double *a, integer * lda, integer *info);
+extern int cpotrf_check(char *uplo, integer *n, scomplex *a, integer *lda, integer *info);
+extern int zpotrf_check(char *uplo, integer *n, dcomplex *a, integer *lda, integer *info);
+extern int lapack_spotrf(char *uplo, integer *n, float *a, integer *lda,	integer *info);
+extern int lapack_dpotrf(char *uplo, integer *n, double *a, integer *lda, integer *info);
+extern int spotf2_check(char *uplo, integer *n, float *a, integer *lda, integer *info);
+extern int dpotf2_check(char *uplo, integer *n, double *a, integer * lda, integer *info);
+extern int cpotf2_check(char *uplo, integer *n, scomplex *a, integer *lda, integer *info);
+extern int zpotf2_check(char *uplo, integer *n, dcomplex *a, integer *lda, integer *info);
+extern int lapack_spotf2(char *uplo, integer *n, float *a, integer *lda,	integer *info);
+extern int lapack_dpotf2(char *uplo, integer *n, double *a, integer *lda, integer *info);
+
 extern void DTL_Trace(
 		    uint8 ui8LogLevel,
 		    uint8 ui8LogType,
@@ -47,7 +60,7 @@ extern void DTL_Trace(
                                integer*  ldim_A,                      \
                                integer*  info )
 
-#if FLA_AMD_OPT
+#if FLA_ENABLE_AMD_OPT
 #define LAPACK_potrf_body_s(prefix)                                                          \
   if( *n < FLA_POTRF_FLOAT_SMALL )                                                           \
   lapack_spotf2( uplo, n, buff_A, ldim_A,  info );                                           \
@@ -98,7 +111,7 @@ LAPACK_potrf(s)
     }
     if (fla_error == LAPACK_SUCCESS)
     {
-#if FLA_AMD_OPT
+#if FLA_ENABLE_AMD_OPT
         {   
             LAPACK_potrf_body_s(s);
         }
@@ -126,7 +139,7 @@ LAPACK_potrf(d)
     }
     if (fla_error == LAPACK_SUCCESS)
     {
-#if FLA_AMD_OPT
+#if FLA_ENABLE_AMD_OPT
         {
         LAPACK_potrf_body_d(d)
         }
@@ -200,7 +213,7 @@ LAPACK_potf2(s)
     }
     if (fla_error == LAPACK_SUCCESS)
     {
-#if FLA_AMD_OPT
+#if FLA_ENABLE_AMD_OPT
         {
             LAPACK_potrf_body_s(s)
         }
@@ -227,7 +240,7 @@ LAPACK_potf2(d)
     }
     if (fla_error == LAPACK_SUCCESS)
     {
-#if FLA_AMD_OPT
+#if FLA_ENABLE_AMD_OPT
         {
             LAPACK_potrf_body_d(d)
         }

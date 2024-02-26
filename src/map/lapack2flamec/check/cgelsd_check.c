@@ -212,7 +212,7 @@ int cgelsd_check(integer *m, integer *n, integer *nrhs, scomplex * a, integer *l
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGELSD", &i__1);
+        xerbla_("CGELSD", &i__1, (ftnlen)6);
         return LAPACK_FAILURE;
     }
     else if (lquery)

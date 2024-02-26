@@ -282,11 +282,12 @@ int dbdsvdx_(char *uplo, char *jobz, char *range, integer *n, doublereal *d__, d
     integer iifail;
     extern integer idamax_(integer *, doublereal *, integer *);
     extern /* Subroutine */
-    int dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
+    int dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     doublereal abstol, thresh;
     integer iiwork;
     extern /* Subroutine */
-    int dstevx_();
+    int dstevx_(char *jobz, char *range, integer *n, doublereal * d__, doublereal *e, doublereal *vl, doublereal *vu, integer *il, integer *iu, doublereal *abstol, integer *m, doublereal *w, doublereal *z__, integer *ldz, doublereal *work, integer *iwork, integer *ifail, integer *info);
+    doublereal *ev, *ev_arr;
     /* -- LAPACK driver routine (version 3.8.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -375,7 +376,7 @@ int dbdsvdx_(char *uplo, char *jobz, char *range, integer *n, doublereal *d__, d
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("DBDSVDX", &i__1);
+        xerbla_("DBDSVDX", &i__1, (ftnlen)7);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -409,6 +410,16 @@ int dbdsvdx_(char *uplo, char *jobz, char *range, integer *n, doublereal *d__, d
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
+    /* Temporary Eigen Value buffer Allocation */
+    ev_arr = (doublereal *) malloc(2 * *n * sizeof(doublereal));
+    if (ev_arr == NULL)
+    {
+        *info = (*n << 1) + 1;
+        AOCL_DTL_TRACE_LOG_EXIT
+        return 0;
+    }
+    ev = &ev_arr[-1];
+
     abstol = dlamch_("Safe Minimum") * 2;
     ulp = dlamch_("Precision");
     eps = dlamch_("Epsilon");
@@ -522,9 +533,11 @@ L2:
         i__1 = *n - 1;
         dcopy_(&i__1, &e[1], &c__1, &work[ietgk + 1], &c__2);
         i__1 = *n << 1;
-        dstevx_("N", "V", &i__1, &work[idtgk], &work[ietgk], &vltgk, &vutgk, & iltgk, &iltgk, &abstol, ns, &s[1], &z__[z_offset], ldz, &work[ itemp], &iwork[iiwork], &iwork[iifail], info);
+        dstevx_("N", "V", &i__1, &work[idtgk], &work[ietgk], &vltgk, &vutgk, & iltgk, &iltgk, &abstol, ns, &ev[1], &z__[z_offset], ldz, &work[ itemp], &iwork[iiwork], &iwork[iifail], info);
         if (*ns == 0)
         {
+            /* De-allocate temporary Eigen Value buffer and return */
+            free(ev_arr);
             AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
@@ -559,8 +572,8 @@ L2:
         i__1 = *n - 1;
         dcopy_(&i__1, &e[1], &c__1, &work[ietgk + 1], &c__2);
         i__1 = *n << 1;
-        dstevx_("N", "I", &i__1, &work[idtgk], &work[ietgk], &vltgk, &vltgk, & iltgk, &iltgk, &abstol, ns, &s[1], &z__[z_offset], ldz, &work[ itemp], &iwork[iiwork], &iwork[iifail], info);
-        vltgk = s[1] - smax * 2. * ulp * *n;
+        dstevx_("N", "I", &i__1, &work[idtgk], &work[ietgk], &vltgk, &vltgk, & iltgk, &iltgk, &abstol, ns, &ev[1], &z__[z_offset], ldz, &work[ itemp], &iwork[iiwork], &iwork[iifail], info);
+        vltgk = ev[1] - smax * 2. * ulp * *n;
         /* WORK( IDTGK:IDTGK+2*N-1 ) = ZERO */
         i__1 = *n << 1;
         for (j1 = 1;
@@ -573,8 +586,8 @@ L2:
         i__1 = *n - 1;
         dcopy_(&i__1, &e[1], &c__1, &work[ietgk + 1], &c__2);
         i__1 = *n << 1;
-        dstevx_("N", "I", &i__1, &work[idtgk], &work[ietgk], &vutgk, &vutgk, & iutgk, &iutgk, &abstol, ns, &s[1], &z__[z_offset], ldz, &work[ itemp], &iwork[iiwork], &iwork[iifail], info);
-        vutgk = s[1] + smax * 2. * ulp * *n;
+        dstevx_("N", "I", &i__1, &work[idtgk], &work[ietgk], &vutgk, &vutgk, & iutgk, &iutgk, &abstol, ns, &ev[1], &z__[z_offset], ldz, &work[ itemp], &iwork[iiwork], &iwork[iifail], info);
+        vutgk = ev[1] + smax * 2. * ulp * *n;
         vutgk = fla_min(vutgk,0.);
         /* If VLTGK=VUTGK, DSTEVX returns an error message, */
         /* so if needed we change VUTGK slightly. */
@@ -613,6 +626,7 @@ L2:
             ++j1)
     {
         s[j1] = 0.;
+        ev[j1] = 0.;
     }
     work[ietgk + (*n << 1) - 1] = 0.;
     /* WORK( IDTGK:IDTGK+2*N-1 ) = ZERO */
@@ -723,21 +737,32 @@ L2:
                     /* Workspace needed by DSTEVX: */
                     /* WORK( ITEMP: ): 2*5*NTGK */
                     /* IWORK( 1: ): 2*6*NTGK */
-                    dstevx_(jobz, rngvx, &ntgk, &work[idtgk + isplt - 1], & work[ietgk + isplt - 1], &vltgk, &vutgk, &iltgk, & iutgk, &abstol, &nsl, &s[isbeg], &z__[irowz + icolz * z_dim1], ldz, &work[itemp], &iwork[iiwork], &iwork[iifail], info);
+                    dstevx_(jobz, rngvx, &ntgk, &work[idtgk + isplt - 1], & work[ietgk + isplt - 1], &vltgk, &vutgk, &iltgk, & iutgk, &abstol, &nsl, &ev[isbeg], &z__[irowz + icolz * z_dim1], ldz, &work[itemp], &iwork[iiwork], &iwork[iifail], info);
                     if (*info != 0)
                     {
+                        /* Assign Singular Values from temporary array to s */
+                        if (*info < 0)
+                        {
+                            i__3 = fla_min(*ns, *n);
+                            for (j1 = 1; j1 <= i__3; ++j1)
+                            {
+                                s[j1] = ev[j1];
+                            }
+                        }
+                        /* De-allocate temporary Eigen Value buffer */
+                        free(ev_arr);
                         /* Exit with the error code from DSTEVX. */
                         AOCL_DTL_TRACE_LOG_EXIT
                         return 0;
                     }
                     /* EMIN = ABS( MAXVAL( S( ISBEG:ISBEG+NSL-1 ) ) ) */
-                    d1 = s[isbeg];
+                    d1 = ev[isbeg];
                     i__3 = nsl;
                     for (j1 = 1;
                             j1 <= i__3;
                             ++j1)
                     {
-                        d1 = fla_max(d1, s[j1 - 1 + isbeg]);
+                        d1 = fla_max(d1, ev[j1 - 1 + isbeg]);
                     }
                     emin = f2c_dabs(d1);
                     if (nsl > 0 && wantz)
@@ -785,6 +810,8 @@ L2:
                             nrmu = dnrm2_(&nru, &z__[irowu + (icolz + i__) * z_dim1], &c__2);
                             if (nrmu == 0.)
                             {
+                                /* De-allocate temporary Eigen Value buffer and return */
+                                free(ev_arr);
                                 *info = (*n << 1) + 1;
                                 AOCL_DTL_TRACE_LOG_EXIT
                                 return 0;
@@ -817,6 +844,8 @@ L2:
                             nrmv = dnrm2_(&nrv, &z__[irowv + (icolz + i__) * z_dim1], &c__2);
                             if (nrmv == 0.)
                             {
+                                /* De-allocate temporary Eigen Value buffer and return */
+                                free(ev_arr);
                                 *info = (*n << 1) + 1;
                                 AOCL_DTL_TRACE_LOG_EXIT
                                 return 0;
@@ -868,7 +897,7 @@ L2:
                             i__ <= i__3;
                             ++i__)
                     {
-                        s[isbeg + i__] = (d__1 = s[isbeg + i__], f2c_dabs(d__1));
+                        ev[isbeg + i__] = (d__1 = ev[isbeg + i__], f2c_dabs(d__1));
                     }
                     /* Update pointers for TGK, S and Z. */
                     isbeg += nsl;
@@ -929,22 +958,22 @@ L2:
             ++i__)
     {
         k = 1;
-        smin = s[1];
+        smin = ev[1];
         i__2 = *ns + 1 - i__;
         for (j = 2;
                 j <= i__2;
                 ++j)
         {
-            if (s[j] <= smin)
+            if (ev[j] <= smin)
             {
                 k = j;
-                smin = s[j];
+                smin = ev[j];
             }
         }
         if (k != *ns + 1 - i__)
         {
-            s[k] = s[*ns + 1 - i__];
-            s[*ns + 1 - i__] = smin;
+            ev[k] = ev[*ns + 1 - i__];
+            ev[*ns + 1 - i__] = smin;
             if (wantz)
             {
                 i__2 = *n << 1;
@@ -964,7 +993,7 @@ L2:
                     j1 <= i__1;
                     ++j1)
             {
-                s[j1 + k] = 0.;
+                ev[j1 + k] = 0.;
             }
             /* IF( WANTZ ) Z( 1:N*2,K+1:NS ) = ZERO */
             if (wantz)
@@ -985,6 +1014,11 @@ L2:
             }
             *ns = k;
         }
+    }
+    /* Assign Singular Values from temporary array to s */
+    for (j1 = 1; j1 <= *ns; ++j1)
+    {
+        s[j1] = ev[j1];
     }
     /* Reorder Z: U = Z( 1:N,1:NS ), V = Z( N+1:N*2,1:NS ). */
     /* If B is a lower diagonal, swap U and V. */
@@ -1009,6 +1043,8 @@ L2:
             }
         }
     }
+    /* De-allocate temporary Eigen Value buffer */
+    free(ev_arr);
     AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DBDSVDX */

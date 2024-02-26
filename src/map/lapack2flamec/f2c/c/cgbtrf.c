@@ -170,7 +170,7 @@ int cgbtrf_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
     int ctrsm_(char *, char *, char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *), cgbtf2_(integer *, integer *, integer *, integer *, complex *, integer *, integer *, integer *);
     extern integer icamax_(integer *, complex *, integer *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int claswp_(integer *, complex *, integer *, integer *, integer *, integer *, integer *);
@@ -234,7 +234,7 @@ int cgbtrf_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGBTRF", &i__1);
+        xerbla_("CGBTRF", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
@@ -245,7 +245,7 @@ int cgbtrf_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
         return 0;
     }
     #if AOCL_FLA_PROGRESS_H
-        step_count =0;
+        progress_step_count =0;
       #ifndef FLA_ENABLE_WINDOWS_BUILD
         if(!aocl_fla_progress_ptr)
               aocl_fla_progress_ptr=aocl_fla_progress;
@@ -335,11 +335,11 @@ int cgbtrf_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
             jb = fla_min(i__3,i__4);
 	    #if AOCL_FLA_PROGRESS_H
                 if(aocl_fla_progress_ptr){
-                        step_count+=jb;
-                        AOCL_FLA_PROGRESS_FUNC_PTR("CGBTRF",6,&step_count,&thread_id,&total_threads);
+                        progress_step_count+=jb;
+                        AOCL_FLA_PROGRESS_FUNC_PTR("CGBTRF",6,&progress_step_count,&progress_thread_id,&progress_total_threads);
                 }
 
-            #endif
+        #endif
 
             /* The active part of the matrix is partitioned */
             /* A11 A12 A13 */

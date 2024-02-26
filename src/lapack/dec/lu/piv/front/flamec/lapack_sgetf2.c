@@ -1,8 +1,11 @@
 /*
-    Copyright (c) 2021-2022 Advanced Micro Devices, Inc.  All rights reserved.
+    Copyright (c) 2021-2023 Advanced Micro Devices, Inc.  All rights reserved.
 */
 
 #include "FLAME.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
 
 /* Subroutine */ integer lapack_sgetf2(integer *m, integer *n, real *a, integer *lda,
 	integer *ipiv, integer *info)
@@ -68,8 +71,7 @@
     /* Local variables */
 	static TLS_CLASS_SPEC integer j;
     static TLS_CLASS_SPEC integer jp;
-    extern /* Subroutine */ int xerbla_(char *, integer *);
-    extern integer isamax_(integer *, real *, integer *);
+    extern /* Subroutine */ int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     int kn;
     float safmin;
     float a_piv;
@@ -92,7 +94,7 @@
     }
     if (*info != 0) {
 	i__1 = -(*info);
-	xerbla_("LAPACK_SGETF2", &i__1);
+	xerbla_("LAPACK_SGETF2", &i__1, (ftnlen)13);
 	return 0;
     }
 

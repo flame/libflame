@@ -17,7 +17,7 @@ int ctrmm_(char *side, char *uplo, char *transa, char *diag, integer *m, integer
     integer nrowa;
     logical upper;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     logical noconj, nounit;
     /* .. Scalar Arguments .. */
     /* .. Array Arguments .. */
@@ -167,7 +167,7 @@ int ctrmm_(char *side, char *uplo, char *transa, char *diag, integer *m, integer
     }
     if (info != 0)
     {
-        xerbla_("CTRMM ", &info);
+        xerbla_("CTRMM ", &info, (ftnlen)6);
         return 0;
     }
     /* Quick return if possible. */

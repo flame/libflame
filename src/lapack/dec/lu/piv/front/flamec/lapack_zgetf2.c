@@ -3,6 +3,9 @@
 */
 
 #include "FLAME.h"
+#if FLA_ENABLE_AOCL_BLAS
+#include "blis.h"
+#endif
 
 /* Subroutine */ integer lapack_zgetf2(integer *m, integer *n, dcomplex *a,
 	integer *lda, integer *ipiv, integer *info)
@@ -66,12 +69,12 @@
     integer a_dim1, a_offset, i__1, i__2, i__3;
     dcomplex z__1;
     /* Builtin functions */
-    void z_div(doublecomplex *, doublecomplex *, doublecomplex *);
+    void z_div(dcomplex *, dcomplex *, dcomplex *);
     /* Local variables */
     static TLS_CLASS_SPEC integer j;
 
     static TLS_CLASS_SPEC integer jp;
-    extern /* Subroutine */ int xerbla_(char *, integer *);
+    extern /* Subroutine */ int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
 #define a_subscr(a_1,a_2) (a_2)*a_dim1 + a_1
 #define a_ref(a_1,a_2) a[a_subscr(a_1,a_2)]
 
@@ -92,7 +95,7 @@
     }
     if (*info != 0) {
 	i__1 = -(*info);
-	xerbla_("LAPACK_ZGETF2", &i__1);
+	xerbla_("LAPACK_ZGETF2", &i__1, (ftnlen)13);
 	return 0;
     }
 

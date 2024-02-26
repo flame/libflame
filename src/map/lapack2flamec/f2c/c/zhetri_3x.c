@@ -189,7 +189,7 @@ int zhetri_3x_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecom
     int ztrmm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *);
     doublecomplex u01_i_j__, u11_i_j__;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer icount;
     extern /* Subroutine */
     int ztrtri_(char *, char *, integer *, doublecomplex *, integer *, integer *);
@@ -243,7 +243,7 @@ int zhetri_3x_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecom
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZHETRI_3X", &i__1);
+        xerbla_("ZHETRI_3X", &i__1, (ftnlen)9);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

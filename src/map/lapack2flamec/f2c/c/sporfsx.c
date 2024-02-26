@@ -412,7 +412,7 @@ int sporfsx_(char *uplo, char *equed, integer *n, integer * nrhs, real *a, integ
     logical rcequ;
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), spocon_( char *, integer *, real *, integer *, real *, real *, real *, integer *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len), spocon_( char *, integer *, real *, integer *, real *, real *, real *, integer *, integer *);
     extern real slansy_(char *, char *, integer *, real *, integer *, real *);
     extern integer ilaprec_(char *);
     integer ithresh, n_norms__;
@@ -560,7 +560,7 @@ int sporfsx_(char *uplo, char *equed, integer *n, integer * nrhs, real *a, integ
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SPORFSX", &i__1);
+        xerbla_("SPORFSX", &i__1, (ftnlen)7);
         return 0;
     }
     /* Quick return if possible. */

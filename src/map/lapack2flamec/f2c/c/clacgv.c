@@ -73,7 +73,7 @@ int clacgv_(integer *n, complex *x, integer *incx)
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */
-    integer i__1, i__2;
+    integer i__1;
     complex q__1;
     /* Local variables */
     integer i__, ioff;

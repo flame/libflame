@@ -1,6 +1,9 @@
 /* ../netlib/v3.9.0/iparam2stage.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
+#ifdef FLA_OPENMP_MULTITHREADING
+#include <omp.h>
+#endif
 static integer c__1 = 1;
 static integer c_n1 = -1;
 /* > \brief \b IPARAM2STAGE */
@@ -160,9 +163,7 @@ integer iparam2stage_(integer *ispec, char *name__, char *opts, integer *ni, int
     char subnam[12];
     integer lqoptnb, qroptnb;
     ftnlen name_len = strlen(name__);
-    /* #if defined(_OPENMP) */
-    /* use omp_lib */
-    /* #endif */
+    int fla_thread_get_num_threads(void);
     /* -- LAPACK auxiliary routine (version 3.8.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -185,11 +186,10 @@ integer iparam2stage_(integer *ispec, char *name__, char *opts, integer *ni, int
     }
     /* Get the number of threads */
     nthreads = 1;
-    /* #if defined(_OPENMP) */
-    /* !$OMP PARALLEL */
-    /* NTHREADS = OMP_GET_NUM_THREADS() */
-    /* !$OMP END PARALLEL */
-    /* #endif */
+#ifdef FLA_OPENMP_MULTITHREADING
+#pragma omp parallel
+    nthreads = fla_thread_get_num_threads();
+#endif
     /* WRITE(*,*) 'IPARAM VOICI NTHREADS ISPEC ',NTHREADS, ISPEC */
     if (*ispec != 19)
     {

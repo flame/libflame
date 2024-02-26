@@ -180,7 +180,7 @@ int ssytri_3x_(char *uplo, integer *n, real *a, integer * lda, real *e, integer 
     int strmm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * );
     real u01_i_j__, u11_i_j__;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer icount;
     extern /* Subroutine */
     int strtri_(char *, char *, integer *, real *, integer *, integer *);
@@ -234,7 +234,7 @@ int ssytri_3x_(char *uplo, integer *n, real *a, integer * lda, real *e, integer 
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("SSYTRI_3X", &i__1);
+        xerbla_("SSYTRI_3X", &i__1, (ftnlen)9);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

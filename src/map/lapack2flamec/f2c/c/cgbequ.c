@@ -161,7 +161,7 @@ int cgbequ_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
     real rcmin, rcmax;
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real bignum, smlnum;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -219,7 +219,7 @@ int cgbequ_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CGBEQU", &i__1);
+        xerbla_("CGBEQU", &i__1, (ftnlen)6);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

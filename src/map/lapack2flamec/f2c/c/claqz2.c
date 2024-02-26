@@ -268,7 +268,7 @@ int claqz2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *);
     real safmin;
     extern /* Subroutine */
-    int xerbla_(char *, integer *);
+    int xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     real safmax;
     extern /* Subroutine */
     int ctgexc_(logical *, logical *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, integer *, integer *, integer *), clartg_( complex *, complex *, real *, complex *, complex *);
@@ -350,7 +350,7 @@ int claqz2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CLAQZ2", &i__1);
+        xerbla_("CLAQZ2", &i__1, (ftnlen)6);
         return 0;
     }
     /* Get machine constants */

@@ -201,7 +201,7 @@ int chetrd_(char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e
     integer nbmin, iinfo;
     logical upper;
     extern /* Subroutine */
-    int chetd2_(char *, integer *, complex *, integer *, real *, real *, complex *, integer *), cher2k_(char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, real *, complex *, integer *), clatrd_(char *, integer *, integer *, complex *, integer *, real *, complex *, complex *, integer *), xerbla_(char *, integer *);
+    int chetd2_(char *, integer *, complex *, integer *, real *, real *, complex *, integer *), cher2k_(char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, real *, complex *, integer *), clatrd_(char *, integer *, integer *, complex *, integer *, real *, complex *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer ldwork, lwkopt;
     logical lquery;
@@ -264,7 +264,7 @@ int chetrd_(char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CHETRD", &i__1);
+        xerbla_("CHETRD", &i__1, (ftnlen)6);
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

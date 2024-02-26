@@ -280,7 +280,7 @@ int cunhr_col_(integer *m, integer *n, integer *nb, complex *a, integer *lda, co
     int claunhr_col_getrfnp_(integer *, integer *, complex *, integer *, complex *, integer *), cscal_(integer *, complex *, complex *, integer *);
     integer iinfo;
     extern /* Subroutine */
-    int ccopy_(integer *, complex *, integer *, complex *, integer *), ctrsm_(char *, char *, char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *);
+    int ccopy_(integer *, complex *, integer *, complex *, integer *), ctrsm_(char *, char *, char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *), xerbla_(const char *srname, const integer *info, ftnlen srname_len);
     integer jbtemp1, jbtemp2;
     /* -- LAPACK computational routine (version 3.9.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -341,7 +341,7 @@ int cunhr_col_(integer *m, integer *n, integer *nb, complex *a, integer *lda, co
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("CUNHR_COL", &i__1);
+        xerbla_("CUNHR_COL", &i__1, (ftnlen)9);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
