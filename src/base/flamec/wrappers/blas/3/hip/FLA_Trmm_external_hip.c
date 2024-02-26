@@ -90,7 +90,8 @@ FLA_Error FLA_Trmm_external_hip( rocblas_handle handle, FLA_Side side, FLA_Uplo 
                    n_B,
                    buff_alpha,
                    ( float * ) A_mat, ldim_A,
-                   ( float * ) B_mat, ldim_B );
+                   ( float * ) B_mat, ldim_B,
+                   ( float * ) B_mat, ldim_B);
     
     break;
   }
@@ -108,7 +109,8 @@ FLA_Error FLA_Trmm_external_hip( rocblas_handle handle, FLA_Side side, FLA_Uplo 
                    n_B,
                    buff_alpha,
                    ( double * ) A_mat, ldim_A,
-                   ( double * ) B_mat, ldim_B );
+                   ( double * ) B_mat, ldim_B,
+                   ( double * ) B_mat, ldim_B);
 
     break;
   }
@@ -126,7 +128,8 @@ FLA_Error FLA_Trmm_external_hip( rocblas_handle handle, FLA_Side side, FLA_Uplo 
                    n_B,
                    buff_alpha,
                    ( rocblas_float_complex * ) A_mat, ldim_A,
-                   ( rocblas_float_complex * ) B_mat, ldim_B );
+                   ( rocblas_float_complex * ) B_mat, ldim_B,
+                   ( rocblas_float_complex * ) B_mat, ldim_B);
 
     break;
   }
@@ -144,7 +147,8 @@ FLA_Error FLA_Trmm_external_hip( rocblas_handle handle, FLA_Side side, FLA_Uplo 
                    n_B,
                    buff_alpha,
                    ( rocblas_double_complex * ) A_mat, ldim_A,
-                   ( rocblas_double_complex * ) B_mat, ldim_B );
+                   ( rocblas_double_complex * ) B_mat, ldim_B,
+                   ( rocblas_double_complex * ) B_mat, ldim_B);
 
     break;
   }
