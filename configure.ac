@@ -253,6 +253,13 @@ FLA_REQUIRE_CC
 dnl Determine the C compiler vendor (CC_VENDOR).
 FLA_REQUIRE_CC_VENDOR
 
+dnl Check whether the user requested a specific Fortran compiler. If so, add it to the
+dnl front of the compiler search list. Otherwise do nothing.
+FLA_CHECK_WITH_FC
+
+dnl Determine the Fortran compiler (FC).
+FLA_REQUIRE_FC
+
 dnl Check whether the user requested a specific library archiver. If so, assign
 dnl it to the requested archiver variable. Otherwise do nothing.
 FLA_CHECK_WITH_AR

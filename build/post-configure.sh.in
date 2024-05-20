@@ -30,6 +30,8 @@ echo "Enable maximum argument list hack............... : @fla_enable_max_arg_lis
 echo ""
 echo "C compiler...................................... : @CC@"
 echo "C compiler vendor............................... : @CC_VENDOR@"
+echo "Fortran compiler................................ : @FC@"
+echo "Fortran compiler vendor......................... : @FC_VENDOR@"
 echo "Library archiver................................ : @AR@"
 echo "Library archive indexer......................... : @RANLIB@"
 echo "Python interpreter.............................. : @PYTHON@"
@@ -114,6 +116,9 @@ echo ""
 echo "User-specified CFLAGS (prepended)............... : @fla_userdef_cflags@"
 
 echo ""
+echo "User-specified FFLAGS (prepended)............... : @fla_userdef_fflags@"
+
+echo ""
 echo "Enable internal error checking.................. : @fla_enable_internal_error_checking@"
 if   [ "@fla_enable_internal_error_checking@" = "yes" ] ; then
 echo "   Internal error checking level................ : @fla_internal_error_checking_level@"
@@ -155,17 +160,6 @@ echo "   Portable timer function...................... : @fla_portable_timer_fun
 fi
 
 echo ""
-echo "Autodetect Fortran linker flags................. : @fla_enable_autodetect_f77_ldflags@"
-if [ "@fla_enable_autodetect_f77_ldflags@" = "yes" ] ; then
-echo "   Fortran linker flags......................... : @FLIBS@"
-fi
-echo "Autodetect Fortran name-mangling................ : @fla_enable_autodetect_f77_name_mangling@"
-if [ "@fla_enable_autodetect_f77_name_mangling@" = "yes" ] ; then
-echo "   Unmangled name............................... : @fla_f77_foobar_unmangled@"
-echo "   Mangled name................................. : @fla_f77_foobar_mangled@"
-fi
-
-echo ""
 echo "Installation directories"
 echo "   prefix....................................... : "'@prefix@'
 echo "   exec_prefix.................................. : "'@exec_prefix@'
@@ -175,13 +169,6 @@ echo "   header files will be installed in............ : "'@includedir@'
 echo ""
 echo "Configuration complete!"
 echo ""
-if [ "@fla_enable_autodetect_f77_ldflags@" = "yes" ] ; then
-echo "NOTE: Autodetection of Fortran linker flags was enabled. The configure"
-echo "script thinks that the flags listed above are necessary to successfully"
-echo "link a program to Fortran object code. If your program uses any Fortran"
-echo "libraries, you will probably need to link with these flags."
-echo ""
-fi
 echo "You may now run 'make' to build all libflame libraries and then 'make install'"
 echo "to install the libraries." 
 echo ""

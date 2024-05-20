@@ -155,6 +155,14 @@ ARFLAGS          := cr
 #AR_ARG_LIST_FILE := ar_arg_list
 AR_OBJ_LIST_FILE := ar_obj_list
 
+# --- Determine the Fortran compiler and related flags ---
+FC           := @FC@
+FC_VENDOR    := @FC_VENDOR@
+
+# If the user provided his own FFLAGS, allow them to override our own.
+ifneq (@fla_userdef_fflags@,)
+FFLAGS       := @FFLAGS@ $(FFLAGS)
+endif
 
 # --- Determine the python interpreter ---
 
