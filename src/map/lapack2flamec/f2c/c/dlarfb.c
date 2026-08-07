@@ -1,3 +1,7 @@
+/**
+ * Copyright (C) 2026, Advanced Micro Devices, Inc. All rights reserved.
+ */
+
 /* ../netlib/dlarfb.f -- translated by f2c (version 20100827). You must link the resulting object
  file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a
@@ -274,7 +278,7 @@ void aocl_lapack_dlarfb(char *side, char *trans, char *direct, char *storev, aoc
         AOCL_DTL_TRACE_LOG_EXIT
         return;
     }
-    if(lsame_(trans, "N", 1, 1))
+    if((*trans == 'N' || *trans == 'n'))
     {
         *(unsigned char *)transt = 'T';
     }
@@ -282,14 +286,14 @@ void aocl_lapack_dlarfb(char *side, char *trans, char *direct, char *storev, aoc
     {
         *(unsigned char *)transt = 'N';
     }
-    if(lsame_(storev, "C", 1, 1))
+    if((*storev == 'C' || *storev == 'c'))
     {
-        if(lsame_(direct, "F", 1, 1))
+        if((*direct == 'F' || *direct == 'f'))
         {
             /* Let V = ( V1 ) (first K rows) */
             /* ( V2 ) */
             /* where V1 is unit lower triangular. */
-            if(lsame_(side, "L", 1, 1))
+            if((*side == 'L' || *side == 'l'))
             {
                 /* Form H * C or H**T * C where C = ( C1 ) */
                 /* ( C2 ) */
@@ -340,7 +344,7 @@ void aocl_lapack_dlarfb(char *side, char *trans, char *direct, char *storev, aoc
                     /* L30: */
                 }
             }
-            else if(lsame_(side, "R", 1, 1))
+            else if((*side == 'R' || *side == 'r'))
             {
                 /* Form C * H or C * H**T where C = ( C1 C2 ) */
                 /* W := C * V = (C1*V1 + C2*V2) (stored in WORK) */
@@ -397,7 +401,7 @@ void aocl_lapack_dlarfb(char *side, char *trans, char *direct, char *storev, aoc
             /* Let V = ( V1 ) */
             /* ( V2 ) (last K rows) */
             /* where V2 is unit upper triangular. */
-            if(lsame_(side, "L", 1, 1))
+            if((*side == 'L' || *side == 'l'))
             {
                 /* Form H * C or H**T * C where C = ( C1 ) */
                 /* ( C2 ) */
@@ -448,7 +452,7 @@ void aocl_lapack_dlarfb(char *side, char *trans, char *direct, char *storev, aoc
                     /* L90: */
                 }
             }
-            else if(lsame_(side, "R", 1, 1))
+            else if((*side == 'R' || *side == 'r'))
             {
                 /* Form C * H or C * H**T where C = ( C1 C2 ) */
                 /* W := C * V = (C1*V1 + C2*V2) (stored in WORK) */
@@ -501,13 +505,13 @@ void aocl_lapack_dlarfb(char *side, char *trans, char *direct, char *storev, aoc
             }
         }
     }
-    else if(lsame_(storev, "R", 1, 1))
+    else if((*storev == 'R' || *storev == 'r'))
     {
-        if(lsame_(direct, "F", 1, 1))
+        if((*direct == 'F' || *direct == 'f'))
         {
             /* Let V = ( V1 V2 ) (V1: first K columns) */
             /* where V1 is unit upper triangular. */
-            if(lsame_(side, "L", 1, 1))
+            if((*side == 'L' || *side == 'l'))
             {
                 /* Form H * C or H**T * C where C = ( C1 ) */
                 /* ( C2 ) */
@@ -558,7 +562,7 @@ void aocl_lapack_dlarfb(char *side, char *trans, char *direct, char *storev, aoc
                     /* L150: */
                 }
             }
-            else if(lsame_(side, "R", 1, 1))
+            else if((*side == 'R' || *side == 'r'))
             {
                 /* Form C * H or C * H**T where C = ( C1 C2 ) */
                 /* W := C * V**T = (C1*V1**T + C2*V2**T) (stored in WORK) */
@@ -614,7 +618,7 @@ void aocl_lapack_dlarfb(char *side, char *trans, char *direct, char *storev, aoc
         {
             /* Let V = ( V1 V2 ) (V2: last K columns) */
             /* where V2 is unit lower triangular. */
-            if(lsame_(side, "L", 1, 1))
+            if((*side == 'L' || *side == 'l'))
             {
                 /* Form H * C or H**T * C where C = ( C1 ) */
                 /* ( C2 ) */
@@ -664,7 +668,7 @@ void aocl_lapack_dlarfb(char *side, char *trans, char *direct, char *storev, aoc
                     /* L210: */
                 }
             }
-            else if(lsame_(side, "R", 1, 1))
+            else if((*side == 'R' || *side == 'r'))
             {
                 /* Form C * H or C * H' where C = ( C1 C2 ) */
                 /* W := C * V**T = (C1*V1**T + C2*V2**T) (stored in WORK) */

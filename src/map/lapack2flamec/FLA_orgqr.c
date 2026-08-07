@@ -7,6 +7,9 @@
     directory, or at http://opensource.org/licenses/BSD-3-Clause
 
 */
+/*
+ * Copyright (C) 2026, Advanced Micro Devices, Inc. All rights reserved.
+ */
 
 #include "FLAME.h"
 
@@ -15,6 +18,9 @@
 #include "FLA_lapack2flame_prototypes.h"
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_lapack2flame_util_defs.h"
+#if FLA_ENABLE_AMD_OPT
+#include "fla_lapack_qr_small_kernels.h"
+#endif
 
 /*
   SORGQR generates an M-by-N real matrix Q with orthonormal columns,
@@ -199,6 +205,15 @@ LAPACK_orgqr(d, org)
     return;
 #else
     {
+        /* m<10: small inlined kernel (no lapack_dorgqr). DTL logging is already initialized
+         * for this wrapper, so this path only avoids the heavier lapack_dorgqr call. */
+        if(*m < 10)
+        {
+            LAPACK_DORGQR_SMALL(*m, *n, *k, buff_A, *ldim_A, buff_t, buff_w, *lwork, info);
+            AOCL_DTL_TRACE_LOG_EXIT
+            return;
+        }
+        /* m>=10: reference code is as fast or faster than the small macro. */
         lapack_dorgqr(m, n, k, buff_A, ldim_A, buff_t, buff_w, lwork, info);
         AOCL_DTL_TRACE_LOG_EXIT
         return;
