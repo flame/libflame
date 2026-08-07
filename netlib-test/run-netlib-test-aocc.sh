@@ -99,11 +99,16 @@ cd libflame_netlib
 # versions.
 sed -i "s/-frecursive/-Mrecursive/g" make.inc
 
-FORTRAN_FLAGS="flang -fopenmp"
+# Select the Fortran compiler from the environment when $FC is set, otherwise
+# default to 'flang'. $FC may be a bare command or a full path (e.g.
+# /opt/aocc/bin/aof), so compare using the basename to detect the AOF compiler.
+FC_COMPILER=${FC:-flang}
+FC_BASENAME=$(basename "$FC_COMPILER")
 
-if [[ "$FC" == "aof" ]]; then
+FORTRAN_FLAGS="$FC_COMPILER -fopenmp"
+
+if [[ "$FC_BASENAME" == "aof" ]]; then
     sed -i "s/-Mrecursive/-fsave-main-program -fstack-arrays -fstack-repack-arrays/g" make.inc
-	FORTRAN_FLAGS="aof -fopenmp"
 fi
 cp $BLAS_LIB_PATH/$BLAS_LIB .
 cp $LAPACK_LIB_PATH/$LAPACK_LIB .

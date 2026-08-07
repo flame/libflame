@@ -1,3 +1,6 @@
+###############################################################################
+# Copyright (C) 2026, Advanced Micro Devices, Inc. All rights reserved.
+###############################################################################
 cmake_minimum_required(VERSION 3.20.0)
 
 if((NOT EXT_LAPACK_LIBRARY_PATH) OR (NOT EXT_LAPACK_LIBNAME))
@@ -5,8 +8,8 @@ if((NOT EXT_LAPACK_LIBRARY_PATH) OR (NOT EXT_LAPACK_LIBNAME))
         set(EXT_LAPACK_LIBNAME "libflame.a")
 endif()
 enable_testing()
-if(CMAKE_C_COMPILER MATCHES "clang$")
-    # Run the netlib test using AOCC if clang compiler is detected 
+if(CMAKE_C_COMPILER MATCHES "clang$" OR CMAKE_C_COMPILER MATCHES "aoc$")
+    # Run the netlib test using AOCC if clang compiler is detected
     set(NETLIB_BASH_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/netlib-test/run-netlib-test-aocc.sh)
 else()
     # Run the netlib test using GCC if gcc compiler is detected 
