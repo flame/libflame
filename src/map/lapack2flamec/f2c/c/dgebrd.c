@@ -332,7 +332,7 @@ int lapack_dgebrd(aocl_int64_t *m, aocl_int64_t *n, doublereal *a, aocl_int64_t 
         /* Computing MAX */
         i__1 = 1;
 #ifdef FLA_ENABLE_AMD_OPT
-        i__2 = (fla_thread_get_num_threads() == 1) ? 32 : 110;
+        i__2 = 110;
 #else
         static aocl_int64_t c__1 = 1;
         i__2 = aocl_lapack_ilaenv(&c__1, "DGEBRD", " ", m, n, &c_n1, &c_n1); // , expr subst
