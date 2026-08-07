@@ -32,7 +32,7 @@ void FLA_get_optimum_params_sgetrf(fla_dim_t m, fla_dim_t n, fla_dim_t *nb, int 
     else if(m <= 1024 || n <= 1024)
     {
         *nb = 32;
-        *n_threads = 16;
+        *n_threads = 8;
     }
     else if(m <= 2048 || n <= 2048)
     {
@@ -42,7 +42,7 @@ void FLA_get_optimum_params_sgetrf(fla_dim_t m, fla_dim_t n, fla_dim_t *nb, int 
     else if(m <= 6500 || n <= 6500)
     {
         *nb = 128;
-        *n_threads = 32;
+        *n_threads = 24;
     }
     else if(m <= 12000 || n <= 12000)
     {
@@ -148,6 +148,15 @@ int FLA_LU_piv_s_parallel(fla_dim_t *m, fla_dim_t *n, real *a, fla_dim_t *lda, a
 
     /* Compute L00 and U00 of diagonal blocks */
     i__3 = *m - j + 1;
+
+#if FLA_ENABLE_AOCL_BLAS
+    /* OpenMP outer loop owns parallelism; pin inner BLIS to 1 thread to
+    avoid oversubscription when BLIS would otherwise spawn its own 
+    threads alongside OpenMP. */
+    aocl_int64_t orig_blis_threads = bli_thread_get_num_threads();
+    bli_thread_set_num_threads(1);
+#endif
+
     aocl_lapack_sgetrf2(&i__3, &jb, M_PTR(a, j, j, a_dim1), lda, &ipiv[j], &iinfo);
 
     if(*info == 0 && iinfo > 0)
@@ -273,6 +282,11 @@ int FLA_LU_piv_s_parallel(fla_dim_t *m, fla_dim_t *n, real *a, fla_dim_t *lda, a
 #pragma omp barrier
         }
     }
+
+#if FLA_ENABLE_AOCL_BLAS
+    bli_thread_set_num_threads(orig_blis_threads);
+#endif
+
 #else
     aocl_lapack_sgetrf2(m, n, a, lda, ipiv, info);
 #endif

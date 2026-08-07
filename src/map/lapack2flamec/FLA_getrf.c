@@ -256,15 +256,23 @@ void zgetf2_(aocl_int_t *m, aocl_int_t *n, dcomplex *buff_A, aocl_int_t *ldim_A,
     integer i = 0;                                                                          \
     if(*m == 2 && *n == 2)                                                                  \
     {                                                                                       \
-        FLA_LU_PIV_SMALL_S_2x2(i, *n, buff_A, ldim_A, buff_p, *info);                         \
+        FLA_LU_PIV_SMALL_S_2x2(i, *n, buff_A, ldim_A, buff_p, *info);                       \
     }                                                                                       \
     else if(*m == 3 && *n == 3)                                                             \
     {                                                                                       \
-        FLA_LU_PIV_SMALL_S_3x3(i, *n, buff_A, ldim_A, buff_p, *info);                         \
+        FLA_LU_PIV_SMALL_S_3x3(i, *n, buff_A, ldim_A, buff_p, *info);                       \
     }                                                                                       \
     else if(*m == 4 && *n == 4)                                                             \
     {                                                                                       \
-        FLA_LU_PIV_SMALL_S_4x4(i, *n, buff_A, ldim_A, buff_p, *info);                         \
+        aocl_fla_init();                                                                    \
+        if(FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))                                               \
+        {                                                                                   \
+            fla_sgetrf_4x4_avx2(m, n, buff_A, ldim_A, buff_p, info);                        \
+        }                                                                                   \
+        else                                                                                \
+        {                                                                                   \
+            FLA_LU_PIV_SMALL_S_4x4(i, *n, buff_A, ldim_A, buff_p, *info);                   \
+        }                                                                                   \
     }                                                                                       \
     else if(*m <= FLA_SGETRF_SMALL_THRESH0 && *n <= FLA_SGETRF_SMALL_THRESH0)               \
     {                                                                                       \

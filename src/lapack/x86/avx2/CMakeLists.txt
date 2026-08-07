@@ -30,6 +30,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/fla_dgetrs_small_trsm_ll_avx2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_lange_kernels_avx2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_dlarf_kernels_avx2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_sgetrf_small_avx2.c
+${CMAKE_CURRENT_SOURCE_DIR}/fla_sgetrf_4x4_avx2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_lu_piv_small_s_update_tr_matrix_avx2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_dnrm2_blas_avx2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_zlarf_kernels_avx2.c

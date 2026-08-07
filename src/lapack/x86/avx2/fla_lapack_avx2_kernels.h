@@ -33,6 +33,8 @@ aocl_int64_t fla_dgetrf_small_avx2(aocl_int64_t *m, aocl_int64_t *n, doublereal 
                                    aocl_int64_t *lda, aocl_int_t *ipiv, aocl_int64_t *info);
 aocl_int64_t fla_sgetrf_small_avx2(aocl_int64_t *m, aocl_int64_t *n, real *a, aocl_int64_t *lda,
                                    aocl_int_t *ipiv, aocl_int64_t *info);
+aocl_int64_t fla_sgetrf_4x4_avx2(aocl_int64_t *m, aocl_int64_t *n, real *a, aocl_int64_t *lda,
+                                 aocl_int_t *ipiv, aocl_int64_t *info);
 void fla_lu_piv_small_d_update_tr_matrix_avx2(aocl_int64_t i_1, aocl_int64_t mi, aocl_int64_t ni,
                                               doublereal *acur, aocl_int64_t lda_t,
                                               doublereal safemin);
