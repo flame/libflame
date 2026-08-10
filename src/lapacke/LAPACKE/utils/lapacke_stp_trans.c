@@ -1,3 +1,6 @@
+/*
+ *     Modifications Copyright (c) 2026 Advanced Micro Devices, Inc.  All rights reserved.
+ */
 /*****************************************************************************
   Copyright (c) 2014, Intel Corp.
   All rights reserved.
@@ -71,13 +74,13 @@ void API_SUFFIX(LAPACKE_stp_trans)( int matrix_layout, char uplo, char diag,
     if( !( colmaj || upper ) || ( colmaj && upper ) ) {
         for( j = st; j < n; j++ ) {
             for( i = 0; i < j+1-st; i++ ) {
-                out[ j-i + (i*(2*n-i+1))/2 ] = in[ ((j+1)*j)/2 + i ];
+                out[ j-i + ((size_t)i*(2*n-i+1))/2 ] = in[ ((size_t)(j+1)*j)/2 + i ];
             }
         }
     } else {
         for( j = 0; j < n-st; j++ ) {
             for( i = j+st; i < n; i++ ) {
-                out[ j + ((i+1)*i)/2 ] = in[ (j*(2*n-j+1))/2 + i-j ];
+                out[ j + ((size_t)(i+1)*i)/2 ] = in[ ((size_t)j*(2*n-j+1))/2 + i-j ];
             }
         }
     }

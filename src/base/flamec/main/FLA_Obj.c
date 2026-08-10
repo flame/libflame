@@ -1,7 +1,7 @@
 /*
 
     Copyright (C) 2014, The University of Texas at Austin
-    Copyright (C) 2020, Advanced Micro Devices, Inc. 
+    Copyright (C) 2020-2026, Advanced Micro Devices, Inc. All rights reserved.
 
     This file is part of libflame and is available under the 3-Clause
     BSD license, which can be found in the LICENSE file at the top-level
@@ -38,6 +38,20 @@ FLA_Bool FLA_is_owner( void )
   return FALSE;
 }
 #endif
+
+// Multiply two non-negative sizes, aborting instead of silently wrapping if
+// the product would overflow (guards buffer-size math against CWE-190).
+#define FLA_safe_mul( a, b )                                                                    \
+({                                                                                               \
+  size_t _fla_a = ( size_t ) ( a );                                                             \
+  size_t _fla_b = ( size_t ) ( b );                                                             \
+  if ( _fla_a != 0 && _fla_b > SIZE_MAX / _fla_a )                                              \
+  {                                                                                             \
+    FLA_Print_message( "integer overflow computing object buffer size", __FILE__, __LINE__ );   \
+    FLA_Abort();                                                                                \
+  }                                                                                              \
+  _fla_a * _fla_b;                                                                              \
+})
 
 FLA_Error FLA_Obj_nullify( FLA_Obj *obj )
 {
@@ -101,8 +115,7 @@ FLA_Error FLA_Obj_create_ext( FLA_Datatype datatype, FLA_Elemtype elemtype, fla_
                                  m, n, &rs, &cs );
 
   // Compute the buffer size in bytes.
-  buffer_size = ( size_t ) n_elem *
-                ( size_t ) FLA_Obj_elem_size( *obj );
+  buffer_size = FLA_safe_mul( n_elem, FLA_Obj_elem_size( *obj ) );
 
   // Allocate the base object's element buffer.
 #ifdef FLA_ENABLE_SCC
@@ -154,8 +167,7 @@ fla_dim_t FLA_compute_num_elem( fla_dim_t elem_size, fla_dim_t m, fla_dim_t n, f
     *cs = FLA_align_ldim( *cs, elem_size );
 
     // Compute the length of the buffer needed for the object we're creating.
-    n_elem = ( size_t ) *cs *
-             ( size_t ) n;
+    n_elem = FLA_safe_mul( *cs, n );
   }
   else if ( *cs == 1 )
   {
@@ -167,8 +179,7 @@ fla_dim_t FLA_compute_num_elem( fla_dim_t elem_size, fla_dim_t m, fla_dim_t n, f
     *rs = FLA_align_ldim( *rs, elem_size );
 
     // Compute the length of the buffer needed for the object we're creating.
-    n_elem = ( size_t ) m *
-             ( size_t ) *rs;
+    n_elem = FLA_safe_mul( m, *rs );
   }
   else
   {
@@ -180,15 +191,13 @@ fla_dim_t FLA_compute_num_elem( fla_dim_t elem_size, fla_dim_t m, fla_dim_t n, f
     {
       *cs = FLA_align_ldim( *cs, elem_size );
 
-      n_elem = ( size_t ) *cs *
-               ( size_t ) n;
+      n_elem = FLA_safe_mul( *cs, n );
     }
     else if ( *rs > *cs )
     {
       *rs = FLA_align_ldim( *rs, elem_size );
 
-      n_elem = ( size_t ) m *
-               ( size_t ) *rs;
+      n_elem = FLA_safe_mul( m, *rs );
     }
     else // if ( rs == cs )
     {
@@ -199,10 +208,15 @@ fla_dim_t FLA_compute_num_elem( fla_dim_t elem_size, fla_dim_t m, fla_dim_t n, f
       // or a m-by-1 matrix. This constraint is enforced in
       // FLA_Check_matrix_strides(). Thus, we can compute the buffer length:
       // m * n * (rs|cs).
-      n_elem = ( size_t ) m *
-               ( size_t ) n *
-               ( size_t ) *cs;
+      n_elem = FLA_safe_mul( FLA_safe_mul( m, n ), *cs );
     }
+  }
+
+  // catch size_t -> fla_dim_t (signed) wraparound when n_elem exceeds INT64_MAX
+  if ( n_elem < 0 )
+  {
+    FLA_Print_message( "integer overflow computing object element count", __FILE__, __LINE__ );
+    FLA_Abort();
   }
 
   return n_elem;
@@ -215,7 +229,7 @@ fla_dim_t FLA_align_ldim( fla_dim_t ldim, fla_dim_t elem_size )
   #ifdef FLA_ENABLE_LDIM_ALIGNMENT
     // Increase ldim so that ( ldim * elem_size ) is a multiple of the desired
     // alignment.
-    ldim = ( ( ldim * elem_size + FLA_MEMORY_ALIGNMENT_BOUNDARY - 1 ) / 
+    ldim = ( ( FLA_safe_mul( ldim, elem_size ) + FLA_MEMORY_ALIGNMENT_BOUNDARY - 1 ) / 
              FLA_MEMORY_ALIGNMENT_BOUNDARY ) *
            FLA_MEMORY_ALIGNMENT_BOUNDARY /
            elem_size;
@@ -571,8 +585,7 @@ FLA_Error FLA_Obj_create_buffer( fla_dim_t rs, fla_dim_t cs, FLA_Obj *obj )
                                  m, n, &rs, &cs );
 
   // Compute the buffer size in bytes.
-  buffer_size = ( size_t ) n_elem *
-                ( size_t ) FLA_Obj_elem_size( *obj );
+  buffer_size = FLA_safe_mul( n_elem, FLA_Obj_elem_size( *obj ) );
 
   // Allocate the base object's element buffer.
 #ifdef FLA_ENABLE_SCC
@@ -609,6 +622,8 @@ FLA_Error FLA_Obj_free( FLA_Obj *obj )
 #endif
     //printf( "freeing base %p\n", obj->base ); fflush( stdout );
     FLA_free( ( void * ) obj->base );
+    //avoid dangling base pointer so a repeat call is a no op, not a double free
+    obj->base = NULL;
   }
 
   obj->offm = 0;
@@ -626,7 +641,12 @@ FLA_Error FLA_Obj_free_without_buffer( FLA_Obj *obj )
   if ( FLA_Check_error_level() >= FLA_MIN_ERROR_CHECKING )
     FLA_Obj_free_without_buffer_check( obj );
 
-  FLA_free( ( void * ) obj->base );
+  if ( obj->base != NULL )
+  {
+    FLA_free( ( void * ) obj->base );
+    /*avoid dangling base pointer so a repeat call is a no-op, not a double-free*/
+    obj->base = NULL; 
+  }
 
   obj->offm = 0;
   obj->offn = 0;
