@@ -39,6 +39,27 @@
 extern double perf;
 extern double time_min;
 
+/* compute_matrix_norm() stores its result through an untyped pointer whose width
+   follows the datatype: four bytes for the single precision types and eight for
+   the double precision ones. Give it a destination of the matching type, so the
+   result can be widened once and the caller can work in double throughout. */
+static double matrix_norm_as_double(integer datatype, char ntype, integer m, integer n, void *A,
+                                    integer lda, char imatrix, void *work)
+{
+    if(datatype == FLOAT || datatype == COMPLEX)
+    {
+        float norm = 0.0f;
+        compute_matrix_norm(datatype, ntype, m, n, A, lda, &norm, imatrix, work);
+        return norm;
+    }
+    else
+    {
+        double norm = 0.0;
+        compute_matrix_norm(datatype, ntype, m, n, A, lda, &norm, imatrix, work);
+        return norm;
+    }
+}
+
 void validate_gelsd(char *tst_api, integer m, integer n, integer nrhs, void *A, integer lda,
                     void *B, integer ldb, void *S, void *X, void *rcond, integer *rank,
                     integer datatype, double err_thresh, char imatrix, void *params)
@@ -67,7 +88,7 @@ void validate_gelsd(char *tst_api, integer m, integer n, integer nrhs, void *A, 
        Check the order of Singular values generated */
     resid1 = svd_check_order(datatype, S, m, n, err_thresh);
 
-    double norm_a, norm_b, norm_x, norm = 0;
+    double norm_a = 0., norm_b = 0., norm_x = 0., norm = 0.;
     if((m >= n) && (*rank == n))
     {
         residual_sum_of_squares(datatype, m, n, nrhs, X, ldb, &resid2);
@@ -76,9 +97,9 @@ void validate_gelsd(char *tst_api, integer m, integer n, integer nrhs, void *A, 
     {
         /* Test 3 */
         /* Compute |B-AX| = 0 */
-        compute_matrix_norm(datatype, NORM, m, n, A, lda, &norm_a, imatrix, work);
-        compute_matrix_norm(datatype, NORM, m, nrhs, B, ldb, &norm_b, imatrix, work);
-        compute_matrix_norm(datatype, NORM, n, nrhs, X, ldx, &norm_x, imatrix, work);
+        norm_a = matrix_norm_as_double(datatype, NORM, m, n, A, lda, imatrix, work);
+        norm_b = matrix_norm_as_double(datatype, NORM, m, nrhs, B, ldb, imatrix, work);
+        norm_x = matrix_norm_as_double(datatype, NORM, n, nrhs, X, ldx, imatrix, work);
 
         /* Compute B-AX */
         fla_invoke_gemm(datatype, "N", "N", &m, &nrhs, &n, s_n_one, A, &lda, X, &ldx, s_one, B,
@@ -88,12 +109,12 @@ void validate_gelsd(char *tst_api, integer m, integer n, integer nrhs, void *A, 
         {
             fla_invoke_gemm(datatype, "T", "N", &n, &nrhs, &m, s_n_one, A, &lda, B, &ldb, s_zero,
                             B_res, &n);
-            compute_matrix_norm(datatype, NORM, norm_rows, nrhs, B_res, n, &norm, imatrix, work);
+            norm = matrix_norm_as_double(datatype, NORM, norm_rows, nrhs, B_res, n, imatrix, work);
             resid3 = fla_compute_norm_based_residual(datatype, norm, norm_a, params);
         }
         else
         {
-            compute_matrix_norm(datatype, NORM, norm_rows, nrhs, B, ldb, &norm, imatrix, work);
+            norm = matrix_norm_as_double(datatype, NORM, norm_rows, nrhs, B, ldb, imatrix, work);
             resid3 = fla_compute_residual(datatype, 'E', norm, norm_a,
                                           (norm_x * fla_max(m, fla_max(n, nrhs)) * norm_b), params);
         }
