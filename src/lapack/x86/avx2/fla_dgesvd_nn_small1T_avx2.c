@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (C) 2023-2024, Advanced Micro Devices, Inc. All rights reserved.
+ * Copyright (C) 2023-2026, Advanced Micro Devices, Inc. All rights reserved.
  *******************************************************************************/
 
 /*! @file fla_dgesvd_nn_small1T_avx2_.c
@@ -44,7 +44,7 @@ void fla_dgesvd_nn_small1T_avx2(aocl_int64_t *m, aocl_int64_t *n, doublereal *a,
     taup = &work[itaup - 1];
 
     /* Upper Bidiagonalization */
-    FLA_BIDIAGONALIZE_SMALL(*m, *m, a, lda, tauq, taup, s, e);
+    FLA_BIDIAGONALIZE_DSMALL(*m, *m, a, lda, tauq, taup, s, e);
 
     /* Compute Singular Values and Vetcors */
     lapack_dbdsqr_small("U", m, &c__0, &c__0, &s[1], &e[1], NULL, &c__1, NULL, &c__1, info);

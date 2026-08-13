@@ -12,7 +12,8 @@
 #if FLA_ENABLE_AOCL_BLAS
 #include "blis.h"
 #endif
-#include "fla_dgesvd_small_avx2.h"
+#include "fla_dgeqrf_small_avx2.h"
+#include "fla_gesvd_small_avx2_kernel.h"
 #include "fla_lapack_x86_common.h"
 #include "immintrin.h"
 
@@ -21,6 +22,8 @@ int fla_dhrot3_avx2(aocl_int64_t *n, doublereal *a, aocl_int64_t *lda, doublerea
                     doublereal *tau);
 int fla_drot_avx2(aocl_int64_t *n, doublereal *dx, aocl_int64_t *incx, doublereal *dy,
                   aocl_int64_t *incy, doublereal *c__, doublereal *s);
+int fla_srot_avx2(aocl_int64_t *n, real *dx, aocl_int64_t *incx, real *dy, aocl_int64_t *incy,
+                  real *c__, real *s);
 int fla_zrot_avx2(aocl_int64_t *n, dcomplex *cx, aocl_int64_t *incx, dcomplex *cy,
                   aocl_int64_t *incy, doublereal *c__, dcomplex *s);
 int fla_sscal_ix1_avx2(aocl_int64_t *n, real *alpha, real *x);
@@ -56,8 +59,8 @@ int fla_zgeqrf_small_ker(aocl_int64_t *m, aocl_int64_t *n, dcomplex *a, aocl_int
 void fla_dgesvd_nn_small1T_avx2(aocl_int64_t *m, aocl_int64_t *n, doublereal *a, aocl_int64_t *lda,
                                 doublereal *s, doublereal *work, aocl_int64_t *info);
 void fla_dgesvd_small6_avx2(aocl_int64_t wntus, aocl_int64_t wntvs, aocl_int64_t *m,
-                            aocl_int64_t *n, doublereal *a, aocl_int64_t *lda, doublereal *ql,
-                            aocl_int64_t *ldql, doublereal *s, doublereal *u, aocl_int64_t *ldu,
+                            aocl_int64_t *n, doublereal *a, aocl_int64_t *lda, doublereal *qr,
+                            aocl_int64_t *ldqr, doublereal *s, doublereal *u, aocl_int64_t *ldu,
                             doublereal *vt, aocl_int64_t *ldvt, doublereal *work,
                             aocl_int64_t *info);
 void fla_dgesvd_small6T_avx2(aocl_int64_t *m, aocl_int64_t *n, doublereal *a, aocl_int64_t *lda,
@@ -72,6 +75,22 @@ void fla_dgesvd_xx_small10_avx2(aocl_int64_t wntu, aocl_int64_t wntv, aocl_int64
 void fla_dgesvd_xs_small10T_avx2(aocl_int64_t *m, aocl_int64_t *n, doublereal *a, aocl_int64_t *lda,
                                  doublereal *s, doublereal *u, aocl_int64_t *ldu, doublereal *vt,
                                  aocl_int64_t *ldvt, doublereal *work, aocl_int64_t *info);
+void fla_sgesvd_nn_small1T_avx2(aocl_int64_t *m, aocl_int64_t *n, real *a, aocl_int64_t *lda,
+                                real *s, real *work, aocl_int64_t *info);
+void fla_sgesvd_small6_avx2(aocl_int64_t wntus, aocl_int64_t wntvs, aocl_int64_t *m,
+                            aocl_int64_t *n, real *a, aocl_int64_t *lda, real *qr,
+                            aocl_int64_t *ldqr, real *s, real *u, aocl_int64_t *ldu, real *vt,
+                            aocl_int64_t *ldvt, real *work, aocl_int64_t *info);
+void fla_sgesvd_small6T_avx2(aocl_int64_t *m, aocl_int64_t *n, real *a, aocl_int64_t *lda, real *ql,
+                             aocl_int64_t *ldql, real *s, real *u, aocl_int64_t *ldu, real *vt,
+                             aocl_int64_t *ldvt, real *work, aocl_int64_t *info);
+void fla_sgesvd_xx_small10_avx2(aocl_int64_t wntu, aocl_int64_t wntv, aocl_int64_t *m,
+                                aocl_int64_t *n, aocl_int64_t *ncu, real *a, aocl_int64_t *lda,
+                                real *s, real *u, aocl_int64_t *ldu, real *vt, aocl_int64_t *ldvt,
+                                real *work, aocl_int64_t *info);
+void fla_sgesvd_xs_small10T_avx2(aocl_int64_t *m, aocl_int64_t *n, real *a, aocl_int64_t *lda,
+                                 real *s, real *u, aocl_int64_t *ldu, real *vt, aocl_int64_t *ldvt,
+                                 real *work, aocl_int64_t *info);
 doublereal fla_get_max_dabs_element_vector_avx2(aocl_int64_t m, doublereal *a, aocl_int64_t a_dim);
 real fla_get_max_sabs_element_vector_avx2(aocl_int64_t m, real *a, aocl_int64_t a_dim);
 doublereal fla_get_max_zabs_element_vector_avx2(aocl_int64_t m, dcomplex *a, aocl_int64_t a_dim);

@@ -34,6 +34,24 @@ void fla_dtranspose(aocl_int64_t *m, aocl_int64_t *n, doublereal *a, aocl_int64_
         }
     }
 }
+void fla_stranspose(aocl_int64_t *m, aocl_int64_t *n, real *a, aocl_int64_t *lda, real *b,
+                    aocl_int64_t *ldb)
+{
+    aocl_int64_t i, j;
+
+    /* Offset adjustments */
+    a -= (1 + *lda);
+    b -= (1 + *ldb);
+
+    /* Do the transpose copy */
+    for(i = 1; i <= *n; i++)
+    {
+        for(j = 1; j <= *m; j++)
+        {
+            b[i + j * *ldb] = a[i * *lda + j];
+        }
+    }
+}
 /* 3x3 Householder Rotation */
 int fla_dhrot3(aocl_int64_t *n, doublereal *a, aocl_int64_t *lda, doublereal *v, doublereal *tau)
 {
@@ -203,6 +221,35 @@ int fla_dgelqf_small(aocl_int64_t *m, aocl_int64_t *n, doublereal *a, aocl_int64
     }
     return 0;
 }
+/* Single LQ (SGELQF) for small sizes */
+int fla_sgelqf_small(aocl_int64_t *m, aocl_int64_t *n, real *a, aocl_int64_t *lda, real *tau,
+                     real *work)
+{
+    if(FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))
+    {
+        real *at;
+
+        /* Allocate transpose matrix */
+        at = malloc(*n * *m * sizeof(real));
+        if(at == NULL)
+        {
+            return -1;
+        }
+
+        /* Do transpose and store it in at */
+        fla_stranspose(m, n, a, lda, at, n);
+
+        /* Call QR for the transposed n x m matrix at */
+        fla_sgeqrf_small_avx2(n, m, at, n, tau, work);
+
+        /* Transpose at and store back in a */
+        fla_stranspose(n, m, at, n, a, lda);
+
+        /* Free the transpose matrix */
+        free(at);
+    }
+    return 0;
+}
 /* real vector scaling when increment is 1 */
 void fla_sscal(aocl_int64_t *n, real *alpha, real *x, aocl_int64_t *incx)
 {
@@ -348,6 +395,76 @@ void fla_dgesvd_small6T(aocl_int64_t *m, aocl_int64_t *n, doublereal *a, aocl_in
     if(FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))
     {
         fla_dgesvd_small6T_avx2(m, n, a, lda, ql, ldql, s, u, ldu, vt, ldvt, work, info);
+    }
+    return;
+}
+
+/* SVD for small matrices in SGESVD
+ */
+void fla_sgesvd_xx_small10(aocl_int64_t wntus, aocl_int64_t wntvs, aocl_int64_t *m, aocl_int64_t *n,
+                           aocl_int64_t *ncu, real *a, aocl_int64_t *lda, real *s, real *u,
+                           aocl_int64_t *ldu, real *vt, aocl_int64_t *ldvt, real *work,
+                           aocl_int64_t *info)
+{
+    if(FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))
+    {
+        fla_sgesvd_xx_small10_avx2(wntus, wntvs, m, n, ncu, a, lda, s, u, ldu, vt, ldvt, work,
+                                   info);
+    }
+    return;
+}
+
+/* SVD for small fat-matrices in SGESVD
+ */
+void fla_sgesvd_xs_small10T(aocl_int64_t *m, aocl_int64_t *n, real *a, aocl_int64_t *lda, real *s,
+                            real *u, aocl_int64_t *ldu, real *vt, aocl_int64_t *ldvt, real *work,
+                            aocl_int64_t *info)
+{
+    if(FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))
+    {
+        fla_sgesvd_xs_small10T_avx2(m, n, a, lda, s, u, ldu, vt, ldvt, work, info);
+    }
+    return;
+}
+
+/* SVD for small tall-matrices with QR factorization
+ * already computed
+ */
+void fla_sgesvd_small6(aocl_int64_t wntus, aocl_int64_t wntvs, aocl_int64_t *m, aocl_int64_t *n,
+                       real *a, aocl_int64_t *lda, real *qr, aocl_int64_t *ldqr, real *s, real *u,
+                       aocl_int64_t *ldu, real *vt, aocl_int64_t *ldvt, real *work,
+                       aocl_int64_t *info)
+{
+    if(FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))
+    {
+        fla_sgesvd_small6_avx2(wntus, wntvs, m, n, a, lda, qr, ldqr, s, u, ldu, vt, ldvt, work,
+                               info);
+    }
+    return;
+}
+
+/* SVD for small fat-matrices for path 1T in SGESVD
+ */
+void fla_sgesvd_nn_small1T(aocl_int64_t *m, aocl_int64_t *n, real *a, aocl_int64_t *lda, real *s,
+                           real *work, aocl_int64_t *info)
+{
+    if(FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))
+    {
+        fla_sgesvd_nn_small1T_avx2(m, n, a, lda, s, work, info);
+    }
+    return;
+}
+
+/* SVD for small fat-matrices with LQ factorization
+ * already computed
+ */
+void fla_sgesvd_small6T(aocl_int64_t *m, aocl_int64_t *n, real *a, aocl_int64_t *lda, real *ql,
+                        aocl_int64_t *ldql, real *s, real *u, aocl_int64_t *ldu, real *vt,
+                        aocl_int64_t *ldvt, real *work, aocl_int64_t *info)
+{
+    if(FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))
+    {
+        fla_sgesvd_small6T_avx2(m, n, a, lda, ql, ldql, s, u, ldu, vt, ldvt, work, info);
     }
     return;
 }

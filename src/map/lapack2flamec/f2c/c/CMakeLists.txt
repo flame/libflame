@@ -2011,6 +2011,9 @@ ${CMAKE_CURRENT_SOURCE_DIR}/ztrtri.c
 
 ${CMAKE_CURRENT_SOURCE_DIR}/dgebrd.c
 ${CMAKE_CURRENT_SOURCE_DIR}/dbdsqr_small.c
+${CMAKE_CURRENT_SOURCE_DIR}/sbdsqr_small.c
+${CMAKE_CURRENT_SOURCE_DIR}/fla_bdsqr_small_defs.h
+${CMAKE_CURRENT_SOURCE_DIR}/fla_bdsqr_small_kernel.h
 ${CMAKE_CURRENT_SOURCE_DIR}/dgebd2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/dgelqf.c
 ${CMAKE_CURRENT_SOURCE_DIR}/dgelq2.c

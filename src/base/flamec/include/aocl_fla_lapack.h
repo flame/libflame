@@ -1,3 +1,6 @@
+/******************************************************************************
+ * Copyright (C) 2025-2026, Advanced Micro Devices, Inc. All rights reserved.
+ *******************************************************************************/
 #ifndef AOCL_FLA_LAPACK_H
 #define AOCL_FLA_LAPACK_H
 
@@ -244,6 +247,9 @@ int lapack_dgelqf(aocl_int64_t *m, aocl_int64_t *n, doublereal *a, aocl_int64_t 
 int lapack_dbdsqr_small(char *uplo, aocl_int64_t *n, aocl_int64_t *ncvt, aocl_int64_t *nru,
                         doublereal *d__, doublereal *e, doublereal *vt, aocl_int64_t *ldvt,
                         doublereal *u, aocl_int64_t *ldu, aocl_int64_t *info);
+int lapack_sbdsqr_small(char *uplo, aocl_int64_t *n, aocl_int64_t *ncvt, aocl_int64_t *nru,
+                        real *d__, real *e, real *vt, aocl_int64_t *ldvt, real *u,
+                        aocl_int64_t *ldu, aocl_int64_t *info);
 int lapack_sorml2(char *side, char *trans, aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *k,
                   real *a, aocl_int64_t *lda, real *tau, real *c__, aocl_int64_t *ldc, real *work,
                   aocl_int64_t *info);

@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (C) 2023-2024, Advanced Micro Devices, Inc. All rights reserved.
+ * Copyright (C) 2023-2026, Advanced Micro Devices, Inc. All rights reserved.
  *******************************************************************************/
 
 /*! @file fla_dgesvd_small6_avx2_.c
@@ -39,6 +39,7 @@ void fla_dgesvd_small6_avx2(aocl_int64_t wntus, aocl_int64_t wntvs, aocl_int64_t
     doublereal stau, d__1;
     doublereal dum[2];
     doublereal c_zero = 0.;
+    doublereal c_one = 1.;
 
     /* indices for partitioning work buffer */
     ie = 1;
@@ -85,22 +86,20 @@ void fla_dgesvd_small6_avx2(aocl_int64_t wntus, aocl_int64_t wntvs, aocl_int64_t
     tn = *n - 1;
     aocl_lapack_dlaset("L", &tn, &tn, &c_zero, &c_zero, &au[2 + *ldau], ldau);
 
-    FLA_BIDIAGONALIZE_SMALL(*n, *n, au, ldau, tauq, taup, s, e);
+    FLA_BIDIAGONALIZE_DSMALL(*n, *n, au, ldau, tauq, taup, s, e);
 
     /* Form Vt' in vt from HH vectors in U (right bi-diagonalizing Q) */
     if(wntvs)
     {
         ncvt = *n;
-        for(i = 1; i <= *n; i++)
-            for(j = 1; j <= *n; j++)
-                vt[i + j * *ldvt] = 0.;
-        FLA_LARF_VTAPPLY_DSMALL_SQR(n, au, ldau, taup, vt, ldvt);
+        FLA_GESVD_ZERO_MAT(*n, *n, vt, ldvt);
+        FLA_LARF_VTAPPLY_SMALL_SQR(n, au, ldau, taup, vt, ldvt, c_one);
     }
 
     /* Form U' in U (left bi-diagonalizing Q) */
     if(wntus)
     {
-        FLA_LARF_UAPPLY_DSMALL_SQR(n, au, ldau, tauq, u, ldu, taup);
+        FLA_LARF_UAPPLY_SMALL_SQR(n, au, ldau, tauq, u, ldu, taup, c_one);
     }
 
     /* Compute SVD for bi-diagonal matrix
@@ -109,15 +108,11 @@ void fla_dgesvd_small6_avx2(aocl_int64_t wntus, aocl_int64_t wntvs, aocl_int64_t
     if(*n == 2)
     {
         /* 2 by 2 block, handle separately */
-        doublereal sigmn, sigmx, sinr, cosr, sinl, cosl;
-
-        dlasv2_(&s[1], &e[1], &s[2], &sigmn, &sigmx, &sinr, &cosr, &sinl, &cosl);
-        s[1] = f2c_abs(sigmx);
-        s[2] = f2c_abs(sigmn);
+        FLA_GESVD_LASV2_2X2_DSMALL(s, e, sigmn, sigmx, sinr, cosr, sinl, cosl);
         /* Compute singular vectors, if desired */
         if(ncvt > 0)
         {
-            FLA_COMPUTE_VT_2X2(vt, ldvt, sigmx, sigmn, cosr, sinr);
+            FLA_COMPUTE_VT_D2X2(vt, ldvt, sigmx, sigmn, cosr, sinr);
         }
         if(nru > 0)
         {
@@ -139,40 +134,7 @@ void fla_dgesvd_small6_avx2(aocl_int64_t wntus, aocl_int64_t wntvs, aocl_int64_t
     if(wntus)
     {
         tau = &work[itau - 1];
-        /* First Iteration corresponding to HH(n) */
-        i = *n;
-        for(j = 1; j <= *n; j++)
-        {
-            /* - u[i][j] * tau[i] */
-            d__1 = -u[i + j * *ldu] * tau[i];
-
-            /* u[n+1:m, j] = d__1 * u[n+1:m, j] */
-            for(k = *n + 1; k <= *m; k++)
-            {
-                u[k + j * *ldu] = d__1 * qr[k + *n * *ldqr];
-            }
-        }
-        /* u[m, 1:m] = u[m, 1:m] * (1 - tau) */
-        d__1 = 1 - tau[i];
-        for(j = 1; j <= *n; j++)
-        {
-            u[*n + j * *ldu] = u[*n + j * *ldu] * d__1;
-        }
-
-        /* Second Iteration onwards */
-        beta = 0;
-        xnorm = 1.;
-        for(i = *n - 1; i >= 1; i--)
-        {
-            /* incrementing n by i to compensate for decrement
-             * by i done in FLA_LARF_APPLY_DLARGE_COL
-             */
-            ni = *n + i;
-
-            au = &u[-i * *ldu];
-            v = &qr[i + i * *ldqr - 1];
-            FLA_LARF_APPLY_DLARGE_COL(i, m, &ni, au, ldu, tau);
-        }
+        FLA_GESVD_UAPPLY_QR_DSMALL(m, n, u, ldu, qr, ldqr, tau);
     }
 
     return;

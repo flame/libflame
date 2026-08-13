@@ -1,8 +1,7 @@
-##Copyright (C) 2023-2026, Advanced Micro Devices, Inc. All rights reserved.## 
+##Copyright (C) 2023-2026, Advanced Micro Devices, Inc. All rights reserved.##
 add_library(FLA_LAPACK_AVX2
      OBJECT
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_lapack_avx2_kernels.h
-${CMAKE_CURRENT_SOURCE_DIR}/fla_dgesvd_small_avx2.h
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_geqrf_small_avx2_kernel.h
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_dgeqrf_small_avx2.h
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_dgeqrf_small_avx2.c
@@ -39,6 +38,13 @@ ${CMAKE_CURRENT_SOURCE_DIR}/fla_dpotri_small_avx2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_dspr_avx2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_dcopy_scal_avx2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_dlasr_kernels_avx2.c
+${CMAKE_CURRENT_SOURCE_DIR}/fla_gesvd_small_avx2_kernel.h
+${CMAKE_CURRENT_SOURCE_DIR}/fla_srot_avx2.c
+${CMAKE_CURRENT_SOURCE_DIR}/fla_sgesvd_nn_small10_avx2.c
+${CMAKE_CURRENT_SOURCE_DIR}/fla_sgesvd_xs_small10T_avx2.c
+${CMAKE_CURRENT_SOURCE_DIR}/fla_sgesvd_small6_avx2.c
+${CMAKE_CURRENT_SOURCE_DIR}/fla_sgesvd_small6T_avx2.c
+${CMAKE_CURRENT_SOURCE_DIR}/fla_sgesvd_nn_small1T_avx2.c
 )
 
 if(WIN32)
