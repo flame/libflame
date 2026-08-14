@@ -250,7 +250,7 @@ void fla_test_larf_experiment(char *tst_api, test_params_t *params, integer data
 
         init_matrix(datatype, c__, m, n, ldc, g_ext_fptr, params->imatrix_char);
 
-        integer num_zeroes_c = set_zero_flag ? (rand() % ((v_num_elements >> 1) + 1)) : 0;
+        integer num_zeroes_c = set_zero_flag ? (rand() % ((work_num_elements >> 1) + 1)) : 0;
 
         if(same_char(side, 'L'))
         {

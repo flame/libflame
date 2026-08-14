@@ -106,6 +106,11 @@ void fla_dlarf1f_left_apply_incv1_avx2(aocl_int64_t m, aocl_int64_t n, doublerea
 void fla_dlarf1l_left_apply_incv1_avx2(aocl_int64_t m, aocl_int64_t n, doublereal *a_buff,
                                        aocl_int64_t ldr, doublereal *v, doublereal tau,
                                        doublereal *work);
+void fla_dlarf1_right_apply_incv1_avx2(aocl_int64_t m, aocl_int64_t n, doublereal *a_buff,
+                                       aocl_int64_t ldr, doublereal *v, doublereal *c1,
+                                       doublereal ntau, doublereal *work);
+void fla_dlarf1_right_update_c1_avx2(aocl_int64_t m, doublereal *restrict c1, doublereal ntau,
+                                     doublereal *restrict work);
 doublereal fla_dnrm2_blas_avx2(aocl_int64_t *sd, doublereal *a, aocl_int64_t *inc);
 void fla_zlarf_left_apply_incv1_avx2(aocl_int64_t m, aocl_int64_t n, dcomplex *a_buff,
                                      aocl_int64_t ldr, dcomplex *v, dcomplex *ntau, dcomplex *work);

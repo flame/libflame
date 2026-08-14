@@ -324,6 +324,31 @@
 /* DLARF , threshold numbers to choose paths for performance */
 #define FLA_DLARF_L_ST_BLOCKED_THRESH_M (1000)
 #define FLA_DLARF_L_ST_BLOCKED_THRESH_N (100)
+/* DLARF1F/DLARF1L applied from the left , the blocked path is already fused per
+   column, so against it the SIMD kernel only saves the DDOT/DAXPY call overhead.
+   That is worth it while C stays inside L3, past which both are memory bound and
+   the tuned BLAS kernels stream better */
+#define FLA_DLARF1_L_FUSED_SIMD_THRESH (1048576)
+/* DLARF1F/DLARF1L applied from the right , the fused kernel makes two passes over
+   each row block of C and touches one cache line per column, so it needs C to be
+   narrow enough for a row block to fit the L1 way count and small enough overall
+   to keep the reuse between the two passes. Both have to hold: C that is narrow
+   but tall loses the reuse just as C that is small but wide does */
+#define FLA_DLARF1_R_SIMD_COLS_THRESH (96)
+#define FLA_DLARF1_R_SIMD_THRESH (4096)
+/* DLARF1F/DLARF1L applied from the right , the fused kernel takes a block of
+   rows of C and makes two passes over all *n of its columns, relying on the
+   block staying L1 resident in between. Successive columns are *ldc doubles
+   apart, and x86 L1 data caches have 64 sets of 64 byte lines, so addresses
+   4096 bytes apart collide. When *ldc is a multiple of 64 doubles a row block
+   reaches at most 8 of the 64 sets, the reuse the fusion depends on is lost
+   and the kernel runs up to 20x slower. GEMV + GER stream over C in two
+   independent passes and need no such reuse, so hand these cases to them */
+#define FLA_DLARF1_R_SIMD_LDC_ALIAS_MASK (63)
+/* DLARF1F/DLARF1L applied from the right , minimum number of rows for which the
+   AVX512 kernel is faster than the AVX2 one. Below this the AVX512 kernel only
+   executes its 256/128 bit tails, which are identical to the AVX2 kernel */
+#define FLA_DLARF1_R_SIMD_AVX512_THRESH_M (8)
 #define FLA_DLARF_L_THRESH_UNBLOCKED (213760)
 #define FLA_DLARF_L_THRESH_THREAD_8 (1048576)
 #define FLA_DLARF_L_THRESH_THREAD_64 (45198729)

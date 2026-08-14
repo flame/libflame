@@ -296,17 +296,24 @@ void aocl_lapack_dlarf1l(char *side, aocl_int64_t *m, aocl_int64_t *n, doublerea
                 aocl_blas_dger(&i__1, &lastc, &d__1, &v[istart], incv, &work[1], &c__1,
                                &c__[firstv + c_dim1], ldc);
 #else
-                /* Get threshold sizes to take optimized path*/
-                FLA_Bool min_lastc_lastv = (lastc <= FLA_DGEMV_DGER_SIMD_SMALL_THRESH)
-                                           && (lastv >= FLA_DGEMV_DGER_SIMD_SMALL_THRESH_M
-                                               && lastv <= FLA_DGEMV_DGER_SIMD_SMALL_THRESH);
+                FLA_Bool use_blocked = 0;
+                aocl_int64_t opt_nthreads = 1;
 
                 /* Initialize global context data */
                 aocl_fla_init();
                 d__1 = -(*tau);
 
+                fla_dlarf_left_tuning_params(lastv, lastc, &use_blocked, &opt_nthreads);
+
+                /* The fused SIMD kernel is single threaded, so it is only used when no
+                   threading is selected, and against the blocked path, which is itself
+                   fused per column, only while C is small enough to stay inside L3 */
+                FLA_Bool use_fused_simd
+                    = (opt_nthreads == 1)
+                      && (!use_blocked || lastv * lastc <= FLA_DLARF1_L_FUSED_SIMD_THRESH);
+
                 /* If the size of the matrix is small and incv =1, use the optimized path */
-                if(min_lastc_lastv && *incv == c__1 && FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))
+                if(use_fused_simd && *incv == c__1 && FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))
                 {
                     /* Call optimized routine */
                     fla_dlarf1l_small_incv1_simd(lastv - firstv + 1, lastc, &c__[firstv + c_dim1],
@@ -315,10 +322,6 @@ void aocl_lapack_dlarf1l(char *side, aocl_int64_t *m, aocl_int64_t *n, doublerea
                 else
                 {
 
-                    FLA_Bool use_blocked = 0;
-                    aocl_int64_t opt_nthreads = 1;
-
-                    fla_dlarf_left_tuning_params(lastv, lastc, &use_blocked, &opt_nthreads);
                     const aocl_int64_t lastv_eff = lastv - firstv;
 
                     /* If use_blocked is 1, process in blocks */
@@ -373,15 +376,24 @@ void aocl_lapack_dlarf1l(char *side, aocl_int64_t *m, aocl_int64_t *n, doublerea
                                         &c__[firstv + c_dim1], ldc, &v[istart], incv, &c_b5,
                                         &work[1], &c__1);
 #endif
+                        /* v(lastv) = 1, so row lastv of C contributes directly to w and is */
+                        /* updated directly from w. Both passes over the (strided) last row */
+                        /* of C are fused into a single loop.                               */
                         /* w(1:lastc,1) += C(lastv,1:lastc)**T * v(lastv,1) = C(lastv,1:lastc)**T */
-                        aocl_blas_daxpy(&lastc, &c_b4, &c__[lastv + c_dim1], ldc, &work[1], &c__1);
+                        /* C(lastv,1:lastc) := C(...) - tau * w(1:lastc,1)**T                    */
+                        {
+                            doublereal *crow = &c__[lastv + c_dim1];
+                            for(i__ = 0; i__ < lastc; ++i__)
+                            {
+                                doublereal wj = work[i__ + 1] + crow[i__ * *ldc];
+                                work[i__ + 1] = wj;
+                                crow[i__ * *ldc] += d__1 * wj;
+                            }
+                        }
                         /* C(firstv:lastv-1,1:lastc) := C(...) - tau * v(firstv:lastv-1,1) *
                          * w(1:lastc,1)**T */
                         aocl_blas_dger(&lastv_eff, &lastc, &d__1, &v[istart], incv, &work[1], &c__1,
                                        &c__[firstv + c_dim1], ldc);
-                        /* C(lastv,1:lastc) := C(...) - tau * v(lastv,1) * w(1:lastc,1)**T */
-                        /* = C(...) - tau * w(1:lastc,1)**T (since v(lastv)=1) */
-                        aocl_blas_daxpy(&lastc, &d__1, &work[1], &c__1, &c__[lastv + c_dim1], ldc);
                     }
                 }
 #endif
@@ -428,13 +440,28 @@ void aocl_lapack_dlarf1l(char *side, aocl_int64_t *m, aocl_int64_t *n, doublerea
                 aocl_int64_t opt_nthreads = 1;
                 aocl_int64_t nb = 0;
 
+                /* Initialize global context data */
+                aocl_fla_init();
+                d__1 = -(*tau);
+
                 fla_dlarf_right_tuning_params(lastc, lastv, &nb, &opt_nthreads);
 
                 const aocl_int64_t lastv_eff = lastv - firstv;
-                d__1 = -(*tau);
 
+                /* For small sizes the fused SIMD kernel is faster than GEMV + GER,
+                   whose call overhead dominates at these sizes */
+                if(opt_nthreads == 1 && *incv == c__1
+                   && (*ldc & FLA_DLARF1_R_SIMD_LDC_ALIAS_MASK) != 0
+                   && lastv_eff <= FLA_DLARF1_R_SIMD_COLS_THRESH
+                   && lastc * lastv_eff <= FLA_DLARF1_R_SIMD_THRESH
+                   && FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))
+                {
+                    fla_dlarf1_small_right_incv1_simd(lastc, lastv_eff, &c__[(c_dim1 * firstv) + 1],
+                                                      *ldc, &v[istart], &c__[(c_dim1 * lastv) + 1],
+                                                      d__1, &work[1]);
+                }
                 /* If nb is non zero, process in blocks */
-                if(nb && opt_nthreads > 1)
+                else if(nb && opt_nthreads > 1)
                 {
                     /* The first panel will process starting unaligned elements
                      * to ensure that all other panels aligned memory addresses
@@ -461,26 +488,23 @@ void aocl_lapack_dlarf1l(char *side, aocl_int64_t *m, aocl_int64_t *n, doublerea
                         aocl_blas_dgemv("No transpose", &current_block_size, &lastv_eff, &c_b4,
                                         &c__[(c_dim1 * firstv) + cur_idx], ldc, &v[istart], incv,
                                         &c_b5, &work[cur_idx], &c__1);
-                        /* W(1:lastc,1) += C(1:lastc,lastv) * v(lastv,1) = C(1:lastc,lastv) */
-                        aocl_blas_daxpy(&current_block_size, &c_b4,
-                                        &c__[(c_dim1 * lastv) + cur_idx], &c__1, &work[cur_idx],
-                                        &c__1);
+                        /* v(lastv) = 1, so column lastv of C contributes directly to w and */
+                        /* is updated directly from w. Both passes over that column of C    */
+                        /* are fused into a single kernel call.                             */
+                        fla_dlarf1_right_update_c1_simd(current_block_size,
+                                                        &c__[(c_dim1 * lastv) + cur_idx], d__1,
+                                                        &work[cur_idx]);
                         /* C(1:lastc,firstv:lastv-1) := C(...) - tau * w(1:lastc,1) *
                          * v(firstv:lastv-1,1)**T */
                         aocl_blas_dger(&current_block_size, &lastv_eff, &d__1, &work[cur_idx],
                                        &c__1, &v[istart], incv, &c__[(c_dim1 * firstv) + cur_idx],
                                        ldc);
-                        /* C(1:lastc,lastv) := C(...) - tau * w(1:lastc,1) * v(lastv,1) =
-                         * C(1:lastc,lastv) - tau * w(1:lastc,1) */
-                        aocl_blas_daxpy(&current_block_size, &d__1, &work[cur_idx], &c__1,
-                                        &c__[(c_dim1 * lastv) + cur_idx], &c__1);
                     }
                 }
                 else
                 {
                     /* w(1:lastc,1) += C(1:lastc,firstv:lastv-1) * v(firstv:lastv-1,1) */
 #if FLA_ENABLE_AOCL_BLAS && defined(BLIS_KERNELS_ZEN4)
-                    aocl_fla_init();
                     if(FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX512) && *incv > 0)
                     {
                         bli_dgemv_n_zen4_int_40x2_st(BLIS_NO_TRANSPOSE, BLIS_NO_CONJUGATE, lastc,
@@ -499,18 +523,18 @@ void aocl_lapack_dlarf1l(char *side, aocl_int64_t *m, aocl_int64_t *n, doublerea
                                     &c__[(c_dim1 * firstv) + 1], ldc, &v[istart], incv, &c_b5,
                                     &work[1], &c__1);
 #endif
+                    /* v(lastv) = 1, so column lastv of C contributes directly to w and */
+                    /* is updated directly from w. Both passes over that column of C    */
+                    /* are fused into a single kernel call.                             */
                     /* w(1:lastc,1) += C(1:lastc,lastv) * v(lastv,1) = C(1:lastc,lastv) */
-                    aocl_blas_daxpy(&lastc, &c_b4, &c__[(c_dim1 * lastv) + 1], &c__1, &work[1],
-                                    &c__1);
+                    /* C(1:lastc,lastv) = C(1:lastc,lastv) - tau * w(1:lastc,1)         */
+                    fla_dlarf1_right_update_c1_simd(lastc, &c__[(c_dim1 * lastv) + 1], d__1,
+                                                    &work[1]);
 
                     /* C(1:lastc,firstv:lastv-1) := C(...) - w(1:lastc,1) * v(firstv:lastv-1,1)**T
                      */
                     aocl_blas_dger(&lastc, &lastv_eff, &d__1, &work[1], &c__1, &v[istart], incv,
                                    &c__[(c_dim1 * firstv) + 1], ldc);
-
-                    /* C(1:lastc,lastv) = C(1:lastc,lastv) - tau * w(1:lastc,1) */
-                    aocl_blas_daxpy(&lastc, &d__1, &work[1], &c__1, &c__[(c_dim1 * lastv) + 1],
-                                    &c__1);
                 }
 #endif
             }

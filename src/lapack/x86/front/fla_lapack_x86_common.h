@@ -100,6 +100,11 @@ void fla_dlarf1l_small_incv1_simd(aocl_int64_t m, aocl_int64_t n, doublereal *a_
                                   doublereal *work);
 void fla_dlasr_left_pivotv_simd(logical forward, aocl_int64_t m, aocl_int64_t n, doublereal *c__,
                                 doublereal *s, doublereal *a, aocl_int64_t a_dim1);
+void fla_dlarf1_small_right_incv1_simd(aocl_int64_t m, aocl_int64_t n, doublereal *a_buff,
+                                       aocl_int64_t ldr, doublereal *v, doublereal *c1,
+                                       doublereal ntau, doublereal *work);
+void fla_dlarf1_right_update_c1_simd(aocl_int64_t m, doublereal *c1, doublereal ntau,
+                                     doublereal *work);
 #endif
 
 #endif /* FLA_LAPACK_X86_COMMON_H */

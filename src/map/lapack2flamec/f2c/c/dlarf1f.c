@@ -342,17 +342,24 @@ void aocl_lapack_dlarf1f(char *side, aocl_int64_t *m, aocl_int64_t *n, doublerea
             aocl_blas_dger(&i__1, &lastc, &d__1, &v[istart], incv, &work[1], &c__1,
                            &c__[c_dim1 + 2], ldc);
 #else
-            /* Get threshold sizes to take optimized path*/
-            FLA_Bool min_lastc_lastv = (lastc <= FLA_DGEMV_DGER_SIMD_SMALL_THRESH)
-                                       && (lastv >= FLA_DGEMV_DGER_SIMD_SMALL_THRESH_M
-                                           && lastv <= FLA_DGEMV_DGER_SIMD_SMALL_THRESH);
+            FLA_Bool use_blocked = 0;
+            aocl_int64_t opt_nthreads = 1;
 
             /* Initialize global context data */
             aocl_fla_init();
             d__1 = -(*tau);
 
+            fla_dlarf_left_tuning_params(lastv, lastc, &use_blocked, &opt_nthreads);
+
+            /* The fused SIMD kernel is single threaded, so it is only used when no
+               threading is selected, and against the blocked path, which is itself
+               fused per column, only while C is small enough to stay inside L3 */
+            FLA_Bool use_fused_simd
+                = (opt_nthreads == 1)
+                  && (!use_blocked || lastv * lastc <= FLA_DLARF1_L_FUSED_SIMD_THRESH);
+
             /* If the size of the matrix is small and incv =1, use the optimized path */
-            if(min_lastc_lastv && *incv == c__1 && FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))
+            if(use_fused_simd && *incv == c__1 && FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))
             {
                 /* Call optimized routine */
                 fla_dlarf1f_small_incv1_simd(lastv, lastc, &c__[c_offset], *ldc, &v[1], d__1,
@@ -361,11 +368,7 @@ void aocl_lapack_dlarf1f(char *side, aocl_int64_t *m, aocl_int64_t *n, doublerea
             else
             {
 
-                FLA_Bool use_blocked = 0;
-                aocl_int64_t opt_nthreads = 1;
-
-                fla_dlarf_left_tuning_params(lastv, lastc, &use_blocked, &opt_nthreads);
-                const aocl_int64_t lastv_m1 = lastv - 1;
+                const aocl_int64_t lastv_eff = lastv - 1;
 
                 /* If use_blocked is 1, process in blocks */
                 if(use_blocked)
@@ -379,12 +382,12 @@ void aocl_lapack_dlarf1f(char *side, aocl_int64_t *m, aocl_int64_t *n, doublerea
                     {
                         /* W(i) =  C(1:lastv,i)**T * v(1:lastv,1)  */
                         work[i__] = c__[i__ * *ldc + 1];
-                        work[i__] += aocl_blas_ddot(&lastv_m1, &v[istart], incv,
+                        work[i__] += aocl_blas_ddot(&lastv_eff, &v[istart], incv,
                                                     &c__[i__ * *ldc + 2], &c__1);
                         /* C(1:lastv,i) = C(1:lastv,i) - v(1:lastv,1) * -tau * W(i) */
                         doublereal d__2 = d__1 * work[i__];
                         c__[i__ * *ldc + 1] += d__2;
-                        aocl_blas_daxpy(&lastv_m1, &d__2, &v[istart], incv, &c__[i__ * *ldc + 2],
+                        aocl_blas_daxpy(&lastv_eff, &d__2, &v[istart], incv, &c__[i__ * *ldc + 2],
                                         &c__1);
                     }
                 }
@@ -396,7 +399,7 @@ void aocl_lapack_dlarf1f(char *side, aocl_int64_t *m, aocl_int64_t *n, doublerea
                     if(FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX512) && *incv > 0)
                     {
                         /* Use direct single threaded BLIS kernel */
-                        bli_dgemv_t_zen4_int(BLIS_CONJUGATE, BLIS_NO_CONJUGATE, lastv_m1, lastc,
+                        bli_dgemv_t_zen4_int(BLIS_CONJUGATE, BLIS_NO_CONJUGATE, lastv_eff, lastc,
                                              &c_b4, &c__[c_offset + 1], 1, *ldc, &v[istart], *incv,
                                              &c_b5, &work[1], c__1, NULL);
                     }
@@ -406,23 +409,32 @@ void aocl_lapack_dlarf1f(char *side, aocl_int64_t *m, aocl_int64_t *n, doublerea
 #pragma omp teams num_teams(1) thread_limit(1)
 #endif
                         {
-                            aocl_blas_dgemv("Transpose", &lastv_m1, &lastc, &c_b4,
+                            aocl_blas_dgemv("Transpose", &lastv_eff, &lastc, &c_b4,
                                             &c__[c_offset + 1], ldc, &v[istart], incv, &c_b5,
                                             &work[1], &c__1);
                         }
                     }
 #else
-                    aocl_blas_dgemv("Transpose", &lastv_m1, &lastc, &c_b4, &c__[c_offset + 1], ldc,
+                    aocl_blas_dgemv("Transpose", &lastv_eff, &lastc, &c_b4, &c__[c_offset + 1], ldc,
                                     &v[istart], incv, &c_b5, &work[1], &c__1);
 #endif
+                    /* v(1) = 1, so row 1 of C contributes directly to w and is  */
+                    /* updated directly from w. Both passes over the (strided)   */
+                    /* first row of C are fused into a single loop.              */
                     /* w(1:lastc,1) += C(1,1:lastc)**T * v(1,1) = C(1,1:lastc)**T */
-                    aocl_blas_daxpy(&lastc, &c_b4, &c__[c_offset], ldc, &work[1], &c__1);
-                    /* C(1:lastv,1:lastc) := C(...) - tau * v(1:lastv,1) * w(1:lastc,1)**T */
-                    /* C(1, 1:lastc) := C(...) - tau * v(1,1) * w(1:lastc,1)**T */
-                    /* = C(...) - tau * w(1:lastc,1)**T */
-                    aocl_blas_daxpy(&lastc, &d__1, &work[1], &c__1, &c__[c_offset], ldc);
+                    /* C(1,1:lastc)  := C(...) - tau * v(1,1) * w(1:lastc,1)**T   */
+                    /*               =  C(...) - tau * w(1:lastc,1)**T            */
+                    {
+                        doublereal *crow = &c__[c_offset];
+                        for(i__ = 0; i__ < lastc; ++i__)
+                        {
+                            doublereal wj = work[i__ + 1] + crow[i__ * *ldc];
+                            work[i__ + 1] = wj;
+                            crow[i__ * *ldc] += d__1 * wj;
+                        }
+                    }
                     /* C(2:lastv,1:lastc) := C(...) - tau * v(2:lastv,1)*w(1:last */
-                    aocl_blas_dger(&lastv_m1, &lastc, &d__1, &v[istart], incv, &work[1], &c__1,
+                    aocl_blas_dger(&lastv_eff, &lastc, &d__1, &v[istart], incv, &work[1], &c__1,
                                    &c__[c_offset + 1], ldc);
                 }
             }
@@ -468,13 +480,26 @@ void aocl_lapack_dlarf1f(char *side, aocl_int64_t *m, aocl_int64_t *n, doublerea
             aocl_int64_t opt_nthreads = 1;
             aocl_int64_t nb = 0;
 
-            fla_dlarf_right_tuning_params(lastc, lastv, &nb, &opt_nthreads);
-
-            const aocl_int64_t lastv_m1 = lastv - 1;
+            /* Initialize global context data */
+            aocl_fla_init();
             d__1 = -(*tau);
 
+            fla_dlarf_right_tuning_params(lastc, lastv, &nb, &opt_nthreads);
+
+            const aocl_int64_t lastv_eff = lastv - 1;
+
+            /* For small sizes the fused SIMD kernel is faster than GEMV + GER,
+               whose call overhead dominates at these sizes */
+            if(opt_nthreads == 1 && *incv == c__1 && (*ldc & FLA_DLARF1_R_SIMD_LDC_ALIAS_MASK) != 0
+               && lastv_eff <= FLA_DLARF1_R_SIMD_COLS_THRESH
+               && lastc * lastv_eff <= FLA_DLARF1_R_SIMD_THRESH
+               && FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))
+            {
+                fla_dlarf1_small_right_incv1_simd(lastc, lastv_eff, &c__[(c_dim1 << 1) + 1], *ldc,
+                                                  &v[istart], &c__[c_offset], d__1, &work[1]);
+            }
             /* If nb is non zero, process in blocks */
-            if(nb && opt_nthreads > 1)
+            else if(nb && opt_nthreads > 1)
             {
                 /* The first panel will process starting unaligned elements
                  * to ensure that all other panels aligned memory addresses
@@ -496,53 +521,50 @@ void aocl_lapack_dlarf1f(char *side, aocl_int64_t *m, aocl_int64_t *n, doublerea
                         = i__ == 1 ? first_thread_rows : fla_min(nb, lastc - completed_rows);
                     aocl_int64_t cur_idx = completed_rows + 1;
 
-                    /* W(1:lastc,1) = C(1:lastc,1) */
-                    memcpy(&work[cur_idx], &c__[c_dim1 + cur_idx],
-                           current_block_size * sizeof(doublereal));
-
-                    /* w(1:lastc,1) += C(1:lastc,2:lastv) * v(2:lastv,1) */
-                    aocl_blas_dgemv("No transpose", &current_block_size, &lastv_m1, &c_b4,
-                                    &c__[(c_dim1 << 1) + cur_idx], ldc, &v[istart], incv, &c_b4,
+                    /* w(1:lastc,1) := C(1:lastc,2:lastv) * v(2:lastv,1) */
+                    aocl_blas_dgemv("No transpose", &current_block_size, &lastv_eff, &c_b4,
+                                    &c__[(c_dim1 << 1) + cur_idx], ldc, &v[istart], incv, &c_b5,
                                     &work[cur_idx], &c__1);
-                    /* C(1:lastc,1) := C(...) - tau * w(1:lastc,1) * v(1,1)
-                       C(1:lastc,1) := C(...) - tau * w(1:lastc,1)
-                    */
-                    aocl_blas_daxpy(&current_block_size, &d__1, &work[cur_idx], &c__1,
-                                    &c__[c_dim1 + cur_idx], &c__1);
+                    /* v(1) = 1, so column 1 of C contributes directly to w and is */
+                    /* updated directly from w. Both passes over the first column  */
+                    /* of C are fused into a single kernel call.                   */
+                    fla_dlarf1_right_update_c1_simd(current_block_size, &c__[c_dim1 + cur_idx],
+                                                    d__1, &work[cur_idx]);
                     /* C(1:lastc,2:lastv) := C(...) - tau * w(1:lastc,1) * v(2:lastv,1)**T */
-                    aocl_blas_dger(&current_block_size, &lastv_m1, &d__1, &work[cur_idx], &c__1,
+                    aocl_blas_dger(&current_block_size, &lastv_eff, &d__1, &work[cur_idx], &c__1,
                                    &v[istart], incv, &c__[(c_dim1 << 1) + cur_idx], ldc);
                 }
             }
             else
             {
-                /* W(1:lastc,1) = C(1:lastc,1) */
-                memcpy(&work[1], &c__[c_offset], lastc * sizeof(doublereal));
-                /* w(1:lastc,1) := C(1:lastc,1:lastv) * v(1:lastv,1) */
+                /* w(1:lastc,1) := C(1:lastc,2:lastv) * v(2:lastv,1) */
 #if FLA_ENABLE_AOCL_BLAS && defined(BLIS_KERNELS_ZEN4)
-                aocl_fla_init();
                 if(FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX512) && *incv > 0)
                 {
                     bli_dgemv_n_zen4_int_40x2_st(BLIS_NO_TRANSPOSE, BLIS_NO_CONJUGATE, lastc,
-                                                 lastv_m1, &c_b4, &c__[(c_dim1 << 1) + 1], c__1,
-                                                 c_dim1, &v[istart], *incv, &c_b4, &work[1], c__1,
+                                                 lastv_eff, &c_b4, &c__[(c_dim1 << 1) + 1], c__1,
+                                                 c_dim1, &v[istart], *incv, &c_b5, &work[1], c__1,
                                                  NULL);
                 }
                 else
                 {
-                    aocl_blas_dgemv("No transpose", &lastc, &lastv_m1, &c_b4,
-                                    &c__[(c_dim1 << 1) + 1], ldc, &v[istart], incv, &c_b4, &work[1],
+                    aocl_blas_dgemv("No transpose", &lastc, &lastv_eff, &c_b4,
+                                    &c__[(c_dim1 << 1) + 1], ldc, &v[istart], incv, &c_b5, &work[1],
                                     &c__1);
                 }
 #else
-                aocl_blas_dgemv("No transpose", &lastc, &lastv_m1, &c_b4, &c__[(c_dim1 << 1) + 1],
-                                ldc, &v[istart], incv, &c_b4, &work[1], &c__1);
+                aocl_blas_dgemv("No transpose", &lastc, &lastv_eff, &c_b4, &c__[(c_dim1 << 1) + 1],
+                                ldc, &v[istart], incv, &c_b5, &work[1], &c__1);
 #endif
-                /* C(1:lastc,1) = C(1:lastc,1) - tau * w(1:lastc,1) */
-                aocl_blas_daxpy(&lastc, &d__1, &work[1], &c__1, &c__[c_offset], &c__1);
+                /* v(1) = 1, so column 1 of C contributes directly to w and is */
+                /* updated directly from w. Both passes over the first column  */
+                /* of C are fused into a single kernel call.                   */
+                /* w(1:lastc,1) += C(1:lastc,1) * v(1,1) = C(1:lastc,1)        */
+                /* C(1:lastc,1)  = C(1:lastc,1) - tau * w(1:lastc,1) * v(1,1)  */
+                fla_dlarf1_right_update_c1_simd(lastc, &c__[c_offset], d__1, &work[1]);
 
                 /* C(1:lastc,2:lastv) := C(...) - w(1:lastc,1) * v(2:lastv,1)**T */
-                aocl_blas_dger(&lastc, &lastv_m1, &d__1, &work[1], &c__1, &v[istart], incv,
+                aocl_blas_dger(&lastc, &lastv_eff, &d__1, &work[1], &c__1, &v[istart], incv,
                                &c__[(c_dim1 << 1) + 1], ldc);
             }
 #endif
