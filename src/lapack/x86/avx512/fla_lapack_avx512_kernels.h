@@ -18,6 +18,8 @@ int fla_zrot_avx512(aocl_int64_t *n, dcomplex *dx, aocl_int64_t *incx, dcomplex 
                     aocl_int64_t *incy, doublereal *c__, dcomplex *s);
 int fla_dhrot3_avx512(aocl_int64_t *n, doublereal *a, aocl_int64_t *lda, doublereal *v,
                       doublereal *tau);
+int fla_cgetrf_small_avx512(aocl_int64_t* m, aocl_int64_t* n, scomplex* a, aocl_int64_t* lda, aocl_int_t* ipiv,
+                            aocl_int64_t* info);
 int fla_zgetrf_small_avx512(aocl_int64_t *m, aocl_int64_t *n, dcomplex *a, aocl_int64_t *lda,
                             aocl_int_t *ipiv, aocl_int64_t *info);
 aocl_int64_t fla_dgetrf_small_avx512(aocl_int64_t *m, aocl_int64_t *n, doublereal *a,

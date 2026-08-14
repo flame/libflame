@@ -298,6 +298,9 @@
 
 #define FLA_ZGETRF_SMALL_THRESH      (100)
 
+#define FLA_CGETRF_SMALL_THRESH0 (10)
+#define FLA_CGETRF_SMALL_THRESH (100)
+
 #define FLA_SSYTD2_SMALL_THRESH      (256)
 // GETRFNPI , these thresholds are used to chose between 3 algorithms to get best
 // results in terms of perfmormance

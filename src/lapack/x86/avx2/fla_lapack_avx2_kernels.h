@@ -48,6 +48,8 @@ int fla_dgetrs_small_trsm_ll_avx2(char *trans, aocl_int64_t *n, aocl_int64_t *nr
                                   aocl_int64_t *ldb, aocl_int64_t *info);
 int fla_zgetrf_small_avx2(aocl_int64_t *m, aocl_int64_t *n, dcomplex *a, aocl_int64_t *lda,
                           aocl_int_t *ipiv, aocl_int64_t *info);
+int fla_cgetrf_small_avx2(aocl_int64_t *m, aocl_int64_t *n, scomplex *a, aocl_int64_t *lda, aocl_int_t *ipiv,
+                          aocl_int64_t *info);
 int fla_dgeqrf_small_avx2(aocl_int64_t *m, aocl_int64_t *n, doublereal *a, aocl_int64_t *lda,
                           doublereal *tau, doublereal *work);
 int fla_sgeqrf_small_avx2(aocl_int64_t *m, aocl_int64_t *n, real *a, aocl_int64_t *lda, real *tau,

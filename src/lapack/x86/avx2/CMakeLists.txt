@@ -16,6 +16,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/fla_drot_avx2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_dscal_ix1_avx2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_sger_avx2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_sscal_ix1_avx2.c
+${CMAKE_CURRENT_SOURCE_DIR}/fla_cgetrf_small_avx2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_zgetrf_avx2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_zrot_avx2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_zscal_ix1_avx2.c

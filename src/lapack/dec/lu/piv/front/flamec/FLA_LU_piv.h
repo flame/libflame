@@ -9,7 +9,7 @@
 */
 
 /*
-    Modifications Copyright (c) 2021-2025 Advanced Micro Devices, Inc.  All rights reserved.
+    Modifications Copyright (c) 2021-2026 Advanced Micro Devices, Inc.  All rights reserved.
 */
 
 #include "FLA_LU_piv_vars.h"
@@ -26,6 +26,10 @@ fla_dim_t   FLA_LU_piv_small_d_var1( fla_dim_t *m, fla_dim_t *n, doublereal *a, 
                                    aocl_int_t *ipiv, fla_dim_t *info );
 fla_dim_t   FLA_LU_piv_small_d_var2( fla_dim_t *m, fla_dim_t *n, doublereal *a, fla_dim_t *lda,
                                    aocl_int_t *ipiv, fla_dim_t *info );
+fla_dim_t   FLA_LU_piv_c_var0(fla_dim_t* m, fla_dim_t* n, scomplex* a, fla_dim_t* lda, 
+                                   aocl_int_t* ipiv, fla_dim_t* info);
+fla_dim_t   FLA_LU_piv_c_parallel( fla_dim_t* m, fla_dim_t* n, scomplex* a, fla_dim_t* lda, 
+                                   aocl_int_t* ipiv, fla_dim_t* info);
 int   FLA_LU_piv_small_z_var0( fla_dim_t *m, fla_dim_t *n, dcomplex *a, fla_dim_t *lda,
                                    aocl_int_t *ipiv, fla_dim_t *info);
 int   FLA_LU_piv_z_var0(fla_dim_t *m, fla_dim_t *n, dcomplex *a, fla_dim_t *lda, aocl_int_t *ipiv, fla_dim_t *info);

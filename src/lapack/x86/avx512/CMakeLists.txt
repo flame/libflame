@@ -5,6 +5,7 @@ add_library(FLA_LAPACK_AVX512
      ${CMAKE_CURRENT_SOURCE_DIR}/fla_lapack_avx512_kernels.h
      ${CMAKE_CURRENT_SOURCE_DIR}/fla_dgetrf_small_avx512.c
      ${CMAKE_CURRENT_SOURCE_DIR}/fla_sgetrf_small_avx512.c
+     ${CMAKE_CURRENT_SOURCE_DIR}/fla_cgetrf_small_avx512.c
      ${CMAKE_CURRENT_SOURCE_DIR}/fla_zgetrf_small_avx512.c
      ${CMAKE_CURRENT_SOURCE_DIR}/fla_dscal_ix1_avx512.c
      ${CMAKE_CURRENT_SOURCE_DIR}/fla_lange_kernels_avx512.c

@@ -9,7 +9,7 @@
 */
 
 /*
-    Modifications Copyright (c) 2021-2025 Advanced Micro Devices, Inc.  All rights reserved.
+    Modifications Copyright (c) 2021-2026 Advanced Micro Devices, Inc.  All rights reserved.
 */
 
 #include "FLAME.h"
@@ -23,6 +23,7 @@
 #include "fla_lapack_avx512_kernels.h"
 #include "fla_lapack_lu_small_kernels_d.h"
 #include "fla_lapack_lu_small_kernels_s.h"
+#include "fla_lapack_lu_small_kernels_c.h"
 #include "fla_lapack_x86_common.h"
 
 /*
@@ -245,15 +246,45 @@ void zgetf2_(aocl_int_t *m, aocl_int_t *n, dcomplex *buff_A, aocl_int_t *ldim_A,
         FLA_LU_piv_z_parallel(m, n, buff_A, ldim_A, buff_p, info);     \
     }
 
+#define LAPACK_getrf_body_c(prefix)                                                         \
+    aocl_int64_t i = 0;                                                                          \
+    if(*m == 1 && *n == 1)                                                                  \
+    {                                                                                       \
+        FLA_LU_PIV_SMALL_C_1x1(i, *n, buff_A, ldim_A, buff_p, *info);                       \
+    }                                                                                       \
+    else if(*m == 2 && *n == 2)                                                             \
+    {                                                                                       \
+        FLA_LU_PIV_SMALL_C_2x2(i, *n, buff_A, ldim_A, buff_p, *info);                        \
+    }                                                                                       \
+    else if(*m == 3 && *n == 3)                                                             \
+    {                                                                                       \
+        FLA_LU_PIV_SMALL_C_3x3(i, *n, buff_A, ldim_A, buff_p, *info);                        \
+    }                                                                                       \
+    else if(*m == 4 && *n == 4)                                                             \
+    {                                                                                       \
+        FLA_LU_PIV_SMALL_C_4x4(i, *n, buff_A, ldim_A, buff_p, *info);                        \
+    }                                                                                       \
+    else if((*m <= FLA_CGETRF_SMALL_THRESH && *n <= FLA_CGETRF_SMALL_THRESH) || *m <= FLA_CGETRF_SMALL_THRESH0 \
+|| *n <= FLA_CGETRF_SMALL_THRESH0)                  \
+    {                                                                                       \
+        FLA_LU_piv_c_var0(m, n, buff_A, ldim_A, buff_p, info);                              \
+    }                                                                                       \
+    else                                                                                    \
+    {                                                                                       \
+        FLA_LU_piv_c_parallel(m, n, buff_A, ldim_A, buff_p, info);                          \
+    }
+
 #else
 
 #define LAPACK_getrf_body_z(prefix) FLA_LU_piv_z_var0(m, n, buff_A, ldim_A, buff_p, info);
+
+#define LAPACK_getrf_body_c(prefix) FLA_LU_piv_c_var0(m, n, buff_A, ldim_A, buff_p, info);
 
 #endif
 
 #define LAPACK_getrf_body_s(prefix)                                                         \
     extern fla_context fla_global_context;                                                  \
-    integer i = 0;                                                                          \
+    aocl_int64_t i = 0;                                                                          \
     if(*m == 2 && *n == 2)                                                                  \
     {                                                                                       \
         FLA_LU_PIV_SMALL_S_2x2(i, *n, buff_A, ldim_A, buff_p, *info);                       \
@@ -303,6 +334,8 @@ void zgetf2_(aocl_int_t *m, aocl_int_t *n, dcomplex *buff_A, aocl_int_t *ldim_A,
 #else /* FLA_ENABLE_AMD_OPT */
 
 #define LAPACK_getrf_body_z LAPACK_getrf_body
+
+#define LAPACK_getrf_body_c LAPACK_getrf_body
 
 #define LAPACK_getrf_body_s LAPACK_getrf_body
 
@@ -440,6 +473,7 @@ void zgetf2_(aocl_int_t *m, aocl_int_t *n, dcomplex *buff_A, aocl_int_t *ldim_A,
 
 #define LAPACK_getrf_body_s LAPACK_getrf_body
 #define LAPACK_getrf_body_d LAPACK_getrf_body
+#define LAPACK_getrf_body_c LAPACK_getrf_body
 #define LAPACK_getrf_body_z LAPACK_getrf_body
 
 // Note that p should be set zero.
@@ -549,10 +583,19 @@ LAPACK_getrf(c)
     }
     if(fla_error == LAPACK_SUCCESS)
     {
-        LAPACK_getrf_body(c)
-            /** fla_error set to 0 on LAPACK_SUCCESS */
-            fla_error
-            = 0;
+        extern fla_context fla_global_context;
+        aocl_fla_init();
+        if(FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))
+        {
+            LAPACK_getrf_body_c(c)
+        }
+        else
+        {
+            LAPACK_getrf_body(c)
+        }
+
+        /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
 
     AOCL_DTL_TRACE_LOG_EXIT

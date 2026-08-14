@@ -307,6 +307,27 @@ int fla_dgetrf_small_simd(aocl_int64_t *m, aocl_int64_t *n, doublereal *a, aocl_
     return 0;
 }
 
+/* Single Complex LU for small sizes,
+ * Optimized for AVX2 and AVX512 ISAs
+ */
+int fla_cgetrf_small_simd(aocl_int64_t *m, aocl_int64_t *n, scomplex *a, aocl_int64_t *lda, aocl_int_t *ipiv,
+                          aocl_int64_t *info)
+{
+    if(FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX512))
+    {
+        fla_cgetrf_small_avx512(m, n, a, lda, ipiv, info);
+    }
+    else if(FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))
+    {
+        fla_cgetrf_small_avx2(m, n, a, lda, ipiv, info);
+    }
+    else
+    {
+        lapack_cgetf2(m, n, a, lda, ipiv, info);
+    }
+    return 0;
+}
+
 /* Double Complex LU for small sizes,
  * Optimized for AVX2 and AVX512 ISAs
  */

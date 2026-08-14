@@ -38,6 +38,8 @@ void fla_dscal(aocl_int64_t *n, doublereal *alpha, doublereal *x, aocl_int64_t *
 void fla_sscal(aocl_int64_t *n, real *alpha, real *x, aocl_int64_t *incx);
 void fla_sger(aocl_int64_t *m, aocl_int64_t *n, real *alpha, real *x, aocl_int64_t *incx, real *y,
               aocl_int64_t *incy, real *a, aocl_int64_t *lda);
+int fla_cgetrf_small_simd(aocl_int64_t *m, aocl_int64_t *n, scomplex *a, aocl_int64_t *lda, aocl_int_t *ipiv,
+                          aocl_int64_t *info);
 int fla_zgetrf_small_simd(aocl_int64_t *m, aocl_int64_t *n, dcomplex *a, aocl_int64_t *lda,
                           aocl_int_t *ipiv, aocl_int64_t *info);
 void fla_dgesvd_small6(aocl_int64_t wntus, aocl_int64_t wntvs, aocl_int64_t *m, aocl_int64_t *n,
