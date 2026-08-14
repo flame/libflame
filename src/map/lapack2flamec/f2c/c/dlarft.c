@@ -242,7 +242,7 @@ void aocl_lapack_dlarft(char *direct, char *storev, aocl_int64_t *n, aocl_int64_
 #ifdef FLA_ENABLE_AMD_OPT
     aocl_fla_init();
 #endif
-    if(lsame_(direct, "F", 1, 1))
+    if(((*direct == 'F') || (*direct == 'f')))
     {
         prevlastv = *n;
         i__1 = *k;
@@ -261,7 +261,7 @@ void aocl_lapack_dlarft(char *direct, char *storev, aocl_int64_t *n, aocl_int64_
             else
             {
                 /* general case */
-                if(lsame_(storev, "C", 1, 1))
+                if(((*storev == 'C') || (*storev == 'c')))
                 {
                     /* Skip any trailing zeros. */
                     i__2 = i__ + 1;
@@ -370,7 +370,7 @@ void aocl_lapack_dlarft(char *direct, char *storev, aocl_int64_t *n, aocl_int64_
                 /* general case */
                 if(i__ < *k)
                 {
-                    if(lsame_(storev, "C", 1, 1))
+                    if(((*storev == 'C') || (*storev == 'c')))
                     {
                         /* Skip any leading zeros. */
                         i__1 = i__ - 1;

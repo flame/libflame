@@ -9,10 +9,137 @@
  /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLAME.h"
 #include "FLA_f2c.h" /* Table of constant values */
+#if FLA_ENABLE_AOCL_BLAS
+#include <blis.h>
+#endif
 static aocl_int64_t c__1 = 1;
 static aocl_int64_t c_n1 = -1;
 static aocl_int64_t c__3 = 3;
 static aocl_int64_t c__2 = 2;
+
+#ifdef FLA_ENABLE_AMD_OPT
+extern int fla_thread_get_num_threads(void);
+
+#if defined(FLA_ENABLE_MULTITHREADING) || defined(FLA_OPENMP_MULTITHREADING)
+/* Return nonzero when runtime BLIS threading is active, so DORGQR can use the
+ * multi-thread tuned path instead of the single-thread tuning. */
+static int dorgqr_use_threaded_tuning(void)
+{
+#if FLA_ENABLE_AOCL_BLAS
+    return bli_thread_get_num_threads() > 1;
+#else
+    return 0;
+#endif
+}
+#endif
+
+/* Select AOCL-tuned DORGQR block sizes for shape and thread-count ranges that
+ * benchmark better than the generic ILAENV value. */
+static aocl_int64_t dorgqr_tuned_nb(aocl_int64_t nb, aocl_int64_t m, aocl_int64_t n,
+                                    aocl_int64_t num_threads)
+{
+    if(num_threads == 1)
+    {
+        if(m == n)
+        {
+            if(n >= 100 && n <= 1000)
+            {
+                return 32;
+            }
+            else if(n <= 2000)
+            {
+                return 64;
+            }
+            else if(n <= 4000)
+            {
+                return 96;
+            }
+            else if(n <= 12000)
+            {
+                return 128;
+            }
+            else if(n <= 16000)
+            {
+                return 160;
+            }
+        }
+        else if(m >= 100 && m <= 500 && n < 100)
+        {
+            return 32;
+        }
+    }
+    else
+    {
+        if(m == n)
+        {
+            if(n > 2500 && n <= 3000)
+            {
+                return 48;
+            }
+            else if(n > 3000)
+            {
+                return 96;
+            }
+        }
+        else if(m > 4000 && m <= 4500 && n > 3500 && n <= 4000)
+        {
+            return 96;
+        }
+    }
+
+    return nb;
+}
+
+#if FLA_ENABLE_AOCL_BLAS \
+    && (defined(FLA_ENABLE_MULTITHREADING) || defined(FLA_OPENMP_MULTITHREADING))
+/* Cap BLIS threads for DORGQR shapes where using all requested threads is
+ * slower than a smaller tuned thread team. */
+static aocl_int64_t dorgqr_tuned_threads(aocl_int64_t m, aocl_int64_t n, aocl_int64_t num_threads)
+{
+    aocl_int64_t thread_cap = num_threads;
+
+    if(m == n)
+    {
+        if(n > 6000)
+        {
+            thread_cap = 24;
+        }
+        else if(n > 4000)
+        {
+            thread_cap = 8;
+        }
+        else if(n > 3200)
+        {
+            thread_cap = 2;
+        }
+        else if(n >= 3000)
+        {
+            thread_cap = 4;
+        }
+        else if(n > 1000)
+        {
+            thread_cap = 8;
+        }
+    }
+    else if(m >= 700 && m <= 1300 && n <= 200)
+    {
+        thread_cap = 1;
+    }
+    else if(n > 500 && n <= 650 && ((m >= 600 && m <= 750) || (m > 3000 && m <= 4000)))
+    {
+        thread_cap = 8;
+    }
+    else if(m > 4000 && m <= 4500 && n > 3500 && n <= 4000)
+    {
+        thread_cap = 8;
+    }
+
+    return thread_cap < num_threads ? thread_cap : num_threads;
+}
+#endif // #if FLA_ENABLE_AOCL_BLAS && (defined(FLA_ENABLE_MULTITHREADING) ||
+       // defined(FLA_OPENMP_MULTITHREADING))
+#endif // #ifdef FLA_ENABLE_AMD_OPT
+
 /* > \brief \b DORGQR */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
@@ -142,9 +269,15 @@ int lapack_dorgqr(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *k, doublereal 
     /* Local variables */
     aocl_int64_t i__, j, l, ib, nb, ki, kk, nx, iws, nbmin, iinfo;
     extern void dorg2r_fla(aocl_int64_t *, aocl_int64_t *, aocl_int64_t *, doublereal *,
-                             aocl_int64_t *, doublereal *, doublereal *, aocl_int64_t *);
+                           aocl_int64_t *, doublereal *, doublereal *, aocl_int64_t *);
     aocl_int64_t ldwork, lwkopt;
     logical lquery;
+#if defined(FLA_ENABLE_AMD_OPT)                                                   \
+    && (defined(FLA_ENABLE_MULTITHREADING) || defined(FLA_OPENMP_MULTITHREADING)) \
+    && FLA_ENABLE_AOCL_BLAS
+    aocl_int64_t orig_blis_threads = 0;
+    aocl_int64_t tuned_blis_threads = 0;
+#endif
     /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -187,6 +320,17 @@ int lapack_dorgqr(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *k, doublereal 
     else
     {
         nb = aocl_lapack_ilaenv(&c__1, "DORGQR", " ", m, n, k, &c_n1);
+#if defined(FLA_ENABLE_MULTITHREADING) || defined(FLA_OPENMP_MULTITHREADING)
+        if((*n > 64) && (*n == *k) && dorgqr_use_threaded_tuning())
+        {
+            nb = dorgqr_tuned_nb(nb, *m, *n, 2);
+        }
+#else
+        if(*n == *k)
+        {
+            nb = dorgqr_tuned_nb(nb, *m, *n, 1);
+        }
+#endif
         lwkopt = fla_max(1, *n) * nb;
         work[1] = (doublereal)lwkopt;
     }
@@ -232,6 +376,19 @@ int lapack_dorgqr(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *k, doublereal 
         work[1] = 1.;
         return 0;
     }
+#if defined(FLA_ENABLE_AMD_OPT)                                                   \
+    && (defined(FLA_ENABLE_MULTITHREADING) || defined(FLA_OPENMP_MULTITHREADING)) \
+    && FLA_ENABLE_AOCL_BLAS
+    if((*n > 64) && (*n == *k))
+    {
+        orig_blis_threads = bli_thread_get_num_threads();
+        tuned_blis_threads = dorgqr_tuned_threads(*m, *n, orig_blis_threads);
+        if(tuned_blis_threads < orig_blis_threads)
+        {
+            bli_thread_set_num_threads(tuned_blis_threads);
+        }
+    }
+#endif
     nbmin = 2;
     nx = 0;
     iws = *n;
@@ -265,15 +422,13 @@ int lapack_dorgqr(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *k, doublereal 
         /* The first kk columns are handled by the block method. */
         ki = (*k - nx - 1) / nb * nb;
         /* Computing MIN */
-        i__1 = *k;
         i__2 = ki + nb; // , expr subst
-        kk = fla_min(i__1, i__2);
+        kk = fla_min(*k, i__2);
         /* Set A(1:kk,kk+1:n) to zero. */
         i__1 = *n;
         for(j = kk + 1; j <= i__1; ++j)
         {
-            i__2 = kk;
-            for(i__ = 1; i__ <= i__2; ++i__)
+            for(i__ = 1; i__ <= kk; ++i__)
             {
                 a[i__ + j * a_dim1] = 0.;
                 /* L10: */
@@ -291,8 +446,8 @@ int lapack_dorgqr(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *k, doublereal 
         i__1 = *m - kk;
         i__2 = *n - kk;
         i__3 = *k - kk;
-        dorg2r_fla(&i__1, &i__2, &i__3, &a[kk + 1 + (kk + 1) * a_dim1], lda, &tau[kk + 1],
-                      &work[1], &iinfo);
+        dorg2r_fla(&i__1, &i__2, &i__3, &a[kk + 1 + (kk + 1) * a_dim1], lda, &tau[kk + 1], &work[1],
+                   &iinfo);
     }
     if(kk > 0)
     {
@@ -301,9 +456,8 @@ int lapack_dorgqr(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *k, doublereal 
         for(i__ = ki + 1; i__1 < 0 ? i__ >= 1 : i__ <= 1; i__ += i__1)
         {
             /* Computing MIN */
-            i__2 = nb;
             i__3 = *k - i__ + 1; // , expr subst
-            ib = fla_min(i__2, i__3);
+            ib = fla_min(nb, i__3);
             if(i__ + ib <= *n)
             {
                 /* Form the triangular factor of the block reflector */
@@ -312,7 +466,6 @@ int lapack_dorgqr(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *k, doublereal 
                 aocl_lapack_dlarft("Forward", "Columnwise", &i__2, &ib, &a[i__ + i__ * a_dim1], lda,
                                    &tau[i__], &work[1], &ldwork);
                 /* Apply H to A(i:m,i+ib:n) from the left */
-                i__2 = *m - i__ + 1;
                 i__3 = *n - i__ - ib + 1;
                 aocl_lapack_dlarfb("Left", "No transpose", "Forward", "Columnwise", &i__2, &i__3,
                                    &ib, &a[i__ + i__ * a_dim1], lda, &work[1], &ldwork,
@@ -320,8 +473,7 @@ int lapack_dorgqr(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *k, doublereal 
             }
             /* Apply H to rows i:m of current block */
             i__2 = *m - i__ + 1;
-            dorg2r_fla(&i__2, &ib, &ib, &a[i__ + i__ * a_dim1], lda, &tau[i__], &work[1],
-                          &iinfo);
+            dorg2r_fla(&i__2, &ib, &ib, &a[i__ + i__ * a_dim1], lda, &tau[i__], &work[1], &iinfo);
             /* Set rows 1:i-1 of current block to zero */
             i__2 = i__ + ib - 1;
             for(j = i__; j <= i__2; ++j)
@@ -337,6 +489,14 @@ int lapack_dorgqr(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *k, doublereal 
             /* L50: */
         }
     }
+#if defined(FLA_ENABLE_AMD_OPT)                                                   \
+    && (defined(FLA_ENABLE_MULTITHREADING) || defined(FLA_OPENMP_MULTITHREADING)) \
+    && FLA_ENABLE_AOCL_BLAS
+    if((*n == *k) && (tuned_blis_threads < orig_blis_threads))
+    {
+        bli_thread_set_num_threads(orig_blis_threads);
+    }
+#endif
     work[1] = (doublereal)iws;
     return 0;
     /* End of DORGQR */
