@@ -384,6 +384,7 @@
 
 // DGEBRD thresholds for lapack_API based code path for large sizes
 #define FLA_DGEBRD_LARGE_SIZE_THRESH    (10000)
+#define FLA_DGEBRD_SMALL_SIZE_THRESH    (160)
 
 // DGEBD2 thresholds for lapack_API based code path for small sizes
 #define FLA_DGEBD2_SMALL_SIZE_THRESH   (140)

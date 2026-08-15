@@ -332,7 +332,8 @@ int lapack_dgebrd(aocl_int64_t *m, aocl_int64_t *n, doublereal *a, aocl_int64_t 
         /* Computing MAX */
         i__1 = 1;
 #ifdef FLA_ENABLE_AMD_OPT
-        if(*m < *n || fla_thread_get_num_threads() == 1)
+        if(*m < *n || fla_thread_get_num_threads() == 1 || *m <= FLA_DGEBRD_SMALL_SIZE_THRESH
+           || *n <= FLA_DGEBRD_SMALL_SIZE_THRESH)
         {
             i__2 = 32;
         }
@@ -425,7 +426,8 @@ int lapack_dgebrd(aocl_int64_t *m, aocl_int64_t *n, doublereal *a, aocl_int64_t 
 #ifdef FLA_OPENMP_MULTITHREADING
     doublereal *gemv_a_row_buffer = NULL;
 
-    if(i__1 > 0 && *m >= *n)
+    if(i__1 > 0 && *m >= *n && *m >= FLA_DGEBRD_SMALL_SIZE_THRESH
+       && *n >= FLA_DGEBRD_SMALL_SIZE_THRESH)
     {
         dlabrd_threads = fla_get_dlabrd_threads(*m, *n, fla_thread_get_num_threads());
         /* fla_dlabrd_var1 (m >= n, OpenMP) uses scratch as: [0..nb-1], [nb..2nb-1],
@@ -444,7 +446,8 @@ int lapack_dgebrd(aocl_int64_t *m, aocl_int64_t *n, doublereal *a, aocl_int64_t 
         i__3 = *m - i__ + 1;
         i__4 = *n - i__ + 1;
 #ifdef FLA_OPENMP_MULTITHREADING
-        if(gemv_a_row_buffer != NULL)
+        if(gemv_a_row_buffer != NULL && *m > FLA_DGEBRD_SMALL_SIZE_THRESH
+           && *n > FLA_DGEBRD_SMALL_SIZE_THRESH)
         {
             fla_dlabrd_var1(&i__3, &i__4, &nb, &a[i__ + i__ * a_dim1], lda, &d__[i__], &e[i__],
                             &tauq[i__], &taup[i__], &work[1], &ldwrkx, &work[ldwrkx * nb + 1],
