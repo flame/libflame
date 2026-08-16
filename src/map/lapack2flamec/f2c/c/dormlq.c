@@ -8,11 +8,11 @@
  order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in
  /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
+#include "fla_mem.h"
 
 static aocl_int64_t c__1 = 1;
 static aocl_int64_t c_n1 = -1;
 static aocl_int64_t c__2 = 2;
-static aocl_int64_t c__65 = 65;
 static int get_opt_threads_dormlq(aocl_int64_t m, aocl_int64_t n);
 /* > \brief \b DORMLQ */
 /* =========== DOCUMENTATION =========== */
@@ -187,7 +187,7 @@ int lapack_dormlq(char *side, char *trans, aocl_int64_t *m, aocl_int64_t *n, aoc
     /* Subroutine */
 
     /* Local variables */
-    aocl_int64_t i__, i1, i2, i3, ib, ic, jc, nb, mi, ni, nq, nw, iwt;
+    aocl_int64_t i__, i1, i2, i3, ib, ic, jc, nb, mi, ni, nq, nw, iwt, ldt;
     logical left;
     extern logical lsame_(char *, char *, aocl_int64_t, aocl_int64_t);
     aocl_int64_t nbmin, iinfo;
@@ -199,6 +199,10 @@ int lapack_dormlq(char *side, char *trans, aocl_int64_t *m, aocl_int64_t *n, aoc
     char transt[1];
     aocl_int64_t lwkopt;
     logical lquery;
+    doublereal *work_buf;
+    doublereal *upd_ptr;
+    doublereal *t_ptr;
+    logical t_alloc;
 #ifdef FLA_OPENMP_MULTITHREADING
     int thread_id, actual_num_threads;
     aocl_int64_t index, mi_sub, ni_sub;
@@ -291,7 +295,7 @@ int lapack_dormlq(char *side, char *trans, aocl_int64_t *m, aocl_int64_t *n, aoc
         i__1 = 64;
         i__2 = aocl_lapack_ilaenv(&c__1, "DORMLQ", ch__1, m, n, k, &c_n1); // , expr subst
         nb = fla_min(i__1, i__2);
-        lwkopt = nw * nb + 4160;
+        lwkopt = nw * nb + nb * (nb + 1);
         work[1] = (doublereal)lwkopt;
     }
     if(*info != 0)
@@ -312,18 +316,31 @@ int lapack_dormlq(char *side, char *trans, aocl_int64_t *m, aocl_int64_t *n, aoc
     }
     nbmin = 2;
     ldwork = nw;
-    if(nb > 1 && nb < *k)
+    work_buf = NULL;
+    t_alloc = FALSE_;
+    if(nb > 1 && nb < *k && *lwork < lwkopt)
     {
-        if(*lwork < lwkopt)
+        /* Allocate enoguh memory for *NB update buffer
+           and the NB*NB block-reflector T factor to preserve performance
+           and avoidmemory  overflow */
+        work_buf = (doublereal *)fla_aligned_malloc(
+            ((size_t)ldwork * (size_t)nb + (size_t)nb * (size_t)(nb + 1)) * sizeof(doublereal),
+            FLA_CACHE_LINE_SIZE_BYTES);
+        if(work_buf != NULL)
         {
-            nb = (*lwork - 4160) / ldwork;
+            t_alloc = TRUE_;
+        }
+        else
+        {
+            /* Allocation failed: fall back to reducing the block size. */
+            nb = (*lwork - (nb * (nb + 1))) / ldwork;
             /* Computing MAX */
             i__1 = 2;
             i__2 = aocl_lapack_ilaenv(&c__2, "DORMLQ", ch__1, m, n, k, &c_n1); // , expr subst
             nbmin = fla_max(i__1, i__2);
         }
     }
-    if(nb < nbmin || nb >= *k)
+    if(nb < nbmin || nb >= *k || fla_min(*m, *n) < FLA_DORMLQ_SMALL_SIZE_THRESH)
     {
         /* Use unblocked code */
         dorml2_fla(side, trans, m, n, k, &a[a_offset], lda, &tau[1], &c__[c_offset], ldc,
@@ -333,6 +350,16 @@ int lapack_dormlq(char *side, char *trans, aocl_int64_t *m, aocl_int64_t *n, aoc
     {
         /* Use blocked code */
         iwt = nw * nb + 1;
+        if(t_alloc)
+        {
+            upd_ptr = work_buf;
+            t_ptr = work_buf + (size_t)ldwork * (size_t)nb;
+        }
+        else
+        {
+            upd_ptr = &work[1];
+            t_ptr = &work[iwt];
+        }
         if(left && notran || !left && !notran)
         {
             i1 = 1;
@@ -377,7 +404,6 @@ int lapack_dormlq(char *side, char *trans, aocl_int64_t *m, aocl_int64_t *n, aoc
 #endif
             for(i__ = i1; i__2 < 0 ? i__ >= i__1 : i__ <= i__1; i__ += i__2)
             {
-
                 /* Computing MIN */
 #ifdef FLA_OPENMP_MULTITHREADING
 /* Compute triangular factor of the block reflector in a single thread */
@@ -387,11 +413,12 @@ int lapack_dormlq(char *side, char *trans, aocl_int64_t *m, aocl_int64_t *n, aoc
                     i__4 = nb;
                     i__5 = *k - i__ + 1; // , expr subst
                     ib = fla_min(i__4, i__5);
+                    ldt = ib + 1;
                     /* Form the triangular factor of the block reflector */
                     /* H = H(i) H(i+1) . . . H(i+ib-1) */
                     i__4 = nq - i__ + 1;
                     aocl_lapack_dlarft("Forward", "Rowwise", &i__4, &ib, &a[i__ + i__ * a_dim1],
-                                       lda, &tau[i__], &work[iwt], &c__65);
+                                       lda, &tau[i__], t_ptr, &ldt);
                 }
 
                 if(left)
@@ -421,23 +448,27 @@ int lapack_dormlq(char *side, char *trans, aocl_int64_t *m, aocl_int64_t *n, aoc
 #ifdef FLA_OPENMP_MULTITHREADING
                 if(left)
                     aocl_lapack_dlarfb(side, transt, "Forward", "Rowwise", &mi_sub, &ni_sub, &ib,
-                                       &a[i__ + i__ * a_dim1], lda, &work[iwt], &c__65,
-                                       &c__[ic + (index + jc) * c_dim1], ldc, &work[1 + index],
+                                       &a[i__ + i__ * a_dim1], lda, t_ptr, &ldt,
+                                       &c__[ic + (index + jc) * c_dim1], ldc, upd_ptr + index,
                                        &ldwork);
                 else
                     aocl_lapack_dlarfb(side, transt, "Forward", "Rowwise", &mi_sub, &ni_sub, &ib,
-                                       &a[i__ + i__ * a_dim1], lda, &work[iwt], &c__65,
-                                       &c__[index + ic + jc * c_dim1], ldc, &work[1 + index],
+                                       &a[i__ + i__ * a_dim1], lda, t_ptr, &ldt,
+                                       &c__[index + ic + jc * c_dim1], ldc, upd_ptr + index,
                                        &ldwork);
 #pragma omp barrier
 #else
                 aocl_lapack_dlarfb(side, transt, "Forward", "Rowwise", &mi, &ni, &ib,
-                                   &a[i__ + i__ * a_dim1], lda, &work[iwt], &c__65,
-                                   &c__[ic + jc * c_dim1], ldc, &work[1], &ldwork);
+                                   &a[i__ + i__ * a_dim1], lda, t_ptr, &ldt,
+                                   &c__[ic + jc * c_dim1], ldc, upd_ptr, &ldwork);
 #endif
                 /* L10: */
             }
         }
+    }
+    if(t_alloc)
+    {
+        fla_aligned_free(work_buf);
     }
     work[1] = (doublereal)lwkopt;
     return 0;

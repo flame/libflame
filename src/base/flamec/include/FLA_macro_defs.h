@@ -389,6 +389,10 @@
 // DGEBD2 thresholds for lapack_API based code path for small sizes
 #define FLA_DGEBD2_SMALL_SIZE_THRESH   (140)
 
+// DORMQR/DORMLQ threshold for small vs large sizes
+#define FLA_DORMQR_SMALL_SIZE_THRESH (100)
+#define FLA_DORMLQ_SMALL_SIZE_THRESH (50)
+
 // --- Error-related macro definitions -----------------------------------------
 
 // Useful when determining the relative index base of the error codes.
