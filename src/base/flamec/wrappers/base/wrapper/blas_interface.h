@@ -1,3 +1,6 @@
+/*
+ * Copyright (C) 2025-2026, Advanced Micro Devices, Inc. All rights reserved.
+ */
 #ifndef BLAS_INTERFACE_H
 #define BLAS_INTERFACE_H
 

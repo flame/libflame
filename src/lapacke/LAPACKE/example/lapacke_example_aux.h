@@ -1,3 +1,6 @@
+/*
+ * Copyright (C) 2025-2026, Advanced Micro Devices, Inc. All rights reserved.
+ */
 #ifndef _LAPACKE_EXAMPLE_AUX_
 #define _LAPACKE_EXAMPLE_AUX_
 

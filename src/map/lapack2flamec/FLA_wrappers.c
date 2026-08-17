@@ -1,3 +1,6 @@
+/*
+ * Copyright (C) 2025-2026, Advanced Micro Devices, Inc. All rights reserved.
+ */
 /** Generated wrapper function */
 void sgebrd_(aocl_int_t *m, aocl_int_t *n, real *buff_A, aocl_int_t *ldim_A, real *buff_d, real *buff_e, real *buff_tu, real *buff_tv, real *buff_w, aocl_int_t *lwork, aocl_int_t *info)
 {

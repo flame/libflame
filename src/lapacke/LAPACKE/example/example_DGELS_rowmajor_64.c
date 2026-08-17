@@ -1,4 +1,7 @@
 /*
+ * Copyright (C) 2025-2026, Advanced Micro Devices, Inc. All rights reserved.
+ */
+/*
    LAPACKE Example : Calling DGELS using row-major layout
    =====================================================
 

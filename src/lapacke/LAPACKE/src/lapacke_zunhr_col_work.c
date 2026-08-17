@@ -1,3 +1,6 @@
+/*
+ * Copyright (C) 2025-2026, Advanced Micro Devices, Inc. All rights reserved.
+ */
 #include "lapacke_utils.h"
 
 lapack_int API_SUFFIX(LAPACKE_zunhr_col_work)( int matrix_layout, lapack_int m, lapack_int n,
