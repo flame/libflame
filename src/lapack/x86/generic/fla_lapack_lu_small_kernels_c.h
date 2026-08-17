@@ -12,16 +12,44 @@
 
 #define FLA_LU_C_ABS1_SC(z) (f2c_abs((z).real) + f2c_abs((z).imag))
 
-#define FLA_LU_C_DIV_SC(zptr, denom)                   \
-    do                                                 \
-    {                                                  \
-        real _dr = (denom).real;                       \
-        real _di = (denom).imag;                       \
-        real _inv = 1.0f / (_dr * _dr + _di * _di);    \
-        real _zr = (zptr)->real;                       \
-        real _zi = (zptr)->imag;                       \
-        (zptr)->real = (_zr * _dr + _zi * _di) * _inv; \
-        (zptr)->imag = (_zi * _dr - _zr * _di) * _inv; \
+/* Reciprocal 1/denom, used to scale a column by multiplication as
+ * bl1_cinvscalv does. |denom|^2 is formed directly whenever the result is a
+ * normal float, which is the case for any denominator between roughly 1e-19 and
+ * 1e19 and costs a single division. Outside that band the square would overflow
+ * to infinity or underflow to zero, so the guard falls back to Smith's scaled
+ * form, matching bl1_cinvert2s exactly. Callers must ensure denom != 0. */
+#define FLA_LU_C_RECIP_SC(rptr, denom)                     \
+    do                                                     \
+    {                                                      \
+        real _dr = (denom).real;                           \
+        real _di = (denom).imag;                           \
+        real _den = _dr * _dr + _di * _di;                 \
+        if(_den >= FLT_MIN && _den <= FLT_MAX)             \
+        {                                                  \
+            real _inv = 1.0f / _den;                       \
+            (rptr)->real = _dr * _inv;                     \
+            (rptr)->imag = -_di * _inv;                    \
+        }                                                  \
+        else                                               \
+        {                                                  \
+            real _s = fla_max(f2c_abs(_dr), f2c_abs(_di)); \
+            real _dr_s = _dr / _s;                         \
+            real _di_s = _di / _s;                         \
+            real _d2 = _dr_s * _dr + _di_s * _di;          \
+            (rptr)->real = _dr_s / _d2;                    \
+            (rptr)->imag = -_di_s / _d2;                   \
+        }                                                  \
+    } while(0)
+
+#define FLA_LU_C_MUL_SC(yptr, alpha)          \
+    do                                        \
+    {                                         \
+        real _ar = (alpha).real;              \
+        real _ai = (alpha).imag;              \
+        real _yr = (yptr)->real;              \
+        real _yi = (yptr)->imag;              \
+        (yptr)->real = _yr * _ar - _yi * _ai; \
+        (yptr)->imag = _yr * _ai + _yi * _ar; \
     } while(0)
 
 #define FLA_LU_C_SUBMUL_SC(y, alpha, x)    \
@@ -56,7 +84,7 @@
  */
 #define FLA_LU_PIV_SMALL_GEN_C_2x2(i, n, buff_A, ldim_A, buff_p, info)            \
     real max_val_2 = 0.0f;                                                        \
-    scomplex t_sc_2;                                                              \
+    scomplex t_sc_2, recip_2;                                                     \
     scomplex *acur_2, *apiv_2, *asrc_2;                                           \
     aocl_int64_t i_2, p_idx_2 = i, lda2 = *ldim_A;                                \
     acur_2 = &buff_A[i + lda2 * i];                                               \
@@ -85,7 +113,8 @@
                     FLA_LU_C_SWAP_SC(apiv_2[3 * lda2], asrc_2[3 * lda2], t_sc_2); \
             }                                                                     \
         }                                                                         \
-        FLA_LU_C_DIV_SC(&acur_2[1], *acur_2);                                     \
+        FLA_LU_C_RECIP_SC(&recip_2, *acur_2);                                     \
+        FLA_LU_C_MUL_SC(&acur_2[1], recip_2);                                     \
         FLA_LU_C_SUBMUL_SC(acur_2[1 + lda2], acur_2[1], acur_2[lda2]);            \
     }                                                                             \
     else                                                                          \
@@ -124,7 +153,7 @@
 #define FLA_LU_PIV_SMALL_GEN_C_3x3(i, n, buff_A, ldim_A, buff_p, info)         \
     aocl_int64_t i_3;                                                          \
     real max_val_3 = 0.0f;                                                     \
-    scomplex t_sc_3;                                                           \
+    scomplex t_sc_3, recip_3;                                                  \
     scomplex *acur_3, *apiv_3, *asrc_3;                                        \
     aocl_int64_t p_idx_3 = i, lda3 = *ldim_A;                                  \
     acur_3 = &buff_A[i + lda3 * i];                                            \
@@ -150,10 +179,11 @@
             if(n == 4)                                                         \
                 FLA_LU_C_SWAP_SC(apiv_3[3 * lda3], asrc_3[3 * lda3], t_sc_3);  \
         }                                                                      \
-        FLA_LU_C_DIV_SC(&acur_3[1], *acur_3);                                  \
+        FLA_LU_C_RECIP_SC(&recip_3, *acur_3);                                  \
+        FLA_LU_C_MUL_SC(&acur_3[1], recip_3);                                  \
         FLA_LU_C_SUBMUL_SC(acur_3[1 + lda3], acur_3[1], acur_3[lda3]);         \
         FLA_LU_C_SUBMUL_SC(acur_3[1 + 2 * lda3], acur_3[1], acur_3[2 * lda3]); \
-        FLA_LU_C_DIV_SC(&acur_3[2], *acur_3);                                  \
+        FLA_LU_C_MUL_SC(&acur_3[2], recip_3);                                  \
         FLA_LU_C_SUBMUL_SC(acur_3[2 + lda3], acur_3[2], acur_3[lda3]);         \
         FLA_LU_C_SUBMUL_SC(acur_3[2 + 2 * lda3], acur_3[2], acur_3[2 * lda3]); \
     }                                                                          \
@@ -170,7 +200,7 @@
 #define FLA_LU_PIV_SMALL_GEN_C_4x4(i, n, buff_A, ldim_A, buff_p, info) \
     aocl_int64_t i_1;                                                  \
     real max_val = 0.0f;                                               \
-    scomplex t_sc;                                                     \
+    scomplex t_sc, recip;                                              \
     scomplex *acur, *apiv, *asrc;                                      \
     aocl_int64_t p_idx = i, lda = *ldim_A;                             \
     acur = &buff_A[i + lda * i];                                       \
@@ -195,15 +225,16 @@
             FLA_LU_C_SWAP_SC(apiv[2 * lda], asrc[2 * lda], t_sc);      \
             FLA_LU_C_SWAP_SC(apiv[3 * lda], asrc[3 * lda], t_sc);      \
         }                                                              \
-        FLA_LU_C_DIV_SC(&acur[1], *acur);                              \
+        FLA_LU_C_RECIP_SC(&recip, *acur);                              \
+        FLA_LU_C_MUL_SC(&acur[1], recip);                              \
         FLA_LU_C_SUBMUL_SC(acur[1 + lda], acur[1], acur[lda]);         \
         FLA_LU_C_SUBMUL_SC(acur[1 + 2 * lda], acur[1], acur[2 * lda]); \
         FLA_LU_C_SUBMUL_SC(acur[1 + 3 * lda], acur[1], acur[3 * lda]); \
-        FLA_LU_C_DIV_SC(&acur[2], *acur);                              \
+        FLA_LU_C_MUL_SC(&acur[2], recip);                              \
         FLA_LU_C_SUBMUL_SC(acur[2 + lda], acur[2], acur[lda]);         \
         FLA_LU_C_SUBMUL_SC(acur[2 + 2 * lda], acur[2], acur[2 * lda]); \
         FLA_LU_C_SUBMUL_SC(acur[2 + 3 * lda], acur[2], acur[3 * lda]); \
-        FLA_LU_C_DIV_SC(&acur[3], *acur);                              \
+        FLA_LU_C_MUL_SC(&acur[3], recip);                              \
         FLA_LU_C_SUBMUL_SC(acur[3 + lda], acur[3], acur[lda]);         \
         FLA_LU_C_SUBMUL_SC(acur[3 + 2 * lda], acur[3], acur[2 * lda]); \
         FLA_LU_C_SUBMUL_SC(acur[3 + 3 * lda], acur[3], acur[3 * lda]); \

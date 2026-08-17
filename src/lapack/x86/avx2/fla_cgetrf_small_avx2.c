@@ -111,13 +111,34 @@ int fla_cgetrf_small_avx2(aocl_int64_t *m, aocl_int64_t *n, scomplex *a, aocl_in
             ------------------------------------------------------------------*/
 
             // Calculate scalefactors (a21) & update trailing matrix
+            /* |pivot|^2 is formed directly whenever the result is a normal
+               float, which holds for any pivot between roughly 1e-19 and 1e19
+               and costs a single division. Outside that band the square would
+               overflow to infinity or underflow to zero, so the guard falls back
+               to Smith's scaled form, matching bl1_cinvert2s exactly. The pivot
+               is nonzero here, so s is nonzero. */
             {
                 real piv_r = acur->real;
                 real piv_i = acur->imag;
-                real inv = 1.0f / (piv_r * piv_r + piv_i * piv_i);
+                real den = piv_r * piv_r + piv_i * piv_i;
 
-                z__1.real = piv_r * inv;
-                z__1.imag = -piv_i * inv;
+                if(den >= FLT_MIN && den <= FLT_MAX)
+                {
+                    real inv = 1.0f / den;
+
+                    z__1.real = piv_r * inv;
+                    z__1.imag = -piv_i * inv;
+                }
+                else
+                {
+                    real s = fla_max(f2c_abs(piv_r), f2c_abs(piv_i));
+                    real piv_r_s = piv_r / s;
+                    real piv_i_s = piv_i / s;
+
+                    den = piv_r_s * piv_r + piv_i_s * piv_i;
+                    z__1.real = piv_r_s / den;
+                    z__1.imag = -piv_i_s / den;
+                }
             }
 
             // Load alpha from memory
