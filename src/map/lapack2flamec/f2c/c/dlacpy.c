@@ -4,7 +4,7 @@
  standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c
  -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 /******************************************************************************
- * Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
+ * Copyright (C) 2025-2026, Advanced Micro Devices, Inc. All rights reserved.
  *******************************************************************************/
 #include "FLA_f2c.h" /* > \brief \b DLACPY copies all or part of one two-dimensional array to another. */
 /* =========== DOCUMENTATION =========== */
@@ -154,7 +154,7 @@ void aocl_lapack_dlacpy(char *uplo, aocl_int64_t *m, aocl_int64_t *n, doublereal
     /* Function Body */
 #ifdef FLA_ENABLE_AMD_OPT
     /* Handling invalid cases */
-    if(*m <= 0 || *n <= 0 || a_dim1 < *m || b_dim1 < *m)
+    if(*m <= 0 || *n <= 0)
     {
         AOCL_DTL_TRACE_LOG_EXIT
         return;
