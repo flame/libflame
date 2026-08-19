@@ -18,8 +18,8 @@ int fla_zrot_avx512(aocl_int64_t *n, dcomplex *dx, aocl_int64_t *incx, dcomplex 
                     aocl_int64_t *incy, doublereal *c__, dcomplex *s);
 int fla_dhrot3_avx512(aocl_int64_t *n, doublereal *a, aocl_int64_t *lda, doublereal *v,
                       doublereal *tau);
-int fla_cgetrf_small_avx512(aocl_int64_t* m, aocl_int64_t* n, scomplex* a, aocl_int64_t* lda, aocl_int_t* ipiv,
-                            aocl_int64_t* info);
+int fla_cgetrf_small_avx512(aocl_int64_t *m, aocl_int64_t *n, scomplex *a, aocl_int64_t *lda,
+                            aocl_int_t *ipiv, aocl_int64_t *info);
 int fla_zgetrf_small_avx512(aocl_int64_t *m, aocl_int64_t *n, dcomplex *a, aocl_int64_t *lda,
                             aocl_int_t *ipiv, aocl_int64_t *info);
 aocl_int64_t fla_dgetrf_small_avx512(aocl_int64_t *m, aocl_int64_t *n, doublereal *a,
@@ -52,6 +52,12 @@ doublereal fla_dnrm2_blas_avx512(aocl_int64_t *sd, doublereal *a, aocl_int64_t *
 void fla_zlarf_left_apply_incv1_avx512(aocl_int64_t m, aocl_int64_t n, dcomplex *a_buff,
                                        aocl_int64_t ldr, dcomplex *v, dcomplex *ntau,
                                        dcomplex *work);
+void fla_zlarf1f_left_apply_incv1_avx512(aocl_int64_t m, aocl_int64_t n, dcomplex *a_buff,
+                                         aocl_int64_t ldr, dcomplex *v, dcomplex *ntau,
+                                         dcomplex *work);
+void fla_zlarf1_right_apply_incv1_avx512(aocl_int64_t m, aocl_int64_t n, dcomplex *a_buff,
+                                         aocl_int64_t ldr, dcomplex *v, dcomplex *c1,
+                                         dcomplex *ntau, dcomplex *work);
 int fla_dpotrf_small_avx512(char *uplo, aocl_int64_t *n, doublereal *a, aocl_int64_t *lda,
                             aocl_int64_t *info);
 void fla_dspr_lower_avx512(aocl_int64_t len, doublereal alpha, const doublereal *x, doublereal *ap);

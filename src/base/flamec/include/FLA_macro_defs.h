@@ -361,6 +361,13 @@
 /* DLARFT , threshold numbers to chose paths for performance */
 #define FLA_DLARFT_BLOCK_NB (16)
 
+/* ZLARF1F threshold numbers */
+#ifndef FLA_ZLARF1_SMALL_DIM_THRESH
+#define FLA_ZLARF1_SMALL_DIM_THRESH (34)
+#endif
+#ifndef FLA_ZLARF1_R_SIMD_AVX512_THRESH_M
+#define FLA_ZLARF1_R_SIMD_AVX512_THRESH_M (8)
+#endif
 
 #define FLA_ZLANGEM_SIMD_AVX512_THRESH_M (15)
 #define FLA_CLANGEM_SIMD_AVX512_THRESH_M (15)

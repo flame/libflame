@@ -26,10 +26,10 @@ int fla_dgeqrf_small(aocl_int64_t *m, aocl_int64_t *n, doublereal *a, aocl_int64
                      doublereal *tau, doublereal *work);
 int fla_sgeqrf_small(aocl_int64_t *m, aocl_int64_t *n, real *a, aocl_int64_t *lda, real *tau,
                      real *work);
-int fla_cgeqrf_small(aocl_int64_t *m, aocl_int64_t *n, scomplex *a, aocl_int64_t *lda, scomplex *tau,
-                     scomplex *work);
-int fla_zgeqrf_small(aocl_int64_t *m, aocl_int64_t *n, dcomplex *a, aocl_int64_t *lda, dcomplex *tau,
-                     dcomplex *work);
+int fla_cgeqrf_small(aocl_int64_t *m, aocl_int64_t *n, scomplex *a, aocl_int64_t *lda,
+                     scomplex *tau, scomplex *work);
+int fla_zgeqrf_small(aocl_int64_t *m, aocl_int64_t *n, dcomplex *a, aocl_int64_t *lda,
+                     dcomplex *tau, dcomplex *work);
 int fla_dgelqf_small(aocl_int64_t *m, aocl_int64_t *n, doublereal *a, aocl_int64_t *lda,
                      doublereal *tau, doublereal *work);
 int fla_sgelqf_small(aocl_int64_t *m, aocl_int64_t *n, real *a, aocl_int64_t *lda, real *tau,
@@ -38,8 +38,8 @@ void fla_dscal(aocl_int64_t *n, doublereal *alpha, doublereal *x, aocl_int64_t *
 void fla_sscal(aocl_int64_t *n, real *alpha, real *x, aocl_int64_t *incx);
 void fla_sger(aocl_int64_t *m, aocl_int64_t *n, real *alpha, real *x, aocl_int64_t *incx, real *y,
               aocl_int64_t *incy, real *a, aocl_int64_t *lda);
-int fla_cgetrf_small_simd(aocl_int64_t *m, aocl_int64_t *n, scomplex *a, aocl_int64_t *lda, aocl_int_t *ipiv,
-                          aocl_int64_t *info);
+int fla_cgetrf_small_simd(aocl_int64_t *m, aocl_int64_t *n, scomplex *a, aocl_int64_t *lda,
+                          aocl_int_t *ipiv, aocl_int64_t *info);
 int fla_zgetrf_small_simd(aocl_int64_t *m, aocl_int64_t *n, dcomplex *a, aocl_int64_t *lda,
                           aocl_int_t *ipiv, aocl_int64_t *info);
 void fla_dgesvd_small6(aocl_int64_t wntus, aocl_int64_t wntvs, aocl_int64_t *m, aocl_int64_t *n,
@@ -87,6 +87,11 @@ real fla_get_max_cabs_element_vector(aocl_int64_t m, scomplex *a, aocl_int64_t a
 doublereal fla_get_max_zabs_element_vector(aocl_int64_t m, dcomplex *a, aocl_int64_t a_dim);
 void fla_zlarf_left_invc1_opt(aocl_int64_t m, aocl_int64_t n, dcomplex *a_buff, aocl_int64_t ldr,
                               dcomplex *v, dcomplex *ntau, dcomplex *work);
+void fla_zlarf1f_small_left_incv1_simd(aocl_int64_t m, aocl_int64_t n, dcomplex *a_buff,
+                                       aocl_int64_t ldr, dcomplex *v, dcomplex *ntau, dcomplex *work);
+void fla_zlarf1_small_right_incv1_simd(aocl_int64_t m, aocl_int64_t n, dcomplex *a_buff,
+                                       aocl_int64_t ldr, dcomplex *v, dcomplex *c1, dcomplex *ntau,
+                                       dcomplex *work);
 void fla_dspr_lower(aocl_int64_t len, doublereal alpha, const doublereal *x, doublereal *ap);
 void fla_dcopy_scal(aocl_int64_t n, doublereal alpha, const doublereal *x, aocl_int64_t incx,
                     doublereal *y, aocl_int64_t incy);

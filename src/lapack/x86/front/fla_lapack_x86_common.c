@@ -173,8 +173,8 @@ int fla_sgeqrf_small(aocl_int64_t *m, aocl_int64_t *n, real *a, aocl_int64_t *ld
     return 0;
 }
 /* Single complex QR (CGEQRF) for small sizes */
-int fla_cgeqrf_small(aocl_int64_t *m, aocl_int64_t *n, scomplex *a, aocl_int64_t *lda, scomplex *tau,
-                     scomplex *work)
+int fla_cgeqrf_small(aocl_int64_t *m, aocl_int64_t *n, scomplex *a, aocl_int64_t *lda,
+                     scomplex *tau, scomplex *work)
 {
     if(FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))
     {
@@ -183,8 +183,8 @@ int fla_cgeqrf_small(aocl_int64_t *m, aocl_int64_t *n, scomplex *a, aocl_int64_t
     return 0;
 }
 /* Double complex QR (ZGEQRF) for small sizes */
-int fla_zgeqrf_small(aocl_int64_t *m, aocl_int64_t *n, dcomplex *a, aocl_int64_t *lda, dcomplex *tau,
-                     dcomplex *work)
+int fla_zgeqrf_small(aocl_int64_t *m, aocl_int64_t *n, dcomplex *a, aocl_int64_t *lda,
+                     dcomplex *tau, dcomplex *work)
 {
     if(FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))
     {
@@ -310,8 +310,8 @@ int fla_dgetrf_small_simd(aocl_int64_t *m, aocl_int64_t *n, doublereal *a, aocl_
 /* Single Complex LU for small sizes,
  * Optimized for AVX2 and AVX512 ISAs
  */
-int fla_cgetrf_small_simd(aocl_int64_t *m, aocl_int64_t *n, scomplex *a, aocl_int64_t *lda, aocl_int_t *ipiv,
-                          aocl_int64_t *info)
+int fla_cgetrf_small_simd(aocl_int64_t *m, aocl_int64_t *n, scomplex *a, aocl_int64_t *lda,
+                          aocl_int_t *ipiv, aocl_int64_t *info)
 {
     if(FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX512))
     {
@@ -755,6 +755,90 @@ void fla_dlarf1_right_update_c1_simd(aocl_int64_t m, doublereal *c1, doublereal 
     return;
 }
 
+/* ZLARF1F for small sizes, assuming v(1) is implicit and equal to 1.
+ * To be used only when vectorized code via avx2/avx512 is enabled.
+ * */
+void fla_zlarf1f_small_left_incv1_simd(aocl_int64_t m, aocl_int64_t n, dcomplex *a_buff,
+                                       aocl_int64_t ldr, dcomplex *v, dcomplex *ntau,
+                                       dcomplex *work)
+{
+    if(m < 4)
+    {
+        aocl_int64_t i, j;
+
+        for(j = 1; j <= n; ++j)
+        {
+            dcomplex *acol = &a_buff[j * ldr];
+            dcomplex w;
+            dcomplex w_conj;
+            dcomplex update;
+
+            w.real = acol[1].real;
+            w.imag = -acol[1].imag;
+
+            for(i = 2; i <= m; ++i)
+            {
+                dcomplex c_conj;
+                dcomplex prod;
+
+                c_conj.real = acol[i].real;
+                c_conj.imag = -acol[i].imag;
+
+                prod.real = c_conj.real * v[i].real - c_conj.imag * v[i].imag;
+                prod.imag = c_conj.real * v[i].imag + c_conj.imag * v[i].real;
+
+                w.real += prod.real;
+                w.imag += prod.imag;
+            }
+
+            work[j] = w;
+            w_conj.real = w.real;
+            w_conj.imag = -w.imag;
+
+            update.real = ntau->real * w_conj.real - ntau->imag * w_conj.imag;
+            update.imag = ntau->real * w_conj.imag + ntau->imag * w_conj.real;
+
+            acol[1].real += update.real;
+            acol[1].imag += update.imag;
+
+            for(i = 2; i <= m; ++i)
+            {
+                dcomplex scaled;
+
+                scaled.real = update.real * v[i].real - update.imag * v[i].imag;
+                scaled.imag = update.real * v[i].imag + update.imag * v[i].real;
+
+                acol[i].real += scaled.real;
+                acol[i].imag += scaled.imag;
+            }
+        }
+        return;
+    }
+
+    else if(m >= FLA_ZGEMV_ZGER_SIMD_AXV2_THRESH_M && FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX512))
+    {
+        fla_zlarf1f_left_apply_incv1_avx512(m, n, a_buff, ldr, v, ntau, work);
+    }
+    else if(FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))
+    {
+        fla_zlarf1f_left_apply_incv1_avx2(m, n, a_buff, ldr, v, ntau, work);
+    }
+}
+
+void fla_zlarf1_small_right_incv1_simd(aocl_int64_t m, aocl_int64_t n, dcomplex *a_buff,
+                                        aocl_int64_t ldr, dcomplex *v, dcomplex *c1, dcomplex *ntau,
+                                        dcomplex *work)
+{
+    if(m >= FLA_ZLARF1_R_SIMD_AVX512_THRESH_M && FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX512))
+    {
+        fla_zlarf1_right_apply_incv1_avx512(m, n, a_buff, ldr, v, c1, ntau, work);
+    }
+    else if(FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))
+    {
+        fla_zlarf1_right_apply_incv1_avx2(m, n, a_buff, ldr, v, c1, ntau, work);
+    }
+}
+
 /* dnrm2 for small input sizes */
 doublereal fla_dnrm2_blas_kernel(aocl_int64_t *sd, doublereal *a, aocl_int64_t *inc)
 {
@@ -886,7 +970,6 @@ void fla_dlasr_left_pivotv_simd(logical forward, aocl_int64_t m, aocl_int64_t n,
 {
     /* No AVX512 kernel here, hence not checking for any ISA support. */
     fla_dlasr_left_pivotv_avx2(forward, m, n, c__, s, a, a_dim1);
-    return;
 }
 
 #endif

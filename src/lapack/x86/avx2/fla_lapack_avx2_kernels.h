@@ -48,8 +48,8 @@ int fla_dgetrs_small_trsm_ll_avx2(char *trans, aocl_int64_t *n, aocl_int64_t *nr
                                   aocl_int64_t *ldb, aocl_int64_t *info);
 int fla_zgetrf_small_avx2(aocl_int64_t *m, aocl_int64_t *n, dcomplex *a, aocl_int64_t *lda,
                           aocl_int_t *ipiv, aocl_int64_t *info);
-int fla_cgetrf_small_avx2(aocl_int64_t *m, aocl_int64_t *n, scomplex *a, aocl_int64_t *lda, aocl_int_t *ipiv,
-                          aocl_int64_t *info);
+int fla_cgetrf_small_avx2(aocl_int64_t *m, aocl_int64_t *n, scomplex *a, aocl_int64_t *lda,
+                          aocl_int_t *ipiv, aocl_int64_t *info);
 int fla_dgeqrf_small_avx2(aocl_int64_t *m, aocl_int64_t *n, doublereal *a, aocl_int64_t *lda,
                           doublereal *tau, doublereal *work);
 int fla_sgeqrf_small_avx2(aocl_int64_t *m, aocl_int64_t *n, real *a, aocl_int64_t *lda, real *tau,
@@ -114,6 +114,12 @@ void fla_dlarf1_right_update_c1_avx2(aocl_int64_t m, doublereal *restrict c1, do
 doublereal fla_dnrm2_blas_avx2(aocl_int64_t *sd, doublereal *a, aocl_int64_t *inc);
 void fla_zlarf_left_apply_incv1_avx2(aocl_int64_t m, aocl_int64_t n, dcomplex *a_buff,
                                      aocl_int64_t ldr, dcomplex *v, dcomplex *ntau, dcomplex *work);
+void fla_zlarf1f_left_apply_incv1_avx2(aocl_int64_t m, aocl_int64_t n, dcomplex *a_buff,
+                                       aocl_int64_t ldr, dcomplex *v, dcomplex *ntau,
+                                       dcomplex *work);
+void fla_zlarf1_right_apply_incv1_avx2(aocl_int64_t m, aocl_int64_t n, dcomplex *a_buff,
+                                       aocl_int64_t ldr, dcomplex *v, dcomplex *c1, dcomplex *ntau,
+                                       dcomplex *work);
 int fla_dpotrf_small_avx2(char *uplo, aocl_int64_t *n, doublereal *a, aocl_int64_t *lda,
                           aocl_int64_t *info);
 void fla_dpotri_small_avx2(char *uplo, aocl_int64_t *n, double *A, aocl_int64_t *lda,

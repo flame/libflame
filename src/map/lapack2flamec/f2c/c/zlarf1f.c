@@ -8,6 +8,9 @@
  order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in
  /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
+#if FLA_ENABLE_AMD_OPT
+#include "fla_lapack_x86_common.h"
+#endif
 static dcomplex c_b1 = {1., 0.};
 static dcomplex c_b2 = {0., 0.};
 static aocl_int64_t c__1 = 1;
@@ -214,6 +217,7 @@ void aocl_lapack_zlarf1f(char *side, aocl_int64_t *m, aocl_int64_t *n, dcomplex 
     aocl_int64_t lastc;
     aocl_int64_t lastv;
     aocl_int64_t istart;
+
     /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -308,6 +312,18 @@ void aocl_lapack_zlarf1f(char *side, aocl_int64_t *m, aocl_int64_t *n, dcomplex 
         }
         else
         {
+#if FLA_ENABLE_AMD_OPT
+            aocl_fla_init();
+            if(lastv <= FLA_ZLARF1_SMALL_DIM_THRESH && lastc <= FLA_ZLARF1_SMALL_DIM_THRESH
+               && *incv == c__1 && FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))
+            {
+                z__1.real = -tau->real;
+                z__1.imag = -tau->imag; // , expr subst
+                fla_zlarf1f_small_left_incv1_simd(lastv, lastc, c__, *ldc, v, &z__1, work);
+            }
+            else
+            {
+#endif
             /* w(1:lastc,1) := C(1:lastv,1:lastc)**H * v(1:lastv,1) */
             /* (I - tvv**H)C = C - tvv**H C */
             /* First compute w**H = v**H c -> w = C**H v */
@@ -352,6 +368,9 @@ void aocl_lapack_zlarf1f(char *side, aocl_int64_t *m, aocl_int64_t *n, dcomplex 
             z__1.imag = -tau->imag; // , expr subst
             aocl_blas_zgerc(&i__1, &lastc, &z__1, &v[istart], incv, &work[1], &c__1,
                             &c__[c_dim1 + 2], ldc);
+#if FLA_ENABLE_AMD_OPT
+            }
+#endif
         }
     }
     else
@@ -367,6 +386,22 @@ void aocl_lapack_zlarf1f(char *side, aocl_int64_t *m, aocl_int64_t *n, dcomplex 
         }
         else
         {
+#if FLA_ENABLE_AMD_OPT
+            aocl_fla_init();
+            if(lastv <= FLA_ZLARF1_SMALL_DIM_THRESH && lastc <= FLA_ZLARF1_SMALL_DIM_THRESH
+               && *incv == c__1 && FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))
+            {
+                aocl_int64_t lastv_eff = lastv - 1;
+
+                z__1.real = -tau->real;
+                z__1.imag = -tau->imag; // , expr subst
+                fla_zlarf1_small_right_incv1_simd(lastc, lastv_eff, &c__[(c_dim1 << 1) + 1],
+                                                  *ldc, &v[istart], &c__[c_offset], &z__1,
+                                                  &work[1]);
+            }
+            else
+            {
+#endif
             /* w(1:lastc,1) := C(1:lastc,1:lastv) * v(1:lastv,1) */
             /* w(1:lastc,1) := C(1:lastc,2:lastv) * v(2:lastv,1) */
             i__1 = lastv - 1;
@@ -386,6 +421,9 @@ void aocl_lapack_zlarf1f(char *side, aocl_int64_t *m, aocl_int64_t *n, dcomplex 
             z__1.imag = -tau->imag; // , expr subst
             aocl_blas_zgerc(&lastc, &i__1, &z__1, &work[1], &c__1, &v[istart], incv,
                             &c__[(c_dim1 << 1) + 1], ldc);
+#if FLA_ENABLE_AMD_OPT
+            }
+#endif
         }
     }
     AOCL_DTL_TRACE_LOG_EXIT
