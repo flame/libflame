@@ -20,6 +20,7 @@ add_library(FLA_LAPACK_AVX512
      ${CMAKE_CURRENT_SOURCE_DIR}/fla_dpotrf_small_avx512.c
      ${CMAKE_CURRENT_SOURCE_DIR}/fla_dspr_avx512.c
      ${CMAKE_CURRENT_SOURCE_DIR}/fla_dcopy_scal_avx512.c
+     ${CMAKE_CURRENT_SOURCE_DIR}/fla_dgtsv_kernel_avx512.c
 )
 
 if(WIN32)

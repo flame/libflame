@@ -46,6 +46,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/fla_sgesvd_xs_small10T_avx2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_sgesvd_small6_avx2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_sgesvd_small6T_avx2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/fla_sgesvd_nn_small1T_avx2.c
+${CMAKE_CURRENT_SOURCE_DIR}/fla_dgtsv_kernel_avx2.c
 )
 
 if(WIN32)

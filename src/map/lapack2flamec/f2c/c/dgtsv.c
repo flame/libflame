@@ -1,9 +1,22 @@
+/*
+    Copyright (C) 2026, Advanced Micro Devices, Inc. All rights reserved.
+*/
 /* ../netlib/dgtsv.f -- translated by f2c (version 20100827). You must link the resulting object
  file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a
  standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c
  -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* > \brief <b> DGTSV computes the solution to system of linear equations A * X = B for GT matrices <b> */
+#if FLA_ENABLE_AMD_OPT
+/* Forward-declare only the kernels used below. The AVX2/AVX512 kernel headers
+   are intentionally not included here: they unconditionally pull in
+   x86-specific headers (e.g. immintrin.h), which would break non-AMD-opt
+   (and potentially non-x86) builds. */
+int fla_dgtsv_kernel_avx2(aocl_int64_t *n, aocl_int64_t *nrhs, doublereal *dl, doublereal *d__,
+                          doublereal *du, doublereal *b, aocl_int64_t *ldb, aocl_int64_t *info);
+int fla_dgtsv_kernel_avx512(aocl_int64_t *n, aocl_int64_t *nrhs, doublereal *dl, doublereal *d__,
+                            doublereal *du, doublereal *b, aocl_int64_t *ldb, aocl_int64_t *info);
+#endif
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
 /* http://www.netlib.org/lapack/explore-html/ */
@@ -170,13 +183,6 @@ void aocl_lapack_dgtsv(aocl_int64_t *n, aocl_int64_t *nrhs, doublereal *dl, doub
     /* .. External Subroutines .. */
     /* .. */
     /* .. Executable Statements .. */
-    /* Parameter adjustments */
-    --dl;
-    --d__;
-    --du;
-    b_dim1 = *ldb;
-    b_offset = 1 + b_dim1;
-    b -= b_offset;
     /* Function Body */
     *info = 0;
     if(*n < 0)
@@ -203,6 +209,42 @@ void aocl_lapack_dgtsv(aocl_int64_t *n, aocl_int64_t *nrhs, doublereal *dl, doub
         AOCL_DTL_TRACE_LOG_EXIT
         return;
     }
+    if(*nrhs == 0)
+    {
+        AOCL_DTL_TRACE_LOG_EXIT
+        return;
+    }
+#if FLA_ENABLE_AMD_OPT
+    /* Initialize the global context (architecture detection) and dispatch to the
+       AVX512/AVX2 optimized kernels based on problem size. The kernels vectorize
+       across the NRHS columns, so the selection is driven by *nrhs:
+         - AVX512 (8 columns/iteration) once *nrhs is large enough to fill the
+           512-bit registers,
+         - AVX2 (4 columns/iteration) for the mid range,
+         - the scalar reference path below for very small *nrhs, where SIMD gather
+           / scatter overheads outweigh any benefit. */
+    aocl_fla_init();
+    if(*nrhs >= FLA_DGTSV_AVX512_MIN_NRHS && FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX512))
+    {
+        fla_dgtsv_kernel_avx512(n, nrhs, dl, d__, du, b, ldb, info);
+        AOCL_DTL_TRACE_LOG_EXIT
+        return;
+    }
+    else if(*nrhs >= FLA_DGTSV_AVX2_MIN_NRHS && FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))
+    {
+        fla_dgtsv_kernel_avx2(n, nrhs, dl, d__, du, b, ldb, info);
+        AOCL_DTL_TRACE_LOG_EXIT
+        return;
+    }
+#endif
+    /* Parameter adjustments */
+    --dl;
+    --d__;
+    --du;
+    b_dim1 = *ldb;
+    b_offset = 1 + b_dim1;
+    b -= b_offset;
+
     if(*nrhs == 1)
     {
         i__1 = *n - 2;

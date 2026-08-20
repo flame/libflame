@@ -276,6 +276,13 @@
 // POTRI threshold numbers to chose paths for performance
 #define FLA_POTRI_DOUBLE_SMALL        (65)
 
+//GTSV, threshold numbers to chose paths for performance.
+// The optimized kernels vectorize across the NRHS columns (8-wide for AVX512,
+// 4-wide for AVX2), so the SIMD path is only chosen when there are enough
+// right-hand sides to fill the vector registers.
+#define FLA_DGTSV_AVX512_MIN_NRHS     (8)
+#define FLA_DGTSV_AVX2_MIN_NRHS       (4)
+
 //GETRF , threshold numbers to chose paths for performance
 #define TALL_RATIO_THRESHOLD 1.5
 #define WIDE_RATIO_THRESHOLD 0.67

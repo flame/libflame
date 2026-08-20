@@ -122,11 +122,15 @@ void fla_zlarf1_right_apply_incv1_avx2(aocl_int64_t m, aocl_int64_t n, dcomplex 
                                        dcomplex *work);
 int fla_dpotrf_small_avx2(char *uplo, aocl_int64_t *n, doublereal *a, aocl_int64_t *lda,
                           aocl_int64_t *info);
+int fla_dgtsv_kernel_avx2(aocl_int64_t *n, aocl_int64_t *nrhs, doublereal *dl, doublereal *d__,
+                          doublereal *du, doublereal *b, aocl_int64_t *ldb, aocl_int64_t *info);
 void fla_dpotri_small_avx2(char *uplo, aocl_int64_t *n, double *A, aocl_int64_t *lda,
                            aocl_int64_t *info);
 int fla_dcopy_scal_ix1_avx2(aocl_int64_t n, doublereal da, const doublereal *dx, doublereal *dy);
 void fla_dspr_lower_avx2(aocl_int64_t len, doublereal alpha, const doublereal *x, doublereal *ap);
 void fla_dlasr_left_pivotv_avx2(logical forward, aocl_int64_t m, aocl_int64_t n, doublereal *c__,
                                 doublereal *s, doublereal *a, aocl_int64_t a_dim1);
+int fla_dgtsv_kernel_avx2(aocl_int64_t *n, aocl_int64_t *nrhs, doublereal *dl, doublereal *d__,
+                          doublereal *du, doublereal *b, aocl_int64_t *ldb, aocl_int64_t *info);
 #endif /* FLA_ENABLE_AMD_OPT */
 #endif /* FLA_LAPACK_AVX2_KERNELS_DEFS_H */
