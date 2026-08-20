@@ -390,6 +390,8 @@ void fla_dlarf1l_left_apply_incv1_avx512(aocl_int64_t m, aocl_int64_t n, doubler
  * a_buff and pair with the n elements of v.
  * Columns of A are contiguous, so both passes reduce to axpys and the rows are
  * processed in register blocks to keep w in flight.
+ *
+ * @note: n is the number of columns of A excluding c1 (i.e. the number of columns of A minus 1)
  * Required: m >= 1
  */
 void fla_dlarf1_right_apply_incv1_avx512(aocl_int64_t m, aocl_int64_t n, doublereal *a_buff,

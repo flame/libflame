@@ -628,9 +628,9 @@ void fla_dlarf_small_incv1_simd(aocl_int64_t m, aocl_int64_t n, doublereal *a_bu
 /* DLARF1F for small sizes
  * To be used only when vectorized code via avx2/avx512 is enabled
  * */
-void fla_dlarf1f_small_incv1_simd(aocl_int64_t m, aocl_int64_t n, doublereal *a_buff,
-                                  aocl_int64_t ldr, doublereal *v, doublereal ntau,
-                                  doublereal *work)
+void fla_dlarf1f_small_left_incv1_simd(aocl_int64_t m, aocl_int64_t n, doublereal *a_buff,
+                                       aocl_int64_t ldr, doublereal *v, doublereal ntau,
+                                       doublereal *work)
 {
     /* Below one full vector block of rows a scalar loop beats the kernels */
     if(m < 4)
@@ -669,9 +669,9 @@ void fla_dlarf1f_small_incv1_simd(aocl_int64_t m, aocl_int64_t n, doublereal *a_
 /* DLARF1L for small sizes
  * To be used only when vectorized code via avx2/avx512 is enabled
  * */
-void fla_dlarf1l_small_incv1_simd(aocl_int64_t m, aocl_int64_t n, doublereal *a_buff,
-                                  aocl_int64_t ldr, doublereal *v, doublereal ntau,
-                                  doublereal *work)
+void fla_dlarf1l_small_left_incv1_simd(aocl_int64_t m, aocl_int64_t n, doublereal *a_buff,
+                                       aocl_int64_t ldr, doublereal *v, doublereal ntau,
+                                       doublereal *work)
 {
     /* Below one full vector block of rows a scalar loop beats the kernels */
     if(m < 4)
@@ -707,8 +707,15 @@ void fla_dlarf1l_small_incv1_simd(aocl_int64_t m, aocl_int64_t n, doublereal *a_
     return;
 }
 
-/* DLARF1F/DLARF1L applied from the right, for small sizes
+/**
+ * DLARF1F/DLARF1L applied from the right, for small sizes
  * To be used only when vectorized code via avx2/avx512 is enabled
+ *
+ * The column of A that pairs with the implicit v element 1 is not part of
+ * a_buff, it is passed separately in c1. The remaining n columns start at
+ * a_buff and pair with the n elements of v.
+ *
+ * @note: n is the number of columns of A excluding c1 (i.e. the number of columns of A minus 1)
  * */
 void fla_dlarf1_small_right_incv1_simd(aocl_int64_t m, aocl_int64_t n, doublereal *a_buff,
                                        aocl_int64_t ldr, doublereal *v, doublereal *c1,

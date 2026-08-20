@@ -97,12 +97,12 @@ void fla_dcopy_scal(aocl_int64_t n, doublereal alpha, const doublereal *x, aocl_
                     doublereal *y, aocl_int64_t incy);
 void fla_dlarf_small_incv1_simd(aocl_int64_t m, aocl_int64_t n, doublereal *a_buff,
                                 aocl_int64_t ldr, doublereal *v, doublereal ntau, doublereal *work);
-void fla_dlarf1f_small_incv1_simd(aocl_int64_t m, aocl_int64_t n, doublereal *a_buff,
-                                  aocl_int64_t ldr, doublereal *v, doublereal ntau,
-                                  doublereal *work);
-void fla_dlarf1l_small_incv1_simd(aocl_int64_t m, aocl_int64_t n, doublereal *a_buff,
-                                  aocl_int64_t ldr, doublereal *v, doublereal ntau,
-                                  doublereal *work);
+void fla_dlarf1f_small_left_incv1_simd(aocl_int64_t m, aocl_int64_t n, doublereal *a_buff,
+                                       aocl_int64_t ldr, doublereal *v, doublereal ntau,
+                                       doublereal *work);
+void fla_dlarf1l_small_left_incv1_simd(aocl_int64_t m, aocl_int64_t n, doublereal *a_buff,
+                                       aocl_int64_t ldr, doublereal *v, doublereal ntau,
+                                       doublereal *work);
 void fla_dlasr_left_pivotv_simd(logical forward, aocl_int64_t m, aocl_int64_t n, doublereal *c__,
                                 doublereal *s, doublereal *a, aocl_int64_t a_dim1);
 void fla_dlarf1_small_right_incv1_simd(aocl_int64_t m, aocl_int64_t n, doublereal *a_buff,

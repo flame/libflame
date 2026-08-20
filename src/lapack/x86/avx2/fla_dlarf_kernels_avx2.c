@@ -416,14 +416,15 @@ __attribute__((aligned(512))) void fla_dlarf1l_left_apply_incv1_avx2(aocl_int64_
     }
 }
 
-/* Apply the Householder rotation from the right                   */
-/*    A = A - tau * A * v * v**T                                   */
-/* DGEMV and DGER operations are combined.                         */
-/* The column of A that pairs with the implicit v element 1 is not */
-/* part of a_buff, it is passed separately in c1. The remaining n  */
-/* columns start at a_buff and pair with the n elements of v.      */
-/* Columns of A are contiguous, so both passes reduce to axpys and */
-/* the rows are processed in register blocks to keep w in flight.  */
+/**
+ * Apply the Householder rotation from the right: A = A - tau * A * v * v**T
+ * DGEMV and DGER operations are combined.
+ * The column of A that pairs with the implicit v element 1 is not part of a_buff,
+ * it is passed separately in c1. The remaining n columns start at a_buff and pair
+ * with the n elements of v. Columns of A are contiguous, so both passes reduce to
+ * axpys and the rows are processed in register blocks to keep w in flight.
+ * @note: n is the number of columns of A excluding c1 (i.e. the number of columns of A minus 1)
+ * */
 __attribute__((aligned(512))) void
     fla_dlarf1_right_apply_incv1_avx2(aocl_int64_t m, aocl_int64_t n, doublereal *a_buff,
                                       aocl_int64_t ldr, doublereal *v, doublereal *c1,
@@ -504,11 +505,12 @@ __attribute__((aligned(512))) void
     }
 }
 
-/* Folds the column of A that pairs with the implicit v element 1 into the  */
-/* GEMV result and updates it, for DLARF1F and DLARF1L from the right.      */
-/*    work = work + c1                                                      */
-/*    c1   = c1 + ntau * work                                               */
-/* Both operands are contiguous, so the two passes fuse into one loop.      */
+/** Folds the column of A that pairs with the implicit v element 1 into the GEMV result
+ *  and updates it, for DLARF1F and DLARF1L from the right.
+ *  work = work + c1
+ *  c1   = c1 + ntau * work
+ *  Both operands are contiguous, so the two passes fuse into one loop.
+ * */
 __attribute__((aligned(512))) void fla_dlarf1_right_update_c1_avx2(aocl_int64_t m,
                                                                    doublereal *restrict c1,
                                                                    doublereal ntau,

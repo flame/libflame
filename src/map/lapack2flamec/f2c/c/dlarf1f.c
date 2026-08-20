@@ -362,8 +362,8 @@ void aocl_lapack_dlarf1f(char *side, aocl_int64_t *m, aocl_int64_t *n, doublerea
             if(use_fused_simd && *incv == c__1 && FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX2))
             {
                 /* Call optimized routine */
-                fla_dlarf1f_small_incv1_simd(lastv, lastc, &c__[c_offset], *ldc, &v[1], d__1,
-                                             &work[1]);
+                fla_dlarf1f_small_left_incv1_simd(lastv, lastc, &c__[c_offset], *ldc, &v[1], d__1,
+                                                  &work[1]);
             }
             else
             {
