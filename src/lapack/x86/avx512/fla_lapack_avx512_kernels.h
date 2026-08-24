@@ -66,5 +66,8 @@ void fla_dspr_lower_avx512(aocl_int64_t len, doublereal alpha, const doublereal 
 int fla_dcopy_scal_ix1_avx512(aocl_int64_t n, doublereal da, const doublereal *dx, doublereal *dy);
 int fla_dgtsv_kernel_avx512(aocl_int64_t *n, aocl_int64_t *nrhs, doublereal *dl, doublereal *d__,
                             doublereal *du, doublereal *b, aocl_int64_t *ldb, aocl_int64_t *info);
+void fla_dlasr_left_pivotv_avx512(logical forward, aocl_int64_t m, aocl_int64_t n, doublereal *c__,
+                                  doublereal *s, doublereal *a, aocl_int64_t a_dim1);
+
 #endif
 #endif

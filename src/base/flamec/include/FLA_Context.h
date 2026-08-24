@@ -101,7 +101,8 @@ typedef enum
     FLA_ARCH_SSE2,
     FLA_ARCH_AVX,
     FLA_ARCH_AVX2,
-    FLA_ARCH_AVX512
+    FLA_ARCH_AVX512,
+    FLA_ARCH_AVX512DQ
 
 } fla_arch_t;
 

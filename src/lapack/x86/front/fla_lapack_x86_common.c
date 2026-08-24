@@ -833,8 +833,8 @@ void fla_zlarf1f_small_left_incv1_simd(aocl_int64_t m, aocl_int64_t n, dcomplex 
 }
 
 void fla_zlarf1_small_right_incv1_simd(aocl_int64_t m, aocl_int64_t n, dcomplex *a_buff,
-                                        aocl_int64_t ldr, dcomplex *v, dcomplex *c1, dcomplex *ntau,
-                                        dcomplex *work)
+                                       aocl_int64_t ldr, dcomplex *v, dcomplex *c1, dcomplex *ntau,
+                                       dcomplex *work)
 {
     if(m >= FLA_ZLARF1_R_SIMD_AVX512_THRESH_M && FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX512))
     {
@@ -968,15 +968,21 @@ void fla_dcopy_scal(aocl_int64_t n, doublereal da, const doublereal *dx, aocl_in
 }
 
 /* DLASR for side='L' with a variable pivot (pivot='V')
- * To be used only when vectorized code via avx2 is enabled
+ * To be used only when vectorized code via avx2/avx512 is enabled
  * Kept last in this file so that adding it leaves the code placement of the
  * functions above unchanged.
  * */
 void fla_dlasr_left_pivotv_simd(logical forward, aocl_int64_t m, aocl_int64_t n, doublereal *c__,
                                 doublereal *s, doublereal *a, aocl_int64_t a_dim1)
 {
-    /* No AVX512 kernel here, hence not checking for any ISA support. */
-    fla_dlasr_left_pivotv_avx2(forward, m, n, c__, s, a, a_dim1);
+    if(n >= FLA_DLASR_L_SIMD_AVX512_THRESH_N && FLA_IS_MIN_ARCH_ID(FLA_ARCH_AVX512DQ))
+    {
+        fla_dlasr_left_pivotv_avx512(forward, m, n, c__, s, a, a_dim1);
+    }
+    else
+    {
+        fla_dlasr_left_pivotv_avx2(forward, m, n, c__, s, a, a_dim1);
+    }
 }
 
 #endif

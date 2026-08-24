@@ -1,7 +1,7 @@
 /*
  *     Copyright (C) 2021-2026, Advanced Micro Devices, Inc. All rights reserved.
  */
- 
+
 /* dormlq.f -- translated by f2c (version 20160102). You must link the resulting object file with
  libf2c: on Microsoft Windows system, link with libf2c.lib; on Linux or Unix systems, link with
  .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that
@@ -13,7 +13,7 @@
 static aocl_int64_t c__1 = 1;
 static aocl_int64_t c_n1 = -1;
 static aocl_int64_t c__2 = 2;
-static int get_opt_threads_dormlq(aocl_int64_t m, aocl_int64_t n);
+static int get_opt_threads_dormlq(aocl_int64_t m, aocl_int64_t n, aocl_int64_t k, logical left);
 /* > \brief \b DORMLQ */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
@@ -192,8 +192,8 @@ int lapack_dormlq(char *side, char *trans, aocl_int64_t *m, aocl_int64_t *n, aoc
     extern logical lsame_(char *, char *, aocl_int64_t, aocl_int64_t);
     aocl_int64_t nbmin, iinfo;
     extern void dorml2_fla(char *, char *, aocl_int64_t *, aocl_int64_t *, aocl_int64_t *,
-                             doublereal *, aocl_int64_t *, doublereal *, doublereal *,
-                             aocl_int64_t *, doublereal *, aocl_int64_t *);
+                           doublereal *, aocl_int64_t *, doublereal *, doublereal *, aocl_int64_t *,
+                           doublereal *, aocl_int64_t *);
     logical notran;
     aocl_int64_t ldwork;
     char transt[1];
@@ -343,8 +343,8 @@ int lapack_dormlq(char *side, char *trans, aocl_int64_t *m, aocl_int64_t *n, aoc
     if(nb < nbmin || nb >= *k || fla_min(*m, *n) < FLA_DORMLQ_SMALL_SIZE_THRESH)
     {
         /* Use unblocked code */
-        dorml2_fla(side, trans, m, n, k, &a[a_offset], lda, &tau[1], &c__[c_offset], ldc,
-                      &work[1], &iinfo);
+        dorml2_fla(side, trans, m, n, k, &a[a_offset], lda, &tau[1], &c__[c_offset], ldc, &work[1],
+                   &iinfo);
     }
     else
     {
@@ -395,7 +395,7 @@ int lapack_dormlq(char *side, char *trans, aocl_int64_t *m, aocl_int64_t *n, aoc
 
 #ifdef FLA_OPENMP_MULTITHREADING
         /* Get optimum thread number for DORMLQ*/
-        actual_num_threads = get_opt_threads_dormlq(*m, *n);
+        actual_num_threads = get_opt_threads_dormlq(*m, *n, *k, left);
 #pragma omp parallel num_threads(actual_num_threads) private(i__, thread_id, mi_sub, ni_sub, index)
         {
             thread_id = omp_get_thread_num();
@@ -459,8 +459,8 @@ int lapack_dormlq(char *side, char *trans, aocl_int64_t *m, aocl_int64_t *n, aoc
 #pragma omp barrier
 #else
                 aocl_lapack_dlarfb(side, transt, "Forward", "Rowwise", &mi, &ni, &ib,
-                                   &a[i__ + i__ * a_dim1], lda, t_ptr, &ldt,
-                                   &c__[ic + jc * c_dim1], ldc, upd_ptr, &ldwork);
+                                   &a[i__ + i__ * a_dim1], lda, t_ptr, &ldt, &c__[ic + jc * c_dim1],
+                                   ldc, upd_ptr, &ldwork);
 #endif
                 /* L10: */
             }
@@ -476,22 +476,24 @@ int lapack_dormlq(char *side, char *trans, aocl_int64_t *m, aocl_int64_t *n, aoc
 }
 /* lapack_dormlq */
 
-// DORMLQ, size thresholds to choose number of threads
-// TODO: Move the macro definitions to corresponding headers
-#define FLA_DORMLQ_THREADS_THRESH0 (1110)
-#define FLA_DORMLQ_THREADS_THRESH1 (3100)
-
 extern int fla_thread_get_num_threads();
-static int get_opt_threads_dormlq(aocl_int64_t m, aocl_int64_t n)
+static int get_opt_threads_dormlq(aocl_int64_t m, aocl_int64_t n, aocl_int64_t k, logical left)
 {
-    aocl_int64_t min_m_n = fla_min(m, n);
+    /* The parallel loop splits the columns of C for side='L' and its rows for side='R'. */
+    aocl_int64_t split = left ? n : m;
+    aocl_int64_t work = m * n * k;
+    aocl_int64_t max_by_split;
     int num_threads;
 
-    if(min_m_n < FLA_DORMLQ_THREADS_THRESH0)
+    if(work < FLA_DORMLQ_THREAD_THRESH0)
+    {
+        num_threads = 8;
+    }
+    else if(work < FLA_DORMLQ_THREAD_THRESH1)
     {
         num_threads = 16;
     }
-    else if(min_m_n < FLA_DORMLQ_THREADS_THRESH1)
+    else if(work < FLA_DORMLQ_THREAD_THRESH2)
     {
         num_threads = 32;
     }
@@ -499,6 +501,11 @@ static int get_opt_threads_dormlq(aocl_int64_t m, aocl_int64_t n)
     {
         num_threads = 64;
     }
+
+    /* Too small a share of the split dimension and a thread's work no longer covers
+       its share of the threading overhead. */
+    max_by_split = fla_max(1, split / FLA_DORMLQ_MIN_SPLIT_PER_THREAD);
+    num_threads = (int)fla_min((aocl_int64_t)num_threads, max_by_split);
 
     num_threads = fla_min(num_threads, fla_thread_get_num_threads());
 

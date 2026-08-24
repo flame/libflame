@@ -368,6 +368,8 @@
 /* DLARFT , threshold numbers to chose paths for performance */
 #define FLA_DLARFT_BLOCK_NB (16)
 
+#define FLA_DLASR_L_SIMD_AVX512_THRESH_N (8)
+
 /* ZLARF1F threshold numbers */
 #ifndef FLA_ZLARF1_SMALL_DIM_THRESH
 #define FLA_ZLARF1_SMALL_DIM_THRESH (34)
@@ -406,6 +408,17 @@
 // DORMQR/DORMLQ threshold for small vs large sizes
 #define FLA_DORMQR_SMALL_SIZE_THRESH (100)
 #define FLA_DORMLQ_SMALL_SIZE_THRESH (50)
+
+// DORMLQ, work (m*n*k) thresholds selecting 8 / 16 / 32 / 64 threads.
+// Below each one the work per thread is too small to cover its share of the
+// threading overhead.
+#define FLA_DORMLQ_THREAD_THRESH0 (1200000000LL)
+#define FLA_DORMLQ_THREAD_THRESH1 (6000000000LL)
+#define FLA_DORMLQ_THREAD_THRESH2 (50000000000LL)
+
+// DORMLQ, smallest share of the split dimension (n for side='L', m for side='R')
+// worth giving a thread, for the same reason.
+#define FLA_DORMLQ_MIN_SPLIT_PER_THREAD (12)
 
 // --- Error-related macro definitions -----------------------------------------
 

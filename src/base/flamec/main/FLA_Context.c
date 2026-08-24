@@ -356,7 +356,7 @@ void fla_thread_update_rntm_from_env(fla_tl_context_t *context)
 void fla_isa_init(fla_context *context)
 {
     fla_arch_id = FLA_ARCH_GENERIC;
-    const char* const flags_array[] = {"avx2", "avx512f"};
+    const char* const flags_array[] = {"avx2", "avx512f", "avx512dq"};
     au_cpu_num_t cpu_num = AU_CURRENT_CPU_NUM;
 
     integer cpu_supports_isa = au_cpuid_has_flags(cpu_num, flags_array, 1);
@@ -368,11 +368,22 @@ void fla_isa_init(fla_context *context)
         fla_arch_id = FLA_ARCH_AVX2;
     }
 
-    cpu_supports_isa = au_cpuid_has_flags(cpu_num, &flags_array[1], 1);
+    /* AVX512DQ is superset of AVX512F
+     * if AVX512DQ is supported, then AVX512F is also supported */
+    cpu_supports_isa = au_cpuid_has_flags(cpu_num, &flags_array[2], 1);
     if(cpu_supports_isa)
     {
         context->is_avx512 = TRUE;
-        fla_arch_id = FLA_ARCH_AVX512;
+        fla_arch_id = FLA_ARCH_AVX512DQ;
+    }
+    else
+    {
+        cpu_supports_isa = au_cpuid_has_flags(cpu_num, &flags_array[1], 1);
+        if(cpu_supports_isa)
+        {
+            context->is_avx512 = TRUE;
+            fla_arch_id = FLA_ARCH_AVX512;
+        }
     }
 
 #ifdef FLA_STRICT_ARCH
