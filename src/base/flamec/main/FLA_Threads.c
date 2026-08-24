@@ -33,7 +33,7 @@ void FLA_Thread_get_subrange(int thread_ID, int num_threads, fla_dim_t range, fl
         else
         {
             *sub_range = sub_region;
-            *index = remainder + thread_ID * sub_region;
+            *index = (*sub_range == 0) ? 0 : (remainder + thread_ID * sub_region);
         }
     }
 }

@@ -23,9 +23,6 @@ void fla_dlabrd_var1(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *nb, doubler
     aocl_int64_t i__;
     int thread_id;
 #ifdef FLA_OPENMP_MULTITHREADING
-    /* thread_threshold is used to store the maximum number of threads that can be used for the
-     * current operation*/
-    fla_dim_t thread_threshold;
     aocl_int64_t i__4, i__5;
     int actual_num_threads = 1;
     int optimal_num_threads = 1;
@@ -89,9 +86,8 @@ void fla_dlabrd_var1(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *nb, doubler
         /* Reduce to upper bidiagonal form */
         i__1 = *nb;
 #ifdef FLA_OPENMP_MULTITHREADING
-#pragma omp parallel num_threads(requested_num_threads) private(i__, i__2, i__3, i__4, i__5, \
-                                                                 thread_id, thread_threshold) \
-                     shared(actual_num_threads, optimal_num_threads)
+#pragma omp parallel num_threads(requested_num_threads) private( \
+        i__, i__2, i__3, i__4, i__5, thread_id) shared(actual_num_threads, optimal_num_threads)
         {
             thread_id = omp_get_thread_num();
             /* Initialize barrier with actual team size inside parallel region */
@@ -99,7 +95,8 @@ void fla_dlabrd_var1(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *nb, doubler
             {
                 actual_num_threads = omp_get_num_threads();
                 FLA_BARRIER_INIT(*barrier, actual_num_threads);
-                /* Chunk partitioning uses optimal_num_threads as divisor; keep >= 1 when actual < 8. */
+                /* Chunk partitioning uses optimal_num_threads as divisor; keep >= 1 when actual
+                 * < 8. */
                 optimal_num_threads = fla_max(1, actual_num_threads / 8);
                 if(optimal_num_threads <= 2)
                 {
@@ -119,10 +116,8 @@ void fla_dlabrd_var1(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *nb, doubler
                 i__2 = *m - i__ + 1;
                 i__3 = i__ - 1;
 #ifdef FLA_OPENMP_MULTITHREADING
-                FLA_Thread_get_subrange_chunks(thread_id, actual_num_threads, sizeof(double), i__2,
-                                               &i__4, &i__5, &thread_threshold);
+                FLA_Thread_get_subrange(thread_id, actual_num_threads, i__2, &i__4, &i__5);
                 FLA_BARRIER_WAIT(*barrier);
-                if(thread_id < thread_threshold)
                 {
                     aocl_blas_dgemv("No transpose", &i__4, &i__3, &neg_one, &a[i__ + a_dim1 + i__5],
                                     lda, &y[i__ + y_dim1], ldy, &d_one,
@@ -164,10 +159,8 @@ void fla_dlabrd_var1(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *nb, doubler
                     i__3 = *n - i__;
 #ifdef FLA_OPENMP_MULTITHREADING
                     /* Determine the sub partition range of current thread */
-                    FLA_Thread_get_subrange_chunks(thread_id, actual_num_threads, sizeof(double),
-                                                   i__3, &i__4, &i__5, &thread_threshold);
+                    FLA_Thread_get_subrange(thread_id, actual_num_threads, i__3, &i__4, &i__5);
                     FLA_BARRIER_WAIT(*barrier);
-                    if(thread_id < thread_threshold)
                     {
                         aocl_blas_dgemv("Transpose", &i__2, &i__4, &d_one,
                                         &a[i__ + (i__5 + i__ + 1) * a_dim1], lda,
@@ -194,11 +187,10 @@ void fla_dlabrd_var1(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *nb, doubler
                     i__2 = *m - i__ + 1;
                     i__3 = i__ - 1;
 #ifdef FLA_OPENMP_MULTITHREADING
-                    FLA_Thread_get_subrange_chunks(thread_id, optimal_num_threads, sizeof(double),
-                                                   i__3, &i__4, &i__5, &thread_threshold);
                     FLA_BARRIER_WAIT(*barrier);
-                    if(thread_id < thread_threshold)
+                    if(thread_id < optimal_num_threads)
                     {
+                        FLA_Thread_get_subrange(thread_id, optimal_num_threads, i__3, &i__4, &i__5);
                         aocl_blas_dgemv("Transpose", &i__2, &i__4, &d_one,
                                         &a[i__ + (i__5 + 1) * a_dim1], lda, &a[i__ + i__ * a_dim1],
                                         &i_one, &d_zero, &y[i__5 + i__ * y_dim1 + 1], &i_one);
@@ -218,11 +210,9 @@ void fla_dlabrd_var1(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *nb, doubler
                     i__2 = *n - i__;
                     i__3 = i__ - 1;
 #ifdef FLA_OPENMP_MULTITHREADING
-                    FLA_Thread_get_subrange_chunks(thread_id, optimal_num_threads, sizeof(double),
-                                                   i__2, &i__4, &i__5, &thread_threshold);
-
-                    if(thread_id < thread_threshold)
+                    if(thread_id < optimal_num_threads)
                     {
+                        FLA_Thread_get_subrange(thread_id, optimal_num_threads, i__2, &i__4, &i__5);
                         aocl_blas_dgemv("No transpose", &i__4, &i__3, &neg_one,
                                         &y[i__ + 1 + y_dim1 + i__5], ldy,
                                         &gemv_a_row_buffer[2 * (*nb)], &i_one, &d_one,
@@ -230,19 +220,17 @@ void fla_dlabrd_var1(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *nb, doubler
                     }
 
 #else
-                    aocl_blas_dgemv("No transpose", &i__2, &i__3, &neg_one, &y[i__ + 1 + y_dim1], ldy,
-                                    &y[i__ * y_dim1 + 1], &i_one, &d_one, &y[i__ + 1 + i__ * y_dim1],
-                                    &i_one);
+                    aocl_blas_dgemv("No transpose", &i__2, &i__3, &neg_one, &y[i__ + 1 + y_dim1],
+                                    ldy, &y[i__ * y_dim1 + 1], &i_one, &d_one,
+                                    &y[i__ + 1 + i__ * y_dim1], &i_one);
 #endif
                     i__2 = i__ - 1;
                     i__3 = *n - i__;
 #ifdef FLA_OPENMP_MULTITHREADING
                     /* Determine the sub partition range of current thread */
-                    FLA_Thread_get_subrange_chunks(thread_id, optimal_num_threads, sizeof(double),
-                                                   i__3, &i__4, &i__5, &thread_threshold);
-
-                    if(thread_id < thread_threshold)
+                    if(thread_id < optimal_num_threads)
                     {
+                        FLA_Thread_get_subrange(thread_id, optimal_num_threads, i__3, &i__4, &i__5);
                         aocl_blas_dgemv("Transpose", &i__2, &i__4, &neg_one,
                                         &a[(i__ + i__5 + 1) * a_dim1 + 1], lda,
                                         &gemv_a_row_buffer[(*nb)], &i_one, &d_one,
@@ -260,11 +248,10 @@ void fla_dlabrd_var1(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *nb, doubler
                     /* Update A(i,i+1:n) */
                     i__2 = *n - i__;
 #ifdef FLA_OPENMP_MULTITHREADING
-                    FLA_Thread_get_subrange_chunks(thread_id, optimal_num_threads, sizeof(double),
-                                                   i__2, &i__4, &i__5, &thread_threshold);
                     FLA_BARRIER_WAIT(*barrier);
-                    if(thread_id < thread_threshold)
+                    if(thread_id < optimal_num_threads)
                     {
+                        FLA_Thread_get_subrange(thread_id, optimal_num_threads, i__2, &i__4, &i__5);
                         aocl_blas_dgemv("No transpose", &i__4, &i__, &neg_one,
                                         &y[i__ + 1 + i__5 + y_dim1], ldy, &gemv_a_row_buffer[0],
                                         &i_one, &d_one, &a[i__ + (i__ + 1 + i__5) * a_dim1], lda);
@@ -280,11 +267,9 @@ void fla_dlabrd_var1(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *nb, doubler
                     i__2 = i__ - 1;
                     i__3 = *n - i__;
 #ifdef FLA_OPENMP_MULTITHREADING
-                    FLA_Thread_get_subrange_chunks(thread_id, optimal_num_threads, sizeof(double),
-                                                   i__3, &i__4, &i__5, &thread_threshold);
-
-                    if(thread_id < thread_threshold)
+                    if(thread_id < optimal_num_threads)
                     {
+                        FLA_Thread_get_subrange(thread_id, optimal_num_threads, i__3, &i__4, &i__5);
                         aocl_blas_dgemv("Transpose", &i__2, &i__4, &neg_one,
                                         &a[(i__ + 1 + i__5) * a_dim1 + 1], lda, &x[i__ + x_dim1],
                                         ldx, &d_one, &a[i__ + (i__ + 1 + i__5) * a_dim1], lda);
@@ -312,8 +297,8 @@ void fla_dlabrd_var1(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *nb, doubler
                         i__3 = *n - i__;
                         if(gemv_a_row_buffer != NULL)
                         {
-                            aocl_blas_dcopy(&i__3, &a[i__ + (i__ + 1) * a_dim1], lda, gemv_a_row_buffer,
-                                   &i_one);
+                            aocl_blas_dcopy(&i__3, &a[i__ + (i__ + 1) * a_dim1], lda,
+                                            gemv_a_row_buffer, &i_one);
                         }
                     }
                     /* Compute X(i+1:m,i) */
@@ -321,10 +306,8 @@ void fla_dlabrd_var1(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *nb, doubler
                     i__3 = *n - i__;
 #ifdef FLA_OPENMP_MULTITHREADING
 
-                    FLA_Thread_get_subrange_chunks(thread_id, actual_num_threads, sizeof(double),
-                                                   i__2, &i__4, &i__5, &thread_threshold);
+                    FLA_Thread_get_subrange(thread_id, actual_num_threads, i__2, &i__4, &i__5);
                     FLA_BARRIER_WAIT(*barrier);
-                    if(thread_id < thread_threshold)
                     {
                         if(gemv_a_row_buffer != NULL)
                         {
@@ -352,11 +335,9 @@ void fla_dlabrd_var1(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *nb, doubler
 #ifdef FLA_OPENMP_MULTITHREADING
 
                     i__2 = *n - i__;
-                    FLA_Thread_get_subrange_chunks(thread_id, optimal_num_threads, sizeof(double),
-                                                   i__, &i__4, &i__5, &thread_threshold);
-
-                    if(thread_id < thread_threshold)
+                    if(thread_id < optimal_num_threads)
                     {
+                        FLA_Thread_get_subrange(thread_id, optimal_num_threads, i__, &i__4, &i__5);
                         aocl_blas_dgemv("Transpose", &i__2, &i__4, &d_one,
                                         &y[i__ + 1 + (i__5 + 1) * y_dim1], ldy,
                                         &a[i__ + (i__ + 1) * a_dim1], lda, &d_zero,
@@ -376,11 +357,9 @@ void fla_dlabrd_var1(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *nb, doubler
 #endif
                     i__2 = *m - i__;
 #ifdef FLA_OPENMP_MULTITHREADING
-                    FLA_Thread_get_subrange_chunks(thread_id, optimal_num_threads, sizeof(double),
-                                                   i__2, &i__4, &i__5, &thread_threshold);
-
-                    if(thread_id < thread_threshold)
+                    if(thread_id < optimal_num_threads)
                     {
+                        FLA_Thread_get_subrange(thread_id, optimal_num_threads, i__2, &i__4, &i__5);
                         aocl_blas_dgemv("No transpose", &i__4, &i__, &neg_one,
                                         &a[i__ + 1 + a_dim1 + i__5], lda, &gemv_a_row_buffer[(*n)],
                                         &i_one, &d_one, &x[i__ + 1 + i__ * x_dim1 + i__5], &i_one);
@@ -397,11 +376,9 @@ void fla_dlabrd_var1(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *nb, doubler
                     i__3 = *n - i__;
 
 #ifdef FLA_OPENMP_MULTITHREADING
-                    FLA_Thread_get_subrange_chunks(thread_id, optimal_num_threads, sizeof(double),
-                                                   i__2, &i__4, &i__5, &thread_threshold);
-
-                    if(thread_id < thread_threshold)
+                    if(thread_id < optimal_num_threads)
                     {
+                        FLA_Thread_get_subrange(thread_id, optimal_num_threads, i__2, &i__4, &i__5);
                         aocl_blas_dgemv("No transpose", &i__4, &i__3, &d_one,
                                         &a[(i__ + 1) * a_dim1 + 1 + i__5], lda,
                                         &a[i__ + (i__ + 1) * a_dim1], lda, &d_zero,
@@ -410,20 +387,20 @@ void fla_dlabrd_var1(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *nb, doubler
 
 #else
                     {
-                        aocl_blas_dgemv(
-                            "No transpose", &i__2, &i__3, &d_one, &a[(i__ + 1) * a_dim1 + 1], lda,
-                            &a[i__ + (i__ + 1) * a_dim1], lda, &d_zero, &x[i__ * x_dim1 + 1], &i_one);
+                        aocl_blas_dgemv("No transpose", &i__2, &i__3, &d_one,
+                                        &a[(i__ + 1) * a_dim1 + 1], lda,
+                                        &a[i__ + (i__ + 1) * a_dim1], lda, &d_zero,
+                                        &x[i__ * x_dim1 + 1], &i_one);
                     }
 #endif
 
                     i__2 = *m - i__;
                     i__3 = i__ - 1;
 #ifdef FLA_OPENMP_MULTITHREADING
-                    FLA_Thread_get_subrange_chunks(thread_id, optimal_num_threads, sizeof(double),
-                                                   i__2, &i__4, &i__5, &thread_threshold);
                     FLA_BARRIER_WAIT(*barrier);
-                    if(thread_id < thread_threshold)
+                    if(thread_id < optimal_num_threads)
                     {
+                        FLA_Thread_get_subrange(thread_id, optimal_num_threads, i__2, &i__4, &i__5);
                         aocl_blas_dgemv("No transpose", &i__4, &i__3, &neg_one,
                                         &x[i__ + 1 + x_dim1 + i__5], ldx, &x[i__ * x_dim1 + 1],
                                         &i_one, &d_one, &x[i__ + 1 + i__ * x_dim1 + i__5], &i_one);
@@ -432,9 +409,9 @@ void fla_dlabrd_var1(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *nb, doubler
                     }
 #else
                     {
-                        aocl_blas_dgemv("No transpose", &i__2, &i__3, &neg_one, &x[i__ + 1 + x_dim1],
-                                        ldx, &x[i__ * x_dim1 + 1], &i_one, &d_one,
-                                        &x[i__ + 1 + i__ * x_dim1], &i_one);
+                        aocl_blas_dgemv("No transpose", &i__2, &i__3, &neg_one,
+                                        &x[i__ + 1 + x_dim1], ldx, &x[i__ * x_dim1 + 1], &i_one,
+                                        &d_one, &x[i__ + 1 + i__ * x_dim1], &i_one);
                         aocl_blas_dscal(&i__2, &taup[i__], &x[i__ + 1 + i__ * x_dim1], &i_one);
                     }
 #endif
@@ -448,9 +425,8 @@ void fla_dlabrd_var1(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *nb, doubler
         /* Reduce to lower bidiagonal form */
         i__1 = *nb;
 #ifdef FLA_OPENMP_MULTITHREADING
-#pragma omp parallel num_threads(requested_num_threads) private(i__, i__2, i__3, i__4, i__5, \
-                                                                 thread_id) \
-                     shared(actual_num_threads)
+#pragma omp parallel num_threads(requested_num_threads) private( \
+        i__, i__2, i__3, i__4, i__5, thread_id) shared(actual_num_threads)
         {
             thread_id = omp_get_thread_num();
             /* Initialize barrier with actual team size inside parallel region.
@@ -506,9 +482,9 @@ void fla_dlabrd_var1(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *nb, doubler
                                     lda, &d_zero, &x[i__5 + i__ + 1 + i__ * x_dim1], &i_one);
                     FLA_BARRIER_WAIT(*barrier);
 #else
-                    aocl_blas_dgemv("No transpose", &i__2, &i__3, &d_one, &a[i__ + 1 + i__ * a_dim1],
-                                    lda, &a[i__ + i__ * a_dim1], lda, &d_zero,
-                                    &x[i__ + 1 + i__ * x_dim1], &i_one);
+                    aocl_blas_dgemv("No transpose", &i__2, &i__3, &d_one,
+                                    &a[i__ + 1 + i__ * a_dim1], lda, &a[i__ + i__ * a_dim1], lda,
+                                    &d_zero, &x[i__ + 1 + i__ * x_dim1], &i_one);
 #endif
                     if(thread_id == 0)
                     {
@@ -519,9 +495,9 @@ void fla_dlabrd_var1(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *nb, doubler
                                         &i_one);
                         i__2 = *m - i__;
                         i__3 = i__ - 1;
-                        aocl_blas_dgemv("No transpose", &i__2, &i__3, &neg_one, &a[i__ + 1 + a_dim1],
-                                        lda, &x[i__ * x_dim1 + 1], &i_one, &d_one,
-                                        &x[i__ + 1 + i__ * x_dim1], &i_one);
+                        aocl_blas_dgemv("No transpose", &i__2, &i__3, &neg_one,
+                                        &a[i__ + 1 + a_dim1], lda, &x[i__ * x_dim1 + 1], &i_one,
+                                        &d_one, &x[i__ + 1 + i__ * x_dim1], &i_one);
                         i__2 = i__ - 1;
                         i__3 = *n - i__ + 1;
                         aocl_blas_dgemv("No transpose", &i__2, &i__3, &d_one, &a[i__ * a_dim1 + 1],
@@ -529,16 +505,16 @@ void fla_dlabrd_var1(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *nb, doubler
                                         &x[i__ * x_dim1 + 1], &i_one);
                         i__2 = *m - i__;
                         i__3 = i__ - 1;
-                        aocl_blas_dgemv("No transpose", &i__2, &i__3, &neg_one, &x[i__ + 1 + x_dim1],
-                                        ldx, &x[i__ * x_dim1 + 1], &i_one, &d_one,
-                                        &x[i__ + 1 + i__ * x_dim1], &i_one);
+                        aocl_blas_dgemv("No transpose", &i__2, &i__3, &neg_one,
+                                        &x[i__ + 1 + x_dim1], ldx, &x[i__ * x_dim1 + 1], &i_one,
+                                        &d_one, &x[i__ + 1 + i__ * x_dim1], &i_one);
                         i__2 = *m - i__;
                         aocl_blas_dscal(&i__2, &taup[i__], &x[i__ + 1 + i__ * x_dim1], &i_one);
                         /* Update A(i+1:m,i) */
                         i__2 = *m - i__;
                         i__3 = i__ - 1;
-                        aocl_blas_dgemv("No transpose", &i__2, &i__3, &neg_one, &a[i__ + 1 + a_dim1],
-                                        lda, &y[i__ + y_dim1], ldy, &d_one,
+                        aocl_blas_dgemv("No transpose", &i__2, &i__3, &neg_one,
+                                        &a[i__ + 1 + a_dim1], lda, &y[i__ + y_dim1], ldy, &d_one,
                                         &a[i__ + 1 + i__ * a_dim1], &i_one);
                         i__2 = *m - i__;
                         aocl_blas_dgemv("No transpose", &i__2, &i__, &neg_one, &x[i__ + 1 + x_dim1],
@@ -549,7 +525,8 @@ void fla_dlabrd_var1(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *nb, doubler
                         /* Computing MIN */
                         i__3 = i__ + 2;
                         aocl_lapack_dlarfg(&i__2, &a[i__ + 1 + i__ * a_dim1],
-                                           &a[fla_min(i__3, *m) + i__ * a_dim1], &i_one, &tauq[i__]);
+                                           &a[fla_min(i__3, *m) + i__ * a_dim1], &i_one,
+                                           &tauq[i__]);
                         e[i__] = a[i__ + 1 + i__ * a_dim1];
                         a[i__ + 1 + i__ * a_dim1] = 1.;
                     }
@@ -575,22 +552,22 @@ void fla_dlabrd_var1(aocl_int64_t *m, aocl_int64_t *n, aocl_int64_t *nb, doubler
                     {
                         i__2 = *m - i__;
                         i__3 = i__ - 1;
-                        aocl_blas_dgemv("Transpose", &i__2, &i__3, &d_one, &a[i__ + 1 + a_dim1], lda,
-                                        &a[i__ + 1 + i__ * a_dim1], &i_one, &d_zero,
+                        aocl_blas_dgemv("Transpose", &i__2, &i__3, &d_one, &a[i__ + 1 + a_dim1],
+                                        lda, &a[i__ + 1 + i__ * a_dim1], &i_one, &d_zero,
                                         &y[i__ * y_dim1 + 1], &i_one);
                         i__2 = *n - i__;
                         i__3 = i__ - 1;
-                        aocl_blas_dgemv("No transpose", &i__2, &i__3, &neg_one, &y[i__ + 1 + y_dim1],
-                                        ldy, &y[i__ * y_dim1 + 1], &i_one, &d_one,
-                                        &y[i__ + 1 + i__ * y_dim1], &i_one);
+                        aocl_blas_dgemv("No transpose", &i__2, &i__3, &neg_one,
+                                        &y[i__ + 1 + y_dim1], ldy, &y[i__ * y_dim1 + 1], &i_one,
+                                        &d_one, &y[i__ + 1 + i__ * y_dim1], &i_one);
                         i__2 = *m - i__;
                         aocl_blas_dgemv("Transpose", &i__2, &i__, &d_one, &x[i__ + 1 + x_dim1], ldx,
                                         &a[i__ + 1 + i__ * a_dim1], &i_one, &d_zero,
                                         &y[i__ * y_dim1 + 1], &i_one);
                         i__2 = *n - i__;
-                        aocl_blas_dgemv("Transpose", &i__, &i__2, &neg_one, &a[(i__ + 1) * a_dim1 + 1],
-                                        lda, &y[i__ * y_dim1 + 1], &i_one, &d_one,
-                                        &y[i__ + 1 + i__ * y_dim1], &i_one);
+                        aocl_blas_dgemv("Transpose", &i__, &i__2, &neg_one,
+                                        &a[(i__ + 1) * a_dim1 + 1], lda, &y[i__ * y_dim1 + 1],
+                                        &i_one, &d_one, &y[i__ + 1 + i__ * y_dim1], &i_one);
                         i__2 = *n - i__;
                         aocl_blas_dscal(&i__2, &tauq[i__], &y[i__ + 1 + i__ * y_dim1], &i_one);
                     }
