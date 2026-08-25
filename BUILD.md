@@ -38,7 +38,6 @@ Use the following command to configure project
      export CC=aoc
      export CXX=aoc++
      export FC=aof
-     export FLIBS="-laof"
 
      With LP64
          cmake ../ -DENABLE_AMD_FLAGS=ON -DCMAKE_INSTALL_PREFIX=<path>
