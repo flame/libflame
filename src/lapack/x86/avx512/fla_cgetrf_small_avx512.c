@@ -22,7 +22,7 @@ static inline void cgetrf_avx2_store4sc(scomplex *v, aocl_int64_t off, __m256 va
 
 static inline __m512 cgetrf_avx512_load4sc(const scomplex *v, aocl_int64_t off)
 {
-    return _mm512_zextps256_ps512(cgetrf_avx2_load4sc(v, off));
+    return _mm512_insertf32x8(_mm512_setzero_ps(), cgetrf_avx2_load4sc(v, off), 0);
 }
 
 static inline void cgetrf_avx512_store4sc(scomplex *v, aocl_int64_t off, __m512 val)
