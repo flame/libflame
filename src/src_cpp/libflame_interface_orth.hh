@@ -7391,8 +7391,14 @@ determined by sgerqf
     {
         larf(side, m, n, v, incv, tau, c, ldc, work);
     }
+    /** @}*/ // end of larf
 
-    /**
+    /** @defgroup larf1f larf1f
+     * @ingroup HH
+     * @{
+     */
+    /*! @brief LARF1F applies an elementary reflector to a general rectangular matrix, \n
+     assuming v(1) = 1
  * @details
  * \b Purpose:
     \verbatim
@@ -7448,8 +7454,14 @@ determined by sgerqf
     {
         larf1f(side, m, n, v, incv, tau, c, ldc, work);
     }
+    /** @}*/ // end of larf1f
 
-    /**
+    /** @defgroup larf1l larf1l
+     * @ingroup HH
+     * @{
+     */
+    /*! @brief LARF1L applies an elementary reflector to a general rectangular matrix, \n
+     assuming v(lastv) = 1
  * @details
  * \b Purpose:
     \verbatim
@@ -7505,7 +7517,7 @@ determined by sgerqf
     {
         larf1l(side, m, n, v, incv, tau, c, ldc, work);
     }
-    /** @}*/ // end of larf
+    /** @}*/ // end of larf1l
 
     /** @defgroup larfx larfx
      * @ingroup HH
