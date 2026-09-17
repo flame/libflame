@@ -1,4 +1,4 @@
-AOCL-LibFLAME v5.3.2 – LICENSE
+AOCL-LibFLAME v6.0.0 – LICENSE
 
 Copyright (c), Advanced Micro Devices, Inc.
 All rights reserved.

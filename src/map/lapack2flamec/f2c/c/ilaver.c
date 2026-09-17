@@ -3,6 +3,10 @@
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a
  standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c
  -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
+
+ /*
+  Copyright (C) 2021-2026, Advanced Micro Devices, Inc. All rights reserved.
+ */
 #include "FLA_f2c.h" /* > \brief \b ILAVER returns the LAPACK version. */
 /* * */
 /* =========== DOCUMENTATION =========== */
@@ -67,7 +71,7 @@ void aocl_lapack_ilaver(aocl_int64_t *vers_major__, aocl_int64_t *vers_minor__, 
     /* ===================================================================== */
     *vers_major__ = 3;
     *vers_minor__ = 12;
-    *vers_patch__ = 0;
+    *vers_patch__ = 1;
     /* ===================================================================== */
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
 }

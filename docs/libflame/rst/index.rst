@@ -1,4 +1,4 @@
-..  Copyright (C) 2024-2025, Advanced Micro Devices. All rights reserved.
+..  Copyright (C) 2024-2026, Advanced Micro Devices, Inc. All rights reserved.
 
 ..  Redistribution and use in source and binary forms, with or without
 ..  modification, are permitted provided that the following conditions are met:
@@ -44,10 +44,10 @@ libflame. The upstream libFLAME repository is available on `GitHub <https://gith
 libflame>`_. AMD is actively optimizing key routines in libFLAME as a part of the AOCL-LAPACK
 library, for AMD “Zen”-based architectures in the "amd" fork of libFLAME hosted on AMD GitHub.
 
-From AOCL 5.1, AOCL-LAPACK is compatible with LAPACK 3.12.0 specification. In combination
-with the AOCL-BLAS library, which includes optimizations for the AMD “Zen”-based processors,
-AOCL-LAPACK enables running high performing LAPACK functionalities on AMD platforms.
-
+From AOCL 6.0, AOCL-LAPACK is conformant to LAPACK 3.12.1 specifications except for the Index-64
+interfaces. In combination with the AOCL-BLAS library, which includes optimizations for
+the AMD “Zen”-based processors, AOCL-LAPACK enables running high performing LAPACK
+functionalities on AMD platforms.
 
 AOCL-LAPACK supports C, Fortran, and C++ template interfaces for the LAPACK APIs.
 
@@ -61,7 +61,7 @@ Please refer to `Netlib documentation <https://www.netlib.org/lapack/>`_ to see 
 
 .. toctree::
    :maxdepth: 1
-   
+
    lapackeInterfaces.rst
 
 AOCL-LAPACK provides standard C Interface to LAPACK APIs.
