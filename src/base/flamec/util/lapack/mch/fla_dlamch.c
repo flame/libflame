@@ -342,7 +342,7 @@ L30:
     static logical iwarn = FALSE_;
 
     /* Format strings */
-    static char fmt_9999[] = "(//\002 WARNING. The value EMIN may be incorre\
+    static const char fmt_9999[] = "(//\002 WARNING. The value EMIN may be incorre\
 ct:-\002,\002  EMIN = \002,i8,/\002 If, after inspection, the value EMIN loo\
 ks\002,\002 acceptable please comment out \002,/\002 the IF block as marked \
 within the code of routine\002,\002 DLAMC2,\002,/\002 otherwise supply EMIN \

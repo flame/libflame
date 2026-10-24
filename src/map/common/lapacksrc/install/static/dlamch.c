@@ -3,9 +3,9 @@
 
 /* Table of constant values */
 
-static doublereal half  = 0.5;
-static doublereal one   = 1.0;
-static doublereal zero  = 0.0;
+static const doublereal half  = 0.5;
+static const doublereal one   = 1.0;
+static const doublereal zero  = 0.0;
 
 doublereal dlamch_(char *cmach)
 {

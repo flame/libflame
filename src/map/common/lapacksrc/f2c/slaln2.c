@@ -206,17 +206,17 @@
 int slaln2_(logical *ltrans, integer *na, integer *nw, real * smin, real *ca, real *a, integer *lda, real *d1, real *d2, real *b, integer *ldb, real *wr, real *wi, real *x, integer *ldx, real *scale, real *xnorm, integer *info)
 {
     /* Initialized data */
-    static logical cswap[4] =
+    static const logical cswap[4] =
     {
         FALSE_,FALSE_,TRUE_,TRUE_
     }
     ;
-    static logical rswap[4] =
+    static const logical rswap[4] =
     {
         FALSE_,TRUE_,FALSE_,TRUE_
     }
     ;
-    static integer ipivot[16] /* was [4][4] */
+    static const integer ipivot[16] /* was [4][4] */
     =
     {
         1,2,3,4,2,1,4,3,3,4,1,2, 4,3,2,1
