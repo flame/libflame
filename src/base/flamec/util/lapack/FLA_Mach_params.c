@@ -46,55 +46,45 @@ FLA_Error FLA_Mach_params( FLA_Machval machval, FLA_Obj val )
 
 float FLA_Mach_params_ops( FLA_Machval machval )
 {
-	static int    first_time = TRUE;
-	static float  vals[FLA_MACH_N_VALS];
+	// No cache: the previous version filled a static table on first use,
+	// guarded by an unsynchronized first_time flag, so concurrent first
+	// callers could read a partially filled table. fla_slamch() is now a
+	// stateless switch over <float.h> constants, so computing on demand is
+	// both thread-safe and cheap.
+	char lapack_machval;
+	float  eps;
 
-	if ( first_time )
+	if ( machval == FLA_MACH_EPS2 )
 	{
-		char lapack_machval;
-		int  i;
-
-		for( i = 0; i < FLA_MACH_N_VALS - 1; ++i )
-		{
-			FLA_Param_map_flame_to_netlib_machval( FLA_MACH_START + i, &lapack_machval );
-//printf( "querying %d %c\n", FLA_MACH_START + i, lapack_machval );
-			vals[i] = fla_slamch( &lapack_machval, 1 );
-//printf( "got back  %34.29e\n", vals[i] );
-		}
-
-		// Store epsilon^2 in the last element.
-		vals[i] = vals[0] * vals[0];
-
-		first_time = FALSE;
+		// epsilon^2 has no LAPACK character code.
+		FLA_Param_map_flame_to_netlib_machval( FLA_MACH_EPS, &lapack_machval );
+		eps = fla_slamch( &lapack_machval, 1 );
+		return eps * eps;
 	}
 
-	return vals[ machval - FLA_MACH_START ];
+	FLA_Param_map_flame_to_netlib_machval( machval, &lapack_machval );
+	return fla_slamch( &lapack_machval, 1 );
 }
 
 double FLA_Mach_params_opd( FLA_Machval machval )
 {
-	static int    first_time = TRUE;
-	static double vals[FLA_MACH_N_VALS];
+	// No cache: the previous version filled a static table on first use,
+	// guarded by an unsynchronized first_time flag, so concurrent first
+	// callers could read a partially filled table. fla_dlamch() is now a
+	// stateless switch over <float.h> constants, so computing on demand is
+	// both thread-safe and cheap.
+	char lapack_machval;
+	double  eps;
 
-	if ( first_time )
+	if ( machval == FLA_MACH_EPS2 )
 	{
-		char lapack_machval;
-		int  i;
-
-		for( i = 0; i < FLA_MACH_N_VALS - 1; ++i )
-		{
-			FLA_Param_map_flame_to_netlib_machval( FLA_MACH_START + i, &lapack_machval );
-//printf( "querying %d %c\n", FLA_MACH_START + i, lapack_machval );
-			vals[i] = fla_dlamch( &lapack_machval, 1 );
-//printf( "got back  %34.29e\n", vals[i] );
-		}
-
-		// Store epsilon^2 in the last element.
-		vals[i] = vals[0] * vals[0];
-
-		first_time = FALSE;
+		// epsilon^2 has no LAPACK character code.
+		FLA_Param_map_flame_to_netlib_machval( FLA_MACH_EPS, &lapack_machval );
+		eps = fla_dlamch( &lapack_machval, 1 );
+		return eps * eps;
 	}
 
-	return vals[ machval - FLA_MACH_START ];
+	FLA_Param_map_flame_to_netlib_machval( machval, &lapack_machval );
+	return fla_dlamch( &lapack_machval, 1 );
 }
 

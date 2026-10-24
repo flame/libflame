@@ -17,6 +17,7 @@ extern "C" {
 #endif
 #include "FLA_f2c.h"
 #include "stdio.h"
+#include <float.h>
 
 /* Table of constant values */
 
@@ -55,145 +56,68 @@ double fla_pow_ri(real *ap, integer *bp)
 
 real fla_slamch(char *cmach, ftnlen cmach_len)
 {
-    /* Initialized data */
+    /*
+       Thread-safe, stateless rewrite.
 
-    static logical first = TRUE_;
+       The original f2c translation of the LAPACK 3.1 SLAMCH discovered
+       the machine parameters at run time (fla_slamc1..5) and kept them,
+       together with the return slot rmach, in static variables guarded by an
+       unsynchronized "first" flag. With concurrent first calls the probes
+       interleaved and could cache garbage (wrong sfmin, negative eps,
+       sfmin = inf) for the life of the process, print DLAMC2's "EMIN may be
+       incorrect" warning, or spin forever. Even after initialization, two
+       threads asking for different constants raced on the shared rmach.
 
-    /* System generated locals */
-    integer i__1;
-    real ret_val;
-
-    /* Builtin functions */
-    double fla_pow_ri(real *, integer *);
-
-    /* Local variables */
-    static real base;
-    static integer beta;
-    static real emin, prec, emax;
-    static integer imin, imax;
-    static logical lrnd;
-    static real rmin, rmax, t, rmach;
+       Like LAPACK >= 3.3, take the values from the language (<float.h>
+       here, Fortran intrinsics there) and keep no state. On IEEE-754
+       hardware the results are bit-identical to the old probe. As in
+       LAPACK, rounding (not chopping) is assumed. fla_slamc1..5 are
+       kept below, unused, for link compatibility.
+    */
+    const real one = 1.f;
+    const real rnd = one;                         /* assume rounding    */
+    const real eps = FLT_EPSILON * 0.5f;          /* b**(1-t) / 2       */
+    const real base = (real) FLT_RADIX;
+    real sfmin, small, rmach;
     extern logical fla_lsame(char *, char *, ftnlen, ftnlen);
-    static real small, sfmin;
-    extern /* Subroutine */ int fla_slamc2(integer *, integer *, logical *, real 
-	    *, integer *, real *, integer *, real *);
-    static integer it;
-    static real rnd, eps;
 
+    (void) cmach_len;
 
-/*  -- LAPACK auxiliary routine (version 3.2) -- */
-/*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. */
-/*     November 2006 */
-
-/*     .. Scalar Arguments .. */
-/*     .. */
-
-/*  Purpose */
-/*  ======= */
-
-/*  SLAMCH determines single precision machine parameters. */
-
-/*  Arguments */
-/*  ========= */
-
-/*  CMACH   (input) CHARACTER*1 */
-/*          Specifies the value to be returned by SLAMCH: */
-/*          = 'E' or 'e',   SLAMCH := eps */
-/*          = 'S' or 's ,   SLAMCH := sfmin */
-/*          = 'B' or 'b',   SLAMCH := base */
-/*          = 'P' or 'p',   SLAMCH := eps*base */
-/*          = 'N' or 'n',   SLAMCH := t */
-/*          = 'R' or 'r',   SLAMCH := rnd */
-/*          = 'M' or 'm',   SLAMCH := emin */
-/*          = 'U' or 'u',   SLAMCH := rmin */
-/*          = 'L' or 'l',   SLAMCH := emax */
-/*          = 'O' or 'o',   SLAMCH := rmax */
-
-/*          where */
-
-/*          eps   = relative machine precision */
-/*          sfmin = safe minimum, such that 1/sfmin does not overflow */
-/*          base  = base of the machine */
-/*          prec  = eps*base */
-/*          t     = number of (base) digits in the mantissa */
-/*          rnd   = 1.0 when rounding occurs in addition, 0.0 otherwise */
-/*          emin  = minimum exponent before (gradual) underflow */
-/*          rmin  = underflow threshold - base**(emin-1) */
-/*          emax  = largest exponent before overflow */
-/*          rmax  = overflow threshold  - (base**emax)*(1-eps) */
-
-/* ===================================================================== */
-
-/*     .. Parameters .. */
-/*     .. */
-/*     .. Local Scalars .. */
-/*     .. */
-/*     .. External Functions .. */
-/*     .. */
-/*     .. External Subroutines .. */
-/*     .. */
-/*     .. Save statement .. */
-/*     .. */
-/*     .. Data statements .. */
-/*     .. */
-/*     .. Executable Statements .. */
-
-    if (first) {
-	fla_slamc2(&beta, &it, &lrnd, &eps, &imin, &rmin, &imax, &rmax);
-	base = (real) beta;
-	t = (real) it;
-	if (lrnd) {
-	    rnd = (float)1.;
-	    i__1 = 1 - it;
-	    eps = fla_pow_ri(&base, &i__1) / 2;
-	} else {
-	    rnd = (float)0.;
-	    i__1 = 1 - it;
-	    eps = fla_pow_ri(&base, &i__1);
-	}
-	prec = eps * base;
-	emin = (real) imin;
-	emax = (real) imax;
-	sfmin = rmin;
-	small = (float)1. / rmax;
-	if (small >= sfmin) {
-
-/*           Use SMALL plus a bit, to avoid the possibility of rounding */
-/*           causing overflow when computing  1/sfmin. */
-
-	    sfmin = small * (eps + (float)1.);
-	}
+    /* Safe minimum: smallest x such that 1/x does not overflow. */
+    sfmin = FLT_MIN;
+    small = one / FLT_MAX;
+    if (small >= sfmin) {
+        /* Use SMALL plus a bit, to avoid rounding causing overflow
+           when computing 1/sfmin. */
+        sfmin = small * (one + eps);
     }
 
     if (fla_lsame(cmach, "E", (ftnlen)1, (ftnlen)1)) {
-	rmach = eps;
+        rmach = eps;                                 /* relative precision */
     } else if (fla_lsame(cmach, "S", (ftnlen)1, (ftnlen)1)) {
-	rmach = sfmin;
+        rmach = sfmin;                               /* safe minimum       */
     } else if (fla_lsame(cmach, "B", (ftnlen)1, (ftnlen)1)) {
-	rmach = base;
+        rmach = base;                                /* base               */
     } else if (fla_lsame(cmach, "P", (ftnlen)1, (ftnlen)1)) {
-	rmach = prec;
+        rmach = eps * base;                          /* eps * base         */
     } else if (fla_lsame(cmach, "N", (ftnlen)1, (ftnlen)1)) {
-	rmach = t;
+        rmach = (real) FLT_MANT_DIG;               /* mantissa digits    */
     } else if (fla_lsame(cmach, "R", (ftnlen)1, (ftnlen)1)) {
-	rmach = rnd;
+        rmach = rnd;                                 /* rounding flag      */
     } else if (fla_lsame(cmach, "M", (ftnlen)1, (ftnlen)1)) {
-	rmach = emin;
+        rmach = (real) FLT_MIN_EXP;                /* min exponent       */
     } else if (fla_lsame(cmach, "U", (ftnlen)1, (ftnlen)1)) {
-	rmach = rmin;
+        rmach = FLT_MIN;                              /* underflow thresh.  */
     } else if (fla_lsame(cmach, "L", (ftnlen)1, (ftnlen)1)) {
-	rmach = emax;
+        rmach = (real) FLT_MAX_EXP;                /* max exponent       */
     } else if (fla_lsame(cmach, "O", (ftnlen)1, (ftnlen)1)) {
-	rmach = rmax;
+        rmach = FLT_MAX;                              /* overflow thresh.   */
+    } else {
+        rmach = 0.f;                                /* as LAPACK >= 3.3   */
     }
 
-    ret_val = rmach;
-    first = FALSE_;
-    return ret_val;
-
-/*     End of SLAMCH */
-
-} /* fla_slamch_ */
+    return rmach;
+} /* fla_slamch */
 
 
 /* *********************************************************************** */
