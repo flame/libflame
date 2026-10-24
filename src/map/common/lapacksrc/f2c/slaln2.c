@@ -225,7 +225,10 @@ int slaln2_(logical *ltrans, integer *na, integer *nw, real * smin, real *ca, re
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, x_dim1, x_offset;
     real r__1, r__2, r__3, r__4, r__5, r__6;
-    static real equiv_0[4], equiv_1[4];
+    /* Not static: f2c emits EQUIVALENCE storage as static, but CR/CI are
+       per-call scratch (all four entries are written before any read),
+       so a shared copy is a data race between concurrent callers. */
+    real equiv_0[4], equiv_1[4];
     /* Local variables */
     integer j;
 #define ci (equiv_0)
