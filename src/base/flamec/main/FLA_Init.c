@@ -10,8 +10,112 @@
 
 #include "FLAME.h"
 
+/*
+   Thread safety of library (de)initialization
+   -------------------------------------------
 
-static FLA_Bool FLA_initialized = FALSE;
+   FLA_Init_safe()/FLA_Finalize_safe() bracket every lapack2flame entry point
+   (e.g. dgesvd_, dgesdd_). Previously they used an unsynchronized global
+   flag and "whoever initialized, finalizes" ownership. When several threads
+   call a LAPACK routine concurrently, the first thread to return would call
+   FLA_Finalize() and free the global constants (FLA_ONE, ...) and control
+   trees while the other threads were still using them, producing random
+   aborts ("not yet implemented", "inconsistent datatypes", NULL pointers),
+   heap corruption, or hangs.
+
+   The state below fixes this:
+
+   - fla_init_lock: a spinlock that serializes every transition of the
+     library state. It is statically initialized, so it is usable before
+     FLA_Init() and needs neither pthreads nor FLA_Lock (which requires a
+     runtime init and only exists in multithreaded builds).
+
+   - fla_safe_users: number of FLA_Init_safe() calls that have not yet been
+     matched by FLA_Finalize_safe(), i.e. library calls in flight.
+
+   - fla_auto_finalize: TRUE when the library must be finalized as soon as
+     fla_safe_users drops to zero. It is set when FLA_Init_safe() had to
+     initialize the library itself, cleared when the user calls FLA_Init()
+     (the user now owns the lifetime), and set again when the user calls
+     FLA_Finalize() while library calls are still in flight (finalization
+     is deferred to the last in-flight call instead of pulling the state
+     out from under it).
+
+   Callers that only need the old behaviour are unaffected: a single-threaded
+   program sees exactly the same init/finalize sequence as before.
+
+   Performance note: if no thread holds the library initialized, concurrent
+   callers may still init/finalize repeatedly whenever the in-flight count
+   touches zero. That is correct but costs time; calling FLA_Init() once at
+   program start (FLA_INIT() from Fortran) avoids it.
+*/
+
+static FLA_Bool FLA_initialized   = FALSE;
+static int      fla_safe_users    = 0;
+static FLA_Bool fla_auto_finalize = FALSE;
+
+#if defined(_MSC_VER)
+
+#include <intrin.h>
+
+static volatile long fla_init_lock_word = 0;
+
+static void fla_init_lock( void )
+{
+  // _InterlockedExchange is a full barrier on MSVC.
+  while ( _InterlockedExchange( &fla_init_lock_word, 1 ) != 0 )
+    while ( fla_init_lock_word != 0 ) ;
+}
+
+static void fla_init_unlock( void )
+{
+  _InterlockedExchange( &fla_init_lock_word, 0 );
+}
+
+static FLA_Bool fla_load_initialized( void )
+{
+  return *( volatile FLA_Bool* ) &FLA_initialized;
+}
+
+static void fla_store_initialized( FLA_Bool val )
+{
+  *( volatile FLA_Bool* ) &FLA_initialized = val;
+}
+
+#else
+
+#include <sched.h>
+
+static int fla_init_lock_word = 0;
+
+static void fla_init_lock( void )
+{
+  // Test-and-test-and-set: only attempt the atomic exchange when the lock
+  // looks free, and yield the CPU while it is held. Initialization is short
+  // and rare, so contention is brief.
+  while ( __atomic_exchange_n( &fla_init_lock_word, 1, __ATOMIC_ACQUIRE ) != 0 )
+    while ( __atomic_load_n( &fla_init_lock_word, __ATOMIC_RELAXED ) != 0 )
+      sched_yield();
+}
+
+static void fla_init_unlock( void )
+{
+  __atomic_store_n( &fla_init_lock_word, 0, __ATOMIC_RELEASE );
+}
+
+// FLA_initialized is read without the lock by FLA_Initialized(), so
+// accesses go through atomics to keep them well defined.
+static FLA_Bool fla_load_initialized( void )
+{
+  return __atomic_load_n( &FLA_initialized, __ATOMIC_ACQUIRE );
+}
+
+static void fla_store_initialized( FLA_Bool val )
+{
+  __atomic_store_n( &FLA_initialized, val, __ATOMIC_RELEASE );
+}
+
+#endif
 
 FLA_Obj FLA_THREE = {};
 FLA_Obj FLA_TWO = {};
@@ -44,11 +148,10 @@ const dcomplex zzero = { 0.0 , 0.0  };
 
  *************************************************************************** */
 
-void FLA_Init()
+// Must be called with fla_init_lock held.
+static void fla_init_locked( void )
 {
   if ( FLA_initialized == TRUE ) return;
-  
-  FLA_initialized = TRUE;
 
   FLA_Error_messages_init();
 
@@ -65,6 +168,23 @@ void FLA_Init()
 #ifdef FLA_ENABLE_SUPERMATRIX
   FLASH_Queue_init();
 #endif
+
+  // Publish only once everything above is in place, so a lock-free
+  // FLA_Initialized() never reports a half-built library.
+  fla_store_initialized( TRUE );
+}
+
+void FLA_Init()
+{
+  fla_init_lock();
+
+  fla_init_locked();
+
+  // An explicit FLA_Init() means the user now owns the library lifetime:
+  // in-flight library calls must not finalize it when they return.
+  fla_auto_finalize = FALSE;
+
+  fla_init_unlock();
 }
 
 /* *************************************************************************
@@ -73,11 +193,12 @@ void FLA_Init()
 
  *************************************************************************** */
 
-void FLA_Finalize()
+// Must be called with fla_init_lock held.
+static void fla_finalize_locked( void )
 {
   if ( FLA_initialized == FALSE ) return;
 
-  FLA_initialized = FALSE;
+  fla_store_initialized( FALSE );
 
   FLA_Finalize_constants();
 
@@ -90,6 +211,25 @@ void FLA_Finalize()
   FLA_Memory_leak_counter_finalize();
 }
 
+void FLA_Finalize()
+{
+  fla_init_lock();
+
+  if ( fla_safe_users > 0 )
+  {
+    // Other threads are inside libflame right now. Freeing the global
+    // state would crash them, so hand finalization to the last of them.
+    fla_auto_finalize = TRUE;
+  }
+  else
+  {
+    fla_finalize_locked();
+    fla_auto_finalize = FALSE;
+  }
+
+  fla_init_unlock();
+}
+
 /* *************************************************************************
 
   FLA_Init_safe()
@@ -98,15 +238,25 @@ void FLA_Finalize()
 
 void FLA_Init_safe( FLA_Error* init_result )
 {
-  if ( FLA_Initialized() )
+  fla_init_lock();
+
+  if ( FLA_initialized == FALSE )
   {
-    *init_result = FLA_FAILURE;
+    // Nobody holds the library initialized: initialize it on behalf of
+    // the in-flight calls and finalize it when the last one returns.
+    fla_init_locked();
+    fla_auto_finalize = TRUE;
   }
-  else
-  {
-    FLA_Init();
-    *init_result = FLA_SUCCESS;
-  }
+
+  // Every caller is registered, including when the user initialized the
+  // library, so that a concurrent FLA_Finalize() is deferred correctly.
+  ++fla_safe_users;
+
+  fla_init_unlock();
+
+  // FLA_SUCCESS now means "registered; pass this to FLA_Finalize_safe()".
+  // The value is only ever passed through to FLA_Finalize_safe().
+  *init_result = FLA_SUCCESS;
 }
 
 /* *************************************************************************
@@ -117,8 +267,19 @@ void FLA_Init_safe( FLA_Error* init_result )
 
 void FLA_Finalize_safe( FLA_Error init_result )
 {
-  if ( init_result == FLA_SUCCESS )
-    FLA_Finalize();
+  if ( init_result != FLA_SUCCESS ) return;
+
+  fla_init_lock();
+
+  --fla_safe_users;
+
+  if ( fla_safe_users == 0 && fla_auto_finalize == TRUE )
+  {
+    fla_finalize_locked();
+    fla_auto_finalize = FALSE;
+  }
+
+  fla_init_unlock();
 }
 
 /* *************************************************************************
@@ -129,7 +290,7 @@ void FLA_Finalize_safe( FLA_Error init_result )
 
 FLA_Bool FLA_Initialized( void )
 {
-  return FLA_initialized;
+  return fla_load_initialized();
 }
 
 /* *************************************************************************

@@ -61,7 +61,7 @@ int (*f__lioproc)(ftnint*, char*, ftnlen, ftnint);
 #define EX 8
 #define SG 16
 #define WH 32
-static
+static const
 char f__ltab[128+1] = {	/* offset one for EOF */
 	0,
 	0,0,AX,0,0,0,0,0,0,WH|B,SX|WH,0,0,0,0,0,
@@ -357,7 +357,7 @@ static int nmL_ungetc(int x, FILE *f)
 static int Lfinish(int ch, int dot, int *rvp)
 {
 	char *s, *se;
-	static char what[] = "namelist input";
+	static const char what[] = "namelist input";
 
 	s = nmLbuf + 2;
 	se = nmLbuf + sizeof(nmLbuf) - 1;
@@ -460,7 +460,7 @@ static int l_L(void)
 
 static int l_CHAR(void)
 {	int ch,size,i;
-	static char rafail[] = "realloc failure";
+	static const char rafail[] = "realloc failure";
 	char quote,*p;
 	if(f__lcount>0) return(0);
 	f__ltype=0;

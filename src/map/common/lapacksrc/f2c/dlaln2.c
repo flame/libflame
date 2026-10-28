@@ -206,17 +206,17 @@
 int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doublereal *ca, doublereal *a, integer *lda, doublereal *d1, doublereal *d2, doublereal *b, integer *ldb, doublereal *wr, doublereal *wi, doublereal *x, integer *ldx, doublereal *scale, doublereal *xnorm, integer *info)
 {
     /* Initialized data */
-    static logical zswap[4] =
+    static const logical zswap[4] =
     {
         FALSE_,FALSE_,TRUE_,TRUE_
     }
     ;
-    static logical rswap[4] =
+    static const logical rswap[4] =
     {
         FALSE_,TRUE_,FALSE_,TRUE_
     }
     ;
-    static integer ipivot[16] /* was [4][4] */
+    static const integer ipivot[16] /* was [4][4] */
     =
     {
         1,2,3,4,2,1,4,3,3,4,1,2, 4,3,2,1
@@ -225,7 +225,10 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, x_dim1, x_offset;
     doublereal d__1, d__2, d__3, d__4, d__5, d__6;
-    static doublereal equiv_0[4], equiv_1[4];
+    /* Not static: f2c emits EQUIVALENCE storage as static, but CR/CI are
+       per-call scratch (all four entries are written before any read),
+       so a shared copy is a data race between concurrent callers. */
+    doublereal equiv_0[4], equiv_1[4];
     /* Local variables */
     integer j;
 #define ci (equiv_0)

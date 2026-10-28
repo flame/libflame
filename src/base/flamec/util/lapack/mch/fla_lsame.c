@@ -23,7 +23,10 @@ logical fla_lsame(char *ca, char *cb, ftnlen ca_len, ftnlen cb_len)
     logical ret_val;
 
     /* Local variables */
-    static integer inta, intb, zcode;
+    /* Not static: f2c made these SAVEd globals, so concurrent callers
+       overwrote each other's operands and could get a wrong answer,
+       e.g. fla_lsame("E", "S") returning TRUE. */
+    integer inta, intb, zcode;
 
 
 /*  -- LAPACK auxiliary routine (version 3.2) -- */

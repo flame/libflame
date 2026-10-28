@@ -3,20 +3,22 @@
 
 /* Table of constant values */
 
-static doublereal half  = 0.5;
-static doublereal one   = 1.0;
-static doublereal zero  = 0.0;
+static const doublereal half  = 0.5;
+static const doublereal one   = 1.0;
+static const doublereal zero  = 0.0;
 
 doublereal dlamch_(char *cmach)
 {
-    /* Initialized data */
-    static logical first = TRUE_;
 
     /* System generated locals */
     doublereal ret_val;
 
     /* Local variables */
-    static doublereal  eps, sfmin, base, prec, t, rnd, emin, rmin, emax, rmax;
+    /* Not static and no "first" flag: the values were cached in statics
+       behind an unsynchronized flag, a data race with concurrent
+       callers. They are compile-time <float.h> constants, so
+       recomputing them on every call costs nothing. */
+    doublereal  eps, sfmin, base, prec, t, rnd, emin, rmin, emax, rmax;
     doublereal rmach, small;
 
     extern logical lsame_(char *, char *);
@@ -59,7 +61,6 @@ doublereal dlamch_(char *cmach)
 
     /* Assume rounding, not chopping. Always. -- This is a comment from LAPACK.
      */
-    if (first)
     {
         /* FLT_ROUNDS specification
         -1 undetermined
@@ -138,7 +139,6 @@ doublereal dlamch_(char *cmach)
     }
 
     ret_val = rmach;
-    first = FALSE_;
     return ret_val;
 
 } /* dlamch_ */

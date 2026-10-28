@@ -167,27 +167,27 @@ static integer c__0 = 0;
 int slasy2_(logical *ltranl, logical *ltranr, integer *isgn, integer *n1, integer *n2, real *tl, integer *ldtl, real *tr, integer * ldtr, real *b, integer *ldb, real *scale, real *x, integer *ldx, real *xnorm, integer *info)
 {
     /* Initialized data */
-    static integer locu12[4] =
+    static const integer locu12[4] =
     {
         3,4,1,2
     }
     ;
-    static integer locl21[4] =
+    static const integer locl21[4] =
     {
         2,1,4,3
     }
     ;
-    static integer locu22[4] =
+    static const integer locu22[4] =
     {
         4,3,2,1
     }
     ;
-    static logical xswpiv[4] =
+    static const logical xswpiv[4] =
     {
         FALSE_,FALSE_,TRUE_,TRUE_
     }
     ;
-    static logical bswpiv[4] =
+    static const logical bswpiv[4] =
     {
         FALSE_,TRUE_,FALSE_,TRUE_
     }
