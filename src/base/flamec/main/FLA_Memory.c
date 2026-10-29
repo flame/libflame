@@ -61,16 +61,13 @@ void FLA_Memory_leak_counter_finalize( void )
     fflush( stderr );
   }
 
-  // Destroy the memory leak counter lock, but only if we have locks in
-  // the first place (ie: only if multithreading is enabled).
-#ifdef FLA_ENABLE_MULTITHREADING
-  FLA_Lock_destroy( &fla_mem_leak_counter_lock );
-#endif
-
-  // We leave the fla_mem_leak_counter_status variable alone.
-
-  // Reset the counter, just for good measure.
-  fla_mem_leak_counter = 0;
+  // The counter, its status and its lock are statically allocated state:
+  // they are initialized once per process (FLA_Memory_leak_counter_init() is
+  // only called by the first FLA_Init()) and are left intact here, so that
+  // re-initializing the library does not recreate the lock. This also keeps
+  // the lock valid for FLA_malloc()/FLA_free() calls made by other threads
+  // while the library is being finalized. The counter keeps counting
+  // outstanding FLA_malloc() allocations across init/finalize cycles.
 }
 
 /* *************************************************************************

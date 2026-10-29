@@ -10,6 +10,8 @@
 
 #include "FLAME.h"
 
+#include <stdint.h>
+
 /*
    Thread safety of library (de)initialization
    -------------------------------------------
@@ -44,15 +46,37 @@
    Callers that only need the old behaviour are unaffected: a single-threaded
    program sees exactly the same init/finalize sequence as before.
 
+   Lifetime of library state
+   -------------------------
+
+   Every lapack2flame call that finds the library uninitialized initializes
+   it and, when it is the last call in flight, finalizes it again. To keep
+   that cycle cheap, state is split by how it is stored:
+
+   - Statically allocated state (.bss/.data/.rodata) is initialized once per
+     process and is NOT torn down by FLA_Finalize(): the error message table,
+     the memory leak counter (count, status and lock), and the global scalar
+     constants FLA_ONE, FLA_ZERO, ..., FLA_OVERFLOW_SQUARE_THRES, whose base
+     objects and buffers now live in static storage (see
+     FLA_Init_constants()). They therefore remain valid after FLA_Finalize().
+
+   - Dynamically allocated state is still created by FLA_Init() and freed by
+     FLA_Finalize(): the control trees (FLA_Cntl_init/FLA_Cntl_finalize) and
+     the SuperMatrix GPU/HIP device handles.
+
    Performance note: if no thread holds the library initialized, concurrent
-   callers may still init/finalize repeatedly whenever the in-flight count
-   touches zero. That is correct but costs time; calling FLA_Init() once at
-   program start (FLA_INIT() from Fortran) avoids it.
+   callers may still init/finalize the dynamic state repeatedly whenever the
+   in-flight count touches zero. That is correct but costs time; calling
+   FLA_Init() once at program start (FLA_INIT() from Fortran) avoids it.
 */
 
 static FLA_Bool FLA_initialized   = FALSE;
 static int      fla_safe_users    = 0;
 static FLA_Bool fla_auto_finalize = FALSE;
+
+// TRUE once the process-lifetime static state (error message table, memory
+// leak counter) has been initialized. Only accessed with fla_init_lock held.
+static FLA_Bool fla_static_state_ready = FALSE;
 
 #if defined(_MSC_VER)
 
@@ -153,12 +177,22 @@ static void fla_init_locked( void )
 {
   if ( FLA_initialized == TRUE ) return;
 
-  FLA_Error_messages_init();
+  // Static state: initialized on the first FLA_Init() of the process only.
+  // FLA_Finalize() leaves it in place, so later re-initializations skip it.
+  if ( fla_static_state_ready == FALSE )
+  {
+    FLA_Error_messages_init();
 
-  FLA_Memory_leak_counter_init();
+    FLA_Memory_leak_counter_init();
 
+    fla_static_state_ready = TRUE;
+  }
+
+  // Idempotent: builds the constants on the first call only (except in SCC
+  // builds, where they are recreated in shared memory for every session).
   FLA_Init_constants();
 
+  // Dynamic state: rebuilt on every initialization.
   FLA_Cntl_init();
 
 #if FLA_VECTOR_INTRINSIC_TYPE == FLA_SSE_INTRINSICS
@@ -200,14 +234,19 @@ static void fla_finalize_locked( void )
 
   fla_store_initialized( FALSE );
 
+  // No-op except in SCC builds: the constants are static and outlive
+  // finalization (see FLA_Init_constants()).
   FLA_Finalize_constants();
 
+  // Dynamic state is released.
   FLA_Cntl_finalize();
 
 #ifdef FLA_ENABLE_SUPERMATRIX
   FLASH_Queue_finalize();
 #endif
 
+  // Reports the counter if enabled; the counter and its lock stay
+  // initialized (static state).
   FLA_Memory_leak_counter_finalize();
 }
 
@@ -297,19 +336,164 @@ FLA_Bool FLA_Initialized( void )
 
    FLA_Init_constants()
 
+   The global scalar constants (FLA_ONE, ..., FLA_OVERFLOW_SQUARE_THRES) are
+   statically allocated: each FLA_Obj points to a base object and a buffer
+   in static storage. They are built on the first call and then stay valid
+   for the life of the process, including after FLA_Finalize(), so that
+   re-initializing the library does not allocate and fill them again.
+
+   Each constant is first built by the regular FLA_Obj_create_constant[_ext]
+   routines, so every field and stored value (int, float, double, scomplex,
+   dcomplex) is exactly what the library always produced, then its base
+   object and buffer are copied into static storage and the heap copies are
+   freed (leaving the memory leak counter balanced).
+
+   In SCC builds the constant buffers must live in shared memory
+   (FLA_shmalloc), so there the constants keep the original behaviour:
+   created by every FLA_Init() and freed by every FLA_Finalize().
+
  *************************************************************************** */
+
+// Must be called with fla_init_lock held (it is, from fla_init_locked()).
+static FLA_Bool fla_constants_ready = FALSE;
+
+#ifndef FLA_ENABLE_SCC
+
+#define FLA_N_STATIC_CONSTANTS 18
+
+// FLA_Obj_create_ext() may pad the 1x1 element to the configured alignment
+// boundary (FLA_align_ldim() rounds the element up to a multiple of it), so
+// the padded size never exceeds FLA_CONSTANT_SIZE + boundary.
+#ifdef FLA_ENABLE_MEMORY_ALIGNMENT
+  #define FLA_STATIC_CONSTANT_CAPACITY \
+          ( FLA_CONSTANT_SIZE + FLA_MEMORY_ALIGNMENT_BOUNDARY )
+  #if defined(__GNUC__)
+    #define FLA_STATIC_CONSTANT_ALIGN \
+            __attribute__(( aligned( FLA_MEMORY_ALIGNMENT_BOUNDARY ) ))
+  #else
+    #define FLA_STATIC_CONSTANT_ALIGN
+  #endif
+#else
+  #define FLA_STATIC_CONSTANT_CAPACITY FLA_CONSTANT_SIZE
+  #define FLA_STATIC_CONSTANT_ALIGN
+#endif
+
+// The union members give at least the alignment malloc() provides for every
+// element type stored in a constant buffer.
+typedef union
+{
+  char        bytes[ FLA_STATIC_CONSTANT_CAPACITY ];
+  double      d;
+  dcomplex    z;
+  long double ld;
+} FLA_STATIC_CONSTANT_ALIGN fla_static_constant_buf_t;
+
+static FLA_Base_obj              fla_static_constant_base[ FLA_N_STATIC_CONSTANTS ];
+static fla_static_constant_buf_t fla_static_constant_buf[ FLA_N_STATIC_CONSTANTS ];
+
+// Compile-time assertion usable as a statement.
+// C11 and later: _Static_assert. C99 (libflame's default -std=c99): a bit-field
+// whose width is negative when cond is false; a bit-field width must also be
+// an integer constant expression, so a non-constant cond is rejected as well.
+#if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L
+  #define FLA_STATIC_ASSERT( cond, msg ) _Static_assert( cond, msg )
+#else
+  #define FLA_STATIC_ASSERT( cond, msg ) \
+          ( void ) sizeof( struct { int fla_static_assert_failed : ( cond ) ? 1 : -1; } )
+#endif
+
+// Move the freshly created constant *obj into static slot idx.
+//
+// fla_constant_make_static() is a macro so that idx, a literal at every call
+// site, can be checked at compile time: a slot index outside
+// [0, FLA_N_STATIC_CONSTANTS-1] (or a non-constant index) fails to compile.
+// A function parameter cannot be checked statically inside the function body.
+#define fla_constant_make_static( obj, idx ) \
+  do { \
+    FLA_STATIC_ASSERT( ( idx ) >= 0 && ( idx ) <= FLA_N_STATIC_CONSTANTS - 1, \
+                       "fla_constant_make_static: idx must be in " \
+                       "[0, FLA_N_STATIC_CONSTANTS-1]" ); \
+    fla_constant_make_static_impl( obj, idx ); \
+  } while ( 0 )
+
+static void fla_constant_make_static_impl( FLA_Obj* obj, int idx )
+{
+  FLA_Base_obj* heap_base = obj->base;
+  FLA_Base_obj* base      = &fla_static_constant_base[ idx ];
+  char*         buf       = fla_static_constant_buf[ idx ].bytes;
+  size_t        n_bytes   = ( size_t ) heap_base->n_elem_alloc *
+                            ( size_t ) FLA_CONSTANT_SIZE;
+
+  // Should not happen given the capacity above; if a configuration ever
+  // breaks the assumption, keep the heap object (still never freed, so the
+  // constant still outlives FLA_Finalize()).
+  if ( n_bytes > sizeof( fla_static_constant_buf[ idx ].bytes ) )
+    return;
+#ifdef FLA_ENABLE_MEMORY_ALIGNMENT
+  if ( ( ( uintptr_t ) buf ) % ( uintptr_t ) FLA_MEMORY_ALIGNMENT_BOUNDARY != 0 )
+    return;
+#endif
+
+  *base        = *heap_base;
+  base->buffer = buf;
+  base->id     = ( unsigned long ) base;
+
+  // Copy the five typed values (not the raw bytes) into a zeroed buffer, so
+  // the padding between them is deterministic instead of heap leftovers.
+  // *obj still views the heap object here; the FLA_*_PTR macros resolve the
+  // per-type offsets inside a constant's buffer.
+  memset( buf, 0, n_bytes );
+  {
+    FLA_Obj tmp = *obj;
+
+    tmp.base = base;
+
+    *FLA_INT_PTR( tmp )            = *FLA_INT_PTR( *obj );
+    *FLA_FLOAT_PTR( tmp )          = *FLA_FLOAT_PTR( *obj );
+    *FLA_DOUBLE_PTR( tmp )         = *FLA_DOUBLE_PTR( *obj );
+    *FLA_COMPLEX_PTR( tmp )        = *FLA_COMPLEX_PTR( *obj );
+    *FLA_DOUBLE_COMPLEX_PTR( tmp ) = *FLA_DOUBLE_COMPLEX_PTR( *obj );
+  }
+
+  // Same release path as FLA_Obj_free() (non-SCC), without touching the
+  // view fields of *obj, which stay those of the 1x1 constant.
+  FLA_buff_free( heap_base->buffer );
+  FLA_free( ( void * ) heap_base );
+
+  obj->base = base;
+}
+
+#define FLA_CONSTANT_STATIC( value, obj, idx ) \
+  do { FLA_Obj_create_constant( value, obj ); \
+       fla_constant_make_static( obj, idx ); } while ( 0 )
+
+#define FLA_CONSTANT_EXT_STATIC( value_s, value_d, obj, idx ) \
+  do { FLA_Obj_create_constant_ext( value_s, value_d, obj ); \
+       fla_constant_make_static( obj, idx ); } while ( 0 )
+
+#else /* FLA_ENABLE_SCC: original per-session heap / shared-memory constants */
+
+#define FLA_CONSTANT_STATIC( value, obj, idx ) \
+  FLA_Obj_create_constant( value, obj )
+
+#define FLA_CONSTANT_EXT_STATIC( value_s, value_d, obj, idx ) \
+  FLA_Obj_create_constant_ext( value_s, value_d, obj )
+
+#endif
 
 void FLA_Init_constants()
 {
-  FLA_Obj_create_constant(  3.0, &FLA_THREE );
-  FLA_Obj_create_constant(  2.0, &FLA_TWO );
-  FLA_Obj_create_constant(  1.0, &FLA_ONE );
-  FLA_Obj_create_constant(  0.5, &FLA_ONE_HALF );
-  FLA_Obj_create_constant(  0.0, &FLA_ZERO );
-  FLA_Obj_create_constant( -0.5, &FLA_MINUS_ONE_HALF );
-  FLA_Obj_create_constant( -1.0, &FLA_MINUS_ONE );
-  FLA_Obj_create_constant( -2.0, &FLA_MINUS_TWO );
-  FLA_Obj_create_constant( -3.0, &FLA_MINUS_THREE );
+  if ( fla_constants_ready == TRUE ) return;
+
+  FLA_CONSTANT_STATIC(  3.0, &FLA_THREE,          0 );
+  FLA_CONSTANT_STATIC(  2.0, &FLA_TWO,            1 );
+  FLA_CONSTANT_STATIC(  1.0, &FLA_ONE,            2 );
+  FLA_CONSTANT_STATIC(  0.5, &FLA_ONE_HALF,       3 );
+  FLA_CONSTANT_STATIC(  0.0, &FLA_ZERO,           4 );
+  FLA_CONSTANT_STATIC( -0.5, &FLA_MINUS_ONE_HALF, 5 );
+  FLA_CONSTANT_STATIC( -1.0, &FLA_MINUS_ONE,      6 );
+  FLA_CONSTANT_STATIC( -2.0, &FLA_MINUS_TWO,      7 );
+  FLA_CONSTANT_STATIC( -3.0, &FLA_MINUS_THREE,    8 );
 
 
   { 
@@ -347,30 +531,38 @@ void FLA_Init_constants()
     sfmin_f2 = sqrt( sfmin_f );
     sfmin_d2 = sqrt( sfmin_d );
 
-    FLA_Obj_create_constant_ext( eps_f,           eps_d,           &FLA_EPSILON );
+    FLA_CONSTANT_EXT_STATIC( eps_f,           eps_d,           &FLA_EPSILON,                 9 );
 
-    FLA_Obj_create_constant_ext( sfmin_f,         sfmin_d,         &FLA_SAFE_MIN );
-    FLA_Obj_create_constant_ext( 1.0F/sfmin_f,    1.0/sfmin_d,     &FLA_SAFE_INV_MIN );
+    FLA_CONSTANT_EXT_STATIC( sfmin_f,         sfmin_d,         &FLA_SAFE_MIN,               10 );
+    FLA_CONSTANT_EXT_STATIC( 1.0F/sfmin_f,    1.0/sfmin_d,     &FLA_SAFE_INV_MIN,           11 );
 
-    FLA_Obj_create_constant_ext( sfmin_f2,        sfmin_d2,        &FLA_SAFE_MIN_SQUARE );
-    FLA_Obj_create_constant_ext( 1.0F/sfmin_f2,   1.0/sfmin_d2,    &FLA_SAFE_INV_MIN_SQUARE );
+    FLA_CONSTANT_EXT_STATIC( sfmin_f2,        sfmin_d2,        &FLA_SAFE_MIN_SQUARE,        12 );
+    FLA_CONSTANT_EXT_STATIC( 1.0F/sfmin_f2,   1.0/sfmin_d2,    &FLA_SAFE_INV_MIN_SQUARE,    13 );
     
-    FLA_Obj_create_constant_ext( under_f,         under_d,         &FLA_UNDERFLOW_THRES );
-    FLA_Obj_create_constant_ext( over_f,          over_d,          &FLA_OVERFLOW_THRES );
+    FLA_CONSTANT_EXT_STATIC( under_f,         under_d,         &FLA_UNDERFLOW_THRES,        14 );
+    FLA_CONSTANT_EXT_STATIC( over_f,          over_d,          &FLA_OVERFLOW_THRES,         15 );
 
-    FLA_Obj_create_constant_ext( sqrt( under_f ), sqrt( under_d ), &FLA_UNDERFLOW_SQUARE_THRES );
-    FLA_Obj_create_constant_ext( sqrt( over_f ),  sqrt( over_d ),  &FLA_OVERFLOW_SQUARE_THRES );
+    FLA_CONSTANT_EXT_STATIC( sqrt( under_f ), sqrt( under_d ), &FLA_UNDERFLOW_SQUARE_THRES, 16 );
+    FLA_CONSTANT_EXT_STATIC( sqrt( over_f ),  sqrt( over_d ),  &FLA_OVERFLOW_SQUARE_THRES,  17 );
   } 
+
+  fla_constants_ready = TRUE;
 }
 
 /* *************************************************************************
 
    FLA_Finalize_constants()
 
+   The constants are statically allocated and remain valid after
+   FLA_Finalize() (see FLA_Init_constants()), so this is a no-op, except in
+   SCC builds where they are freed as before and rebuilt by the next
+   FLA_Init_constants().
+
  *************************************************************************** */
 
 void FLA_Finalize_constants()
 {
+#ifdef FLA_ENABLE_SCC
   FLA_Obj_free( &FLA_THREE );
   FLA_Obj_free( &FLA_TWO );
   FLA_Obj_free( &FLA_ONE );
@@ -390,5 +582,8 @@ void FLA_Finalize_constants()
   FLA_Obj_free( &FLA_OVERFLOW_THRES );  
   FLA_Obj_free( &FLA_UNDERFLOW_SQUARE_THRES );
   FLA_Obj_free( &FLA_OVERFLOW_SQUARE_THRES );
+
+  fla_constants_ready = FALSE;
+#endif
 }
 
