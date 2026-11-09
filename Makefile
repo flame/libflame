@@ -580,10 +580,10 @@ endif
 define fortran_rule
 $$(BASE_OBJ_PATH)/%.o: $$(SRC_PATH)/$1 $$(CONFIG_MK_FILE) $$(HEADERS_TO_FLATTEN) $$(BASE_OBJ_PATH)/la_xisnan.mod
 ifeq ($$(ENABLE_VERBOSE),yes)
-	$(FC) -cpp -c $$< -o $$@
+	$(FC) $(FFLAGS) -cpp -c $$< -o $$@
 else
 	@echo "Compiling $$<"
-	@$(FC) -cpp -c $$< -o $$@
+	@$(FC) $(FFLAGS) -cpp -c $$< -o $$@
 endif
 ifeq ($$(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 	@echo $$@ >> $$(AR_OBJ_LIST_FILE)
@@ -593,10 +593,10 @@ $(foreach FEXT, $(FORT_EXT), $(eval $(call fortran_rule,$(FEXT))))
 
 $(BASE_OBJ_PATH)/la_xisnan.mod: $(FDEPS2) $(BASE_OBJ_PATH)/la_constants.mod
 ifeq ($(ENABLE_VERBOSE),yes)
-	$(FC) -cpp -c $< -o $@
+	$(FC) $(FFLAGS) -cpp -c $< -o $@
 else
 	@echo "Building $<"
-	@$(FC) -cpp -c $< -o $@
+	@$(FC) $(FFLAGS) -cpp -c $< -o $@
 endif
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 	@echo $@ >> $(AR_OBJ_LIST_FILE)
@@ -604,10 +604,10 @@ endif
 
 $(BASE_OBJ_PATH)/la_constants.mod: $(FDEPS1)
 ifeq ($(ENABLE_VERBOSE),yes)
-	$(FC) -cpp -c $< -o $@
+	$(FC) $(FFLAGS) -cpp -c $< -o $@
 else
 	@echo "Building $<"
-	@$(FC) -cpp -c $< -o $@
+	@$(FC) $(FFLAGS) -cpp -c $< -o $@
 endif
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 	@echo $@ >> $(AR_OBJ_LIST_FILE)

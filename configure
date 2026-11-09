@@ -6600,6 +6600,8 @@ $as_echo "no" >&6; }
 $as_echo "#define _GNU_SOURCE 1" >>confdefs.h
 
 		;;
+				*clang)
+		;;
 				icc)
 		;;
 				pathcc)
@@ -6625,6 +6627,9 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} language flags... "
 
 		case ${CC_VENDOR} in
 				gcc)
+			fla_c_lang_flags='-std=c99 -Wall -Wno-unused-function -Wno-parentheses -Wfatal-errors'
+		;;
+				*clang)
 			fla_c_lang_flags='-std=c99 -Wall -Wno-unused-function -Wno-parentheses -Wfatal-errors'
 		;;
 				icc)
@@ -7225,6 +7230,9 @@ $as_echo_n "checking for (guessing) OpenMP flags for ${CC_VENDOR}... " >&6; }
 				gcc)
 			fla_c_openmp_flags='-fopenmp'
 		;;
+				*clang)
+			fla_c_openmp_flags='-fopenmp'
+		;;
 				pathcc)
 			fla_c_openmp_flags='-mp'
 		;;
@@ -7792,6 +7800,9 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} optimization flags.
 						gcc)
 				fla_c_opt_flags='-O3'
 			;;
+						*clang)
+				fla_c_opt_flags='-O3'
+			;;
 						icc)
 				fla_c_opt_flags='-O3'
 			;;
@@ -7818,6 +7829,9 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} optimization flags.
 
 				case ${CC_VENDOR} in
 						gcc)
+				fla_c_opt_flags='-O0'
+			;;
+						*clang)
 				fla_c_opt_flags='-O0'
 			;;
 						icc)
@@ -7910,6 +7924,9 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} warning flags... " 
 						gcc)
 				fla_c_warning_flags='-Wall -Wno-comment'
 			;;
+						*clang)
+				fla_c_warning_flags='-Wall -Wno-comment'
+			;;
 						icc)
 				fla_c_warning_flags='-Wall -wd869,981,1418,1419,1572'
 			;;
@@ -7936,6 +7953,9 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} warning flags... " 
 
 				case ${CC_VENDOR} in
 						gcc)
+				fla_c_warning_flags='-w'
+			;;
+						*clang)
 				fla_c_warning_flags='-w'
 			;;
 						icc)
@@ -8027,6 +8047,9 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} debug flags... " >&
 						gcc)
 				fla_c_debug_flags='-g'
 			;;
+						*clang)
+				fla_c_debug_flags='-g'
+			;;
 						icc)
 				fla_c_debug_flags='-g'
 			;;
@@ -8053,6 +8076,9 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} debug flags... " >&
 
 				case ${CC_VENDOR} in
 						gcc)
+				fla_c_debug_flags='-g0'
+			;;
+						*clang)
 				fla_c_debug_flags='-g0'
 			;;
 						icc)
@@ -8145,6 +8171,9 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} profiling flags... 
 						gcc)
 				fla_c_prof_flags='-pg'
 			;;
+						*clang)
+				fla_c_prof_flags='-pg'
+			;;
 						icc)
 				fla_c_prof_flags='-p'
 			;;
@@ -8171,6 +8200,9 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} profiling flags... 
 
 				case ${CC_VENDOR} in
 						gcc)
+				fla_c_prof_flags=''
+			;;
+						*clang)
 				fla_c_prof_flags=''
 			;;
 						icc)

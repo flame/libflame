@@ -24,8 +24,8 @@
 
 #ifdef FLA_ENABLE_WINDOWS_BUILD
 #define _CRT_RAND_S
-#include <stdlib.h>
 #endif
+#include <stdlib.h>
 
 
 #ifdef FLA_ENABLE_SUPERMATRIX
@@ -1342,11 +1342,7 @@ FLASH_Task* FLASH_Queue_work_stealing( int queue, void *arg )
       rand_s( &q );
       q = q % n_queues;
 #else
-#ifdef FLA_ENABLE_TIDSP
       q = rand() % n_queues;
-#else
-      q = lrand48() % n_queues;
-#endif
 #endif
    }
    while ( q == queue );
