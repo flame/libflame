@@ -9,14 +9,16 @@ static const real zero  = 0.f;
 
 real slamch_(char *cmach)
 {
-    /* Initialized data */
-    static logical first = TRUE_;
 
     /* System generated locals */
     real ret_val;
 
     /* Local variables */
-    static real  eps, sfmin, base, prec, t, rnd, emin, rmin, emax, rmax;
+    /* Not static and no "first" flag: the values were cached in statics
+       behind an unsynchronized flag, a data race with concurrent
+       callers. They are compile-time <float.h> constants, so
+       recomputing them on every call costs nothing. */
+    real  eps, sfmin, base, prec, t, rnd, emin, rmin, emax, rmax;
     real rmach, small;
 
     extern logical lsame_(char *, char *);
@@ -59,7 +61,6 @@ real slamch_(char *cmach)
 
     /* Assume rounding, not chopping. Always. -- This is a comment from LAPACK.
      */
-    if (first)
     {
         /* flt_ROUNDS specification
         -1 undetermined
@@ -138,7 +139,6 @@ real slamch_(char *cmach)
     }
 
     ret_val = rmach;
-    first = FALSE_;
     return ret_val;
 
 } /* slamch_ */
